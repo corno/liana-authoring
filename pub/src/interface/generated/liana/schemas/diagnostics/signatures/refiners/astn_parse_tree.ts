@@ -7,6 +7,25 @@ import * as i_out from "../../data"
 
 import * as i_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
 
+export namespace Diagnostics_ {
+    
+    export type I = i_in.Value
+    
+    export type O = i_out.Diagnostics
+    
+    export type E = i_generic.Error
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Diagnostics_ = (
+    context: Diagnostics_.I,
+    abort: _pi.Abort<Diagnostics_.E>,
+) => Diagnostics_.O
+
 export namespace Result_ {
     
     export type I = i_in.Value
@@ -46,6 +65,7 @@ export type Parameters_ = (
 ) => Parameters_.O
 
 export { 
+    Diagnostics_ as Diagnostics, 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }

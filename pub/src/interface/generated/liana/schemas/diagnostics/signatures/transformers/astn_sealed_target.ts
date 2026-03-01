@@ -5,6 +5,22 @@ import * as i_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as i_in from "../../data"
 
+export namespace Diagnostics_ {
+    
+    export type I = i_in.Diagnostics
+    
+    export type O = i_out.Value
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Diagnostics_ = (
+    context: Diagnostics_.I,
+) => Diagnostics_.O
+
 export namespace Result_ {
     
     export type I = i_in.Result
@@ -38,6 +54,7 @@ export type Parameters_ = (
 ) => Parameters_.O
 
 export { 
+    Diagnostics_ as Diagnostics, 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }

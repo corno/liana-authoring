@@ -7,6 +7,33 @@ import * as i_in from "pareto-fountain-pen/dist/interface/generated/liana/schema
 
 import * as i_out from "../../data"
 
+export namespace Diagnostics_ {
+    
+    export type I = i_in.List_of_Characters
+    
+    export type O = i_out.Diagnostics
+    
+    export type E = i_generic.Error
+    
+    export namespace P {
+        
+        export type document_resource_identifier = string
+        
+        export type tab_size = number
+        
+    }
+    
+}
+
+export type Diagnostics_ = (
+    context: Diagnostics_.I,
+    abort: _pi.Abort<Diagnostics_.E>,
+    parameters: {
+        readonly 'document resource identifier': Diagnostics_.P.document_resource_identifier
+        readonly 'tab size': Diagnostics_.P.tab_size
+    },
+) => Diagnostics_.O
+
 export namespace Result_ {
     
     export type I = i_in.List_of_Characters
@@ -62,6 +89,7 @@ export type Parameters_ = (
 ) => Parameters_.O
 
 export { 
+    Diagnostics_ as Diagnostics, 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }
