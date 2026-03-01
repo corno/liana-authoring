@@ -53,7 +53,7 @@ export const Concrete_Value = (
             })
         )]])
         case 'optional': return _p.ss($, ($) => ['nothing', null])
-        case 'state': return _p.ss($, ($) => ['state', ['missing data', null]])
+        case 'state': return _p.ss($, ($) => ['state', ['missing', null]])
         default: return _p.au($[0])
     }
 })
@@ -100,7 +100,7 @@ export const Type_Node_Resolver = (
                     })
                 )]])
                 case 'optional': return _p.ss($, ($) => ['nothing', null])
-                case 'state': return _p.ss($, ($) => ['state', ['missing data', null]])
+                case 'state': return _p.ss($, ($) => ['state', ['missing', null]])
                 default: return _p.au($[0])
             }
         })
