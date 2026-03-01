@@ -20,7 +20,6 @@ export type Document = _pi.Refiner_With_Parameter<
     d_function_seal.Error,
     d_in.List_of_Characters,
     {
-        'position': d_location.Position
         'unmarshall': d_function_unmarshall.Parameters
     }
 >

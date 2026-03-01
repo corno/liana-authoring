@@ -1,6 +1,6 @@
 {
   "name": "liana-authoring",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Corno",
   "license": "Apache-2.0",
   "description": "A library providing utilities for the VSCode language server for Liana.",
