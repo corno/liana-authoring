@@ -5,7 +5,7 @@ import * as _pdev from 'pareto-core-dev'
 //data types
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data"
-import * as d_function_unmarshall from "pareto-liana/dist/interface/to_be_generated/deserialize_unmarshall_result"
+import * as d_function_unmarshall from "pareto-liana/dist/interface/to_be_generated/unmarshall_result_from_loc"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies

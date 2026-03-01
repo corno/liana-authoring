@@ -6,7 +6,7 @@ import * as _pdev from 'pareto-core-dev'
 // import * as d_in from "pareto-liana/dist/interface/to_be_generated/unmashall_result"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
-import * as d_function_unmarshall from "pareto-liana/dist/interface/to_be_generated/deserialize_unmarshall_result"
+import * as d_function_unmarshall from "pareto-liana/dist/interface/to_be_generated/unmarshall_result_from_loc"
 import * as d_function_seal from "../../../../interface/to_be_generated/seal"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 

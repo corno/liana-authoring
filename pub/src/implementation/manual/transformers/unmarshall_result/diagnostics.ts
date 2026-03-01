@@ -14,17 +14,12 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 import * as t_unmarshall_errors_to_fp from "pareto-liana/dist/implementation/manual/transformers/unmarshall_errors/fountain_pen"
 
 
-export type Document = _pi.Transformer_With_Parameter<
+export type Document = _pi.Transformer<
     d_in.Document,
-    d_out.Diagnostics,
-    {
-        'position': d_location.Position
-        'full path': string
-        'id path': string
-    }
+    d_out.Diagnostics
 >
 
-export const Document: Document = ($, $p) => {
+export const Document: Document = ($) => {
     return t_to_unmarshall_result_to_errors.Document($).__l_map(($) => {
         return ({
             'severity': _p.decide.state($.type, ($) => {
