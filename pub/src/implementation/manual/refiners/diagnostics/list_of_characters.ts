@@ -3,8 +3,6 @@ import * as _p from 'pareto-core/dist/assign'
 import * as _pdev from 'pareto-core-dev'
 
 //data types
-// import * as d_in from "pareto-liana/dist/interface/to_be_generated/unmashall_result"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
 import * as d_function_deserialize_unmarshall_result from "pareto-liana/dist/interface/to_be_generated/unmarshall_result_from_loc"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
