@@ -51,7 +51,7 @@ export const Document: Document = ($, abort, $p) => {
                                     'character': 0,
                                 }
                             }))
-                            case 'parse': return _p.ss($, ($) => t_astn_location_to_location.Range(
+                            case 'deserialize': return _p.ss($, ($) => t_astn_location_to_location.Range(
                                 t_deserialize_parse_tree_to_location.Error($)
                             ))
                             default: return _p.au($[0])
