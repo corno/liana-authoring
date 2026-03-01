@@ -1,0 +1,33 @@
+{
+  "name": "liana-authoring",
+  "version": "0.0.0",
+  "author": "Corno",
+  "license": "Apache-2.0",
+  "description": "A library providing utilities for the VSCode language server for Liana.",
+  "keywords": [],
+  "homepage": "https://github.com/corno/liana-authoring#readme",
+  "bugs": {
+    "url": "https://github.com/corno/liana-authoring/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corno/liana-authoring.git"
+  },
+  "main": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "./dist/index.js",
+  "bin": {},
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "documentation"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "astn": "^0.113.43",
+    "pareto-liana": "^0.0.16"
+  }
+}

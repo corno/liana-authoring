@@ -1,0 +1,6 @@
+/out
+/pub/dist
+/pub/node_modules
+/test/dist
+/test/node_modules
+/temp
