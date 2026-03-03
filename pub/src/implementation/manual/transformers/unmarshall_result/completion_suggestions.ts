@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import * as _pdev from 'pareto-core-dev'
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
 //data types

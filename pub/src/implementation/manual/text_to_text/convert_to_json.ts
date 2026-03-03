@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import * as _pdev from "pareto-core-dev"
 
 import * as d_function from "../../../interface/generated/liana/schemas/convert_to_json/data"
 import * as d_deserialize_parse_tree from "astn-core/dist/interface/generated/liana/schemas/deserialize_parse_tree/data"
