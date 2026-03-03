@@ -1,6 +1,5 @@
 import * as _pi from 'pareto-core/dist/interface'
 import * as _p from 'pareto-core/dist/assign'
-import * as _pdev from 'pareto-core-dev'
 
 //data types
 import * as d_in from "pareto-liana/dist/interface/to_be_generated/unmashall_result"
@@ -22,11 +21,14 @@ const range_is_at_position = (
         'position': d_location.Position
 
     }
-): boolean => (
-    $.start.line < $p.position.line
-    ||
-    ($.start.line === $p.position.line && $.start.character <= $p.position.character)
-) && (
+): boolean =>
+    (
+        $.start.line < $p.position.line
+        ||
+        ($.start.line === $p.position.line && $.start.character <= $p.position.character)
+    )
+    &&
+    (
         $.end.line > $p.position.line
         ||
         ($.end.line === $p.position.line && $.end.character >= $p.position.character)
@@ -146,16 +148,25 @@ export const Value: Value = ($, $p) => {
                                                 'position': $p.position,
                                             }
                                         ),
-                                        () => _p.optional.literal.set(_p.decide.state($['definition found'], ($): d_out.Found => {
+                                        () => _p.decide.state($['definition found'], ($): d_out.Possibly_Found => {
+
                                             switch ($[0]) {
                                                 case 'yes': return _p.ss($, ($) => $.value.__decide(
-                                                    ($): d_out.Found => Value($, $p),
-                                                    (): d_out.Found => ['verbose property', prop],
+                                                    ($): d_out.Possibly_Found => _p.optional.literal.set(Value_possibly_found($, $p).__decide(
+                                                        ($) => $,
+                                                        (): d_out.Found => ['verbose property', prop]
+                                                    )),
+                                                    () => {
+                                                        return _p.optional.literal.set(['verbose property', prop])
+                                                    }
                                                 ))
-                                                case 'no': return _p.ss($, ($) => ['verbose property', prop])
+                                                case 'no': return _p.ss($, ($) => {
+
+                                                    return _p.optional.literal.set(['verbose property', prop])
+                                                })
                                                 default: return _p.au($[0])
                                             }
-                                        })),
+                                        }),
                                         () => _p.optional.literal.not_set(),
                                     )
                                 },
