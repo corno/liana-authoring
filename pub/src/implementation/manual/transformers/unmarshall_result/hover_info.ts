@@ -32,6 +32,7 @@ export const Document: Document = ($, $p) => {
                     $p['id path'],
                     _p.decide.state($.unmarshalled, ($) => {
                         switch ($[0]) {
+                            case 'missing': return _p.ss($, ($) => "missing")
                             case 'number': return _p.ss($, ($) => "number")
                             case 'boolean': return _p.ss($, ($) => "boolean")
                             case 'component': return _p.ss($, ($) => "component")

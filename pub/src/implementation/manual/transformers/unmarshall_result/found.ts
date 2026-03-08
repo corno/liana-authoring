@@ -95,6 +95,7 @@ export const Value: Value = ($, $p) => {
 
     return _p.decide.state($.unmarshalled, ($) => {
         switch ($[0]) {
+            case 'missing': return _p.ss($, ($) => this_value())
             case 'number': return _p.ss($, ($) => this_value())
             case 'boolean': return _p.ss($, ($) => this_value())
             case 'component': return _p.ss($, ($) => Value($.value, $p))

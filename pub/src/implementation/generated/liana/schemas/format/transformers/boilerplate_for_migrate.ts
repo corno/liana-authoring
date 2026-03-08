@@ -9,64 +9,10 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/form
 
 import * as v_location from "../../location/transformers/boilerplate_for_migrate"
 
-export const Result: t_signatures.Result = ($) => _p.list.from.list(
+import * as v_text_edits from "../../text_edits/transformers/boilerplate_for_migrate"
+
+export const Result: t_signatures.Result = ($) => v_text_edits.Text_Edits(
     $,
-).map(
-    ($) => _p.decide.state(
-        $,
-        ($): t_out.Result.L => {
-            switch ($[0]) {
-                case 'replace':
-                    return _p.ss(
-                        $,
-                        ($) => ['replace', {
-                            'range': _p_change_context(
-                                $['range'],
-                                ($) => v_location.Range(
-                                    $,
-                                ),
-                            ),
-                            'text': _p_change_context(
-                                $['text'],
-                                ($) => $,
-                            ),
-                        }],
-                    )
-                case 'delete':
-                    return _p.ss(
-                        $,
-                        ($) => ['delete', {
-                            'range': _p_change_context(
-                                $['range'],
-                                ($) => v_location.Range(
-                                    $,
-                                ),
-                            ),
-                        }],
-                    )
-                case 'insert':
-                    return _p.ss(
-                        $,
-                        ($) => ['insert', {
-                            'location': _p_change_context(
-                                $['location'],
-                                ($) => v_location.Position(
-                                    $,
-                                ),
-                            ),
-                            'text': _p_change_context(
-                                $['text'],
-                                ($) => $,
-                            ),
-                        }],
-                    )
-                default:
-                    return _p.au(
-                        $[0],
-                    )
-            }
-        },
-    ),
 )
 
 export const Error: t_signatures.Error = ($) => ({

@@ -17,6 +17,8 @@ import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/
 
 import * as v_external_location from "../../location/refiners/astn_parse_tree"
 
+import * as v_external_text_edits from "../../text_edits/refiners/astn_parse_tree"
+
 export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, abort) => _p.list.from.list(
     v_unmarshalled_from_parse_tree.List(
         $,
@@ -39,6 +41,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                             "label": null,
                             "insert text": null,
                             "documentation": null,
+                            "additional text edits": null,
                         },
                     ),
                 },
@@ -95,6 +98,23 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 },
                             ),
                             ($) => v_unmarshalled_from_parse_tree.Text(
+                                $,
+                                ($) => abort(
+                                    $,
+                                ),
+                            ),
+                        ),
+                        'additional text edits': _p_change_context(
+                            v_unmarshalled_from_parse_tree.Property(
+                                $,
+                                ($) => abort(
+                                    $,
+                                ),
+                                {
+                                    'id': 'additional text edits',
+                                },
+                            ),
+                            ($) => v_external_text_edits.Text_Edits(
                                 $,
                                 ($) => abort(
                                     $,

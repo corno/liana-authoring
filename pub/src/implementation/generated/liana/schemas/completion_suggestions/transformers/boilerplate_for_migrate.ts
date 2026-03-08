@@ -9,6 +9,8 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/comp
 
 import * as v_location from "../../location/transformers/boilerplate_for_migrate"
 
+import * as v_text_edits from "../../text_edits/transformers/boilerplate_for_migrate"
+
 export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => _p.list.from.list(
     $,
 ).map(
@@ -24,6 +26,12 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
         'documentation': _p_change_context(
             $['documentation'],
             ($) => $,
+        ),
+        'additional text edits': _p_change_context(
+            $['additional text edits'],
+            ($) => v_text_edits.Text_Edits(
+                $,
+            ),
         ),
     }),
 )

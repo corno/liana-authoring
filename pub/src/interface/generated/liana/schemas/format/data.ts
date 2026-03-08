@@ -3,56 +3,9 @@ import * as _pi from 'pareto-core/dist/interface'
 
 import * as i__imports_location from "../location/data"
 
-export namespace Result_ {
-    
-    export namespace L {
-        
-        export namespace replace {
-            
-            export type range = i__imports_location.Range
-            
-            export type text = string
-            
-        }
-        
-        export type replace = {
-            readonly 'range': replace.range
-            readonly 'text': replace.text
-        }
-        
-        export namespace delete_ {
-            
-            export type range = i__imports_location.Range
-            
-        }
-        
-        export type delete_ = {
-            readonly 'range': delete_.range
-        }
-        
-        export namespace insert {
-            
-            export type location = i__imports_location.Position
-            
-            export type text = string
-            
-        }
-        
-        export type insert = {
-            readonly 'location': insert.location
-            readonly 'text': insert.text
-        }
-        
-    }
-    
-    export type L = 
-        | readonly ['replace', L.replace]
-        | readonly ['delete', L.delete_]
-        | readonly ['insert', L.insert]
-    
-}
+import * as i__imports_text_edits from "../text_edits/data"
 
-export type Result_ = _pi.List<Result_.L>
+export type Result_ = i__imports_text_edits.Text_Edits
 
 export namespace Error_ {
     

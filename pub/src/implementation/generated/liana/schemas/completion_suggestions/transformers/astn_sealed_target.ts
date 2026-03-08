@@ -13,6 +13,8 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../location/transformers/astn_sealed_target"
 
+import * as v_external_text_edits from "../../text_edits/transformers/astn_sealed_target"
+
 export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => ['list', _p.list.from.list(
     $,
 ).map(
@@ -38,6 +40,12 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                     'delimiter': ['quote', null],
                     'value': $,
                 }],
+            ),
+            "additional text edits": _p_change_context(
+                $['additional text edits'],
+                ($) => v_external_text_edits.Text_Edits(
+                    $,
+                ),
             ),
         },
     )]],

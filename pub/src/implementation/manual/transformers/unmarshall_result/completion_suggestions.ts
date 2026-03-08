@@ -10,9 +10,13 @@ import * as d_ast_target from "astn/dist/interface/generated/liana/schemas/autho
 import * as d_fpblock from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
+import * as d_out_text_edits from "../../../../interface/generated/liana/schemas/text_edits/data"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found"
+import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target"
+import * as t_authoring_target_to_text from "astn/dist/implementation/manual/transformers/authoring_target/text"
+import * as t_astn_location_to_location from "../astn_core_location/location"
 
 // import * as t_astn_target_to_fp from "astn/dist/implementation/manual/schemas/authoring_target/transformers/fountain_pen_block"
 // import * as t_default_initialize from "../liana_schema/authoring_target"
@@ -60,43 +64,116 @@ export const Document: Document = ($, $p) => {
             switch ($[0]) {
                 case 'value': return _p.ss($, ($): _pi.Optional_Value<d_out.Completion_Suggestions> => _p.optional.literal.set(_p.list.literal([
                     {
+                        'label': "value-completion",
                         'documentation': "DFSFSF",
                         'insert text': "SDFSFDF",
-                        'label': "value"
+                        'additional text edits': _p.list.literal([]),
+
                     }
                 ])))
                 case 'entry': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
                     {
+                        'label': "entry-completion",
                         'documentation': "DFSFSF",
                         'insert text': "SDFSFDF",
-                        'label': "entry"
+                        'additional text edits': _p.list.literal([]),
                     }
 
                 ])))
                 case 'verbose property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
                     {
+                        'label': "verbose property-completion",
                         'documentation': "DFSFSF",
                         'insert text': "SDFSFDF",
-                        'label': "verbose property"
+                        'additional text edits': _p.list.literal([]),
                     }
 
                 ])))
                 case 'concise property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
                     {
+                        'label': "concise property-completion",
                         'documentation': "DFSFSF",
                         'insert text': "SDFSFDF",
-                        'label': "concise property"
+                        'additional text edits': _p.list.literal([]),
                     }
 
                 ])))
-                case 'valid state': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
-                    {
-                        'documentation': "DFSFSF",
-                        'insert text': "SDFSFDF",
-                        'label': "state"
-                    }
+                case 'valid state': return _p.ss($, ($) => {
+                    const definition = $.definition
+                    return _p.decide.state($.instance, ($) => {
+                        switch ($[0]) {
+                            case 'state': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
+                                switch ($[0]) {
+                                    case 'missing': return _p.ss($, ($) => {
+                                        const missing_data_marker = $['#']
+                                        return _p.optional.literal.set(_p.list.nested_literal_old<d_out.Completion_Suggestions.L>([
+                                            [
+                                                {
+                                                    'label': "state-completion",
+                                                    'documentation': "DFSFSF",
+                                                    'insert text': "SDFSFDF",
+                                                    'additional text edits': _p.list.literal([]),
+                                                }
+                                            ],
+                                            definition.options.__to_list(($, id) => ({
+                                                'label': id,
+                                                'documentation': "DFSFSF",
+                                                //'insert text': "SDFSFDF",
+                                                'insert text': t_authoring_target_to_text.Value(
+                                                    ({
+                                                        'metadata': {
+                                                            'comments': _p.list.literal([])
+                                                        },
+                                                        'data': ['concrete', {
+                                                            'type': ['state', ['set', {
+                                                                'option': id,
+                                                                'value': t_liana_schema_to_authoring_target.Value(
+                                                                    $.value
+                                                                )
+                                                            }]]
+                                                        }]
+                                                    }),
+                                                    {
+                                                        'indentation': $p.indent,
+                                                        'newline': "\n",
+                                                        'write delimiters': false,
+                                                    }
+                                                ),
+                                                'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
+                                                    ['delete', {
+                                                        'range': t_astn_location_to_location.Range(missing_data_marker.range)
+                                                    }]
+                                                ]),
 
-                ])))
+                                            }))
+
+                                        ]))
+                                    })
+                                    case 'set': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
+                                        {
+                                            'label': "set state-completion",
+                                            'documentation': "DFSFSF",
+                                            'insert text': "SDFSFDF",
+                                            'additional text edits': _p.list.literal([]),
+                                        }
+
+                                    ])))
+                                    default: return _p.au($[0])
+                                }
+                            }))
+                            case 'list': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
+                                {
+                                    'label': "legacy state-completion",
+                                    'documentation': "DFSFSF",
+                                    'insert text': "SDFSFDF",
+                                    'additional text edits': _p.list.literal([]),
+                                }
+
+                            ])))
+                            default: return _p.au($[0])
+                        }
+                    })
+                })
                 default: return _p.au($[0])
             }
         }

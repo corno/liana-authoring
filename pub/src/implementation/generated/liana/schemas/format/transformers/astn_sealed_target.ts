@@ -13,86 +13,11 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../location/transformers/astn_sealed_target"
 
-export const Result: t_signatures.Result = ($) => ['list', _p.list.from.list(
+import * as v_external_text_edits from "../../text_edits/transformers/astn_sealed_target"
+
+export const Result: t_signatures.Result = ($) => v_external_text_edits.Text_Edits(
     $,
-).map(
-    ($) => ['state', _p.decide.state(
-        $,
-        ($): t_out.Value.state => {
-            switch ($[0]) {
-                case 'replace':
-                    return _p.ss(
-                        $,
-                        ($) => ({
-                            'option': 'replace',
-                            'value': ['group', ['verbose', _p.dictionary.literal(
-                                {
-                                    "range": _p_change_context(
-                                        $['range'],
-                                        ($) => v_external_location.Range(
-                                            $,
-                                        ),
-                                    ),
-                                    "text": _p_change_context(
-                                        $['text'],
-                                        ($) => ['text', {
-                                            'delimiter': ['quote', null],
-                                            'value': $,
-                                        }],
-                                    ),
-                                },
-                            )]],
-                        }),
-                    )
-                case 'delete':
-                    return _p.ss(
-                        $,
-                        ($) => ({
-                            'option': 'delete',
-                            'value': ['group', ['verbose', _p.dictionary.literal(
-                                {
-                                    "range": _p_change_context(
-                                        $['range'],
-                                        ($) => v_external_location.Range(
-                                            $,
-                                        ),
-                                    ),
-                                },
-                            )]],
-                        }),
-                    )
-                case 'insert':
-                    return _p.ss(
-                        $,
-                        ($) => ({
-                            'option': 'insert',
-                            'value': ['group', ['verbose', _p.dictionary.literal(
-                                {
-                                    "location": _p_change_context(
-                                        $['location'],
-                                        ($) => v_external_location.Position(
-                                            $,
-                                        ),
-                                    ),
-                                    "text": _p_change_context(
-                                        $['text'],
-                                        ($) => ['text', {
-                                            'delimiter': ['quote', null],
-                                            'value': $,
-                                        }],
-                                    ),
-                                },
-                            )]],
-                        }),
-                    )
-                default:
-                    return _p.au(
-                        $[0],
-                    )
-            }
-        },
-    )],
-)]
+)
 
 export const Error: t_signatures.Error = ($) => ['group', ['verbose', _p.dictionary.literal(
     {
