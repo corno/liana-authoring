@@ -33,5 +33,74 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                 $,
             ),
         ),
+        'type': _p_change_context(
+            $['type'],
+            ($) => _p.decide.state(
+                $,
+                ($): t_out.Completion_Suggestions.L.type_ => {
+                    switch ($[0]) {
+                        case 'boolean':
+                            return _p.ss(
+                                $,
+                                ($) => ['boolean', null],
+                            )
+                        case 'component':
+                            return _p.ss(
+                                $,
+                                ($) => ['component', null],
+                            )
+                        case 'dictionary':
+                            return _p.ss(
+                                $,
+                                ($) => ['dictionary', null],
+                            )
+                        case 'group':
+                            return _p.ss(
+                                $,
+                                ($) => ['group', null],
+                            )
+                        case 'list':
+                            return _p.ss(
+                                $,
+                                ($) => ['list', null],
+                            )
+                        case 'nothing':
+                            return _p.ss(
+                                $,
+                                ($) => ['nothing', null],
+                            )
+                        case 'number':
+                            return _p.ss(
+                                $,
+                                ($) => ['number', null],
+                            )
+                        case 'optional':
+                            return _p.ss(
+                                $,
+                                ($) => ['optional', null],
+                            )
+                        case 'reference':
+                            return _p.ss(
+                                $,
+                                ($) => ['reference', null],
+                            )
+                        case 'state':
+                            return _p.ss(
+                                $,
+                                ($) => ['state', null],
+                            )
+                        case 'text':
+                            return _p.ss(
+                                $,
+                                ($) => ['text', null],
+                            )
+                        default:
+                            return _p.au(
+                                $[0],
+                            )
+                    }
+                },
+            ),
+        ),
     }),
 )

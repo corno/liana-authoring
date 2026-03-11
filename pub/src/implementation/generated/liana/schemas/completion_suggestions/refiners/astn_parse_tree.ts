@@ -42,6 +42,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                             "insert text": null,
                             "documentation": null,
                             "additional text edits": null,
+                            "type": null,
                         },
                     ),
                 },
@@ -118,6 +119,151 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 $,
                                 ($) => abort(
                                     $,
+                                ),
+                            ),
+                        ),
+                        'type': _p_change_context(
+                            v_unmarshalled_from_parse_tree.Property(
+                                $,
+                                ($) => abort(
+                                    $,
+                                ),
+                                {
+                                    'id': 'type',
+                                },
+                            ),
+                            ($) => _p_change_context(
+                                v_unmarshalled_from_parse_tree.State(
+                                    $,
+                                    ($) => abort(
+                                        $,
+                                    ),
+                                ),
+                                ($) => _p.decide.text(
+                                    $['option']['value'],
+                                    ($t): t_out.Completion_Suggestions.L.type_ => {
+                                        switch ($t) {
+                                            case 'boolean':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['boolean', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'component':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['component', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'dictionary':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['dictionary', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'group':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['group', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'list':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['list', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'nothing':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['nothing', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'number':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['number', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'optional':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['optional', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'reference':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['reference', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'state':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['state', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'text':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['text', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            default:
+                                                return abort(
+                                                    ['liana', {
+                                                        'type': ['state', ['unknown option', $['option']['value']]],
+                                                        'range': v_parse_tree_to_location.Value(
+                                                            $['value'],
+                                                        ),
+                                                    }],
+                                                )
+                                        }
+                                    },
                                 ),
                             ),
                         ),

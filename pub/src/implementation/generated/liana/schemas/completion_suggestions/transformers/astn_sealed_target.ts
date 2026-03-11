@@ -47,6 +47,108 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                     $,
                 ),
             ),
+            "type": _p_change_context(
+                $['type'],
+                ($) => ['state', _p.decide.state(
+                    $,
+                    ($): t_out.Value.state => {
+                        switch ($[0]) {
+                            case 'boolean':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'boolean',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'component':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'component',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'dictionary':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'dictionary',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'group':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'group',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'list':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'list',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'nothing':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'nothing',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'number':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'number',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'optional':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'optional',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'reference':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'reference',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'state':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'state',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            case 'text':
+                                return _p.ss(
+                                    $,
+                                    ($) => ({
+                                        'option': 'text',
+                                        'value': ['nothing', null],
+                                    }),
+                                )
+                            default:
+                                return _p.au(
+                                    $[0],
+                                )
+                        }
+                    },
+                )],
+            ),
         },
     )]],
 )]

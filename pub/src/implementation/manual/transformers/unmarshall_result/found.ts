@@ -2,8 +2,7 @@ import * as _pi from 'pareto-core/dist/interface'
 import * as _p from 'pareto-core/dist/assign'
 
 //data types
-import * as d_in from "pareto-liana/dist/interface/to_be_generated/unmashall_result"
-import * as d_astn_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
+import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "../../../../interface/to_be_generated/found"
 

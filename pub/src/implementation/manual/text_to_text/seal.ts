@@ -8,7 +8,7 @@ import * as d_seal from "../../../interface/to_be_generated/seal"
 type Signature = _pi.Refiner_With_Parameter<d_loc.List_of_Characters, d_seal.Error, d_loc.List_of_Characters, d_seal.Parameters>
 
 //dependencies
-import * as r_sealed_target_from_loc from "../refiners/sealed_target/list_of_characters"
+import * as r_sealed_target_from_loc from "../refiners/astn_sealed_target/list_of_characters"
 import * as t_sealed_target_to_loc from "astn-core/dist/implementation/manual/transformers/sealed_target/list_of_characters"
 
 
