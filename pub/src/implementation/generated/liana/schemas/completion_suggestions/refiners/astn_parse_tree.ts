@@ -140,7 +140,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                     ),
                                 ),
                                 ($) => _p.decide.text(
-                                    $['option']['value'],
+                                    $['option']['token']['value'],
                                     ($t): t_out.Completion_Suggestions.L.type_ => {
                                         switch ($t) {
                                             case 'boolean':
@@ -256,7 +256,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                             default:
                                                 return abort(
                                                     ['liana', {
-                                                        'type': ['state', ['unknown option', $['option']['value']]],
+                                                        'type': ['state', ['unknown option', $['option']['token']['value']]],
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
                                                         ),

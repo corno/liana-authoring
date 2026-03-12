@@ -27,7 +27,7 @@ export const Found = ($: d_in_astn_parse_tree.Value): d_function.Found => {
                     case 'optional': return _p.ss($, ($) => ['optional', null])
                     case 'state': return _p.ss($, ($) => ['state', null])
                     case 'text': return _p.ss($, ($) => ['text', {
-                        'value': $.value
+                        'value': $.token.value
                     }])
                     default: return _p.au($[0])
                 }
@@ -57,7 +57,7 @@ export const Value: Value = ($, abort) => {
             case 'boolean': return _p.ss($, ($): d_out.Value => ['text', {
                 'value': _p.decide.state($['found value type'], ($) => {
                     switch ($[0]) {
-                        case 'valid': return _p.ss($, ($) => $.instance.value)
+                        case 'valid': return _p.ss($, ($) => $.instance.token.value)
                         default: return _p.ss($, ($) => abort({
                             'definition path': definition_path,
                             'type': ['boolean', ['wrong type', null]],
@@ -77,7 +77,7 @@ export const Value: Value = ($, abort) => {
                         const grouped = _p.dictionary.from.list(
                             $.entries
                         ).group(
-                            ($) => $['id value pair'].id.value
+                            ($) => $['id value pair'].id.token.value
                         )
                         return grouped.__d_map(($, id) => _p.decide.list($).has_single_item(
                             ($) => {
@@ -138,7 +138,7 @@ export const Value: Value = ($, abort) => {
                                         _p.dictionary.from.list(
                                             $.properties
                                         ).group(
-                                            ($) => $['id value pair'].id.value
+                                            ($) => $['id value pair'].id.token.value
                                         ),
                                         ($, $o, id): d_out.Value.group.verbose.D => $o.__decide(
                                             ($) => _p.decide.list(
@@ -246,7 +246,7 @@ export const Value: Value = ($, abort) => {
             case 'number': return _p.ss($, ($): d_out.Value => ['text', {
                 'value': _p.decide.state($['found value type'], ($) => {
                     switch ($[0]) {
-                        case 'valid': return _p.ss($, ($) => $.instance.value)
+                        case 'valid': return _p.ss($, ($) => $.instance.token.value)
                         default: return _p.ss($, ($) => abort({
                             'definition path': definition_path,
                             'type': ['number', ['wrong type', null]],
@@ -277,7 +277,7 @@ export const Value: Value = ($, abort) => {
             case 'reference': return _p.ss($, ($): d_out.Value => ['text', {
                 'value': _p.decide.state($['found value type'], ($) => {
                     switch ($[0]) {
-                        case 'valid': return _p.ss($, ($) => $.instance.value)
+                        case 'valid': return _p.ss($, ($) => $.instance.token.value)
                         default: return _p.ss($, ($) => abort({
                             'definition path': definition_path,
                             'type': ['reference', ['wrong type', null]],
@@ -310,7 +310,7 @@ export const Value: Value = ($, abort) => {
                                     return _p.decide.state($.option, ($) => {
                                         switch ($[0]) {
                                             case 'known': return _p.ss($, ($) => ({
-                                                'option': option_token.value,
+                                                'option': option_token.token.value,
                                                 'value': Value($.value, abort)
                                             }))
                                             case 'unknown': return _p.ss($, ($) => abort({
@@ -367,7 +367,7 @@ export const Value: Value = ($, abort) => {
             case 'text': return _p.ss($, ($): d_out.Value => ['text', {
                 'value': _p.decide.state($['found value type'], ($) => {
                     switch ($[0]) {
-                        case 'valid': return _p.ss($, ($) => $.instance.value)
+                        case 'valid': return _p.ss($, ($) => $.instance.token.value)
                         default: return _p.ss($, ($) => abort({
                             'definition path': definition_path,
                             'type': ['text', ['wrong type', null]],

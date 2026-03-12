@@ -71,7 +71,7 @@ export const Diagnostics: t_signatures.Diagnostics = ($, abort) => _p.list.from.
                                     ),
                                 ),
                                 ($) => _p.decide.text(
-                                    $['option']['value'],
+                                    $['option']['token']['value'],
                                     ($t): t_out.Diagnostics.L.severity => {
                                         switch ($t) {
                                             case 'error':
@@ -117,7 +117,7 @@ export const Diagnostics: t_signatures.Diagnostics = ($, abort) => _p.list.from.
                                             default:
                                                 return abort(
                                                     ['liana', {
-                                                        'type': ['state', ['unknown option', $['option']['value']]],
+                                                        'type': ['state', ['unknown option', $['option']['token']['value']]],
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
                                                         ),

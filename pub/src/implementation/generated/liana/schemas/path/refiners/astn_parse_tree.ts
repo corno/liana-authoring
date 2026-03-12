@@ -164,7 +164,7 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
         ),
     ),
     ($) => _p.decide.text(
-        $['option']['value'],
+        $['option']['token']['value'],
         ($t): t_out.Start => {
             switch ($t) {
                 case 'absolute':
@@ -226,7 +226,7 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                 default:
                     return abort(
                         ['liana', {
-                            'type': ['state', ['unknown option', $['option']['value']]],
+                            'type': ['state', ['unknown option', $['option']['token']['value']]],
                             'range': v_parse_tree_to_location.Value(
                                 $['value'],
                             ),
@@ -318,7 +318,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                                     ),
                                 ),
                                 ($) => _p.decide.text(
-                                    $['option']['value'],
+                                    $['option']['token']['value'],
                                     ($t): t_out.Non_Normalized_Path.segments.L => {
                                         switch ($t) {
                                             case 'parent':
@@ -364,7 +364,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                                             default:
                                                 return abort(
                                                     ['liana', {
-                                                        'type': ['state', ['unknown option', $['option']['value']]],
+                                                        'type': ['state', ['unknown option', $['option']['token']['value']]],
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
                                                         ),

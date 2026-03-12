@@ -116,7 +116,7 @@ export const Value: Value = ($) => {
                                                 _p.dictionary.from.list(
                                                     $.properties,
                                                 ).group(
-                                                    ($) => $['id value pair'].id.value
+                                                    ($) => $['id value pair'].id.token.value
                                                 ),
                                                 ($, $o, id) => $o
                                             ),
@@ -157,7 +157,7 @@ export const Value: Value = ($) => {
                                                                 {
                                                                     'range': id_value_pair.id.range,
                                                                     'type': ['error', ['missing property', { //'missing property value'
-                                                                        'name': id_value_pair.id.value
+                                                                        'name': id_value_pair.id.token.value
                                                                     }]]
                                                                 }
                                                             ])
@@ -166,7 +166,7 @@ export const Value: Value = ($) => {
                                                             {
                                                                 'range': id_value_pair.id.range,
                                                                 'type': ['error', ['superfluous property', {
-                                                                    'name': _p.optional.literal.set(id_value_pair.id.value)
+                                                                    'name': _p.optional.literal.set(id_value_pair.id.token.value)
                                                                 }]]
                                                             }
                                                         ]))
@@ -200,7 +200,7 @@ export const Value: Value = ($) => {
                                 _p.dictionary.from.list(
                                     $.entries
                                 ).group(
-                                    ($) => $['id value pair'].id.value
+                                    ($) => $['id value pair'].id.token.value
                                 )
                             ).flatten(
                                 ($, id): d_out.Errors => {
@@ -226,7 +226,7 @@ export const Value: Value = ($) => {
                                         {
                                             'range': $['id value pair'].id.range,
                                             'type': ['error', ['missing property value', { //missing property value
-                                                name: $['id value pair'].id.value
+                                                name: $['id value pair'].id.token.value
                                             }]]
                                         }
                                     ]), //FIXME! optional node not set is often an error
@@ -374,7 +374,7 @@ export const Value: Value = ($) => {
                                                     {
                                                         'range': option_token.range,
                                                         'type': ['error', ['state', ['unknown option', {
-                                                            'found': option_token.value,
+                                                            'found': option_token.token.value,
                                                             'expected': sg_def.options.__d_map(($) => null)
                                                         }]]]
                                                     }

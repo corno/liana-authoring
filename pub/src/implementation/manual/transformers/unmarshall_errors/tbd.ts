@@ -128,6 +128,9 @@ export const Error_Type_Error = (
                 default: return _p.au($[0])
             }
         }))
+        case 'missing value':  return _p.ss($, ($) => sh.ph.composed([
+            sh.ph.literal("missing value")
+        ]))
         default: return _p.au($[0])
     }
 })

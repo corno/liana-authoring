@@ -50,11 +50,11 @@ export const Document: Document = ($, $p) => {
                 ])))
                 case 'entry': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
                     "entry",
-                    $['id value pair'].id.value,
+                    $['id value pair'].id.token.value,
                  ])))
                 case 'verbose property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
                     "verbose property",
-                    $['id value pair'].id.value,
+                    $['id value pair'].id.token.value,
                 ])))
                 case 'concise property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
                     "concise property"
@@ -63,7 +63,7 @@ export const Document: Document = ($, $p) => {
                     "valid state",
                      _p.decide.state($.option, ($) => {
                          switch ($[0]) {
-                             case 'set': return _p.ss($, ($) => $['option token'].value)
+                             case 'set': return _p.ss($, ($) => $['option token'].token.value)
                              case 'missing data':return _p.ss($, ($) => "missing token")
                              default: return _p.au($[0])
                          }

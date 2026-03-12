@@ -71,7 +71,7 @@ export const Value = (
                                             _p.dictionary.from.list(
                                                 $.entries
                                             ).group(
-                                                ($) => $['id value pair'].id.value
+                                                ($) => $['id value pair'].id.token.value
                                             )
                                         ).map(($, id): d_out.Optional_Entry => _p.decide.list($).has_single_item(
                                             ($) => $.value.__decide(
@@ -267,7 +267,7 @@ export const Value = (
                                                                 $.value,
                                                                 {
                                                                     'definition': def.options.__get_entry_deprecated(
-                                                                        option_token.value,
+                                                                        option_token.token.value,
                                                                         {
                                                                             'no_such_entry': _p_unreachable_code_path("the definition is resolved")
                                                                         }

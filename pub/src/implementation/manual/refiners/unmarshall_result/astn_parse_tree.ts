@@ -48,7 +48,7 @@ export const Value: Value = ($, $p) => {
                                                 'instance': $,
                                                 // 'parsed': xx,
                                                 'range': $.range,
-                                                'correct string type': _p.decide.state($.type, ($) => {
+                                                'correct string type': _p.decide.state($.token.type, ($) => {
                                                     switch ($[0]) {
                                                         case 'quoted': return false
                                                         case 'apostrophed': return false
@@ -113,7 +113,7 @@ export const Value: Value = ($, $p) => {
                                                 return ['valid', {
                                                     'instance': $,
                                                     'entries': $.entries.__l_map(($): d_out.Entry_Data => {
-                                                        const id = $.id.value
+                                                        const id = $.id.token.value
                                                         return {
                                                             // 'id value pair': $,
                                                             'value': _p.optional.from.optional(
@@ -123,7 +123,7 @@ export const Value: Value = ($, $p) => {
                                                                     $.value,
                                                                     {
                                                                         'definition': prop_def,
-                                                                        'definition path': `${$p['definition path']}.${id}`,
+                                                                        'definition path': `${$p['definition path']}.D`,
                                                                     }
                                                                 ),
                                                             ),
@@ -187,7 +187,7 @@ export const Value: Value = ($, $p) => {
                                                     const id_value_pair = $
                                                     return {
                                                         'id value pair': $,
-                                                        'definition found': group_def.__get_possible_entry_deprecated($.id.value).__decide(
+                                                        'definition found': group_def.__get_possible_entry_deprecated($.id.token.value).__decide(
                                                             ($): d_out.Verbose_Property_Definition_Found => {
                                                                 const prop_def = $
                                                                 return ['yes', {
@@ -197,7 +197,7 @@ export const Value: Value = ($, $p) => {
                                                                             $.value,
                                                                             {
                                                                                 'definition': prop_def.value,
-                                                                                'definition path': `${$p['definition path']}.${id_value_pair.id.value}`,
+                                                                                'definition path': `${$p['definition path']}.${id_value_pair.id.token.value}`,
                                                                             }
                                                                         )
                                                                     )
@@ -246,7 +246,13 @@ export const Value: Value = ($, $p) => {
                                             case 'list': return _p.ss($, ($) => {
                                                 return ['valid', {
                                                     'instance': $,
-                                                    'items': _pdev.implement_me("list elements deserialization") //TODO
+                                                    'items': $.items.__l_map(($) => Value(
+                                                        $.value,
+                                                        {
+                                                            'definition': prop_def,
+                                                            'definition path': $p['definition path'] + ".L"
+                                                        }
+                                                    ))
                                                 }]
                                             })
                                             default: return ['invalid', value]
@@ -263,7 +269,7 @@ export const Value: Value = ($, $p) => {
                                             case 'nothing': return _p.ss($, ($) => ['valid', {
                                                 'value': ['nothing', $],
                                             }])
-                                            case 'text': return _p.ss($, ($) => $.value === "null" ?
+                                            case 'text': return _p.ss($, ($) => $.token.value === "null" ?
                                                 ['valid', {
                                                     'value': ['null literal', $],
                                                 }] :
@@ -282,7 +288,7 @@ export const Value: Value = ($, $p) => {
                                             case 'text': return _p.ss($, ($) => ['valid', {
                                                 'instance': $,
                                                 'range': $.range,
-                                                'correct string type': _p.decide.state($.type, ($) => {
+                                                'correct string type': _p.decide.state($.token.type, ($) => {
                                                     switch ($[0]) {
                                                         case 'quoted': return true
                                                         case 'apostrophed': return false
@@ -306,7 +312,7 @@ export const Value: Value = ($, $p) => {
                                             case 'nothing': return _p.ss($, ($) => ['valid', ['not set', {
                                                 'instance': ['nothing', $],
                                             }]])
-                                            case 'text': return _p.ss($, ($) => $.value === "null" ?
+                                            case 'text': return _p.ss($, ($) => $.token.value === "null" ?
                                                 ['valid', ['not set', {
                                                     'instance': ['null literal', $],
                                                 }]] :
@@ -363,7 +369,7 @@ export const Value: Value = ($, $p) => {
                                                                     switch ($[0]) {
                                                                         case 'text': return _p.ss($, ($) => {
                                                                             const option_token = $
-                                                                            const option_name = $.value
+                                                                            const option_name = $.token.value
                                                                             return _p.decide.list(rest).has_first_item(
                                                                                 ($, rest): d_out.State__found_value_type => {
                                                                                     const raw_value = $
@@ -437,7 +443,7 @@ export const Value: Value = ($, $p) => {
                                                             case 'missing': return _p.ss($, ($) => ['missing data', $['#']])
                                                             case 'set': return _p.ss($, ($): d_out.State_Option => {
                                                                 const value = $.value
-                                                                const option_name = $.option.value
+                                                                const option_name = $.option.token.value
                                                                 return ['set', {
                                                                     'option token': $.option,
                                                                     'option': _p.decide.optional(
