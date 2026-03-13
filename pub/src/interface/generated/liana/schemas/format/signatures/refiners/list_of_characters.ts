@@ -17,8 +17,6 @@ export namespace Result_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -29,7 +27,6 @@ export type Result_ = (
     context: Result_.I,
     abort: _pi.Abort<Result_.E>,
     parameters: {
-        readonly 'document resource identifier': Result_.P.document_resource_identifier
         readonly 'tab size': Result_.P.tab_size
     },
 ) => Result_.O
@@ -44,8 +41,6 @@ export namespace Error_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -56,7 +51,6 @@ export type Error_ = (
     context: Error_.I,
     abort: _pi.Abort<Error_.E>,
     parameters: {
-        readonly 'document resource identifier': Error_.P.document_resource_identifier
         readonly 'tab size': Error_.P.tab_size
     },
 ) => Error_.O
@@ -71,8 +65,6 @@ export namespace Parameters_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -83,7 +75,6 @@ export type Parameters_ = (
     context: Parameters_.I,
     abort: _pi.Abort<Parameters_.E>,
     parameters: {
-        readonly 'document resource identifier': Parameters_.P.document_resource_identifier
         readonly 'tab size': Parameters_.P.tab_size
     },
 ) => Parameters_.O

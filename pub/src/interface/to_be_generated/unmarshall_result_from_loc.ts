@@ -3,18 +3,15 @@ import * as d_deserialize_schema from "liana-core/dist/interface/to_be_generated
 import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 export type Parameters = {
-    'instance path': string
     'tab size': number
     'schema': {
         'content': d_loc.List_of_Characters
-        'path': string
     }
 }
 
 export type Error =
     | ['schema', {
         'error': d_deserialize_schema.Error,
-        'file location': string
     }]
     | ['deserialize', d_parse_result.Error]
     // | ['unmarshall', null]

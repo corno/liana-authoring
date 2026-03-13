@@ -14,7 +14,6 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort, $p) => v
             ['parse error', $],
         ),
         {
-            'document resource identifier': $p['document resource identifier'],
             'tab size': $p['tab size'],
         },
     )['content'],

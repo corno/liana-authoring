@@ -14,7 +14,6 @@ export const Hover_Texts: t_signatures.Hover_Texts = ($, abort, $p) => v_unmarsh
             ['parse error', $],
         ),
         {
-            'document resource identifier': $p['document resource identifier'],
             'tab size': $p['tab size'],
         },
     )['content'],

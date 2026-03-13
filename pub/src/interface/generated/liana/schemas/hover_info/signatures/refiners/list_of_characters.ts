@@ -17,8 +17,6 @@ export namespace Hover_Texts_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -29,7 +27,6 @@ export type Hover_Texts_ = (
     context: Hover_Texts_.I,
     abort: _pi.Abort<Hover_Texts_.E>,
     parameters: {
-        readonly 'document resource identifier': Hover_Texts_.P.document_resource_identifier
         readonly 'tab size': Hover_Texts_.P.tab_size
     },
 ) => Hover_Texts_.O

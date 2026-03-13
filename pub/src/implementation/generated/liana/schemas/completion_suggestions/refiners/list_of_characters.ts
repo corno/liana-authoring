@@ -14,7 +14,6 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
             ['parse error', $],
         ),
         {
-            'document resource identifier': $p['document resource identifier'],
             'tab size': $p['tab size'],
         },
     )['content'],

@@ -17,8 +17,6 @@ export namespace Sort_Parameters_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -29,7 +27,6 @@ export type Sort_Parameters_ = (
     context: Sort_Parameters_.I,
     abort: _pi.Abort<Sort_Parameters_.E>,
     parameters: {
-        readonly 'document resource identifier': Sort_Parameters_.P.document_resource_identifier
         readonly 'tab size': Sort_Parameters_.P.tab_size
     },
 ) => Sort_Parameters_.O

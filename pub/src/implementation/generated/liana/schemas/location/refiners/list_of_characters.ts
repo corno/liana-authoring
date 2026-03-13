@@ -14,7 +14,6 @@ export const Position: t_signatures.Position = ($, abort, $p) => v_unmarshall.Po
             ['parse error', $],
         ),
         {
-            'document resource identifier': $p['document resource identifier'],
             'tab size': $p['tab size'],
         },
     )['content'],
@@ -30,7 +29,6 @@ export const Range: t_signatures.Range = ($, abort, $p) => v_unmarshall.Range(
             ['parse error', $],
         ),
         {
-            'document resource identifier': $p['document resource identifier'],
             'tab size': $p['tab size'],
         },
     )['content'],

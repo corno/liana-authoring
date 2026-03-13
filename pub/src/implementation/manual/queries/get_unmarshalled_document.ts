@@ -31,10 +31,8 @@ export const $$x: signatures.queries.get_unmarshalled_document = _p.query_functi
                 $p.content,
                 ($) => abort(['deserialize', $]),
                 {
-                    'instance path': t_path_to_text.Node_Path($p['file path']),
                     'schema': {
                         'content': $,
-                        'path': schema_path_text,
                     },
                     'tab size': $p['tab size'],
                 },

@@ -26,11 +26,7 @@ export const Value: Value = ($, abort, $p) => {
         $p['schema']['content'],
         ($) => abort(['schema', {
             'error': $,
-            'file location': $p['schema']['path'],
         }]),
-        {
-            'document resource identifier': $p['schema']['path'],
-        }
     )
 
     const x3 = tu_dynamic_unmarshall.Value(
@@ -39,7 +35,6 @@ export const Value: Value = ($, abort, $p) => {
             ($) => abort(['deserialize', $]),
             {
                 'tab size': $p['tab size'],
-                'document resource identifier': $p['instance path']
             },
         ).content,
         {

@@ -17,8 +17,6 @@ export namespace Position_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -29,7 +27,6 @@ export type Position_ = (
     context: Position_.I,
     abort: _pi.Abort<Position_.E>,
     parameters: {
-        readonly 'document resource identifier': Position_.P.document_resource_identifier
         readonly 'tab size': Position_.P.tab_size
     },
 ) => Position_.O
@@ -44,8 +41,6 @@ export namespace Range_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -56,7 +51,6 @@ export type Range_ = (
     context: Range_.I,
     abort: _pi.Abort<Range_.E>,
     parameters: {
-        readonly 'document resource identifier': Range_.P.document_resource_identifier
         readonly 'tab size': Range_.P.tab_size
     },
 ) => Range_.O

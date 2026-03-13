@@ -14,7 +14,6 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort, $p) => v_unmarshal
             ['parse error', $],
         ),
         {
-            'document resource identifier': $p['document resource identifier'],
             'tab size': $p['tab size'],
         },
     )['content'],

@@ -17,8 +17,6 @@ export namespace Completion_Suggestions_ {
     
     export namespace P {
         
-        export type document_resource_identifier = string
-        
         export type tab_size = number
         
     }
@@ -29,7 +27,6 @@ export type Completion_Suggestions_ = (
     context: Completion_Suggestions_.I,
     abort: _pi.Abort<Completion_Suggestions_.E>,
     parameters: {
-        readonly 'document resource identifier': Completion_Suggestions_.P.document_resource_identifier
         readonly 'tab size': Completion_Suggestions_.P.tab_size
     },
 ) => Completion_Suggestions_.O
