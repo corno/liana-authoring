@@ -1,5 +1,5 @@
 import * as _p from 'pareto-core/dist/assign'
-import * as _pdev from 'pareto-core-dev'
+import _p_implement_me from 'pareto-core-dev/dist/implement_me'
 
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
@@ -103,8 +103,8 @@ export const Resolver_Value = (
                 }])
                 case 'component': return _p.ss($, ($) => _p.decide.state($.location, ($) => {
                     switch ($[0]) {
-                        case 'external': return _p.ss($, ($) => _pdev.implement_me("xx"))
-                        case 'internal': return _p.ss($, ($) => _pdev.implement_me("xx"))
+                        case 'external': return _p.ss($, ($) => _p_implement_me("xx"))
+                        case 'internal': return _p.ss($, ($) => _p_implement_me("xx"))
                         default: return _p.au($[0])
                     }
                 }))

@@ -1,6 +1,6 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import * as _pdev from 'pareto-core-dev'
+import _p_implement_me from 'pareto-core-dev/dist/implement_me'
 
 import * as d_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../interface/to_be_generated/unmashall_result"
@@ -490,7 +490,7 @@ export const Value: Value = ($, $p) => {
                     })
                 }
             })
-            case 'include': return _p.ss($, ($) => _pdev.implement_me("include node deserialization")) //TODO
+            case 'include': return _p.ss($, ($) => _p_implement_me("include node deserialization")) //TODO
             case 'missing': return _p.ss($, ($): d_out.Value => {
                 return {
                     'definition': $p.definition,
