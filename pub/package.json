@@ -1,6 +1,6 @@
 {
   "name": "liana-authoring",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Corno",
   "license": "Apache-2.0",
   "description": "A library providing utilities for the VSCode language server for Liana.",
@@ -29,6 +29,6 @@
   "dependencies": {
     "astn": "^0.113.55",
     "pareto-core-dev": "^0.12.13",
-    "pareto-liana": "file:../../pareto-liana/pub"
+    "pareto-liana": "^0.1.6"
   }
 }
