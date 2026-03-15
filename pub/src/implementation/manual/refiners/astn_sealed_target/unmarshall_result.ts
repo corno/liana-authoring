@@ -285,7 +285,7 @@ export const Value: Value = ($, abort) => {
                         }))
                     }
                 }),
-                'delimiter': ['backtick', null],
+                'delimiter': ['apostrophe', null],
 
             }])
             case 'state': return _p.ss($, ($): d_out.Value => ['state', _p.decide.state($['found value type'], ($): d_out.Value.state => {

@@ -1,7 +1,7 @@
 import * as _pi from 'pareto-core/dist/interface'
 
 //data types
-import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/parse_tree/data"
+import * as d_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
 import * as d_function from "../../../../interface/to_be_generated/sealed_target_from_parse_tree"
 

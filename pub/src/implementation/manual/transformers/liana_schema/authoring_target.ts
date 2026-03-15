@@ -98,7 +98,7 @@ export const Resolver_Value = (
                 }])
                 case 'list': return _p.ss($, ($) => ['list', _p.list.literal([])])
                 case 'reference': return _p.ss($, ($) => ['text', {
-                    'delimiter': ['backtick', null],
+                    'delimiter': ['apostrophe', null],
                     'value': "..."
                 }])
                 case 'component': return _p.ss($, ($) => _p.decide.state($.location, ($) => {

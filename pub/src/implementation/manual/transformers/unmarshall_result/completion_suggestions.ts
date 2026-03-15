@@ -79,7 +79,7 @@ export const Document: Document = ($, $p) => {
                                             },
                                             'data': ['concrete', {
                                                 'type': ['text', {
-                                                    'delimiter': ['backtick', null],
+                                                    'delimiter': ['apostrophe', null],
                                                     'value': "..."
                                                 }]
                                             }]
@@ -142,16 +142,44 @@ export const Document: Document = ($, $p) => {
                         }
                     })
                 })
-                case 'entry': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
-                    {
-                        'label': "entry-completion",
-                        'documentation': "DFSFSF",
-                        'insert text': "SDFSFDF",
-                        'additional text edits': _p.list.literal([]),
-                        'type': ['dictionary', null]
-                    }
+                case 'entry': return _p.ss($, ($) => $['id value pair'].assignment.__decide(
+                    ($) => t_to_unmarshall_result_value_at_position.range_overlaps_position(
+                        $[':'].range,
+                        {
+                            'position': $p.position
+                        }
+                    )
+                        ? _p.optional.literal.set(_p.list.literal([
+                            {
+                                'label': "entry",
+                                'documentation': "DFSFSF",
+                                'insert text': " #",
+                                'additional text edits': _p.list.literal([]),
+                                'type': ['group', null]
+                            }
 
-                ])))
+                        ]))
+                        : _p.optional.literal.set(_p.list.literal([
+                            {
+                                'label': "entry-completion (is this possible???? no colon)",
+                                'documentation': "DFSFSF",
+                                'insert text': "SDFSFDF",
+                                'additional text edits': _p.list.literal([]),
+                                'type': ['group', null]
+                            }
+
+                        ])),
+                    () => _p.optional.literal.set(_p.list.literal([
+                        {
+                            'label': "entry-completion (no value)",
+                            'documentation': "DFSFSF",
+                            'insert text': "SDFSFDF",
+                            'additional text edits': _p.list.literal([]),
+                            'type': ['group', null]
+                        }
+
+                    ]))
+                ))
                 case 'verbose property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
                     {
                         'label': "verbose property-completion",

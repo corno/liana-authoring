@@ -116,16 +116,19 @@ export const Value: Value = ($, $p) => {
                                                         const id = $.id.token.value
                                                         return {
                                                             // 'id value pair': $,
-                                                            'value': _p.optional.from.optional(
-                                                                $.value,
-                                                            ).map(
-                                                                ($) => Value(
+                                                            'value': $.assignment.__decide(
+                                                                ($) => _p.optional.from.optional(
                                                                     $.value,
-                                                                    {
-                                                                        'definition': prop_def,
-                                                                        'definition path': `${$p['definition path']}.D`,
-                                                                    }
+                                                                ).map(
+                                                                    ($) => Value(
+                                                                        $,
+                                                                        {
+                                                                            'definition': prop_def,
+                                                                            'definition path': `${$p['definition path']}.D`,
+                                                                        }
+                                                                    ),
                                                                 ),
+                                                                () => _p.optional.literal.not_set()
                                                             ),
                                                             'id value pair': $
                                                         }
@@ -192,14 +195,17 @@ export const Value: Value = ($, $p) => {
                                                                 const prop_def = $
                                                                 return ['yes', {
                                                                     'definition': $,
-                                                                    'value': _p.optional.from.optional(id_value_pair.value).map(
-                                                                        ($) => Value(
-                                                                            $.value,
-                                                                            {
-                                                                                'definition': prop_def.value,
-                                                                                'definition path': `${$p['definition path']}.${id_value_pair.id.token.value}`,
-                                                                            }
-                                                                        )
+                                                                    'value': id_value_pair.assignment.__decide(
+                                                                        ($) => _p.optional.from.optional($.value).map(
+                                                                            ($) => Value(
+                                                                                $,
+                                                                                {
+                                                                                    'definition': prop_def.value,
+                                                                                    'definition path': `${$p['definition path']}.${id_value_pair.id.token.value}`,
+                                                                                }
+                                                                            )
+                                                                        ),
+                                                                        () => _p.optional.literal.not_set()
                                                                     )
                                                                 }]
                                                             },

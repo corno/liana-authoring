@@ -4,6 +4,7 @@ import * as _p from 'pareto-core/dist/assign'
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
+import * as d_astn_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 import * as d_out from "../../../../interface/to_be_generated/found"
 
 // import { $$ as op_expect_1_element } from "pareto-standard-operations/dist/implementation/operations/impure/list/expect_exactly_one_element"
@@ -14,24 +15,36 @@ import * as t_parse_tree_to_full_value_range from "astn-core/dist/implementation
 import * as t_astn_location_to_location from "../astn_core_location/location"
 
 
-const range_is_at_position = (
-    $: d_location.Range,
+export const range_overlaps_position = (
+    $: d_astn_location.Range,
     $p: {
         'position': d_location.Position
 
     }
-): boolean =>
-    (
-        $.start.line < $p.position.line
-        ||
-        ($.start.line === $p.position.line && $.start.character <= $p.position.character)
+): boolean => {
+    const range_overlaps_positionx = (
+        $: d_location.Range,
+        $p: {
+            'position': d_location.Position
+
+        }
+    ): boolean =>
+        (
+            $.start.line < $p.position.line
+            ||
+            ($.start.line === $p.position.line && $.start.character <= $p.position.character)
+        )
+        &&
+        (
+            $.end.line > $p.position.line
+            ||
+            ($.end.line === $p.position.line && $.end.character >= $p.position.character)
+        )
+    return range_overlaps_positionx(
+        t_astn_location_to_location.Range($),
+        $p
     )
-    &&
-    (
-        $.end.line > $p.position.line
-        ||
-        ($.end.line === $p.position.line && $.end.character >= $p.position.character)
-    )
+}
 
 
 export type Document = _pi.Transformer_With_Parameter<
@@ -69,10 +82,8 @@ export type Value_possibly_found = _pi.Transformer_With_Parameter<
 export const Document: Document = ($, $p) => Value($.content, $p)
 
 export const Value_possibly_found: Value_possibly_found = ($, $p) => {
-    return range_is_at_position(
-        t_astn_location_to_location.Range(
-            t_parse_tree_to_full_value_range.Value($.instance)
-        ),
+    return range_overlaps_position(
+        t_parse_tree_to_full_value_range.Value($.instance),
         {
             'position': $p.position,
         }
@@ -104,13 +115,13 @@ export const Value: Value = ($, $p) => {
                         ($) => {
                             const entry = $
                             return _p.decide.boolean(
-                                range_is_at_position(
+                                range_overlaps_position(
                                     {
-                                        'start': t_astn_location_to_location.Relative_Location($['id value pair'].id.range.start.relative),
-                                        'end': t_astn_location_to_location.Relative_Location($.value.__decide(
-                                            ($) => t_parse_tree_to_full_value_range.Value($.instance).end.relative,
-                                            () => $['id value pair'].id.range.end.relative
-                                        )),
+                                        'start': $['id value pair'].id.range.start,
+                                        'end': $.value.__decide(
+                                            ($) => t_parse_tree_to_full_value_range.Value($.instance).end,
+                                            () => $['id value pair'].id.range.end
+                                        ),
                                     },
                                     {
                                         'position': $p.position,
@@ -140,10 +151,8 @@ export const Value: Value = ($, $p) => {
                                 ($): d_out.Possibly_Found => {
                                     const prop = $
                                     return _p.decide.boolean(
-                                        range_is_at_position(
-                                            t_astn_location_to_location.Range(
-                                                t_parse_tree_to_full_value_range.ID_Value_Pair(prop['id value pair'])
-                                            ),
+                                        range_overlaps_position(
+                                            t_parse_tree_to_full_value_range.ID_Value_Pair(prop['id value pair']),
                                             {
                                                 'position': $p.position,
                                             }
@@ -176,10 +185,8 @@ export const Value: Value = ($, $p) => {
                                 ($) => {
                                     const prop = $
                                     return _p.decide.boolean(
-                                        range_is_at_position(
-                                            t_astn_location_to_location.Range(
-                                                t_parse_tree_to_full_value_range.Value(prop.item.value)
-                                            ),
+                                        range_overlaps_position(
+                                            t_parse_tree_to_full_value_range.Value(prop.item.value),
                                             {
                                                 'position': $p.position,
                                             }
