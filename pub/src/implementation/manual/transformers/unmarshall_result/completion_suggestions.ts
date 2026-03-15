@@ -150,13 +150,13 @@ export const Document: Document = ($, $p) => {
                         }
                     )
                         ? _p.optional.literal.set(_p.list.literal([
-                            {
-                                'label': "entry",
-                                'documentation': "DFSFSF",
-                                'insert text': " #",
-                                'additional text edits': _p.list.literal([]),
-                                'type': ['group', null]
-                            }
+                            // {
+                            //     'label': "entry",
+                            //     'documentation': "DFSFSF",
+                            //     'insert text': " #",
+                            //     'additional text edits': _p.list.literal([]),
+                            //     'type': ['group', null]
+                            // }
 
                         ]))
                         : _p.optional.literal.set(_p.list.literal([
