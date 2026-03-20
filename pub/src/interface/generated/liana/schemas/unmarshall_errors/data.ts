@@ -29,6 +29,8 @@ export namespace Errors_ {
                             
                             export type not_set = null
                             
+                            export type nothing = null
+                            
                             export type set_ = null
                             
                             export type list = null
@@ -43,6 +45,7 @@ export namespace Errors_ {
                             | readonly ['concise group', L.concise_group]
                             | readonly ['dictionary', L.dictionary]
                             | readonly ['not set', L.not_set]
+                            | readonly ['nothing', L.nothing]
                             | readonly ['set', L.set_]
                             | readonly ['list', L.list]
                             | readonly ['state', L.state]
@@ -170,23 +173,23 @@ export namespace Errors_ {
             
             export namespace warning {
                 
-                export type expected_apostrophed_string = null
+                export type expected_apostrophed_text = null
                 
-                export type expected_quoted_string = null
+                export type expected_quoted_text = null
                 
-                export type expected_backticked_string = null
+                export type expected_backticked_text = null
                 
-                export type expected_undelimited_string = null
+                export type expected_undelimited_text = null
                 
                 export type expected_a_group = null
                 
             }
             
             export type warning = 
-                | readonly ['expected apostrophed string', warning.expected_apostrophed_string]
-                | readonly ['expected quoted string', warning.expected_quoted_string]
-                | readonly ['expected backticked string', warning.expected_backticked_string]
-                | readonly ['expected undelimited string', warning.expected_undelimited_string]
+                | readonly ['expected apostrophed text', warning.expected_apostrophed_text]
+                | readonly ['expected quoted text', warning.expected_quoted_text]
+                | readonly ['expected backticked text', warning.expected_backticked_text]
+                | readonly ['expected undelimited text', warning.expected_undelimited_text]
                 | readonly ['expected a group', warning.expected_a_group]
             
         }

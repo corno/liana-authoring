@@ -23,7 +23,7 @@ export type Temp_Error = {
     'type':
     | ['schema', null]
     | ['deserialize', null]
-    'range': d_loc.Range,
+    'range': d_loc.Range_FE,
     'message': string,
     'severity':
     | ['error', null]
@@ -71,7 +71,7 @@ export const Document: Document = ($, abort, $p) => {
                                 'message': "The schema is not valid",
                                 'location': {
                                     'file path': $p['schema path'],
-                                    'range': _p.decide.state(t_deserialize_resolved_to_location.Error($.error), ($): d_loc.Range => {
+                                    'range': _p.decide.state(t_deserialize_resolved_to_location.Error($.error), ($): d_loc.Range_FE => {
                                         switch ($[0]) {
                                             case 'range': return _p.ss($, ($) => t_astn_location_to_location.Range($))
                                             case 'end of document': return _p.ss($, ($) => ({

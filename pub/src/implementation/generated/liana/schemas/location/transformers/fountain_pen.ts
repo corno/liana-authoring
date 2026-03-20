@@ -13,8 +13,8 @@ export const Position: t_signatures.Position = ($) => v_serialize.Document(
     ),
 )
 
-export const Range: t_signatures.Range = ($) => v_serialize.Document(
-    v_marshall.Range(
+export const Range_FE: t_signatures.Range_FE = ($) => v_serialize.Document(
+    v_marshall.Range_FE(
         $,
     ),
 )

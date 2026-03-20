@@ -206,6 +206,16 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                     ),
                                                                                                                                 )],
                                                                                                                             )
+                                                                                                                        case 'nothing':
+                                                                                                                            return _p_change_context(
+                                                                                                                                $['value'],
+                                                                                                                                ($) => ['nothing', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                                                                    $,
+                                                                                                                                    ($) => abort(
+                                                                                                                                        $,
+                                                                                                                                    ),
+                                                                                                                                )],
+                                                                                                                            )
                                                                                                                         case 'set':
                                                                                                                             return _p_change_context(
                                                                                                                                 $['value'],
@@ -688,40 +698,40 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                             $['option']['token']['value'],
                                                             ($t): t_out.Errors.L.type_.warning => {
                                                                 switch ($t) {
-                                                                    case 'expected apostrophed string':
+                                                                    case 'expected apostrophed text':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['expected apostrophed string', v_unmarshalled_from_parse_tree.Nothing(
+                                                                            ($) => ['expected apostrophed text', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
                                                                                 ($) => abort(
                                                                                     $,
                                                                                 ),
                                                                             )],
                                                                         )
-                                                                    case 'expected quoted string':
+                                                                    case 'expected quoted text':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['expected quoted string', v_unmarshalled_from_parse_tree.Nothing(
+                                                                            ($) => ['expected quoted text', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
                                                                                 ($) => abort(
                                                                                     $,
                                                                                 ),
                                                                             )],
                                                                         )
-                                                                    case 'expected backticked string':
+                                                                    case 'expected backticked text':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['expected backticked string', v_unmarshalled_from_parse_tree.Nothing(
+                                                                            ($) => ['expected backticked text', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
                                                                                 ($) => abort(
                                                                                     $,
                                                                                 ),
                                                                             )],
                                                                         )
-                                                                    case 'expected undelimited string':
+                                                                    case 'expected undelimited text':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['expected undelimited string', v_unmarshalled_from_parse_tree.Nothing(
+                                                                            ($) => ['expected undelimited text', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
                                                                                 ($) => abort(
                                                                                     $,

@@ -138,7 +138,7 @@ export const Diagnostics: t_signatures.Diagnostics = ($, abort) => _p.list.from.
                                     'id': 'range',
                                 },
                             ),
-                            ($) => v_external_location.Range(
+                            ($) => v_external_location.Range_FE(
                                 $,
                                 ($) => abort(
                                     $,
@@ -271,7 +271,7 @@ export const Diagnostics: t_signatures.Diagnostics = ($, abort) => _p.list.from.
                                                                                         'id': 'range',
                                                                                     },
                                                                                 ),
-                                                                                ($) => v_external_location.Range(
+                                                                                ($) => v_external_location.Range_FE(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,

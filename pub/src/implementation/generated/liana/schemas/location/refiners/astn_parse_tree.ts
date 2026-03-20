@@ -82,7 +82,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
     ),
 )
 
-export const Range: t_signatures.Range = ($, abort) => _p_change_context(
+export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
     v_unmarshalled_from_parse_tree.Verbose_Group(
         $,
         ($) => abort(

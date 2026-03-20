@@ -31,11 +31,11 @@ export type Position_ = (
     },
 ) => Position_.O
 
-export namespace Range_ {
+export namespace Range_FE_ {
     
     export type I = i_in.List_of_Characters
     
-    export type O = i_out.Range
+    export type O = i_out.Range_FE
     
     export type E = i_generic.Error
     
@@ -47,15 +47,15 @@ export namespace Range_ {
     
 }
 
-export type Range_ = (
-    context: Range_.I,
-    abort: _pi.Abort<Range_.E>,
+export type Range_FE_ = (
+    context: Range_FE_.I,
+    abort: _pi.Abort<Range_FE_.E>,
     parameters: {
-        readonly 'tab size': Range_.P.tab_size
+        readonly 'tab size': Range_FE_.P.tab_size
     },
-) => Range_.O
+) => Range_FE_.O
 
 export { 
     Position_ as Position, 
-    Range_ as Range, 
+    Range_FE_ as Range_FE, 
 }

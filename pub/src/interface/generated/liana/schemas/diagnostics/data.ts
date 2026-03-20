@@ -27,7 +27,7 @@ export namespace Diagnostics_ {
             | readonly ['information', severity.information]
             | readonly ['hint', severity.hint]
         
-        export type range = i__imports_location.Range
+        export type range = i__imports_location.Range_FE
         
         export type message = string
         
@@ -41,7 +41,7 @@ export namespace Diagnostics_ {
                         
                         export type file_path = i__imports_path.Node_Path
                         
-                        export type range = i__imports_location.Range
+                        export type range = i__imports_location.Range_FE
                         
                     }
                     

@@ -94,7 +94,7 @@ export const Value_data = (
             }]
         })
         case 'optional': return _p.ss($, ($) => ['concrete', {
-            'type': ['nothing', null]
+            'type': ['optional', ['not set', null]]
         }])
         case 'state': return _p.ss($, ($) => ['concrete', {
             'type': ['state', ['missing', null]]

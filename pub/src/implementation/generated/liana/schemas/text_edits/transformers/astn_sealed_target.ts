@@ -29,7 +29,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                                 {
                                     "range": _p_change_context(
                                         $['range'],
-                                        ($) => v_external_location.Range(
+                                        ($) => v_external_location.Range_FE(
                                             $,
                                         ),
                                     ),
@@ -53,7 +53,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                                 {
                                     "range": _p_change_context(
                                         $['range'],
-                                        ($) => v_external_location.Range(
+                                        ($) => v_external_location.Range_FE(
                                             $,
                                         ),
                                     ),

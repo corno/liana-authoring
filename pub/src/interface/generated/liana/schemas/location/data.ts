@@ -14,7 +14,7 @@ export type Position_ = {
     readonly 'character': Position_.character
 }
 
-export namespace Range_ {
+export namespace Range_FE_ {
     
     export type start = Position_
     
@@ -22,12 +22,12 @@ export namespace Range_ {
     
 }
 
-export type Range_ = {
-    readonly 'start': Range_.start
-    readonly 'end': Range_.end
+export type Range_FE_ = {
+    readonly 'start': Range_FE_.start
+    readonly 'end': Range_FE_.end
 }
 
 export { 
     Position_ as Position, 
-    Range_ as Range, 
+    Range_FE_ as Range_FE, 
 }

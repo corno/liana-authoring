@@ -22,7 +22,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
                         ($) => ['replace', {
                             'range': _p_change_context(
                                 $['range'],
-                                ($) => v_location.Range(
+                                ($) => v_location.Range_FE(
                                     $,
                                 ),
                             ),
@@ -38,7 +38,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
                         ($) => ['delete', {
                             'range': _p_change_context(
                                 $['range'],
-                                ($) => v_location.Range(
+                                ($) => v_location.Range_FE(
                                     $,
                                 ),
                             ),

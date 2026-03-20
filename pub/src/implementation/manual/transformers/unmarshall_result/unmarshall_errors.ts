@@ -168,7 +168,7 @@ export const Value: Value = ($, $p) => {
                                                             ? _p.list.literal([
                                                                 {
                                                                     'range': id_value_pair.id.range,
-                                                                    'type': ['warning', ['expected backticked string', null]]
+                                                                    'type': ['warning', ['expected backticked text', null]]
                                                                 }
                                                             ])
                                                             : _p.list.literal([]),
@@ -254,7 +254,7 @@ export const Value: Value = ($, $p) => {
                                             ? _p.list.literal([
                                                 {
                                                     'range': $['id value pair'].id.range,
-                                                    'type': ['warning', ['expected apostrophed string', null]]
+                                                    'type': ['warning', ['expected apostrophed text', null]]
                                                 }
                                             ])
                                             : _p.list.literal([]),
@@ -292,7 +292,7 @@ export const Value: Value = ($, $p) => {
                         ? _p.list.literal([])
                         : _p.list.literal<d_out.Errors.L>([{
                             'range': $.instance.range,
-                            'type': ['warning', ['expected undelimited string', null]]
+                            'type': ['warning', ['expected undelimited text', null]]
                         }]))
                     case 'invalid': return _p.ss($, ($) => _p.list.literal([
                         {
@@ -311,7 +311,7 @@ export const Value: Value = ($, $p) => {
                         ? _p.list.literal([])
                         : _p.list.literal<d_out.Errors.L>([{
                             'range': $.instance.range,
-                            'type': ['warning', ['expected undelimited string', null]]
+                            'type': ['warning', ['expected undelimited text', null]]
                         }]))
                     case 'invalid': return _p.ss($, ($) => _p.list.literal([
                         {
@@ -356,24 +356,44 @@ export const Value: Value = ($, $p) => {
                     default: return _p.au($[0])
                 }
             }))
-            case 'reference': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
+            case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($): d_out.Errors => {
                 switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.nested_literal_old([
-                        $.instance.token.type[0] !== 'apostrophed' && $p['report warnings']
-                            ? _p.list.literal([{
-                                'range': $.instance.range,
-                                'type': ['warning', ['expected apostrophed string', null]]
-                            }])
-                            : _p.list.literal([]),
-                    ]))
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['text', null]]),
-                            }]]
+                    case 'derived': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
+                        switch ($[0]) {
+                            case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.nested_literal_old([
+                            ]))
+                            case 'invalid': return _p.ss($, ($): d_out.Errors => _p.list.literal([
+                                {
+                                    'range': t_astn_parse_tree_to_location.Value($),
+                                    'type': ['error', ['invalid value type', {
+                                        'expected': _p.list.literal([['nothing', null]]),
+                                    }]]
+                                }
+                            ]))
+                            default: return _p.au($[0])
                         }
-                    ]))
+                    }))
+                    case 'selected': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
+                        switch ($[0]) {
+                            case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.nested_literal_old([
+                                $.instance.token.type[0] !== 'apostrophed' && $p['report warnings']
+                                    ? _p.list.literal([{
+                                        'range': $.instance.range,
+                                        'type': ['warning', ['expected apostrophed text', null]]
+                                    }])
+                                    : _p.list.literal([]),
+                            ]))
+                            case 'invalid': return _p.ss($, ($) => _p.list.literal([
+                                {
+                                    'range': t_astn_parse_tree_to_location.Value($),
+                                    'type': ['error', ['invalid value type', {
+                                        'expected': _p.list.literal([['text', null]]),
+                                    }]]
+                                }
+                            ]))
+                            default: return _p.au($[0])
+                        }
+                    }))
                     default: return _p.au($[0])
                 }
             }))
@@ -421,7 +441,7 @@ export const Value: Value = ($, $p) => {
                                                 ? _p.list.literal([
                                                     {
                                                         'range': option_token.range,
-                                                        'type': ['warning', ['expected apostrophed string', null]]
+                                                        'type': ['warning', ['expected apostrophed text', null]]
                                                     }
                                                 ])
                                                 : _p.list.literal([]),
@@ -521,7 +541,7 @@ export const Value: Value = ($, $p) => {
                             ? _p.list.literal([
                                 {
                                     'range': $.instance.range,
-                                    'type': ['warning', ['expected quoted string', null]]
+                                    'type': ['warning', ['expected quoted text', null]]
                                 }
 
                             ])

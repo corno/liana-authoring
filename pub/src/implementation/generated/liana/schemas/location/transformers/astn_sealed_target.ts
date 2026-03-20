@@ -34,7 +34,7 @@ export const Position: t_signatures.Position = ($) => ['group', ['verbose', _p.d
     },
 )]]
 
-export const Range: t_signatures.Range = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Range_FE: t_signatures.Range_FE = ($) => ['group', ['verbose', _p.dictionary.literal(
     {
         "start": _p_change_context(
             $['start'],

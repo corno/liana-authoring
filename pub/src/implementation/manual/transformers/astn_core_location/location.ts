@@ -5,8 +5,8 @@ import * as d_out from "../../../../interface/generated/liana/schemas/location/d
 import * as d_in from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
 export type Relative_Location = _pi.Transformer<d_in.Relative_Location, d_out.Position>
-export type Range = _pi.Transformer<d_in.Range, d_out.Range>
-export type Possible_Range = _pi.Transformer<d_in.Possible_Range, d_out.Range>
+export type Range = _pi.Transformer<d_in.Range, d_out.Range_FE>
+export type Possible_Range = _pi.Transformer<d_in.Possible_Range, d_out.Range_FE>
 
 export const Range: Range = ($) => ({
     'start': Relative_Location($.start.relative),
@@ -15,7 +15,7 @@ export const Range: Range = ($) => ({
 export const Possible_Range: Possible_Range = ($) => _p.decide.state($, ($) => {
     switch ($[0]) {
         case 'range': return _p.ss($, ($) => Range($))
-        case 'end of document': return _p.ss($, ($): d_out.Range => Range({
+        case 'end of document': return _p.ss($, ($): d_out.Range_FE => Range({
             'start': $.end,
             'end': $.end,
         }))

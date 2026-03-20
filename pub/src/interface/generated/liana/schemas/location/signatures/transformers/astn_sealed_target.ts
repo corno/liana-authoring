@@ -21,9 +21,9 @@ export type Position_ = (
     context: Position_.I,
 ) => Position_.O
 
-export namespace Range_ {
+export namespace Range_FE_ {
     
-    export type I = i_in.Range
+    export type I = i_in.Range_FE
     
     export type O = i_out.Value
     
@@ -33,11 +33,11 @@ export namespace Range_ {
     
 }
 
-export type Range_ = (
-    context: Range_.I,
-) => Range_.O
+export type Range_FE_ = (
+    context: Range_FE_.I,
+) => Range_FE_.O
 
 export { 
     Position_ as Position, 
-    Range_ as Range, 
+    Range_FE_ as Range_FE, 
 }

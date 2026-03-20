@@ -23,7 +23,7 @@ export const range_overlaps_position = (
     }
 ): boolean => {
     const range_overlaps_positionx = (
-        $: d_location.Range,
+        $: d_location.Range_FE,
         $p: {
             'position': d_location.Position
 

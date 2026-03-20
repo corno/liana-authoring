@@ -68,7 +68,7 @@ export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', _p.list.fro
             ),
             "range": _p_change_context(
                 $['range'],
-                ($) => v_external_location.Range(
+                ($) => v_external_location.Range_FE(
                     $,
                 ),
             ),
@@ -100,7 +100,7 @@ export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', _p.list.fro
                                             ),
                                             "range": _p_change_context(
                                                 $['range'],
-                                                ($) => v_external_location.Range(
+                                                ($) => v_external_location.Range_FE(
                                                     $,
                                                 ),
                                             ),

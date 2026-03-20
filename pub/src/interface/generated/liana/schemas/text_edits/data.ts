@@ -9,7 +9,7 @@ export namespace Text_Edits_ {
         
         export namespace replace {
             
-            export type range = i__imports_location.Range
+            export type range = i__imports_location.Range_FE
             
             export type text = string
             
@@ -22,7 +22,7 @@ export namespace Text_Edits_ {
         
         export namespace delete_ {
             
-            export type range = i__imports_location.Range
+            export type range = i__imports_location.Range_FE
             
         }
         

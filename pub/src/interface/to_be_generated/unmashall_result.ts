@@ -137,7 +137,7 @@ export type Optional = {
         }]
         | ['not set', {
             'instance':
-            | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
+            | ['not set', d_astn_parse_tree.Value.type_.concrete.optional.not_set]
             | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
         }]
     ]
@@ -146,11 +146,22 @@ export type Optional = {
 
 export type Reference = {
     'definition': d_schema.Value.reference
-    'found value type':
-    | ['valid', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.text
-    }] //FIXME
-    | ['invalid', d_astn_parse_tree.Value]
+    'type':
+    ['derived', {
+        'found value type':
+        | ['valid', {
+            'instance': d_astn_parse_tree.Value.type_.concrete.nothing
+        }] //FIXME
+        | ['invalid', d_astn_parse_tree.Value]
+    }]
+    | ['selected', {
+        'found value type':
+        | ['valid', {
+            'instance': d_astn_parse_tree.Value.type_.concrete.text
+        }] //FIXME
+        | ['invalid', d_astn_parse_tree.Value]
+    }]
+
 }
 
 export type State = {

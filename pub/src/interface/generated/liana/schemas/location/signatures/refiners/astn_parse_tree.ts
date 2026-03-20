@@ -26,11 +26,11 @@ export type Position_ = (
     abort: _pi.Abort<Position_.E>,
 ) => Position_.O
 
-export namespace Range_ {
+export namespace Range_FE_ {
     
     export type I = i_in.Value
     
-    export type O = i_out.Range
+    export type O = i_out.Range_FE
     
     export type E = i_generic.Error
     
@@ -40,12 +40,12 @@ export namespace Range_ {
     
 }
 
-export type Range_ = (
-    context: Range_.I,
-    abort: _pi.Abort<Range_.E>,
-) => Range_.O
+export type Range_FE_ = (
+    context: Range_FE_.I,
+    abort: _pi.Abort<Range_FE_.E>,
+) => Range_FE_.O
 
 export { 
     Position_ as Position, 
-    Range_ as Range, 
+    Range_FE_ as Range_FE, 
 }

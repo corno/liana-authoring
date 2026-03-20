@@ -274,20 +274,26 @@ export const Value: Value = ($, abort) => {
                     default: return _p.au($[0])
                 }
             })])
-            case 'reference': return _p.ss($, ($): d_out.Value => ['text', {
-                'value': _p.decide.state($['found value type'], ($) => {
-                    switch ($[0]) {
-                        case 'valid': return _p.ss($, ($) => $.instance.token.value)
-                        default: return _p.ss($, ($) => abort({
-                            'definition path': definition_path,
-                            'type': ['reference', ['wrong type', null]],
-                            'range': t_astn_parse_tree_to_location.Value($)
-                        }))
-                    }
-                }),
-                'delimiter': ['apostrophe', null],
+            case 'reference': return _p.ss($, ($): d_out.Value => _p.decide.state($.type, ($) => {
+                switch ($[0]) {
+                    case 'derived': return _p.ss($, ($) => ['nothing', null])
+                    case 'selected': return _p.ss($, ($) => ['text', {
+                        'value': _p.decide.state($['found value type'], ($) => {
+                            switch ($[0]) {
+                                case 'valid': return _p.ss($, ($) => $.instance.token.value)
+                                default: return _p.ss($, ($) => abort({
+                                    'definition path': definition_path,
+                                    'type': ['reference', ['wrong type', null]],
+                                    'range': t_astn_parse_tree_to_location.Value($)
+                                }))
+                            }
+                        }),
+                        'delimiter': ['apostrophe', null],
 
-            }])
+                    }])
+                    default: return _p.au($[0])
+                }
+            }))
             case 'state': return _p.ss($, ($): d_out.Value => ['state', _p.decide.state($['found value type'], ($): d_out.Value.state => {
                 switch ($[0]) {
                     case 'valid': return _p.ss($, ($) => {

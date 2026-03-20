@@ -1,352 +1,352 @@
 (
-    'omit (de)serializer': false
-    'schema tree': | 'set' {
-        `location`: | 'schema' (
-            'schema imports': {}
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+    `omit (de)serializer`: false
+    `schema tree`: | `set` {
+        'location': | `schema` (
+            `schema imports`: {}
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Position`: (
-                    'root value': | 'group' {
-                        `line`: (
-                            'description': ~
-                            'value': | 'number' | 'local' (
-                                'precision': | 'exact' (
-                                    'decimal separator offset': ~
-                                    'type': | 'natural' ~
+            `modules`: {
+                'Position': (
+                    `root value`: | `group` {
+                        'line': (
+                            `description`: _
+                            `value`: | `number` | `local` (
+                                `precision`: | `exact` (
+                                    `decimal separator offset`: _
+                                    `type`: | `natural` ~
                                 )
                             )
                         )
-                        `character`: (
-                            'description': ~
-                            'value': | 'number' | 'local' (
-                                'precision': | 'exact' (
-                                    'decimal separator offset': ~
-                                    'type': | 'natural' ~
+                        'character': (
+                            `description`: _
+                            `value`: | `number` | `local` (
+                                `precision`: | `exact` (
+                                    `decimal separator offset`: _
+                                    `type`: | `natural` ~
                                 )
                             )
                         )
                     }
                 )
-                `Range`: (
-                    'root value': | 'group' {
-                        `start`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'internal' `Position`
-                                'results': ~
+                'Range FE': (
+                    `root value`: | `group` {
+                        'start': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Position'
+                                `results`: _
                             )
                         )
-                        `end`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'internal' `Position`
-                                'results': ~
+                        'end': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Position'
+                                `results`: _
                             )
                         )
                     }
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `text edits`: | 'schema' (
-            'schema imports': {
-                `location`: (
-                    'schema set child': `location`
-                    'schema': ~
+        'text edits': | `schema` (
+            `schema imports`: {
+                'location': (
+                    `schema set child`: 'location'
+                    `schema`: ~
                 )
             }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Text Edits`: (
-                    'root value': | 'list' (
-                        'value': | 'state' (
-                            'options': {
-                                `replace`: (
-                                    'constraints': ~
-                                    'description': ~
-                                    'value': | 'group' {
-                                        `range`: (
-                                            'description': ~
-                                            'value': | 'component' (
-                                                'type': | 'external' (
-                                                    'import': `location`
-                                                    'module': `Range`
+            `modules`: {
+                'Text Edits': (
+                    `root value`: | `list` (
+                        `value`: | `state` (
+                            `options`: {
+                                'replace': (
+                                    `constraints`: _
+                                    `description`: _
+                                    `value`: | `group` {
+                                        'range': (
+                                            `description`: _
+                                            `value`: | `component` (
+                                                `type`: | `external` (
+                                                    `import`: 'location'
+                                                    `module`: 'Range FE'
                                                 )
-                                                'results': ~
+                                                `results`: _
                                             )
                                         )
-                                        `text`: (
-                                            'description': ~
-                                            'value': | 'text' | 'local' (
-                                                'type': | 'multi line' ~
+                                        'text': (
+                                            `description`: _
+                                            `value`: | `text` | `local` (
+                                                `type`: | `multi line` ~
                                             )
                                         )
                                     }
                                 )
-                                `delete`: (
-                                    'constraints': ~
-                                    'description': ~
-                                    'value': | 'group' {
-                                        `range`: (
-                                            'description': ~
-                                            'value': | 'component' (
-                                                'type': | 'external' (
-                                                    'import': `location`
-                                                    'module': `Range`
+                                'delete': (
+                                    `constraints`: _
+                                    `description`: _
+                                    `value`: | `group` {
+                                        'range': (
+                                            `description`: _
+                                            `value`: | `component` (
+                                                `type`: | `external` (
+                                                    `import`: 'location'
+                                                    `module`: 'Range FE'
                                                 )
-                                                'results': ~
+                                                `results`: _
                                             )
                                         )
                                     }
                                 )
-                                `insert`: (
-                                    'constraints': ~
-                                    'description': ~
-                                    'value': | 'group' {
-                                        `location`: (
-                                            'description': ~
-                                            'value': | 'component' (
-                                                'type': | 'external' (
-                                                    'import': `location`
-                                                    'module': `Position`
+                                'insert': (
+                                    `constraints`: _
+                                    `description`: _
+                                    `value`: | `group` {
+                                        'location': (
+                                            `description`: _
+                                            `value`: | `component` (
+                                                `type`: | `external` (
+                                                    `import`: 'location'
+                                                    `module`: 'Position'
                                                 )
-                                                'results': ~
+                                                `results`: _
                                             )
                                         )
-                                        `text`: (
-                                            'description': ~
-                                            'value': | 'text' | 'local' (
-                                                'type': | 'multi line' ~
+                                        'text': (
+                                            `description`: _
+                                            `value`: | `text` | `local` (
+                                                `type`: | `multi line` ~
                                             )
                                         )
                                     }
                                 )
                             }
-                            'results': ~
+                            `results`: _
                         )
-                        'results': ~
+                        `results`: _
                     )
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `completion suggestions`: | 'schema' (
-            'schema imports': {
-                `location`: (
-                    'schema set child': `location`
-                    'schema': ~
+        'completion suggestions': | `schema` (
+            `schema imports`: {
+                'location': (
+                    `schema set child`: 'location'
+                    `schema`: ~
                 )
-                `text edits`: (
-                    'schema set child': `text edits`
-                    'schema': ~
+                'text edits': (
+                    `schema set child`: 'text edits'
+                    `schema`: ~
                 )
             }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Completion Suggestions`: (
-                    'root value': | 'list' (
-                        'value': | 'group' {
-                            `label`: (
-                                'description': ~
-                                'value': | 'text' | 'local' (
-                                    'type': | 'single line' ~
+            `modules`: {
+                'Completion Suggestions': (
+                    `root value`: | `list` (
+                        `value`: | `group` {
+                            'label': (
+                                `description`: _
+                                `value`: | `text` | `local` (
+                                    `type`: | `single line` ~
                                 )
                             )
-                            `insert text`: (
-                                'description': ~
-                                'value': | 'text' | 'local' (
-                                    'type': | 'single line' ~
+                            'insert text': (
+                                `description`: _
+                                `value`: | `text` | `local` (
+                                    `type`: | `single line` ~
                                 )
                             )
-                            `documentation`: (
-                                'description': ~
-                                'value': | 'text' | 'local' (
-                                    'type': | 'multi line' ~
+                            'documentation': (
+                                `description`: _
+                                `value`: | `text` | `local` (
+                                    `type`: | `multi line` ~
                                 )
                             )
-                            `additional text edits`: (
-                                'description': ~
-                                'value': | 'component' (
-                                    'type': | 'external' (
-                                        'import': `text edits`
-                                        'module': `Text Edits`
+                            'additional text edits': (
+                                `description`: _
+                                `value`: | `component` (
+                                    `type`: | `external` (
+                                        `import`: 'text edits'
+                                        `module`: 'Text Edits'
                                     )
-                                    'results': ~
+                                    `results`: _
                                 )
                             )
-                            `type`: (
-                                'description': ~
-                                'value': | 'state' (
-                                    'options': {
-                                        `boolean`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                            'type': (
+                                `description`: _
+                                `value`: | `state` (
+                                    `options`: {
+                                        'boolean': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `component`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'component': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `dictionary`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'dictionary': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `group`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'group': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `list`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'list': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `nothing`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'nothing': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `number`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'number': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `optional`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'optional': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `reference`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'reference': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `state`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'state': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `text`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'text': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
                                     }
-                                    'results': ~
+                                    `results`: _
                                 )
                             )
                         }
-                        'results': ~
+                        `results`: _
                     )
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `convert to json`: | 'schema' (
-            'schema imports': {}
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+        'convert to json': | `schema` (
+            `schema imports`: {}
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Parameters`: (
-                    'root value': | 'group' {
-                        `source`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `document resource identifier`: (
-                                    'description': ~
-                                    'value': | 'text' | 'local' (
-                                        'type': | 'single line' ~
+            `modules`: {
+                'Parameters': (
+                    `root value`: | `group` {
+                        'source': (
+                            `description`: _
+                            `value`: | `group` {
+                                'document resource identifier': (
+                                    `description`: _
+                                    `value`: | `text` | `local` (
+                                        `type`: | `single line` ~
                                     )
                                 )
-                                `tab size`: (
-                                    'description': ~
-                                    'value': | 'number' | 'local' (
-                                        'precision': | 'exact' (
-                                            'decimal separator offset': ~
-                                            'type': | 'natural' ~
+                                'tab size': (
+                                    `description`: _
+                                    `value`: | `number` | `local` (
+                                        `precision`: | `exact` (
+                                            `decimal separator offset`: _
+                                            `type`: | `natural` ~
                                         )
                                     )
                                 )
                             }
                         )
-                        `target`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `indentation`: (
-                                    'description': ~
-                                    'value': | 'text' | 'local' (
-                                        'type': | 'single line' ~
+                        'target': (
+                            `description`: _
+                            `value`: | `group` {
+                                'indentation': (
+                                    `description`: _
+                                    `value`: | `text` | `local` (
+                                        `type`: | `single line` ~
                                     )
                                 )
-                                `newline`: (
-                                    'description': ~
-                                    'value': | 'text' | 'local' (
-                                        'type': | 'single line' ~
+                                'newline': (
+                                    `description`: _
+                                    `value`: | `text` | `local` (
+                                        `type`: | `single line` ~
                                     )
                                 )
                             }
@@ -354,376 +354,376 @@
                     }
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `path`: | 'schema' (
-            'schema imports': {}
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {}
-                'number types': {}
+        'path': | `schema` (
+            `schema imports`: {}
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {}
+                `number types`: {}
             )
-            'modules': {
-                `Node Path`: (
-                    'root value': | 'group' {
-                        `context`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'internal' `Context Path`
-                                'results': ~
+            `modules`: {
+                'Node Path': (
+                    `root value`: | `group` {
+                        'context': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Context Path'
+                                `results`: _
                             )
                         )
-                        `node`: (
-                            'description': ~
-                            'value': | 'text' | 'local' (
-                                'type': | 'single line' ~
-                            )
-                        )
-                    }
-                )
-                `Context Path`: (
-                    'root value': | 'group' {
-                        `start`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'internal' `Start`
-                                'results': ~
-                            )
-                        )
-                        `subpath`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'internal' `Context Subpath`
-                                'results': ~
+                        'node': (
+                            `description`: _
+                            `value`: | `text` | `local` (
+                                `type`: | `single line` ~
                             )
                         )
                     }
                 )
-                `Context Subpath`: (
-                    'root value': | 'list' (
-                        'value': | 'text' | 'local' (
-                            'type': | 'single line' ~
+                'Context Path': (
+                    `root value`: | `group` {
+                        'start': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Start'
+                                `results`: _
+                            )
                         )
-                        'results': ~
+                        'subpath': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Context Subpath'
+                                `results`: _
+                            )
+                        )
+                    }
+                )
+                'Context Subpath': (
+                    `root value`: | `list` (
+                        `value`: | `text` | `local` (
+                            `type`: | `single line` ~
+                        )
+                        `results`: _
                     )
                 )
-                `Start`: (
-                    'root value': | 'state' (
-                        'options': {
-                            `absolute`: (
-                                'constraints': ~
-                                'description': ~
-                                'value': | 'nothing' ~
+                'Start': (
+                    `root value`: | `state` (
+                        `options`: {
+                            'absolute': (
+                                `constraints`: _
+                                `description`: _
+                                `value`: | `nothing` ~
                             )
-                            `relative`: (
-                                'constraints': ~
-                                'description': ~
-                                'value': | 'group' {
-                                    `up steps`: (
-                                        'description': ~
-                                        'value': | 'component' (
-                                            'type': | 'internal' `Up Steps`
-                                            'results': ~
+                            'relative': (
+                                `constraints`: _
+                                `description`: _
+                                `value`: | `group` {
+                                    'up steps': (
+                                        `description`: _
+                                        `value`: | `component` (
+                                            `type`: | `internal` 'Up Steps'
+                                            `results`: _
                                         )
                                     )
                                 }
                             )
                         }
-                        'results': ~
+                        `results`: _
                     )
                 )
-                `Up Steps`: (
-                    'root value': | 'number' | 'local' (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                'Up Steps': (
+                    `root value`: | `number` | `local` (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 )
-                `Non Normalized Path`: (
-                    'root value': | 'group' {
-                        `leading slash`: (
-                            'description': ~
-                            'value': | 'boolean' ~
+                'Non Normalized Path': (
+                    `root value`: | `group` {
+                        'leading slash': (
+                            `description`: _
+                            `value`: | `boolean` ~
                         )
-                        `segments`: (
-                            'description': ~
-                            'value': | 'list' (
-                                'value': | 'state' (
-                                    'options': {
-                                        `parent`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                        'segments': (
+                            `description`: _
+                            `value`: | `list` (
+                                `value`: | `state` (
+                                    `options`: {
+                                        'parent': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `child`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'text' | 'local' (
-                                                'type': | 'single line' ~
+                                        'child': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `text` | `local` (
+                                                `type`: | `single line` ~
                                             )
                                         )
-                                        `current`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'current': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `nothing`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'nothing': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
                                     }
-                                    'results': ~
+                                    `results`: _
                                 )
-                                'results': ~
+                                `results`: _
                             )
                         )
-                        `trailing slash`: (
-                            'description': ~
-                            'value': | 'boolean' ~
+                        'trailing slash': (
+                            `description`: _
+                            `value`: | `boolean` ~
                         )
                     }
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `diagnostics`: | 'schema' (
-            'schema imports': {
-                `location`: (
-                    'schema set child': `location`
-                    'schema': ~
+        'diagnostics': | `schema` (
+            `schema imports`: {
+                'location': (
+                    `schema set child`: 'location'
+                    `schema`: ~
                 )
-                `path`: (
-                    'schema set child': `path`
-                    'schema': ~
+                'path': (
+                    `schema set child`: 'path'
+                    `schema`: ~
                 )
             }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Diagnostics`: (
-                    'root value': | 'list' (
-                        'value': | 'group' {
-                            `severity`: (
-                                'description': ~
-                                'value': | 'state' (
-                                    'options': {
-                                        `error`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+            `modules`: {
+                'Diagnostics': (
+                    `root value`: | `list` (
+                        `value`: | `group` {
+                            'severity': (
+                                `description`: _
+                                `value`: | `state` (
+                                    `options`: {
+                                        'error': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `warning`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'warning': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `information`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'information': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
-                                        `hint`: (
-                                            'constraints': ~
-                                            'description': ~
-                                            'value': | 'nothing' ~
+                                        'hint': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
                                     }
-                                    'results': ~
+                                    `results`: _
                                 )
                             )
-                            `range`: (
-                                'description': ~
-                                'value': | 'component' (
-                                    'type': | 'external' (
-                                        'import': `location`
-                                        'module': `Range`
+                            'range': (
+                                `description`: _
+                                `value`: | `component` (
+                                    `type`: | `external` (
+                                        `import`: 'location'
+                                        `module`: 'Range FE'
                                     )
-                                    'results': ~
+                                    `results`: _
                                 )
                             )
-                            `message`: (
-                                'description': ~
-                                'value': | 'text' | 'local' (
-                                    'type': | 'single line' ~
+                            'message': (
+                                `description`: _
+                                `value`: | `text` | `local` (
+                                    `type`: | `single line` ~
                                 )
                             )
-                            `related information`: (
-                                'description': ~
-                                'value': | 'optional' | 'list' (
-                                    'value': | 'group' {
-                                        `location`: (
-                                            'description': ~
-                                            'value': | 'group' {
-                                                `file path`: (
-                                                    'description': ~
-                                                    'value': | 'component' (
-                                                        'type': | 'external' (
-                                                            'import': `path`
-                                                            'module': `Node Path`
+                            'related information': (
+                                `description`: _
+                                `value`: | `optional` | `list` (
+                                    `value`: | `group` {
+                                        'location': (
+                                            `description`: _
+                                            `value`: | `group` {
+                                                'file path': (
+                                                    `description`: _
+                                                    `value`: | `component` (
+                                                        `type`: | `external` (
+                                                            `import`: 'path'
+                                                            `module`: 'Node Path'
                                                         )
-                                                        'results': ~
+                                                        `results`: _
                                                     )
                                                 )
-                                                `range`: (
-                                                    'description': ~
-                                                    'value': | 'component' (
-                                                        'type': | 'external' (
-                                                            'import': `location`
-                                                            'module': `Range`
+                                                'range': (
+                                                    `description`: _
+                                                    `value`: | `component` (
+                                                        `type`: | `external` (
+                                                            `import`: 'location'
+                                                            `module`: 'Range FE'
                                                         )
-                                                        'results': ~
+                                                        `results`: _
                                                     )
                                                 )
                                             }
                                         )
-                                        `message`: (
-                                            'description': ~
-                                            'value': | 'text' | 'local' (
-                                                'type': | 'single line' ~
+                                        'message': (
+                                            `description`: _
+                                            `value`: | `text` | `local` (
+                                                `type`: | `single line` ~
                                             )
                                         )
                                     }
-                                    'results': ~
+                                    `results`: _
                                 )
                             )
                         }
-                        'results': ~
+                        `results`: _
                     )
                 )
-                `Result`: (
-                    'root value': | 'group' {
-                        `diagnostics`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'internal' `Diagnostics`
-                                'results': ~
+                'Result': (
+                    `root value`: | `group` {
+                        'diagnostics': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Diagnostics'
+                                `results`: _
                             )
                         )
                     }
                 )
-                `Parameters`: (
-                    'root value': | 'group' {
-                        `content`: (
-                            'description': ~
-                            'value': | 'text' | 'local' (
-                                'type': | 'multi line' ~
+                'Parameters': (
+                    `root value`: | `group` {
+                        'content': (
+                            `description`: _
+                            `value`: | `text` | `local` (
+                                `type`: | `multi line` ~
                             )
                         )
-                        `file path`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'external' (
-                                    'import': `path`
-                                    'module': `Node Path`
+                        'file path': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `external` (
+                                    `import`: 'path'
+                                    `module`: 'Node Path'
                                 )
-                                'results': ~
+                                `results`: _
                             )
                         )
-                        `tab size`: (
-                            'description': ~
-                            'value': | 'number' | 'local' (
-                                'precision': | 'exact' (
-                                    'decimal separator offset': ~
-                                    'type': | 'natural' ~
+                        'tab size': (
+                            `description`: _
+                            `value`: | `number` | `local` (
+                                `precision`: | `exact` (
+                                    `decimal separator offset`: _
+                                    `type`: | `natural` ~
                                 )
                             )
                         )
                     }
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `format`: | 'schema' (
-            'schema imports': {
-                `location`: (
-                    'schema set child': `location`
-                    'schema': ~
+        'format': | `schema` (
+            `schema imports`: {
+                'location': (
+                    `schema set child`: 'location'
+                    `schema`: ~
                 )
-                `text edits`: (
-                    'schema set child': `text edits`
-                    'schema': ~
+                'text edits': (
+                    `schema set child`: 'text edits'
+                    `schema`: ~
                 )
             }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Result`: (
-                    'root value': | 'component' (
-                        'type': | 'external' (
-                            'import': `text edits`
-                            'module': `Text Edits`
+            `modules`: {
+                'Result': (
+                    `root value`: | `component` (
+                        `type`: | `external` (
+                            `import`: 'text edits'
+                            `module`: 'Text Edits'
                         )
-                        'results': ~
+                        `results`: _
                     )
                 )
-                `Error`: (
-                    'root value': | 'group' {
-                        `message`: (
-                            'description': ~
-                            'value': | 'text' | 'local' (
-                                'type': | 'single line' ~
+                'Error': (
+                    `root value`: | `group` {
+                        'message': (
+                            `description`: _
+                            `value`: | `text` | `local` (
+                                `type`: | `single line` ~
                             )
                         )
                     }
                 )
-                `Parameters`: (
-                    'root value': | 'group' {
-                        `options`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `insert spaces`: (
-                                    'description': ~
-                                    'value': | 'boolean' ~
+                'Parameters': (
+                    `root value`: | `group` {
+                        'options': (
+                            `description`: _
+                            `value`: | `group` {
+                                'insert spaces': (
+                                    `description`: _
+                                    `value`: | `boolean` ~
                                 )
-                                `preserve delimiters`: (
-                                    'description': ~
-                                    'value': | 'boolean' ~
+                                'preserve delimiters': (
+                                    `description`: _
+                                    `value`: | `boolean` ~
                                 )
-                                `preserve final newline state`: (
-                                    'description': ~
-                                    'value': | 'boolean' ~
+                                'preserve final newline state': (
+                                    `description`: _
+                                    `value`: | `boolean` ~
                                 )
-                                `preserve commas`: (
-                                    'description': ~
-                                    'value': | 'boolean' ~
+                                'preserve commas': (
+                                    `description`: _
+                                    `value`: | `boolean` ~
                                 )
-                                `indent string`: (
-                                    'description': ~
-                                    'value': | 'text' | 'local' (
-                                        'type': | 'single line' ~
+                                'indent string': (
+                                    `description`: _
+                                    `value`: | `text` | `local` (
+                                        `type`: | `single line` ~
                                     )
                                 )
                             }
@@ -731,352 +731,711 @@
                     }
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `get completion suggestions`: | 'schema' (
-            'schema imports': {
-                `completion suggestions`: (
-                    'schema set child': `completion suggestions`
-                    'schema': ~
+        'get completion suggestions': | `schema` (
+            `schema imports`: {
+                'completion suggestions': (
+                    `schema set child`: 'completion suggestions'
+                    `schema`: ~
                 )
-                `location`: (
-                    'schema set child': `location`
-                    'schema': ~
+                'location': (
+                    `schema set child`: 'location'
+                    `schema`: ~
                 )
-                `path`: (
-                    'schema set child': `path`
-                    'schema': ~
+                'path': (
+                    `schema set child`: 'path'
+                    `schema`: ~
                 )
             }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Result`: (
-                    'root value': | 'group' {
-                        `completion suggestions`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'external' (
-                                    'import': `completion suggestions`
-                                    'module': `Completion Suggestions`
+            `modules`: {
+                'Result': (
+                    `root value`: | `group` {
+                        'completion suggestions': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `external` (
+                                    `import`: 'completion suggestions'
+                                    `module`: 'Completion Suggestions'
                                 )
-                                'results': ~
+                                `results`: _
                             )
                         )
                     }
                 )
-                `Parameters`: (
-                    'root value': | 'group' {
-                        `content`: (
-                            'description': ~
-                            'value': | 'text' | 'local' (
-                                'type': | 'multi line' ~
+                'Parameters': (
+                    `root value`: | `group` {
+                        'content': (
+                            `description`: _
+                            `value`: | `text` | `local` (
+                                `type`: | `multi line` ~
                             )
                         )
-                        `source`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `file path`: (
-                                    'description': ~
-                                    'value': | 'component' (
-                                        'type': | 'external' (
-                                            'import': `path`
-                                            'module': `Node Path`
+                        'source': (
+                            `description`: _
+                            `value`: | `group` {
+                                'file path': (
+                                    `description`: _
+                                    `value`: | `component` (
+                                        `type`: | `external` (
+                                            `import`: 'path'
+                                            `module`: 'Node Path'
                                         )
-                                        'results': ~
+                                        `results`: _
                                     )
                                 )
-                                `tab size`: (
-                                    'description': ~
-                                    'value': | 'number' | 'local' (
-                                        'precision': | 'exact' (
-                                            'decimal separator offset': ~
-                                            'type': | 'natural' ~
+                                'tab size': (
+                                    `description`: _
+                                    `value`: | `number` | `local` (
+                                        `precision`: | `exact` (
+                                            `decimal separator offset`: _
+                                            `type`: | `natural` ~
                                         )
                                     )
                                 )
                             }
                         )
-                        `position`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'external' (
-                                    'import': `location`
-                                    'module': `Position`
+                        'position': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `external` (
+                                    `import`: 'location'
+                                    `module`: 'Position'
                                 )
-                                'results': ~
+                                `results`: _
                             )
                         )
-                        `indent`: (
-                            'description': ~
-                            'value': | 'text' | 'local' (
-                                'type': | 'single line' ~
-                            )
-                        )
-                    }
-                )
-            }
-            'complexity': | 'unconstrained' ~
-        )
-        `hover info`: | 'schema' (
-            'schema imports': {}
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {}
-                'number types': {}
-            )
-            'modules': {
-                `Hover Texts`: (
-                    'root value': | 'optional' | 'list' (
-                        'value': | 'text' | 'local' (
-                            'type': | 'single line' ~
-                        )
-                        'results': ~
-                    )
-                )
-            }
-            'complexity': | 'unconstrained' ~
-        )
-        `get on hover info`: | 'schema' (
-            'schema imports': {
-                `hover info`: (
-                    'schema set child': `hover info`
-                    'schema': ~
-                )
-                `location`: (
-                    'schema set child': `location`
-                    'schema': ~
-                )
-                `path`: (
-                    'schema set child': `path`
-                    'schema': ~
-                )
-            }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
-                    )
-                }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
-                        )
-                    )
-                }
-            )
-            'modules': {
-                `Result`: (
-                    'root value': | 'group' {
-                        `contents`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `hover texts`: (
-                                    'description': ~
-                                    'value': | 'component' (
-                                        'type': | 'external' (
-                                            'import': `hover info`
-                                            'module': `Hover Texts`
-                                        )
-                                        'results': ~
-                                    )
-                                )
-                            }
-                        )
-                    }
-                )
-                `Parameters`: (
-                    'root value': | 'group' {
-                        `content`: (
-                            'description': ~
-                            'value': | 'text' | 'local' (
-                                'type': | 'multi line' ~
-                            )
-                        )
-                        `source`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `file path`: (
-                                    'description': ~
-                                    'value': | 'component' (
-                                        'type': | 'external' (
-                                            'import': `path`
-                                            'module': `Node Path`
-                                        )
-                                        'results': ~
-                                    )
-                                )
-                                `tab size`: (
-                                    'description': ~
-                                    'value': | 'number' | 'local' (
-                                        'precision': | 'exact' (
-                                            'decimal separator offset': ~
-                                            'type': | 'natural' ~
-                                        )
-                                    )
-                                )
-                            }
-                        )
-                        `position`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'external' (
-                                    'import': `location`
-                                    'module': `Position`
-                                )
-                                'results': ~
+                        'indent': (
+                            `description`: _
+                            `value`: | `text` | `local` (
+                                `type`: | `single line` ~
                             )
                         )
                     }
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
         )
-        `seal`: | 'schema' (
-            'schema imports': {
-                `path`: (
-                    'schema set child': `path`
-                    'schema': ~
+        'hover info': | `schema` (
+            `schema imports`: {}
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {}
+                `number types`: {}
+            )
+            `modules`: {
+                'Hover Texts': (
+                    `root value`: | `optional` | `list` (
+                        `value`: | `text` | `local` (
+                            `type`: | `single line` ~
+                        )
+                        `results`: _
+                    )
                 )
             }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
+            `complexity`: | `unconstrained` ~
+        )
+        'get on hover info': | `schema` (
+            `schema imports`: {
+                'hover info': (
+                    `schema set child`: 'hover info'
+                    `schema`: ~
+                )
+                'location': (
+                    `schema set child`: 'location'
+                    `schema`: ~
+                )
+                'path': (
+                    `schema set child`: 'path'
+                    `schema`: ~
+                )
+            }
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
                     )
                 }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
                         )
                     )
                 }
             )
-            'modules': {
-                `Result`: (
-                    'root value': | 'text' | 'local' (
-                        'type': | 'single line' ~
-                    )
-                )
-                `Parameters`: (
-                    'root value': | 'group' {
-                        `content`: (
-                            'description': ~
-                            'value': | 'text' | 'local' (
-                                'type': | 'multi line' ~
-                            )
-                        )
-                        `source`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `file path`: (
-                                    'description': ~
-                                    'value': | 'component' (
-                                        'type': | 'external' (
-                                            'import': `path`
-                                            'module': `Node Path`
+            `modules`: {
+                'Result': (
+                    `root value`: | `group` {
+                        'contents': (
+                            `description`: _
+                            `value`: | `group` {
+                                'hover texts': (
+                                    `description`: _
+                                    `value`: | `component` (
+                                        `type`: | `external` (
+                                            `import`: 'hover info'
+                                            `module`: 'Hover Texts'
                                         )
-                                        'results': ~
-                                    )
-                                )
-                                `tab size`: (
-                                    'description': ~
-                                    'value': | 'number' | 'local' (
-                                        'precision': | 'exact' (
-                                            'decimal separator offset': ~
-                                            'type': | 'natural' ~
-                                        )
-                                    )
-                                )
-                            }
-                        )
-                        `target`: (
-                            'description': ~
-                            'value': | 'group' {
-                                `indentation`: (
-                                    'description': ~
-                                    'value': | 'text' | 'local' (
-                                        'type': | 'single line' ~
-                                    )
-                                )
-                                `newline`: (
-                                    'description': ~
-                                    'value': | 'text' | 'local' (
-                                        'type': | 'single line' ~
+                                        `results`: _
                                     )
                                 )
                             }
                         )
                     }
                 )
-            }
-            'complexity': | 'unconstrained' ~
-        )
-        `sort alphabetically`: | 'schema' (
-            'schema imports': {
-                `location`: (
-                    'schema set child': `location`
-                    'schema': ~
-                )
-            }
-            'resolver imports': {}
-            'globals': (
-                'complexity': | 'unconstrained' ~
-                'text types': {
-                    `Text Value`: (
-                        'type': | 'single line' ~
-                    )
-                }
-                'number types': {
-                    `Position`: (
-                        'precision': | 'exact' (
-                            'decimal separator offset': ~
-                            'type': | 'natural' ~
+                'Parameters': (
+                    `root value`: | `group` {
+                        'content': (
+                            `description`: _
+                            `value`: | `text` | `local` (
+                                `type`: | `multi line` ~
+                            )
                         )
-                    )
-                }
-            )
-            'modules': {
-                `Sort Parameters`: (
-                    'root value': | 'group' {
-                        `position`: (
-                            'description': ~
-                            'value': | 'component' (
-                                'type': | 'external' (
-                                    'import': `location`
-                                    'module': `Position`
+                        'source': (
+                            `description`: _
+                            `value`: | `group` {
+                                'file path': (
+                                    `description`: _
+                                    `value`: | `component` (
+                                        `type`: | `external` (
+                                            `import`: 'path'
+                                            `module`: 'Node Path'
+                                        )
+                                        `results`: _
+                                    )
                                 )
-                                'results': ~
+                                'tab size': (
+                                    `description`: _
+                                    `value`: | `number` | `local` (
+                                        `precision`: | `exact` (
+                                            `decimal separator offset`: _
+                                            `type`: | `natural` ~
+                                        )
+                                    )
+                                )
+                            }
+                        )
+                        'position': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `external` (
+                                    `import`: 'location'
+                                    `module`: 'Position'
+                                )
+                                `results`: _
                             )
                         )
                     }
                 )
             }
-            'complexity': | 'unconstrained' ~
+            `complexity`: | `unconstrained` ~
+        )
+        'astn location': | `schema` (
+            `schema imports`: {}
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {}
+                `number types`: {}
+            )
+            `modules`: {
+                'Range': (
+                    `root value`: | `group` {
+                        'start': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Location'
+                                `results`: _
+                            )
+                        )
+                        'end': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Location'
+                                `results`: _
+                            )
+                        )
+                    }
+                )
+                'Possible Range': (
+                    `root value`: | `state` (
+                        `options`: {
+                            'range': (
+                                `constraints`: _
+                                `description`: _
+                                `value`: | `component` (
+                                    `type`: | `internal` 'Range'
+                                    `results`: _
+                                )
+                            )
+                            'end of document': (
+                                `constraints`: _
+                                `description`: _
+                                `value`: | `group` {
+                                    'end': (
+                                        `description`: _
+                                        `value`: | `component` (
+                                            `type`: | `internal` 'Location'
+                                            `results`: _
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        `results`: _
+                    )
+                )
+                'Location': (
+                    `root value`: | `group` {
+                        'relative': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Relative Location'
+                                `results`: _
+                            )
+                        )
+                        'absolute': (
+                            `description`: _
+                            `value`: | `number` | `local` (
+                                `precision`: | `exact` (
+                                    `decimal separator offset`: _
+                                    `type`: | `natural` ~
+                                )
+                            )
+                        )
+                    }
+                )
+                'Relative Location': (
+                    `root value`: | `group` {
+                        'line': (
+                            `description`: _
+                            `value`: | `number` | `local` (
+                                `precision`: | `exact` (
+                                    `decimal separator offset`: _
+                                    `type`: | `natural` ~
+                                )
+                            )
+                        )
+                        'column': (
+                            `description`: _
+                            `value`: | `number` | `local` (
+                                `precision`: | `exact` (
+                                    `decimal separator offset`: _
+                                    `type`: | `natural` ~
+                                )
+                            )
+                        )
+                    }
+                )
+            }
+            `complexity`: | `unconstrained` ~
+        )
+        'seal': | `schema` (
+            `schema imports`: {
+                'path': (
+                    `schema set child`: 'path'
+                    `schema`: ~
+                )
+            }
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
+                    )
+                }
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
+                        )
+                    )
+                }
+            )
+            `modules`: {
+                'Result': (
+                    `root value`: | `text` | `local` (
+                        `type`: | `single line` ~
+                    )
+                )
+                'Parameters': (
+                    `root value`: | `group` {
+                        'content': (
+                            `description`: _
+                            `value`: | `text` | `local` (
+                                `type`: | `multi line` ~
+                            )
+                        )
+                        'source': (
+                            `description`: _
+                            `value`: | `group` {
+                                'file path': (
+                                    `description`: _
+                                    `value`: | `component` (
+                                        `type`: | `external` (
+                                            `import`: 'path'
+                                            `module`: 'Node Path'
+                                        )
+                                        `results`: _
+                                    )
+                                )
+                                'tab size': (
+                                    `description`: _
+                                    `value`: | `number` | `local` (
+                                        `precision`: | `exact` (
+                                            `decimal separator offset`: _
+                                            `type`: | `natural` ~
+                                        )
+                                    )
+                                )
+                            }
+                        )
+                        'target': (
+                            `description`: _
+                            `value`: | `group` {
+                                'indentation': (
+                                    `description`: _
+                                    `value`: | `text` | `local` (
+                                        `type`: | `single line` ~
+                                    )
+                                )
+                                'newline': (
+                                    `description`: _
+                                    `value`: | `text` | `local` (
+                                        `type`: | `single line` ~
+                                    )
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+            `complexity`: | `unconstrained` ~
+        )
+        'sort alphabetically': | `schema` (
+            `schema imports`: {
+                'location': (
+                    `schema set child`: 'location'
+                    `schema`: ~
+                )
+            }
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {
+                    'Text Value': (
+                        `type`: | `single line` ~
+                    )
+                }
+                `number types`: {
+                    'Position': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
+                        )
+                    )
+                }
+            )
+            `modules`: {
+                'Sort Parameters': (
+                    `root value`: | `group` {
+                        'position': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `external` (
+                                    `import`: 'location'
+                                    `module`: 'Position'
+                                )
+                                `results`: _
+                            )
+                        )
+                    }
+                )
+            }
+            `complexity`: | `unconstrained` ~
+        )
+        'unmarshall errors': | `schema` (
+            `schema imports`: {
+                'location': (
+                    `schema set child`: 'astn location'
+                    `schema`: ~
+                )
+            }
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `constrained` ~
+                `text types`: {}
+                `number types`: {}
+            )
+            `modules`: {
+                'Errors': (
+                    `root value`: | `list` (
+                        `value`: | `group` {
+                            'range': (
+                                `description`: _
+                                `value`: | `component` (
+                                    `type`: | `external` (
+                                        `import`: 'location'
+                                        `module`: 'Range'
+                                    )
+                                    `results`: _
+                                )
+                            )
+                            'type': (
+                                `description`: _
+                                `value`: | `state` (
+                                    `options`: {
+                                        'error': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `state` (
+                                                `options`: {
+                                                    'invalid value type': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `group` {
+                                                            'expected': (
+                                                                `description`: _
+                                                                `value`: | `list` (
+                                                                    `value`: | `state` (
+                                                                        `options`: {
+                                                                            'text': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'verbose group': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'concise group': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'dictionary': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'not set': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'set': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'list': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'state': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                        }
+                                                                        `results`: _
+                                                                    )
+                                                                    `results`: _
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    'duplicate property': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `group` {
+                                                            'name': (
+                                                                `description`: _
+                                                                `value`: | `text` | `local` (
+                                                                    `type`: | `single line` ~
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    'duplicate entry': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `group` {
+                                                            'name': (
+                                                                `description`: _
+                                                                `value`: | `text` | `local` (
+                                                                    `type`: | `single line` ~
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    'missing property': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `group` {
+                                                            'name': (
+                                                                `description`: _
+                                                                `value`: | `text` | `local` (
+                                                                    `type`: | `single line` ~
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    'missing value': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'missing property value': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `group` {
+                                                            'name': (
+                                                                `description`: _
+                                                                `value`: | `text` | `local` (
+                                                                    `type`: | `single line` ~
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    'superfluous property': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `group` {
+                                                            'name': (
+                                                                `description`: _
+                                                                `value`: | `optional` | `text` | `local` (
+                                                                    `type`: | `single line` ~
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+                                                    'state': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `state` (
+                                                            `options`: {
+                                                                'more than 2 items': (
+                                                                    `constraints`: _
+                                                                    `description`: _
+                                                                    `value`: | `nothing` ~
+                                                                )
+                                                                'missing option name': (
+                                                                    `constraints`: _
+                                                                    `description`: _
+                                                                    `value`: | `nothing` ~
+                                                                )
+                                                                'option name is not a text': (
+                                                                    `constraints`: _
+                                                                    `description`: _
+                                                                    `value`: | `nothing` ~
+                                                                )
+                                                                'missing value': (
+                                                                    `constraints`: _
+                                                                    `description`: _
+                                                                    `value`: | `nothing` ~
+                                                                )
+                                                                'unknown option': (
+                                                                    `constraints`: _
+                                                                    `description`: _
+                                                                    `value`: | `group` {
+                                                                        'found': (
+                                                                            `description`: _
+                                                                            `value`: | `text` | `local` (
+                                                                                `type`: | `single line` ~
+                                                                            )
+                                                                        )
+                                                                        'expected': (
+                                                                            `description`: _
+                                                                            `value`: | `dictionary` (
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                        )
+                                                                    }
+                                                                )
+                                                                'missing option': (
+                                                                    `constraints`: _
+                                                                    `description`: _
+                                                                    `value`: | `nothing` ~
+                                                                )
+                                                            }
+                                                            `results`: _
+                                                        )
+                                                    )
+                                                }
+                                                `results`: _
+                                            )
+                                        )
+                                        'warning': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `state` (
+                                                `options`: {
+                                                    'expected apostrophed text': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'expected quoted text': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'expected backticked text': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'expected undelimited text': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'expected a group': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                }
+                                                `results`: _
+                                            )
+                                        )
+                                    }
+                                    `results`: _
+                                )
+                            )
+                        }
+                        `results`: _
+                    )
+                )
+            }
+            `complexity`: | `unconstrained` ~
         )
     }
 )

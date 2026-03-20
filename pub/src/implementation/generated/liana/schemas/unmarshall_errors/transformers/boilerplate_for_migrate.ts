@@ -70,6 +70,11 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                                                                     $,
                                                                                     ($) => ['not set', null],
                                                                                 )
+                                                                            case 'nothing':
+                                                                                return _p.ss(
+                                                                                    $,
+                                                                                    ($) => ['nothing', null],
+                                                                                )
                                                                             case 'set':
                                                                                 return _p.ss(
                                                                                     $,
@@ -228,25 +233,25 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                     $,
                                     ($): t_out.Errors.L.type_.warning => {
                                         switch ($[0]) {
-                                            case 'expected apostrophed string':
+                                            case 'expected apostrophed text':
                                                 return _p.ss(
                                                     $,
-                                                    ($) => ['expected apostrophed string', null],
+                                                    ($) => ['expected apostrophed text', null],
                                                 )
-                                            case 'expected quoted string':
+                                            case 'expected quoted text':
                                                 return _p.ss(
                                                     $,
-                                                    ($) => ['expected quoted string', null],
+                                                    ($) => ['expected quoted text', null],
                                                 )
-                                            case 'expected backticked string':
+                                            case 'expected backticked text':
                                                 return _p.ss(
                                                     $,
-                                                    ($) => ['expected backticked string', null],
+                                                    ($) => ['expected backticked text', null],
                                                 )
-                                            case 'expected undelimited string':
+                                            case 'expected undelimited text':
                                                 return _p.ss(
                                                     $,
-                                                    ($) => ['expected undelimited string', null],
+                                                    ($) => ['expected undelimited text', null],
                                                 )
                                             case 'expected a group':
                                                 return _p.ss(

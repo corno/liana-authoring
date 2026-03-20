@@ -304,20 +304,17 @@ export const Value: Value = ($, $p) => {
                                 const def = $
                                 return ['optional', {
                                     'definition': $,
-                                    'found value type': _p.decide.state(concrete_value, ($) => {
+                                    'found value type': _p.decide.state(concrete_value, ($): d_out.Optional['found value type'] => {
                                         switch ($[0]) {
-                                            case 'nothing': return _p.ss($, ($) => ['valid', ['not set', {
-                                                'instance': ['nothing', $],
-                                            }]])
                                             case 'text': return _p.ss($, ($) => $.token.value === "null" ?
                                                 ['valid', ['not set', {
                                                     'instance': ['null literal', $],
                                                 }]] :
                                                 ['invalid', value]
                                             )
-                                            case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                                            case 'optional': return _p.ss($, ($): d_out.Optional['found value type'] => _p.decide.state($, ($) => {
                                                 switch ($[0]) {
-                                                    case 'set': return _p.ss($, ($) => ['valid', ['set', {
+                                                    case 'set': return _p.ss($, ($): d_out.Optional['found value type'] => ['valid', ['set', {
                                                         'instance': $,
                                                         'child value': Value(
                                                             $.value,
@@ -328,6 +325,9 @@ export const Value: Value = ($, $p) => {
                                                             }
                                                         )
                                                     }]])
+                                                    case 'not set': return _p.ss($, ($): d_out.Optional['found value type'] => ['valid', ['not set', {
+                                                        'instance': ['not set', $],
+                                                    }]])
                                                     default: return _p.au($[0])
                                                 }
                                             }))
@@ -337,15 +337,34 @@ export const Value: Value = ($, $p) => {
                                 }]
                             })
                             case 'reference': return _p.ss($, ($): d_out.Unmarshalled_Value_Type => {
+                                const def = $
                                 return ['reference', {
-                                    'definition': $,
-                                    'found value type': _p.decide.state(concrete_value, ($) => {
+                                    'definition': def,
+                                    'type': _p.decide.state($.type, ($): d_out.Reference['type'] => {
                                         switch ($[0]) {
-                                            case 'text': return _p.ss($, ($) => ['valid', {
-                                                'instance': $,
+                                            case 'derived': return _p.ss($, ($) => ['derived', {
+                                                'found value type': _p.decide.state(concrete_value, ($) => {
+                                                    switch ($[0]) {
+                                                        case 'nothing': return _p.ss($, ($) => ['valid', {
+                                                            'instance': $,
+                                                        }])
+                                                        // case 'nothing': return pa.ss($, () => ['invalid', data.location])
+                                                        default: return ['invalid', value]
+                                                    }
+                                                })
                                             }])
-                                            // case 'nothing': return pa.ss($, () => ['invalid', data.location])
-                                            default: return ['invalid', value]
+                                            case 'selected': return _p.ss($, ($) => ['selected', {
+                                                'found value type': _p.decide.state(concrete_value, ($) => {
+                                                    switch ($[0]) {
+                                                        case 'text': return _p.ss($, ($) => ['valid', {
+                                                            'instance': $,
+                                                        }])
+                                                        // case 'nothing': return pa.ss($, () => ['invalid', data.location])
+                                                        default: return ['invalid', value]
+                                                    }
+                                                })
+                                            }])
+                                            default: return _p.au($[0])
                                         }
                                     })
                                 }]

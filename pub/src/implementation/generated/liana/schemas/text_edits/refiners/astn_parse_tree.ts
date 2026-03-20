@@ -73,7 +73,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                             'id': 'range',
                                                         },
                                                     ),
-                                                    ($) => v_external_location.Range(
+                                                    ($) => v_external_location.Range_FE(
                                                         $,
                                                         ($) => abort(
                                                             $,
@@ -136,7 +136,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                             'id': 'range',
                                                         },
                                                     ),
-                                                    ($) => v_external_location.Range(
+                                                    ($) => v_external_location.Range_FE(
                                                         $,
                                                         ($) => abort(
                                                             $,

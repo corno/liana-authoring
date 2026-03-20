@@ -22,7 +22,7 @@ export const Position: t_signatures.Position = ($, abort, $p) => v_unmarshall.Po
     ),
 )
 
-export const Range: t_signatures.Range = ($, abort, $p) => v_unmarshall.Range(
+export const Range_FE: t_signatures.Range_FE = ($, abort, $p) => v_unmarshall.Range_FE(
     v_deserialize.Document(
         $,
         ($) => abort(

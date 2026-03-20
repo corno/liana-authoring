@@ -95,6 +95,14 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                         'value': ['nothing', null],
                                                                                                     }),
                                                                                                 )
+                                                                                            case 'nothing':
+                                                                                                return _p.ss(
+                                                                                                    $,
+                                                                                                    ($) => ({
+                                                                                                        'option': 'nothing',
+                                                                                                        'value': ['nothing', null],
+                                                                                                    }),
+                                                                                                )
                                                                                             case 'set':
                                                                                                 return _p.ss(
                                                                                                     $,
@@ -336,35 +344,35 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                             $,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
-                                                    case 'expected apostrophed string':
+                                                    case 'expected apostrophed text':
                                                         return _p.ss(
                                                             $,
                                                             ($) => ({
-                                                                'option': 'expected apostrophed string',
+                                                                'option': 'expected apostrophed text',
                                                                 'value': ['nothing', null],
                                                             }),
                                                         )
-                                                    case 'expected quoted string':
+                                                    case 'expected quoted text':
                                                         return _p.ss(
                                                             $,
                                                             ($) => ({
-                                                                'option': 'expected quoted string',
+                                                                'option': 'expected quoted text',
                                                                 'value': ['nothing', null],
                                                             }),
                                                         )
-                                                    case 'expected backticked string':
+                                                    case 'expected backticked text':
                                                         return _p.ss(
                                                             $,
                                                             ($) => ({
-                                                                'option': 'expected backticked string',
+                                                                'option': 'expected backticked text',
                                                                 'value': ['nothing', null],
                                                             }),
                                                         )
-                                                    case 'expected undelimited string':
+                                                    case 'expected undelimited text':
                                                         return _p.ss(
                                                             $,
                                                             ($) => ({
-                                                                'option': 'expected undelimited string',
+                                                                'option': 'expected undelimited text',
                                                                 'value': ['nothing', null],
                                                             }),
                                                         )

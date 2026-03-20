@@ -27,8 +27,8 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "astn": "^0.113.57",
+    "astn": "^0.113.58",
     "pareto-core-dev": "^0.12.13",
-    "pareto-liana": "^0.1.8"
+    "pareto-liana": "^0.1.9"
   }
 }

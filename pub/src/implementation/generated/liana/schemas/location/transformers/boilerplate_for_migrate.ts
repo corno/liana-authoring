@@ -18,7 +18,7 @@ export const Position: t_signatures.Position = ($) => ({
     ),
 })
 
-export const Range: t_signatures.Range = ($) => ({
+export const Range_FE: t_signatures.Range_FE = ($) => ({
     'start': _p_change_context(
         $['start'],
         ($) => Position(

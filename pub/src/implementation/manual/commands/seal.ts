@@ -39,14 +39,14 @@ export const $$: signatures.commands.transform_file = _p.command_procedure(($p, 
                                 'tab size': 4,
                             },
                             ($): d_transform_file.Error => ['processing', sh.ph.composed([
-                                sh.ph.literal("FIX location"),
+                                sh.ph.literal("FIX location: "),
                                 t_load_file_to_fp.Error(
                                     $,
                                 )
                             ])]
                         ),
                         ($, abort) => r_astn_sealed_target_from_unmarshall_result.Document($, ($) => abort(['processing', sh.ph.composed([
-                            sh.ph.literal("FIX location"),
+                            sh.ph.literal("FIX location: "),
                             t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
                                 $,
                                 // {
