@@ -35,7 +35,8 @@ export const Value: Value = ($, $p) => {
                 const concrete_value = $
                 return {
                     'definition': $p.definition,
-                    'definition path': $p['definition path'],
+                    'definition path x': $p['definition path'],
+                    'property path': $p['property path'],
                     'instance': value,
                     'unmarshalled': _p.decide.state($p.definition, ($): d_out.Unmarshalled_Value_Type => {
                         switch ($[0]) {
@@ -84,10 +85,12 @@ export const Value: Value = ($, $p) => {
                                                 default: return _p.au($[0])
                                             }
                                         }),
+                                        'property path': $p['property path']
                                     }
                                 )
                             }])
                             case 'dictionary': return _p.ss($, ($): d_out.Unmarshalled_Value_Type => {
+                                const dict_def = $
                                 const prop_def = $.value
                                 return ['dictionary', {
                                     'definition': $,
@@ -115,6 +118,8 @@ export const Value: Value = ($, $p) => {
                                                     'entries': $.entries.__l_map(($): d_out.Entry_Data => {
                                                         const id = $.id.token.value
                                                         return {
+                                                            'definition': dict_def,
+                                                            'property path': $p['property path'],
                                                             // 'id value pair': $,
                                                             'value': $.assignment.__decide(
                                                                 ($) => _p.optional.from.optional(
@@ -125,6 +130,7 @@ export const Value: Value = ($, $p) => {
                                                                         {
                                                                             'definition': prop_def,
                                                                             'definition path': `${$p['definition path']}.D`,
+                                                                            'property path': "",
                                                                         }
                                                                     ),
                                                                 ),
@@ -174,6 +180,7 @@ export const Value: Value = ($, $p) => {
                                                                         {
                                                                             'definition': $.definition.value,
                                                                             'definition path': `${$p['definition path']}.${$.id}`,
+                                                                            'property path': $p['property path'] + "." + $.id
                                                                         }
                                                                     )
                                                                 }],
@@ -202,6 +209,7 @@ export const Value: Value = ($, $p) => {
                                                                                 {
                                                                                     'definition': prop_def.value,
                                                                                     'definition path': `${$p['definition path']}.${id_value_pair.id.token.value}`,
+                                                                                    'property path': $p['property path'] + "." + id_value_pair.id.token.value
                                                                                 }
                                                                             )
                                                                         ),
@@ -256,7 +264,8 @@ export const Value: Value = ($, $p) => {
                                                         $.value,
                                                         {
                                                             'definition': prop_def,
-                                                            'definition path': $p['definition path'] + ".L"
+                                                            'definition path': $p['definition path'] + ".L",
+                                                            'property path': ""
                                                         }
                                                     ))
                                                 }]
@@ -333,6 +342,7 @@ export const Value: Value = ($, $p) => {
                                                             {
                                                                 'definition': def,
                                                                 'definition path': `${$p['definition path']}.O`,
+                                                                'property path': $p['property path'] + ".O",
                                                             }
                                                         )
                                                     }]])
@@ -386,6 +396,7 @@ export const Value: Value = ($, $p) => {
                                                                                         }],
                                                                                         (): d_out.State__found_value_type => ['valid', {
                                                                                             'definition': def,
+                                                                                            'property path': $p['property path'],
                                                                                             'instance': ['list', list],
                                                                                             'option': ['set', {
                                                                                                 'option token': option_token,
@@ -400,6 +411,7 @@ export const Value: Value = ($, $p) => {
                                                                                                                 {
                                                                                                                     'definition': option_def.value,
                                                                                                                     'definition path': `${$p['definition path']}.${option_name}`,
+                                                                                                                    'property path': "",
                                                                                                                 }
                                                                                                             )
                                                                                                         }]
@@ -443,6 +455,7 @@ export const Value: Value = ($, $p) => {
                                             case 'state': return _p.ss($, ($): d_out.State__found_value_type => {
                                                 return ['valid', {
                                                     'definition': def,
+                                                    'property path': $p['property path'],
                                                     'instance': ['state', $],
                                                     'option': _p.decide.state($.status, ($): d_out.State_Option => {
                                                         switch ($[0]) {
@@ -461,6 +474,7 @@ export const Value: Value = ($, $p) => {
                                                                                 {
                                                                                     'definition': $.value,
                                                                                     'definition path': `${$p['definition path']}.${option_name}`,
+                                                                                    'property path': "",
                                                                                 }
                                                                             )
                                                                         }],
@@ -500,7 +514,8 @@ export const Value: Value = ($, $p) => {
             case 'missing': return _p.ss($, ($): d_out.Value => {
                 return {
                     'definition': $p.definition,
-                    'definition path': $p['definition path'],
+                    'definition path x': $p['definition path'],
+                    'property path': $p['property path'],
                     'instance': value,
                     'unmarshalled': ['missing', null],
                 }

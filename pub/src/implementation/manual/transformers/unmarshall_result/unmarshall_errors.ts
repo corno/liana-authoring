@@ -4,7 +4,7 @@ import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
-import * as d_out from "pareto-liana/dist/interface/generated/liana/schemas/unmarshall_errors/data"
+import * as d_out from "../../../../interface/generated/liana/schemas/unmarshall_errors/data"
 import * as d_in_astn_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
 
 //dependencies
@@ -15,17 +15,20 @@ export type Document = _pi.Transformer<
     d_out.Errors
 >
 
-export type Value = _pi.Transformer<
+export type Value = _pi.Transformer_With_Parameter<
     d_in.Value,
-    d_out.Errors
+    d_out.Errors,
+    {
+        'report warnings': boolean
+    }
 >
 
 
 export const Document: Document = ($) => {
-    return Value($.content)
+    return Value($.content, { 'report warnings': true })
 }
 
-export const Value: Value = ($) => {
+export const Value: Value = ($, $p) => {
     const instance = $.instance
     return _p.decide.state($.unmarshalled, ($): d_out.Errors => {
         switch ($[0]) {
@@ -41,6 +44,7 @@ export const Value: Value = ($) => {
                 return _p.decide.state($['found value type'], ($): d_out.Errors => {
                     switch ($[0]) {
                         case 'valid': return _p.ss($, ($) => {
+                            const is_group = $.instance[0] === 'group'
                             const group_start_token = _p.decide.state($.instance, ($): d_in_astn_parse_tree.Structural_Token => {
                                 switch ($[0]) {
                                     case 'dictionary': return _p.ss($, ($) => $['{'])
@@ -55,127 +59,151 @@ export const Value: Value = ($) => {
                                     default: return _p.au($[0])
                                 }
                             })
-                            return _p.decide.state($.type, ($) => {
-                                switch ($[0]) {
-                                    case 'concise': return _p.ss($, ($) => _p.list.nested_literal_old([
-                                        _p.list.from.list(
+                            return _p.list.nested_literal_old([
+                                ((!is_group && $p['report warnings']))
+                                    ? _p.list.literal([
+                                        {
+                                            'range': group_start_token.range,
+                                            'type': ['warning', ['expected a group', null]]
+                                        }
+                                    ])
+                                    : _p.list.literal([]),
+                                _p.decide.state($.type, ($) => {
+                                    switch ($[0]) {
+                                        case 'concise': return _p.ss($, ($) => _p.list.nested_literal_old([
                                             _p.list.from.list(
-                                                _p.list.from.dictionary(group_def).convert(($, id) => ({ 'id': id, 'definition': $ }))
-                                            ).join(
-                                                $.properties,
-                                                ($, $o) => ({
-                                                    'implementation': $o,
-                                                    'id': $.id,
-                                                })
-                                            ),
-                                        ).flatten(
-                                            ($): d_out.Errors => {
-                                                return $.implementation.__decide(
-                                                    ($) => _p.list.literal([]),
-                                                    () => _p.list.literal([
-                                                        {
-                                                            'range': group_start_token.range,
-                                                            'type': ['error', ['missing property', {
-                                                                name: $.id
-                                                            }]]
-                                                        }
-                                                    ])
-                                                )
-                                            }
-                                        ),
-                                        _p.list.from.list(
-                                            $.properties
-                                        ).flatten(
-                                            ($) => {
-                                                const item = $.item
-                                                return _p.decide.state($['definition found'], ($) => {
-                                                    switch ($[0]) {
-                                                        case 'no': return _p.ss($, ($) => _p.list.literal([
+                                                _p.list.from.list(
+                                                    _p.list.from.dictionary(group_def).convert(($, id) => ({ 'id': id, 'definition': $ }))
+                                                ).join(
+                                                    $.properties,
+                                                    ($, $o) => ({
+                                                        'implementation': $o,
+                                                        'id': $.id,
+                                                    })
+                                                ),
+                                            ).flatten(
+                                                ($): d_out.Errors => {
+                                                    return $.implementation.__decide(
+                                                        ($) => _p.list.literal([]),
+                                                        () => _p.list.literal([
                                                             {
-                                                                'range': t_astn_parse_tree_to_location.Value(item.value),
-                                                                'type': ['error', ['superfluous property', {
-                                                                    'name': _p.optional.literal.not_set()
+                                                                'range': group_start_token.range,
+                                                                'type': ['error', ['missing property', {
+                                                                    name: $.id
                                                                 }]]
                                                             }
-                                                        ]))
-                                                        case 'yes': return _p.ss($, ($) => Value($.value,))
-                                                        default: return _p.au($[0])
-                                                    }
-                                                })
-                                            }
-                                        ),
-                                    ]))
-                                    case 'verbose': return _p.ss($, ($) => _p.list.nested_literal_old([
-                                        _p.list.from.dictionary(
-                                            _p.dictionary.from.dictionary(
-                                                group_def
-                                            ).join(
-                                                _p.dictionary.from.list(
-                                                    $.properties,
-                                                ).group(
-                                                    ($) => $['id value pair'].id.token.value
-                                                ),
-                                                ($, $o, id) => $o
+                                                        ])
+                                                    )
+                                                }
                                             ),
-                                        ).flatten(
-                                            ($, id): d_out.Errors => {
-                                                return $.__decide(
-                                                    ($) => _p.decide.list($).has_single_item(
-                                                        ($) => _p.list.literal([]),
-                                                        ($) => $.__l_map(($): d_out.Errors.L => ({
-                                                            'range': $['id value pair'].id.range,
-                                                            'type': ['error', ['duplicate property', {
-                                                                name: id
-                                                            }]]
-                                                        })),
-                                                        () => _p_unreachable_code_path("the list is the result of a group operation, it could never have been created if there was not at least one item")
-                                                    ),
-                                                    () => _p.list.literal([
-                                                        {
-                                                            'range': group_start_token.range,
-                                                            'type': ['error', ['missing property', {
-                                                                name: id
-                                                            }]]
-                                                        }
-                                                    ])
-                                                )
-                                            }
-                                        ),
-                                        _p.list.from.list(
-                                            $.properties,
-                                        ).flatten<d_out.Errors.L>(
-                                            ($) => {
-                                                const id_value_pair = $['id value pair']
-                                                return _p.decide.state($['definition found'], ($) => {
-                                                    switch ($[0]) {
-                                                        case 'yes': return _p.ss($, ($) => $.value.__decide(
-                                                            ($) => Value($),
-                                                            (): d_out.Errors => _p.list.literal([
+                                            _p.list.from.list(
+                                                $.properties
+                                            ).flatten(
+                                                ($) => {
+                                                    const item = $.item
+                                                    return _p.decide.state($['definition found'], ($) => {
+                                                        switch ($[0]) {
+                                                            case 'no': return _p.ss($, ($) => _p.list.literal([
                                                                 {
-                                                                    'range': id_value_pair.id.range,
-                                                                    'type': ['error', ['missing property', { //'missing property value'
-                                                                        'name': id_value_pair.id.token.value
+                                                                    'range': t_astn_parse_tree_to_location.Value(item.value),
+                                                                    'type': ['error', ['superfluous property', {
+                                                                        'name': _p.optional.literal.not_set()
                                                                     }]]
                                                                 }
-                                                            ])
-                                                        ))
-                                                        case 'no': return _p.ss($, ($) => _p.list.literal([
+                                                            ]))
+                                                            case 'yes': return _p.ss($, ($) => Value($.value, { 'report warnings': is_group && $p['report warnings'] }))
+                                                            default: return _p.au($[0])
+                                                        }
+                                                    })
+                                                }
+                                            ),
+                                        ]))
+                                        case 'verbose': return _p.ss($, ($) => _p.list.nested_literal_old([
+                                            //duplicate id's
+                                            _p.list.from.dictionary(
+                                                _p.dictionary.from.dictionary(
+                                                    group_def
+                                                ).join(
+                                                    _p.dictionary.from.list(
+                                                        $.properties,
+                                                    ).group(
+                                                        ($) => $['id value pair'].id.token.value
+                                                    ),
+                                                    ($, $o, id) => $o
+                                                ),
+                                            ).flatten(
+                                                ($, id): d_out.Errors => {
+                                                    return $.__decide(
+                                                        ($) => _p.decide.list($).has_single_item(
+                                                            ($) => _p.list.literal([]),
+                                                            ($) => $.__l_map(($): d_out.Errors.L => ({
+                                                                'range': $['id value pair'].id.range,
+                                                                'type': ['error', ['duplicate property', {
+                                                                    name: id
+                                                                }]]
+                                                            })),
+                                                            () => _p_unreachable_code_path("the list is the result of a group operation, it could never have been created if there was not at least one item")
+                                                        ),
+                                                        () => _p.list.literal([
                                                             {
-                                                                'range': id_value_pair.id.range,
-                                                                'type': ['error', ['superfluous property', {
-                                                                    'name': _p.optional.literal.set(id_value_pair.id.token.value)
+                                                                'range': group_start_token.range,
+                                                                'type': ['error', ['missing property', {
+                                                                    name: id
                                                                 }]]
                                                             }
-                                                        ]))
-                                                        default: return _p.au($[0])
-                                                    }
-                                                })
-                                            }
-                                        )
-                                    ]))
-                                    default: return _p.au($[0])
-                                }
-                            })
+                                                        ])
+                                                    )
+                                                }
+                                            ),
+                                            //diagnostics for each property
+                                            _p.list.from.list(
+                                                $.properties,
+                                            ).flatten<d_out.Errors.L>(
+                                                ($) => {
+                                                    const id_value_pair = $['id value pair']
+
+                                                    const is_backticked = $['id value pair'].id.token.type[0] === 'backticked'
+                                                    return _p.list.nested_literal_old([
+                                                        (!is_backticked && $p['report warnings'])
+                                                            ? _p.list.literal([
+                                                                {
+                                                                    'range': id_value_pair.id.range,
+                                                                    'type': ['warning', ['expected backticked string', null]]
+                                                                }
+                                                            ])
+                                                            : _p.list.literal([]),
+                                                        _p.decide.state($['definition found'], ($) => {
+                                                            switch ($[0]) {
+                                                                case 'yes': return _p.ss($, ($) => $.value.__decide(
+                                                                    ($) => Value($, { 'report warnings': is_group && is_backticked && $p['report warnings'] }),
+                                                                    (): d_out.Errors => _p.list.literal([
+                                                                        {
+                                                                            'range': id_value_pair.id.range,
+                                                                            'type': ['error', ['missing property', { //'missing property value'
+                                                                                'name': id_value_pair.id.token.value
+                                                                            }]]
+                                                                        }
+                                                                    ])
+                                                                ))
+                                                                case 'no': return _p.ss($, ($) => _p.list.literal([
+                                                                    {
+                                                                        'range': id_value_pair.id.range,
+                                                                        'type': ['error', ['superfluous property', {
+                                                                            'name': _p.optional.literal.set(id_value_pair.id.token.value)
+                                                                        }]]
+                                                                    }
+                                                                ]))
+                                                                default: return _p.au($[0])
+                                                            }
+                                                        })
+                                                    ])
+                                                }
+                                            )
+                                        ]))
+                                        default: return _p.au($[0])
+                                    }
+                                })
+                            ])
                         })
                         case 'invalid': return _p.ss($, ($) => _p.list.literal([
                             {
@@ -193,6 +221,7 @@ export const Value: Value = ($) => {
                 switch ($[0]) {
                     case 'valid': return _p.ss($, ($) => {
                         return _p.list.nested_literal_old([
+                            //duplicate id's
                             _p.list.from.dictionary(
                                 _p.dictionary.from.list(
                                     $.entries
@@ -213,21 +242,36 @@ export const Value: Value = ($) => {
                                     )
                                 }
                             ),
+                            //diagnostics for each entry
                             _p.list.from.list(
                                 $.entries,
                             ).flatten(
-                                ($) => $.value.__decide(
-                                    ($) => Value($),
+                                ($) => {
+                                    const is_apostrophed = $['id value pair'].id.token.type[0] === 'apostrophed'
 
-                                    () => _p.list.literal<d_out.Errors.L>([
-                                        {
-                                            'range': $['id value pair'].id.range,
-                                            'type': ['error', ['missing property value', { //missing property value
-                                                name: $['id value pair'].id.token.value
-                                            }]]
-                                        }
-                                    ]), //FIXME! optional node not set is often an error
-                                )
+                                    return _p.list.nested_literal_old([
+                                        (!is_apostrophed && $p['report warnings'])
+                                            ? _p.list.literal([
+                                                {
+                                                    'range': $['id value pair'].id.range,
+                                                    'type': ['warning', ['expected apostrophed string', null]]
+                                                }
+                                            ])
+                                            : _p.list.literal([]),
+                                        $.value.__decide(
+                                            ($) => Value($, { 'report warnings': is_apostrophed && $p['report warnings'] }),
+
+                                            () => _p.list.literal<d_out.Errors.L>([
+                                                {
+                                                    'range': $['id value pair'].id.range,
+                                                    'type': ['error', ['missing property value', { //missing property value
+                                                        name: $['id value pair'].id.token.value
+                                                    }]]
+                                                }
+                                            ]), //FIXME! optional node not set is often an error
+                                        )
+                                    ])
+                                }
                             )
                         ])
                     })
@@ -285,7 +329,7 @@ export const Value: Value = ($) => {
                     case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.from.list(
                         $.items
                     ).flatten(
-                        ($) => Value($)
+                        ($) => Value($, $p)
                     ))
                     case 'invalid': return _p.ss($, ($) => _p.list.literal([
                         {
@@ -314,7 +358,14 @@ export const Value: Value = ($) => {
             }))
             case 'reference': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
                 switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.literal([]))
+                    case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.nested_literal_old([
+                        $.instance.token.type[0] === 'apostrophed' && $p['report warnings']
+                            ? _p.list.literal([{
+                                'range': $.instance.range,
+                                'type': ['warning', ['expected apostrophed string', null]]
+                            }])
+                            : _p.list.literal([]),
+                    ]))
                     case 'invalid': return _p.ss($, ($) => _p.list.literal([
                         {
                             'range': t_astn_parse_tree_to_location.Value($),
@@ -327,13 +378,13 @@ export const Value: Value = ($) => {
                 }
             }))
             case 'component': return _p.ss($, ($) => {
-                return Value($.value)
+                return Value($.value, $p)
             })
             case 'optional': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
                 switch ($[0]) {
                     case 'valid': return _p.ss($, ($): d_out.Errors => _p.decide.state($, ($) => {
                         switch ($[0]) {
-                            case 'set': return _p.ss($, ($) => Value($['child value']))
+                            case 'set': return _p.ss($, ($) => Value($['child value'], $p))
                             case 'not set': return _p.ss($, ($) => _p.list.literal([]))
                             default: return _p.au($[0])
                         }
@@ -364,22 +415,33 @@ export const Value: Value = ($) => {
                                     ]))
                                     case 'set': return _p.ss($, ($) => {
                                         const option_token = $['option token']
-                                        return _p.decide.state($.option, ($) => {
-                                            switch ($[0]) {
-                                                case 'known': return _p.ss($, ($) => Value($.value))
-                                                case 'unknown': return _p.ss($, ($) => _p.list.literal([
+                                        const is_backticked = $['option token'].token.type[0] === 'backticked'
+                                        return _p.list.nested_literal_old([
+                                            (!is_backticked && $p['report warnings'])
+                                                ? _p.list.literal([
                                                     {
                                                         'range': option_token.range,
-                                                        'type': ['error', ['state', ['unknown option', {
-                                                            'found': option_token.token.value,
-                                                            'expected': sg_def.options.__d_map(($) => null)
-                                                        }]]]
+                                                        'type': ['warning', ['expected apostrophed string', null]]
                                                     }
-                                                ]))
+                                                ])
+                                                : _p.list.literal([]),
+                                            _p.decide.state($.option, ($) => {
+                                                switch ($[0]) {
+                                                    case 'known': return _p.ss($, ($) => Value($.value, { 'report warnings': is_backticked && $p['report warnings'] }))
+                                                    case 'unknown': return _p.ss($, ($) => _p.list.literal([
+                                                        {
+                                                            'range': option_token.range,
+                                                            'type': ['error', ['state', ['unknown option', {
+                                                                'found': option_token.token.value,
+                                                                'expected': sg_def.options.__d_map(($) => null)
+                                                            }]]]
+                                                        }
+                                                    ]))
 
-                                                default: return _p.au($[0])
-                                            }
-                                        })
+                                                    default: return _p.au($[0])
+                                                }
+                                            })
+                                        ])
                                     })
                                     default: return _p.au($[0])
                                 }
@@ -454,7 +516,17 @@ export const Value: Value = ($) => {
             })
             case 'text': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
                 switch ($[0]) {
-                    case 'valid': return _p.list.literal([])
+                    case 'valid': return _p.ss($, ($) => _p.list.nested_literal_old([
+                        ($.instance.token.type[0] === 'quoted' && $p['report warnings'])
+                            ? _p.list.literal([
+                                {
+                                    'range': $.instance.range,
+                                    'type': ['warning', ['expected a group', null]]
+                                }
+
+                            ])
+                            : _p.list.literal([])
+                    ]))
                     case 'invalid': return _p.ss($, ($) => _p.list.literal([
                         {
                             'range': t_astn_parse_tree_to_location.Value($),

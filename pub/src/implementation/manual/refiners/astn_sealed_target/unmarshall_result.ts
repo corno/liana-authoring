@@ -45,7 +45,7 @@ export const Document: Document = ($, abort) => {
 }
 
 export const Value: Value = ($, abort) => {
-    const definition_path = $['definition path']
+    const definition_path = $['definition path x']
     const instance = $.instance
     return _p.decide.state($.unmarshalled, ($): d_out.Value => {
         switch ($[0]) {

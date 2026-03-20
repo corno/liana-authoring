@@ -29,6 +29,6 @@
   "dependencies": {
     "astn": "^0.113.57",
     "pareto-core-dev": "^0.12.13",
-    "pareto-liana": "^0.1.7"
+    "pareto-liana": "^0.1.8"
   }
 }

@@ -39,7 +39,8 @@ export const Value: Value = ($, abort, $p) => {
         ).content,
         {
             'definition': x.root.entry['root value'],
-            'definition path': x.root.id
+            'definition path': x.root.id,
+            'property path': "",
         }
     )
     return x3

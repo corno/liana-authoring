@@ -6,15 +6,25 @@ import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/schem
 
 export const Value = (
     $: d_in.Value,
+    $p: {
+        'style':
+        | ['concise', null]
+        | ['verbose', null]
+    }
 ): d_out.Value => ({
     'metadata': {
         'comments': _p.list.literal([])
     },
-    'data': Value_data($)
+    'data': Value_data($, $p)
 })
 
 export const Value_data = (
     $: d_in.Value,
+    $p: {
+        'style':
+        | ['concise', null]
+        | ['verbose', null]
+    }
 ): d_out.Value.data => _p.decide.state($, ($): d_out.Value.data => {
     switch ($[0]) {
         case 'number': return _p.ss($, ($) => ['concrete', {
@@ -44,9 +54,9 @@ export const Value_data = (
         case 'reference': return _p.ss($, ($) => ['missing', null])
         case 'component': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
             switch ($[0]) {
-                case 'external': return _p.ss($, ($) => Value_data($.module['l entry']['root value']))
-                case 'internal': return _p.ss($, ($) => Value_data($['l entry'].get_circular_dependent()['root value']))
-                case 'internal acyclic': return _p.ss($, ($) => Value_data($['l entry']['root value']))
+                case 'external': return _p.ss($, ($) => Value_data($.module['l entry']['root value'], $p))
+                case 'internal': return _p.ss($, ($) => Value_data($['l entry'].get_circular_dependent()['root value'], $p))
+                case 'internal acyclic': return _p.ss($, ($) => Value_data($['l entry']['root value'], $p))
                 default: return _p.au($[0])
             }
         })
@@ -54,16 +64,35 @@ export const Value_data = (
         case 'dictionary': return _p.ss($, ($) => ['concrete', {
             'type': ['dictionary', _p.list.literal([])]
         }])
-        case 'group': return _p.ss($, ($): d_out.Value.data => ['concrete', {
-            'type': ['group', ['verbose', _p.list.from.dictionary(
-                $
-            ).convert(
-                ($, id): d_out.ID_Value_Pairs.L => ({
-                    'id': id,
-                    'value': _p.optional.literal.set(Value($.value))
-                })
-            )]]
-        }])
+        case 'group': return _p.ss($, ($): d_out.Value.data => {
+            const xx = $
+            return ['concrete', {
+                'type': ['group', _p.decide.state($p.style, ($): d_out.Value.data.concrete.type_.group => {
+                    switch ($[0]) {
+                        case 'concise': return _p.ss($, ($) => ['concise', _p.list.from.dictionary(
+                            xx
+                        ).convert(
+                            ($, id): d_out.Items.L => Value(
+                                $.value,
+                                $p
+                            )
+                        )])
+                        case 'verbose': return _p.ss($, ($) => ['verbose', _p.list.from.dictionary(
+                            xx
+                        ).convert(
+                            ($, id): d_out.ID_Value_Pairs.L => ({
+                                'id': id,
+                                'value': _p.optional.literal.set(Value(
+                                    $.value,
+                                    $p
+                                ))
+                            })
+                        )])
+                        default: return _p.au($[0])
+                    }
+                })]
+            }]
+        })
         case 'optional': return _p.ss($, ($) => ['concrete', {
             'type': ['nothing', null]
         }])

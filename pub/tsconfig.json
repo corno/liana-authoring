@@ -12,6 +12,6 @@
         "forceConsistentCasingInFileNames": true
     },
     "include": [
-      "./src"
-, "../../pareto-liana/pub/src/interface/resources.ts"    ]
+        "./src"
+    ]
 }

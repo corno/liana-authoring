@@ -16,7 +16,8 @@ export type Optional_Value = _pi.Optional_Value<Value>
 
 
 export type Value = {
-    'definition path': string
+    'definition path x': string
+    'property path': string
     'definition': d_schema.Value
     'instance': d_astn_parse_tree.Value
     'unmarshalled': Unmarshalled_Value_Type //the type is determined by the definition
@@ -172,6 +173,7 @@ export type State_Option =
     | ['missing data', d_astn_parse_tree.Structural_Token]
 
 export type Valid_State = {
+    'property path': string
     'definition': d_schema.Value.state
     'instance':
     | ['state', d_astn_parse_tree.Value.type_.concrete.state]
@@ -226,6 +228,8 @@ export type Number = {
 }
 
 export type Entry_Data = {
+    'property path': string
+    'definition': d_schema.Dictionary
     'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
     'value': Optional_Value
 }
