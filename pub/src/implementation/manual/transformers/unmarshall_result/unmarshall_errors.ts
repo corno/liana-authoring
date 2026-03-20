@@ -359,7 +359,7 @@ export const Value: Value = ($, $p) => {
             case 'reference': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
                 switch ($[0]) {
                     case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.nested_literal_old([
-                        $.instance.token.type[0] === 'apostrophed' && $p['report warnings']
+                        $.instance.token.type[0] !== 'apostrophed' && $p['report warnings']
                             ? _p.list.literal([{
                                 'range': $.instance.range,
                                 'type': ['warning', ['expected apostrophed string', null]]
@@ -517,11 +517,11 @@ export const Value: Value = ($, $p) => {
             case 'text': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
                 switch ($[0]) {
                     case 'valid': return _p.ss($, ($) => _p.list.nested_literal_old([
-                        ($.instance.token.type[0] === 'quoted' && $p['report warnings'])
+                        ($.instance.token.type[0] !== 'quoted' && $p['report warnings'])
                             ? _p.list.literal([
                                 {
                                     'range': $.instance.range,
-                                    'type': ['warning', ['expected a group', null]]
+                                    'type': ['warning', ['expected quoted string', null]]
                                 }
 
                             ])

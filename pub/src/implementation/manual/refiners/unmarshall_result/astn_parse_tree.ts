@@ -97,30 +97,12 @@ export const Value: Value = ($, $p) => {
                                     'found value type': _p.decide.state(concrete_value, ($) => {
                                         switch ($[0]) {
                                             case 'dictionary': return _p.ss($, ($) => {
-                                                const range = $['{'].range
-
-                                                const op_expect_exactly_one_element = <T>($: _pi.List<T>): _pi.Optional_Value<T> => _p.number.natural.from.list($).amount_of_items() !== 1
-                                                    ? _p.optional.literal.not_set()
-                                                    // there is an element, so this statement will always return a 'set'
-                                                    : $.__deprecated_get_possible_item_at(0)
-
-
-                                                type ID_Value_Pair<T> = {
-                                                    'id': string,
-                                                    'value': T,
-                                                }
-                                                const op_group = <T>(
-                                                    $: _pi.List<ID_Value_Pair<T>>,
-                                                ): _pi.Dictionary<_pi.List<T>> => _p.dictionary.from.list($).group(($) => $.id).__d_map(($) => $.__l_map(($) => $.value))
-
                                                 return ['valid', {
                                                     'instance': $,
                                                     'entries': $.entries.__l_map(($): d_out.Entry_Data => {
-                                                        const id = $.id.token.value
                                                         return {
                                                             'definition': dict_def,
                                                             'property path': $p['property path'],
-                                                            // 'id value pair': $,
                                                             'value': $.assignment.__decide(
                                                                 ($) => _p.optional.from.optional(
                                                                     $.value,

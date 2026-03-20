@@ -139,10 +139,10 @@ export const Error_Type_Warning = (
     $: d_in.Errors.L.type_.warning,
 ): d_out.Phrase => _p.decide.state($, ($) => {
     switch ($[0]) {
-        case 'expected apostrophed string': return _p.ss($, ($) => sh.ph.literal("Expected apostrophed string"))
-        case 'expected backticked string': return _p.ss($, ($) => sh.ph.literal("Expected backticked string"))
-        case 'expected quoted string': return _p.ss($, ($) => sh.ph.literal("Expected quoted string"))
-        case 'expected undelimited string': return _p.ss($, ($) => sh.ph.literal("Expected undelimited string"))
+        case 'expected apostrophed string': return _p.ss($, ($) => sh.ph.literal("Expected a text with apostrophes (')"))
+        case 'expected backticked string': return _p.ss($, ($) => sh.ph.literal("Expected a text with backticks (`)"))
+        case 'expected quoted string': return _p.ss($, ($) => sh.ph.literal("Expected a text with quotes (\")"))
+        case 'expected undelimited string': return _p.ss($, ($) => sh.ph.literal("Expected a text without delimiters"))
         case 'expected a group': return _p.ss($, ($) => sh.ph.literal("Expected a group"))
         default: return _p.au($[0])
     }
