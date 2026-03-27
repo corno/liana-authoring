@@ -26,7 +26,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
             $,
         ),
         {
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     )['items'],
 ).map(
@@ -48,7 +48,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                             "type": null,
                         },
                     ),
-                    'document resource identifier': "dummy dri",
+                    'subdocument context': _p.optional.literal.not_set(),
                 },
             ),
             ($) => _p_variables(
@@ -57,7 +57,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                     const var_verbose_group_range = v_parse_tree_to_location.Value(
                         $['value'],
                         {
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     )
                     return {
@@ -69,7 +69,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'label',
-                                    'document resource identifier': "dummy dri",
+                                    'subdocument context': _p.optional.literal.not_set(),
                                 },
                             ),
                             ($) => v_unmarshalled_from_parse_tree.Text(
@@ -87,7 +87,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'insert text',
-                                    'document resource identifier': "dummy dri",
+                                    'subdocument context': _p.optional.literal.not_set(),
                                 },
                             ),
                             ($) => v_unmarshalled_from_parse_tree.Text(
@@ -105,7 +105,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'documentation',
-                                    'document resource identifier': "dummy dri",
+                                    'subdocument context': _p.optional.literal.not_set(),
                                 },
                             ),
                             ($) => v_unmarshalled_from_parse_tree.Text(
@@ -123,7 +123,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'additional text edits',
-                                    'document resource identifier': "dummy dri",
+                                    'subdocument context': _p.optional.literal.not_set(),
                                 },
                             ),
                             ($) => v_external_text_edits.Text_Edits(
@@ -141,7 +141,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'type',
-                                    'document resource identifier': "dummy dri",
+                                    'subdocument context': _p.optional.literal.not_set(),
                                 },
                             ),
                             ($) => _p_change_context(
@@ -272,7 +272,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
                                                             {
-                                                                'document resource identifier': "dummy dri",
+                                                                'subdocument context': _p.optional.literal.not_set(),
                                                             },
                                                         ),
                                                     }],

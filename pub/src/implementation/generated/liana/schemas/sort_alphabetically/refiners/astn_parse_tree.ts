@@ -29,7 +29,7 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
                     "position": null,
                 },
             ),
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -38,7 +38,7 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'document resource identifier': "dummy dri",
+                    'subdocument context': _p.optional.literal.not_set(),
                 },
             )
             return {
@@ -50,7 +50,7 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
                         ),
                         {
                             'id': 'position',
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                     ($) => v_external_location.Position(

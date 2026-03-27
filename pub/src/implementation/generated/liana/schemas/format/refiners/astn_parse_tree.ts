@@ -38,7 +38,7 @@ export const Error: t_signatures.Error = ($, abort) => _p_change_context(
                     "message": null,
                 },
             ),
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -47,7 +47,7 @@ export const Error: t_signatures.Error = ($, abort) => _p_change_context(
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'document resource identifier': "dummy dri",
+                    'subdocument context': _p.optional.literal.not_set(),
                 },
             )
             return {
@@ -59,7 +59,7 @@ export const Error: t_signatures.Error = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'message',
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -86,7 +86,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                     "options": null,
                 },
             ),
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -95,7 +95,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'document resource identifier': "dummy dri",
+                    'subdocument context': _p.optional.literal.not_set(),
                 },
             )
             return {
@@ -107,7 +107,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                         ),
                         {
                             'id': 'options',
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                     ($) => _p_change_context(
@@ -126,7 +126,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                         "indent string": null,
                                     },
                                 ),
-                                'document resource identifier': "dummy dri",
+                                'subdocument context': _p.optional.literal.not_set(),
                             },
                         ),
                         ($) => _p_variables(
@@ -135,7 +135,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                                     $['value'],
                                     {
-                                        'document resource identifier': "dummy dri",
+                                        'subdocument context': _p.optional.literal.not_set(),
                                     },
                                 )
                                 return {
@@ -147,7 +147,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'insert spaces',
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -157,7 +157,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -169,7 +169,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'preserve delimiters',
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -179,7 +179,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -191,7 +191,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'preserve final newline state',
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -201,7 +201,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -213,7 +213,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'preserve commas',
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -223,7 +223,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -235,7 +235,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'indent string',
-                                                'document resource identifier': "dummy dri",
+                                                'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Text(

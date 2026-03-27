@@ -28,7 +28,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                     "character": null,
                 },
             ),
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -37,7 +37,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'document resource identifier': "dummy dri",
+                    'subdocument context': _p.optional.literal.not_set(),
                 },
             )
             return {
@@ -49,7 +49,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'line',
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Number(
@@ -59,7 +59,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'type': ['decimal', null],
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                 ),
@@ -71,7 +71,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'character',
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Number(
@@ -81,7 +81,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'type': ['decimal', null],
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                 ),
@@ -103,7 +103,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                     "end": null,
                 },
             ),
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -112,7 +112,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'document resource identifier': "dummy dri",
+                    'subdocument context': _p.optional.literal.not_set(),
                 },
             )
             return {
@@ -124,7 +124,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'start',
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                     ($) => Position(
@@ -142,7 +142,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'end',
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
                     ($) => Position(

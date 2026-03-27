@@ -24,7 +24,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
             $,
         ),
         {
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     )['items'],
 ).map(
@@ -43,7 +43,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                             "type": null,
                         },
                     ),
-                    'document resource identifier': "dummy dri",
+                    'subdocument context': _p.optional.literal.not_set(),
                 },
             ),
             ($) => _p_variables(
@@ -52,7 +52,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                     const var_verbose_group_range = v_parse_tree_to_location.Value(
                         $['value'],
                         {
-                            'document resource identifier': "dummy dri",
+                            'subdocument context': _p.optional.literal.not_set(),
                         },
                     )
                     return {
@@ -64,7 +64,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                 ),
                                 {
                                     'id': 'range',
-                                    'document resource identifier': "dummy dri",
+                                    'subdocument context': _p.optional.literal.not_set(),
                                 },
                             ),
                             ($) => v_external_location.Range(
@@ -82,7 +82,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                 ),
                                 {
                                     'id': 'type',
-                                    'document resource identifier': "dummy dri",
+                                    'subdocument context': _p.optional.literal.not_set(),
                                 },
                             ),
                             ($) => _p_change_context(
@@ -125,7 +125,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                 "expected": null,
                                                                                             },
                                                                                         ),
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                                 ($) => _p_variables(
@@ -134,7 +134,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'document resource identifier': "dummy dri",
+                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
@@ -146,7 +146,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'expected',
-                                                                                                        'document resource identifier': "dummy dri",
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => _p.list.from.list(
@@ -156,7 +156,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                             $,
                                                                                                         ),
                                                                                                         {
-                                                                                                            'document resource identifier': "dummy dri",
+                                                                                                            'subdocument context': _p.optional.literal.not_set(),
                                                                                                         },
                                                                                                     )['items'],
                                                                                                 ).map(
@@ -270,7 +270,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                     'range': v_parse_tree_to_location.Value(
                                                                                                                                         $['value'],
                                                                                                                                         {
-                                                                                                                                            'document resource identifier': "dummy dri",
+                                                                                                                                            'subdocument context': _p.optional.literal.not_set(),
                                                                                                                                         },
                                                                                                                                     ),
                                                                                                                                 }],
@@ -302,7 +302,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                                 ($) => _p_variables(
@@ -311,7 +311,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'document resource identifier': "dummy dri",
+                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
@@ -323,7 +323,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'document resource identifier': "dummy dri",
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -353,7 +353,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                                 ($) => _p_variables(
@@ -362,7 +362,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'document resource identifier': "dummy dri",
+                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
@@ -374,7 +374,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'document resource identifier': "dummy dri",
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -404,7 +404,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                                 ($) => _p_variables(
@@ -413,7 +413,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'document resource identifier': "dummy dri",
+                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
@@ -425,7 +425,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'document resource identifier': "dummy dri",
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -465,7 +465,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                                 ($) => _p_variables(
@@ -474,7 +474,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'document resource identifier': "dummy dri",
+                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
@@ -486,7 +486,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'document resource identifier': "dummy dri",
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -516,7 +516,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                                 ($) => _p_variables(
@@ -525,7 +525,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'document resource identifier': "dummy dri",
+                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
@@ -537,7 +537,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'document resource identifier': "dummy dri",
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => _p.optional.from.optional(
@@ -631,7 +631,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                         "expected": null,
                                                                                                                     },
                                                                                                                 ),
-                                                                                                                'document resource identifier': "dummy dri",
+                                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                                             },
                                                                                                         ),
                                                                                                         ($) => _p_variables(
@@ -640,7 +640,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                                                     $['value'],
                                                                                                                     {
-                                                                                                                        'document resource identifier': "dummy dri",
+                                                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                                                     },
                                                                                                                 )
                                                                                                                 return {
@@ -652,7 +652,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                             ),
                                                                                                                             {
                                                                                                                                 'id': 'found',
-                                                                                                                                'document resource identifier': "dummy dri",
+                                                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                                                             },
                                                                                                                         ),
                                                                                                                         ($) => v_unmarshalled_from_parse_tree.Text(
@@ -670,7 +670,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                             ),
                                                                                                                             {
                                                                                                                                 'id': 'expected',
-                                                                                                                                'document resource identifier': "dummy dri",
+                                                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                                                             },
                                                                                                                         ),
                                                                                                                         ($) => _p_change_context(
@@ -680,7 +680,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                     $,
                                                                                                                                 ),
                                                                                                                                 {
-                                                                                                                                    'document resource identifier': "dummy dri",
+                                                                                                                                    'subdocument context': _p.optional.literal.not_set(),
                                                                                                                                 },
                                                                                                                             ),
                                                                                                                             ($) => _p.dictionary.from.dictionary(
@@ -717,7 +717,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                         'range': v_parse_tree_to_location.Value(
                                                                                                             $['value'],
                                                                                                             {
-                                                                                                                'document resource identifier': "dummy dri",
+                                                                                                                'subdocument context': _p.optional.literal.not_set(),
                                                                                                             },
                                                                                                         ),
                                                                                                     }],
@@ -734,7 +734,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 'range': v_parse_tree_to_location.Value(
                                                                                     $['value'],
                                                                                     {
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                             }],
@@ -815,7 +815,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 'range': v_parse_tree_to_location.Value(
                                                                                     $['value'],
                                                                                     {
-                                                                                        'document resource identifier': "dummy dri",
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                             }],
@@ -832,7 +832,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
                                                             {
-                                                                'document resource identifier': "dummy dri",
+                                                                'subdocument context': _p.optional.literal.not_set(),
                                                             },
                                                         ),
                                                     }],

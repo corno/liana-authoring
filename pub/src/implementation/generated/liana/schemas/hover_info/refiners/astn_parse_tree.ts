@@ -30,7 +30,7 @@ export const Hover_Texts: t_signatures.Hover_Texts = ($, abort) => _p.optional.f
                 $,
             ),
             {
-                'document resource identifier': "dummy dri",
+                'subdocument context': _p.optional.literal.not_set(),
             },
         )['items'],
     ).map(

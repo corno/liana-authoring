@@ -24,7 +24,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
             $,
         ),
         {
-            'document resource identifier': "dummy dri",
+            'subdocument context': _p.optional.literal.not_set(),
         },
     )['items'],
 ).map(
@@ -57,7 +57,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                     "text": null,
                                                 },
                                             ),
-                                            'document resource identifier': "dummy dri",
+                                            'subdocument context': _p.optional.literal.not_set(),
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -66,7 +66,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
                                                 {
-                                                    'document resource identifier': "dummy dri",
+                                                    'subdocument context': _p.optional.literal.not_set(),
                                                 },
                                             )
                                             return {
@@ -78,7 +78,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'range',
-                                                            'document resource identifier': "dummy dri",
+                                                            'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_external_location.Range_FE(
@@ -96,7 +96,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'text',
-                                                            'document resource identifier': "dummy dri",
+                                                            'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -126,7 +126,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                     "range": null,
                                                 },
                                             ),
-                                            'document resource identifier': "dummy dri",
+                                            'subdocument context': _p.optional.literal.not_set(),
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -135,7 +135,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
                                                 {
-                                                    'document resource identifier': "dummy dri",
+                                                    'subdocument context': _p.optional.literal.not_set(),
                                                 },
                                             )
                                             return {
@@ -147,7 +147,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'range',
-                                                            'document resource identifier': "dummy dri",
+                                                            'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_external_location.Range_FE(
@@ -178,7 +178,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                     "text": null,
                                                 },
                                             ),
-                                            'document resource identifier': "dummy dri",
+                                            'subdocument context': _p.optional.literal.not_set(),
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -187,7 +187,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
                                                 {
-                                                    'document resource identifier': "dummy dri",
+                                                    'subdocument context': _p.optional.literal.not_set(),
                                                 },
                                             )
                                             return {
@@ -199,7 +199,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'location',
-                                                            'document resource identifier': "dummy dri",
+                                                            'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_external_location.Position(
@@ -217,7 +217,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'text',
-                                                            'document resource identifier': "dummy dri",
+                                                            'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -239,7 +239,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                     'range': v_parse_tree_to_location.Value(
                                         $['value'],
                                         {
-                                            'document resource identifier': "dummy dri",
+                                            'subdocument context': _p.optional.literal.not_set(),
                                         },
                                     ),
                                 }],
