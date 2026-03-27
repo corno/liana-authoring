@@ -13,7 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/text
 
 import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 import * as v_external_location from "../../location/refiners/astn_parse_tree"
 
@@ -23,6 +23,9 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
         ($) => abort(
             $,
         ),
+        {
+            'document resource identifier': "dummy dri",
+        },
     )['items'],
 ).map(
     ($) => _p_change_context(
@@ -54,6 +57,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                     "text": null,
                                                 },
                                             ),
+                                            'document resource identifier': "dummy dri",
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -61,6 +65,9 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
+                                                {
+                                                    'document resource identifier': "dummy dri",
+                                                },
                                             )
                                             return {
                                                 'range': _p_change_context(
@@ -71,6 +78,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'range',
+                                                            'document resource identifier': "dummy dri",
                                                         },
                                                     ),
                                                     ($) => v_external_location.Range_FE(
@@ -88,6 +96,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'text',
+                                                            'document resource identifier': "dummy dri",
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -117,6 +126,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                     "range": null,
                                                 },
                                             ),
+                                            'document resource identifier': "dummy dri",
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -124,6 +134,9 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
+                                                {
+                                                    'document resource identifier': "dummy dri",
+                                                },
                                             )
                                             return {
                                                 'range': _p_change_context(
@@ -134,6 +147,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'range',
+                                                            'document resource identifier': "dummy dri",
                                                         },
                                                     ),
                                                     ($) => v_external_location.Range_FE(
@@ -164,6 +178,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                     "text": null,
                                                 },
                                             ),
+                                            'document resource identifier': "dummy dri",
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -171,6 +186,9 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
+                                                {
+                                                    'document resource identifier': "dummy dri",
+                                                },
                                             )
                                             return {
                                                 'location': _p_change_context(
@@ -181,6 +199,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'location',
+                                                            'document resource identifier': "dummy dri",
                                                         },
                                                     ),
                                                     ($) => v_external_location.Position(
@@ -198,6 +217,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'text',
+                                                            'document resource identifier': "dummy dri",
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -218,6 +238,9 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                     'type': ['state', ['unknown option', $['option']['token']['value']]],
                                     'range': v_parse_tree_to_location.Value(
                                         $['value'],
+                                        {
+                                            'document resource identifier': "dummy dri",
+                                        },
                                     ),
                                 }],
                             )

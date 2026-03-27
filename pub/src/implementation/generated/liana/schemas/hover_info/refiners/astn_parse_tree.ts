@@ -13,7 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/hove
 
 import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 export const Hover_Texts: t_signatures.Hover_Texts = ($, abort) => _p.optional.from.optional(
     v_unmarshalled_from_parse_tree.Optional(
@@ -29,6 +29,9 @@ export const Hover_Texts: t_signatures.Hover_Texts = ($, abort) => _p.optional.f
             ($) => abort(
                 $,
             ),
+            {
+                'document resource identifier': "dummy dri",
+            },
         )['items'],
     ).map(
         ($) => _p_change_context(

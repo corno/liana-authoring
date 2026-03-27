@@ -13,7 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/sort
 
 import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 import * as v_external_location from "../../location/refiners/astn_parse_tree"
 
@@ -29,6 +29,7 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
                     "position": null,
                 },
             ),
+            'document resource identifier': "dummy dri",
         },
     ),
     ($) => _p_variables(
@@ -36,6 +37,9 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
             
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
+                {
+                    'document resource identifier': "dummy dri",
+                },
             )
             return {
                 'position': _p_change_context(
@@ -46,6 +50,7 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
                         ),
                         {
                             'id': 'position',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => v_external_location.Position(

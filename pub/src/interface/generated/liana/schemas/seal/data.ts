@@ -1,7 +1,7 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_path from "../path/data"
+import * as i_imports_path from "../path/data"
 
 export type Result_ = string
 
@@ -11,7 +11,7 @@ export namespace Parameters_ {
     
     export namespace source {
         
-        export type file_path = i__imports_path.Node_Path
+        export type file_path = i_imports_path.Node_Path
         
         export type tab_size = number
         

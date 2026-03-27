@@ -1,13 +1,13 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_location from "../astn_location/data"
+import * as i_imports_location from "../astn_location/data"
 
 export namespace Errors_ {
     
     export namespace L {
         
-        export type range = i__imports_location.Range
+        export type range = i_imports_location.Range
         
         export namespace type_ {
             

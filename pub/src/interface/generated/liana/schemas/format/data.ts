@@ -1,11 +1,11 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_location from "../location/data"
+import * as i_imports_location from "../location/data"
 
-import * as i__imports_text_edits from "../text_edits/data"
+import * as i_imports_text_edits from "../text_edits/data"
 
-export type Result_ = i__imports_text_edits.Text_Edits
+export type Result_ = i_imports_text_edits.Text_Edits
 
 export namespace Error_ {
     

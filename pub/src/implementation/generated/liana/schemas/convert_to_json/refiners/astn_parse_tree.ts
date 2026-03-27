@@ -13,7 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/conv
 
 import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_context(
     v_unmarshalled_from_parse_tree.Verbose_Group(
@@ -28,6 +28,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                     "target": null,
                 },
             ),
+            'document resource identifier': "dummy dri",
         },
     ),
     ($) => _p_variables(
@@ -35,6 +36,9 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
             
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
+                {
+                    'document resource identifier': "dummy dri",
+                },
             )
             return {
                 'source': _p_change_context(
@@ -45,6 +49,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                         ),
                         {
                             'id': 'source',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => _p_change_context(
@@ -60,6 +65,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                         "tab size": null,
                                     },
                                 ),
+                                'document resource identifier': "dummy dri",
                             },
                         ),
                         ($) => _p_variables(
@@ -67,6 +73,9 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                 
                                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                                     $['value'],
+                                    {
+                                        'document resource identifier': "dummy dri",
+                                    },
                                 )
                                 return {
                                     'document resource identifier': _p_change_context(
@@ -77,6 +86,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'document resource identifier',
+                                                'document resource identifier': "dummy dri",
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Text(
@@ -94,6 +104,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'tab size',
+                                                'document resource identifier': "dummy dri",
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Number(
@@ -103,6 +114,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['decimal', null],
+                                                'document resource identifier': "dummy dri",
                                             },
                                         ),
                                     ),
@@ -119,6 +131,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                         ),
                         {
                             'id': 'target',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => _p_change_context(
@@ -134,6 +147,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                         "newline": null,
                                     },
                                 ),
+                                'document resource identifier': "dummy dri",
                             },
                         ),
                         ($) => _p_variables(
@@ -141,6 +155,9 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                 
                                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                                     $['value'],
+                                    {
+                                        'document resource identifier': "dummy dri",
+                                    },
                                 )
                                 return {
                                     'indentation': _p_change_context(
@@ -151,6 +168,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'indentation',
+                                                'document resource identifier': "dummy dri",
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Text(
@@ -168,6 +186,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'newline',
+                                                'document resource identifier': "dummy dri",
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Text(

@@ -1,15 +1,15 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_completion_suggestions from "../completion_suggestions/data"
+import * as i_imports_completion_suggestions from "../completion_suggestions/data"
 
-import * as i__imports_location from "../location/data"
+import * as i_imports_location from "../location/data"
 
-import * as i__imports_path from "../path/data"
+import * as i_imports_path from "../path/data"
 
 export namespace Result_ {
     
-    export type completion_suggestions = i__imports_completion_suggestions.Completion_Suggestions
+    export type completion_suggestions = i_imports_completion_suggestions.Completion_Suggestions
     
 }
 
@@ -23,7 +23,7 @@ export namespace Parameters_ {
     
     export namespace source {
         
-        export type file_path = i__imports_path.Node_Path
+        export type file_path = i_imports_path.Node_Path
         
         export type tab_size = number
         
@@ -34,7 +34,7 @@ export namespace Parameters_ {
         readonly 'tab size': source.tab_size
     }
     
-    export type position = i__imports_location.Position
+    export type position = i_imports_location.Position
     
     export type indent = string
     

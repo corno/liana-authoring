@@ -1,9 +1,9 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_location from "../location/data"
+import * as i_imports_location from "../location/data"
 
-import * as i__imports_path from "../path/data"
+import * as i_imports_path from "../path/data"
 
 export namespace Diagnostics_ {
     
@@ -27,7 +27,7 @@ export namespace Diagnostics_ {
             | readonly ['information', severity.information]
             | readonly ['hint', severity.hint]
         
-        export type range = i__imports_location.Range_FE
+        export type range = i_imports_location.Range_FE
         
         export type message = string
         
@@ -39,9 +39,9 @@ export namespace Diagnostics_ {
                     
                     export namespace location {
                         
-                        export type file_path = i__imports_path.Node_Path
+                        export type file_path = i_imports_path.Node_Path
                         
-                        export type range = i__imports_location.Range_FE
+                        export type range = i_imports_location.Range_FE
                         
                     }
                     
@@ -94,7 +94,7 @@ export namespace Parameters_ {
     
     export type content = string
     
-    export type file_path = i__imports_path.Node_Path
+    export type file_path = i_imports_path.Node_Path
     
     export type tab_size = number
     

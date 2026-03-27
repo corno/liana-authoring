@@ -13,7 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/comp
 
 import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 import * as v_external_location from "../../location/refiners/astn_parse_tree"
 
@@ -25,6 +25,9 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
         ($) => abort(
             $,
         ),
+        {
+            'document resource identifier': "dummy dri",
+        },
     )['items'],
 ).map(
     ($) => _p_change_context(
@@ -45,6 +48,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                             "type": null,
                         },
                     ),
+                    'document resource identifier': "dummy dri",
                 },
             ),
             ($) => _p_variables(
@@ -52,6 +56,9 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                     
                     const var_verbose_group_range = v_parse_tree_to_location.Value(
                         $['value'],
+                        {
+                            'document resource identifier': "dummy dri",
+                        },
                     )
                     return {
                         'label': _p_change_context(
@@ -62,6 +69,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'label',
+                                    'document resource identifier': "dummy dri",
                                 },
                             ),
                             ($) => v_unmarshalled_from_parse_tree.Text(
@@ -79,6 +87,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'insert text',
+                                    'document resource identifier': "dummy dri",
                                 },
                             ),
                             ($) => v_unmarshalled_from_parse_tree.Text(
@@ -96,6 +105,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'documentation',
+                                    'document resource identifier': "dummy dri",
                                 },
                             ),
                             ($) => v_unmarshalled_from_parse_tree.Text(
@@ -113,6 +123,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'additional text edits',
+                                    'document resource identifier': "dummy dri",
                                 },
                             ),
                             ($) => v_external_text_edits.Text_Edits(
@@ -130,6 +141,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 ),
                                 {
                                     'id': 'type',
+                                    'document resource identifier': "dummy dri",
                                 },
                             ),
                             ($) => _p_change_context(
@@ -259,6 +271,9 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         'type': ['state', ['unknown option', $['option']['token']['value']]],
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
+                                                            {
+                                                                'document resource identifier': "dummy dri",
+                                                            },
                                                         ),
                                                     }],
                                                 )

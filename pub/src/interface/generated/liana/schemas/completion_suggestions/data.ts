@@ -1,9 +1,9 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_location from "../location/data"
+import * as i_imports_location from "../location/data"
 
-import * as i__imports_text_edits from "../text_edits/data"
+import * as i_imports_text_edits from "../text_edits/data"
 
 export namespace Completion_Suggestions_ {
     
@@ -15,7 +15,7 @@ export namespace Completion_Suggestions_ {
         
         export type documentation = string
         
-        export type additional_text_edits = i__imports_text_edits.Text_Edits
+        export type additional_text_edits = i_imports_text_edits.Text_Edits
         
         export namespace type_ {
             

@@ -13,7 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/loca
 
 import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 export const Position: t_signatures.Position = ($, abort) => _p_change_context(
     v_unmarshalled_from_parse_tree.Verbose_Group(
@@ -28,6 +28,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                     "character": null,
                 },
             ),
+            'document resource identifier': "dummy dri",
         },
     ),
     ($) => _p_variables(
@@ -35,6 +36,9 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
             
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
+                {
+                    'document resource identifier': "dummy dri",
+                },
             )
             return {
                 'line': _p_change_context(
@@ -45,6 +49,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'line',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Number(
@@ -54,6 +59,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'type': ['decimal', null],
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                 ),
@@ -65,6 +71,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'character',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Number(
@@ -74,6 +81,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'type': ['decimal', null],
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                 ),
@@ -95,6 +103,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                     "end": null,
                 },
             ),
+            'document resource identifier': "dummy dri",
         },
     ),
     ($) => _p_variables(
@@ -102,6 +111,9 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
             
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
+                {
+                    'document resource identifier': "dummy dri",
+                },
             )
             return {
                 'start': _p_change_context(
@@ -112,6 +124,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'start',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => Position(
@@ -129,6 +142,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'end',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => Position(

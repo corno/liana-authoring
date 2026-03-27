@@ -13,7 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/path
 
 import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context(
     v_unmarshalled_from_parse_tree.Verbose_Group(
@@ -28,6 +28,7 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
                     "node": null,
                 },
             ),
+            'document resource identifier': "dummy dri",
         },
     ),
     ($) => _p_variables(
@@ -35,6 +36,9 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
             
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
+                {
+                    'document resource identifier': "dummy dri",
+                },
             )
             return {
                 'context': _p_change_context(
@@ -45,6 +49,7 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
                         ),
                         {
                             'id': 'context',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => Context_Path(
@@ -62,6 +67,7 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
                         ),
                         {
                             'id': 'node',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -89,6 +95,7 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
                     "subpath": null,
                 },
             ),
+            'document resource identifier': "dummy dri",
         },
     ),
     ($) => _p_variables(
@@ -96,6 +103,9 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
             
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
+                {
+                    'document resource identifier': "dummy dri",
+                },
             )
             return {
                 'start': _p_change_context(
@@ -106,6 +116,7 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
                         ),
                         {
                             'id': 'start',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => Start(
@@ -123,6 +134,7 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
                         ),
                         {
                             'id': 'subpath',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => Context_Subpath(
@@ -143,6 +155,9 @@ export const Context_Subpath: t_signatures.Context_Subpath = ($, abort) => _p.li
         ($) => abort(
             $,
         ),
+        {
+            'document resource identifier': "dummy dri",
+        },
     )['items'],
 ).map(
     ($) => _p_change_context(
@@ -192,6 +207,7 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                                             "up steps": null,
                                         },
                                     ),
+                                    'document resource identifier': "dummy dri",
                                 },
                             ),
                             ($) => _p_variables(
@@ -199,6 +215,9 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                                     
                                     const var_verbose_group_range = v_parse_tree_to_location.Value(
                                         $['value'],
+                                        {
+                                            'document resource identifier': "dummy dri",
+                                        },
                                     )
                                     return {
                                         'up steps': _p_change_context(
@@ -209,6 +228,7 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                                                 ),
                                                 {
                                                     'id': 'up steps',
+                                                    'document resource identifier': "dummy dri",
                                                 },
                                             ),
                                             ($) => Up_Steps(
@@ -229,6 +249,9 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                             'type': ['state', ['unknown option', $['option']['token']['value']]],
                             'range': v_parse_tree_to_location.Value(
                                 $['value'],
+                                {
+                                    'document resource identifier': "dummy dri",
+                                },
                             ),
                         }],
                     )
@@ -244,6 +267,7 @@ export const Up_Steps: t_signatures.Up_Steps = ($, abort) => v_unmarshalled_from
     ),
     {
         'type': ['decimal', null],
+        'document resource identifier': "dummy dri",
     },
 )
 
@@ -261,6 +285,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                     "trailing slash": null,
                 },
             ),
+            'document resource identifier': "dummy dri",
         },
     ),
     ($) => _p_variables(
@@ -268,6 +293,9 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
             
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
+                {
+                    'document resource identifier': "dummy dri",
+                },
             )
             return {
                 'leading slash': _p_change_context(
@@ -278,6 +306,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                         ),
                         {
                             'id': 'leading slash',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -287,6 +316,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                         ),
                         {
                             'type': ['true/false', null],
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                 ),
@@ -298,6 +328,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                         ),
                         {
                             'id': 'segments',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => _p.list.from.list(
@@ -306,6 +337,9 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                             ($) => abort(
                                 $,
                             ),
+                            {
+                                'document resource identifier': "dummy dri",
+                            },
                         )['items'],
                     ).map(
                         ($) => _p_change_context(
@@ -367,6 +401,9 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                                                         'type': ['state', ['unknown option', $['option']['token']['value']]],
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
+                                                            {
+                                                                'document resource identifier': "dummy dri",
+                                                            },
                                                         ),
                                                     }],
                                                 )
@@ -385,6 +422,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                         ),
                         {
                             'id': 'trailing slash',
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -394,6 +432,7 @@ export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($, abort) 
                         ),
                         {
                             'type': ['true/false', null],
+                            'document resource identifier': "dummy dri",
                         },
                     ),
                 ),
