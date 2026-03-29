@@ -11,8 +11,8 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
-                    'Position': (
+                `simple types`: {
+                    'Natural': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
                             `type`: | `natural` ~
@@ -25,21 +25,11 @@
                     `root value`: | `group` {
                         'line': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                         'character': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                     }
                 )
@@ -79,7 +69,7 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
+                `simple types`: {
                     'Position': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
@@ -181,7 +171,7 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
+                `simple types`: {
                     'Position': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
@@ -302,8 +292,8 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
-                    'Position': (
+                `simple types`: {
+                    'Natural': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
                             `type`: | `natural` ~
@@ -325,12 +315,7 @@
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `local` (
-                                        `precision`: | `exact` (
-                                            `decimal separator offset`: _
-                                            `type`: | `natural` ~
-                                        )
-                                    )
+                                    `value`: | `number` | `global` 'Natural'
                                 )
                             }
                         )
@@ -362,7 +347,14 @@
             `globals`: (
                 `complexity`: | `unconstrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {
+                    'Natural': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
+                        )
+                    )
+                }
             )
             `modules`: {
                 'Node Path': (
@@ -434,12 +426,7 @@
                     )
                 )
                 'Up Steps': (
-                    `root value`: | `number` | `local` (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
-                        )
-                    )
+                    `root value`: | `number` | `global` 'Natural'
                 )
                 'Non Normalized Path': (
                     `root value`: | `group` {
@@ -508,8 +495,8 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
-                    'Position': (
+                `simple types`: {
+                    'Natural': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
                             `type`: | `natural` ~
@@ -639,12 +626,7 @@
                         )
                         'tab size': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                     }
                 )
@@ -670,7 +652,7 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
+                `simple types`: {
                     'Position': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
@@ -756,8 +738,8 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
-                    'Position': (
+                `simple types`: {
+                    'Natural': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
                             `type`: | `natural` ~
@@ -803,12 +785,7 @@
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `local` (
-                                        `precision`: | `exact` (
-                                            `decimal separator offset`: _
-                                            `type`: | `natural` ~
-                                        )
-                                    )
+                                    `value`: | `number` | `global` 'Natural'
                                 )
                             }
                         )
@@ -839,7 +816,7 @@
             `globals`: (
                 `complexity`: | `unconstrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {}
             )
             `modules`: {
                 'Hover Texts': (
@@ -876,8 +853,8 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
-                    'Position': (
+                `simple types`: {
+                    'Natural': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
                             `type`: | `natural` ~
@@ -928,12 +905,7 @@
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `local` (
-                                        `precision`: | `exact` (
-                                            `decimal separator offset`: _
-                                            `type`: | `natural` ~
-                                        )
-                                    )
+                                    `value`: | `number` | `global` 'Natural'
                                 )
                             }
                         )
@@ -958,7 +930,14 @@
             `globals`: (
                 `complexity`: | `unconstrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {
+                    'Natural': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
+                        )
+                    )
+                }
             )
             `modules`: {
                 'Range': (
@@ -1018,12 +997,7 @@
                         )
                         'absolute': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                     }
                 )
@@ -1031,21 +1005,11 @@
                     `root value`: | `group` {
                         'line': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                         'column': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                     }
                 )
@@ -1067,8 +1031,8 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
-                    'Position': (
+                `simple types`: {
+                    'Natural': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
                             `type`: | `natural` ~
@@ -1105,12 +1069,7 @@
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `local` (
-                                        `precision`: | `exact` (
-                                            `decimal separator offset`: _
-                                            `type`: | `natural` ~
-                                        )
-                                    )
+                                    `value`: | `number` | `global` 'Natural'
                                 )
                             }
                         )
@@ -1151,7 +1110,7 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
+                `simple types`: {
                     'Position': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
@@ -1189,7 +1148,7 @@
             `globals`: (
                 `complexity`: | `constrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {}
             )
             `modules`: {
                 'Errors': (
@@ -1244,6 +1203,11 @@
                                                                                 `value`: | `nothing` ~
                                                                             )
                                                                             'not set': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'nothing': (
                                                                                 `constraints`: _
                                                                                 `description`: _
                                                                                 `value`: | `nothing` ~
