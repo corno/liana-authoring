@@ -27,16 +27,22 @@ export const Value_data = (
     }
 ): d_out.Value.data => _p.decide.state($, ($): d_out.Value.data => {
     switch ($[0]) {
-        case 'number': return _p.ss($, ($) => ['concrete', {
+        case 'simple': return _p.ss($, ($) => ['concrete', {
             'type': ['text', {
                 'delimiter': ['none', null],
-                'value': "0"
-            }]
-        }])
-        case 'boolean': return _p.ss($, ($) => ['concrete', {
-            'type': ['text', {
-                'delimiter': ['none', null],
-                'value': "false"
+                'value': _p.decide.state($, ($) => {
+                    switch ($[0]) {
+                        case 'global': return _p.ss($, ($) => _p.decide.state($['l entry'].type, ($) => {
+                            switch ($[0]) {
+                                case 'number': return _p.ss($, ($) => "0")
+                                case 'boolean': return _p.ss($, ($) => "false")
+                                case 'date': return _p.ss($, ($) => "yyyy-mm-dd")
+                                default: return _p.au($[0])
+                            }
+                        }))
+                        default: return _p.au($[0])
+                    }
+                })
             }]
         }])
         case 'nothing': return _p.ss($, ($) => ['concrete', {
@@ -112,13 +118,9 @@ export const Resolver_Value = (
     'data': ['concrete', {
         'type': _p.decide.state($, ($): d_out.Value.data.concrete.type_ => {
             switch ($[0]) {
-                case 'number': return _p.ss($, ($) => ['text', {
+                case 'simple': return _p.ss($, ($) => ['text', {
                     'delimiter': ['none', null],
                     'value': "0"
-                }])
-                case 'boolean': return _p.ss($, ($) => ['text', {
-                    'delimiter': ['none', null],
-                    'value': "false"
                 }])
                 case 'nothing': return _p.ss($, ($) => ['nothing', null])
                 case 'text': return _p.ss($, ($) => ['text', {

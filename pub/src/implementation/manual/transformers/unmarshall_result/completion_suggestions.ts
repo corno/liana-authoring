@@ -160,11 +160,10 @@ const do_def = (
                     ),
                     'type': _p.decide.state($, ($): d_out.Completion_Suggestions.L.type_ => {
                         switch ($[0]) {
-                            case 'boolean': return _p.ss($, ($) => ['boolean', null])
                             case 'dictionary': return _p.ss($, ($) => ['dictionary', null])
                             case 'list': return _p.ss($, ($) => ['list', null])
                             case 'nothing': return _p.ss($, ($) => ['nothing', null])
-                            case 'number': return _p.ss($, ($) => ['number', null])
+                            case 'simple': return _p.ss($, ($) => ['simple', null])
                             case 'optional': return _p.ss($, ($) => ['optional', null])
                             case 'state': return _p.ss($, ($) => ['state', null])
                             case 'text': return _p.ss($, ($) => ['text', null])

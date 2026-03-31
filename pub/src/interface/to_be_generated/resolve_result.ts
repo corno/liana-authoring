@@ -15,13 +15,12 @@ export type Value = {
 }
 
 export type Resolved_Value_Type =
-    | ['boolean', d_unmarshall_result.Boolean]
     | ['component', Component]
     | ['dictionary', Dictionary]
     | ['group', Group]
     | ['list', List]
     | ['nothing', d_unmarshall_result.Nothing]
-    | ['number', d_unmarshall_result.Number]
+    | ['simple', d_unmarshall_result.Simple]
     | ['optional', Optional]
     | ['reference', Reference]
     | ['state', State]

@@ -23,12 +23,12 @@ export const Value = (
         'unmarshalled': $,
         'resolved': _p.decide.state($p.definition, ($): d_out.Resolved_Value_Type => {
             switch ($[0]) {
-                case 'boolean': return _p.ss($, ($) => ['boolean', _p.decide.state(unmarshall_result.unmarshalled, ($) => {
-                    switch ($[0]) {
-                        case 'boolean': return _p.ss($, ($) => $)
-                        default: return _p_unreachable_code_path("unmarshalled value should match the definition")
-                    }
-                })])
+                // case 'boolean': return _p.ss($, ($) => ['boolean', _p.decide.state(unmarshall_result.unmarshalled, ($) => {
+                //     switch ($[0]) {
+                //         case 'boolean': return _p.ss($, ($) => $)
+                //         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
+                //     }
+                // })])
                 case 'component': return _p.ss($, ($) => {
                     const def = $
                     return ['component', _p.decide.state(unmarshall_result.unmarshalled, ($) => {
@@ -201,9 +201,9 @@ export const Value = (
                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                     }
                 })])
-                case 'number': return _p.ss($, ($) => ['number', _p.decide.state(unmarshall_result.unmarshalled, ($) => {
+                case 'simple': return _p.ss($, ($) => ['simple', _p.decide.state(unmarshall_result.unmarshalled, ($) => {
                     switch ($[0]) {
-                        case 'number': return _p.ss($, ($) => $)
+                        case 'simple': return _p.ss($, ($) => $)
                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                     }
                 })])

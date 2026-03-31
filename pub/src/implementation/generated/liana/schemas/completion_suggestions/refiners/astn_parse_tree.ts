@@ -155,16 +155,6 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                     $['option']['token']['value'],
                                     ($t): t_out.Completion_Suggestions.L.type_ => {
                                         switch ($t) {
-                                            case 'boolean':
-                                                return _p_change_context(
-                                                    $['value'],
-                                                    ($) => ['boolean', v_unmarshalled_from_parse_tree.Nothing(
-                                                        $,
-                                                        ($) => abort(
-                                                            $,
-                                                        ),
-                                                    )],
-                                                )
                                             case 'component':
                                                 return _p_change_context(
                                                     $['value'],
@@ -215,10 +205,10 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         ),
                                                     )],
                                                 )
-                                            case 'number':
+                                            case 'simple':
                                                 return _p_change_context(
                                                     $['value'],
-                                                    ($) => ['number', v_unmarshalled_from_parse_tree.Nothing(
+                                                    ($) => ['simple', v_unmarshalled_from_parse_tree.Nothing(
                                                         $,
                                                         ($) => abort(
                                                             $,

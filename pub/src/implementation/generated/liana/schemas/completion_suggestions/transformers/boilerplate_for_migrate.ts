@@ -39,11 +39,6 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                 $,
                 ($): t_out.Completion_Suggestions.L.type_ => {
                     switch ($[0]) {
-                        case 'boolean':
-                            return _p.ss(
-                                $,
-                                ($) => ['boolean', null],
-                            )
                         case 'component':
                             return _p.ss(
                                 $,
@@ -69,10 +64,10 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                                 $,
                                 ($) => ['nothing', null],
                             )
-                        case 'number':
+                        case 'simple':
                             return _p.ss(
                                 $,
-                                ($) => ['number', null],
+                                ($) => ['simple', null],
                             )
                         case 'optional':
                             return _p.ss(

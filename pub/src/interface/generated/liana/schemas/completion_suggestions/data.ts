@@ -18,9 +18,7 @@ export namespace Completion_Suggestions_ {
         export type additional_text_edits = i_imports_text_edits.Text_Edits
         
         export namespace type_ {
-            
-            export type boolean_ = null
-            
+                        
             export type component = null
             
             export type dictionary = null
@@ -31,7 +29,7 @@ export namespace Completion_Suggestions_ {
             
             export type nothing = null
             
-            export type number_ = null
+            export type simple = null
             
             export type optional = null
             
@@ -44,13 +42,12 @@ export namespace Completion_Suggestions_ {
         }
         
         export type type_ = 
-            | readonly ['boolean', type_.boolean_]
             | readonly ['component', type_.component]
             | readonly ['dictionary', type_.dictionary]
             | readonly ['group', type_.group]
             | readonly ['list', type_.list]
             | readonly ['nothing', type_.nothing]
-            | readonly ['number', type_.number_]
+            | readonly ['simple', type_.simple]
             | readonly ['optional', type_.optional]
             | readonly ['reference', type_.reference]
             | readonly ['state', type_.state]

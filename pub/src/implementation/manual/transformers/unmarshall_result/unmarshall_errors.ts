@@ -286,26 +286,7 @@ export const Value: Value = ($, $p) => {
                     default: return _p.au($[0])
                 }
             }))
-            case 'number': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Errors => $['correct string type']
-                        ? _p.list.literal([])
-                        : _p.list.literal<d_out.Errors.L>([{
-                            'range': $.instance.range,
-                            'type': ['warning', ['expected undelimited text', null]]
-                        }]))
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['text', null]]),
-                            }]]
-                        }
-                    ]))
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'boolean': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
+            case 'simple': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
                 switch ($[0]) {
                     case 'valid': return _p.ss($, ($): d_out.Errors => $['correct string type']
                         ? _p.list.literal([])

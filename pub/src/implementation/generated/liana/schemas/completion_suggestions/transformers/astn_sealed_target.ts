@@ -53,14 +53,6 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                     $,
                     ($): t_out.Value.state => {
                         switch ($[0]) {
-                            case 'boolean':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'boolean',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
                             case 'component':
                                 return _p.ss(
                                     $,
@@ -101,11 +93,11 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                                         'value': ['nothing', null],
                                     }),
                                 )
-                            case 'number':
+                            case 'simple':
                                 return _p.ss(
                                     $,
                                     ($) => ({
-                                        'option': 'number',
+                                        'option': 'simple',
                                         'value': ['nothing', null],
                                     }),
                                 )

@@ -25,22 +25,35 @@ export const Document: Document = ($, $p) => {
         t_to_unmarshall_result_value_at_position.Document($, $p),
         ($) => {
             switch ($[0]) {
-                case 'value': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
-                    $['property path'],
+                case 'value': return _p.ss($, ($) => _p.optional.literal.set(_p.list.nested_literal_old([
+                    [
+                        $['property path'],
+                    ],
                     _p.decide.state($.unmarshalled, ($) => {
                         switch ($[0]) {
-                            case 'missing': return _p.ss($, ($) => "missing")
-                            case 'number': return _p.ss($, ($) => "number")
-                            case 'boolean': return _p.ss($, ($) => "boolean")
-                            case 'component': return _p.ss($, ($) => "component")
-                            case 'dictionary': return _p.ss($, ($) => "dictionary")
-                            case 'group': return _p.ss($, ($) => "group")
-                            case 'list': return _p.ss($, ($) => "list")
-                            case 'nothing': return _p.ss($, ($) => "nothing")
-                            case 'optional': return _p.ss($, ($) => "optional")
-                            case 'reference': return _p.ss($, ($) => "reference")
-                            case 'state': return _p.ss($, ($) => "state")
-                            case 'text': return _p.ss($, ($) => "text")
+                            case 'missing': return _p.ss($, ($) => [ "use ctrl+d to get suggestions" ])
+                            case 'simple': return _p.ss($, ($) => [ "simple value" ])
+                            case 'component': return _p.ss($, ($) => [ "component" ])
+                            case 'dictionary': return _p.ss($, ($) => [ "dictionary" ])
+                            case 'group': return _p.ss($, ($) => [ "group" ])
+                            case 'list': return _p.ss($, ($) => [ "list" ])
+                            case 'nothing': return _p.ss($, ($) => [ "nothing" ])
+                            case 'optional': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
+                                switch ($[0]) {
+                                    case 'valid': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                                        switch ($[0]) {
+                                            case 'set': return _p.ss($, ($) => ["optional"])
+                                            case 'not set':return _p.ss($, ($) => ["not set optional", "replace by '*' to set the value"])
+                                            default: return _p.au($[0])
+                                        }
+                                    }))
+                                    case 'invalid': return _p.ss($, ($) => ["optional value"])
+                                    default: return _p.au($[0])
+                                }
+                            }))
+                            case 'reference': return _p.ss($, ($) => [ "reference" ])
+                            case 'state': return _p.ss($, ($) => [ "state" ])
+                            case 'text': return _p.ss($, ($) => [ "text" ])
                             default: return _p.au($[0])
                         }
                     }),
@@ -95,8 +108,8 @@ export const Document: Document = ($, $p) => {
                                 }),
                             ]))
                             case 'missing data': return _p.ss($, ($) => _p.list.literal([
-                                prop_path,
-                                "option is missing"
+                                "property: " + prop_path,
+                                "use ctrl+d to get suggestions for options",
                             ]))
                             default: return _p.au($[0])
                         }

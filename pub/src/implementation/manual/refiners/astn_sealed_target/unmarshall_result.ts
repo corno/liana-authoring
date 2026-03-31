@@ -54,20 +54,6 @@ export const Value: Value = ($, abort) => {
                 'type': ['dictionary', ['foo', null]],
                 'range': t_astn_parse_tree_to_location.Value(instance)
             }))
-            case 'boolean': return _p.ss($, ($): d_out.Value => ['text', {
-                'value': _p.decide.state($['found value type'], ($) => {
-                    switch ($[0]) {
-                        case 'valid': return _p.ss($, ($) => $.instance.token.value)
-                        default: return _p.ss($, ($) => abort({
-                            'definition path': definition_path,
-                            'type': ['boolean', ['wrong type', null]],
-                            'range': t_astn_parse_tree_to_location.Value($)
-                        }))
-                    }
-                }),
-                'delimiter': ['none', null],
-
-            }])
             case 'component': return _p.ss($, ($) => Value($.value, abort))
             case 'dictionary': return _p.ss($, ($) => ['dictionary', _p.decide.state($['found value type'], ($): d_out.Value.dictionary => {
                 switch ($[0]) {
@@ -243,7 +229,7 @@ export const Value: Value = ($, abort) => {
                 }
             })])
             case 'nothing': return _p.ss($, ($): d_out.Value => ['nothing', null])
-            case 'number': return _p.ss($, ($): d_out.Value => ['text', {
+            case 'simple': return _p.ss($, ($): d_out.Value => ['text', {
                 'value': _p.decide.state($['found value type'], ($) => {
                     switch ($[0]) {
                         case 'valid': return _p.ss($, ($) => $.instance.token.value)

@@ -25,28 +25,16 @@ export type Value = {
 
 export type Unmarshalled_Value_Type =
     | ['missing', null]
-    | ['boolean', Boolean]
     | ['component', Component]
     | ['dictionary', Dictionary]
     | ['group', Group]
     | ['list', List]
     | ['nothing', Nothing]
-    | ['number', Number]
+    | ['simple', Simple]
     | ['optional', Optional]
     | ['reference', Reference]
     | ['state', State]
     | ['text', Text]
-
-
-export type Boolean = {
-    'definition': d_schema.Value.boolean_
-    'found value type':
-    | ['valid', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.text
-        'correct string type': boolean
-    }]
-    | ['invalid', d_astn_parse_tree.Value]
-}
 
 export type Component = {
     'definition': d_schema.Value.component
@@ -228,8 +216,8 @@ export type Text = {
     | ['invalid', d_astn_parse_tree.Value]
 }
 
-export type Number = {
-    'definition': d_schema.Value.number_
+export type Simple = {
+    'definition': d_schema.Value.simple
     'found value type':
     | ['valid', {
         'instance': d_astn_parse_tree.Value.type_.concrete.text

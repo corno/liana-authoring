@@ -40,30 +40,6 @@ export const Value: Value = ($, $p) => {
                     'instance': value,
                     'unmarshalled': _p.decide.state($p.definition, ($): d_out.Unmarshalled_Value_Type => {
                         switch ($[0]) {
-                            case 'boolean': return _p.ss($, ($): d_out.Unmarshalled_Value_Type => {
-                                return ['boolean', {
-                                    'definition': $,
-                                    'found value type': _p.decide.state(concrete_value, ($) => {
-                                        switch ($[0]) {
-                                            case 'text': return _p.ss($, ($) => ['valid', {
-                                                'instance': $,
-                                                // 'parsed': xx,
-                                                'range': $.range,
-                                                'correct string type': _p.decide.state($.token.type, ($) => {
-                                                    switch ($[0]) {
-                                                        case 'quoted': return false
-                                                        case 'apostrophed': return false
-                                                        case 'undelimited': return true
-                                                        case 'backticked': return false
-                                                        default: return _p.au($[0])
-                                                    }
-                                                })
-                                            }])
-                                            default: return ['invalid', value]
-                                        }
-                                    })
-                                }]
-                            })
                             case 'component': return _p.ss($, ($): d_out.Unmarshalled_Value_Type => ['component', {
                                 'definition': $,
                                 'value': Value(
@@ -277,8 +253,8 @@ export const Value: Value = ($, $p) => {
                                     })
                                 }]
                             })
-                            case 'number': return _p.ss($, ($): d_out.Unmarshalled_Value_Type => {
-                                return ['number', {
+                            case 'simple': return _p.ss($, ($): d_out.Unmarshalled_Value_Type => {
+                                return ['simple', {
                                     'definition': $,
                                     'found value type': _p.decide.state(concrete_value, ($) => {
                                         switch ($[0]) {
