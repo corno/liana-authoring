@@ -13,9 +13,11 @@
                 }
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -25,11 +27,11 @@
                     `root value`: | `group` {
                         'line': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                         'character': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -68,12 +70,17 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'multi line text': (
+                        `type`: | `multi line` ~
+                    )
                 }
                 `simple types`: {
                     'Position': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -99,9 +106,7 @@
                                         )
                                         'text': (
                                             `description`: _
-                                            `value`: | `text` | `local` (
-                                                `type`: | `multi line` ~
-                                            )
+                                            `value`: | `text` | `global` 'multi line text'
                                         )
                                     }
                                 )
@@ -137,9 +142,7 @@
                                         )
                                         'text': (
                                             `description`: _
-                                            `value`: | `text` | `local` (
-                                                `type`: | `multi line` ~
-                                            )
+                                            `value`: | `text` | `global` 'multi line text'
                                         )
                                     }
                                 )
@@ -170,12 +173,20 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'multi line text': (
+                        `type`: | `multi line` ~
+                    )
+                    'text': (
+                        `type`: | `single line` ~
+                    )
                 }
                 `simple types`: {
                     'Position': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -186,21 +197,15 @@
                         `value`: | `group` {
                             'label': (
                                 `description`: _
-                                `value`: | `text` | `local` (
-                                    `type`: | `single line` ~
-                                )
+                                `value`: | `text` | `global` 'text'
                             )
                             'insert text': (
                                 `description`: _
-                                `value`: | `text` | `local` (
-                                    `type`: | `single line` ~
-                                )
+                                `value`: | `text` | `global` 'text'
                             )
                             'documentation': (
                                 `description`: _
-                                `value`: | `text` | `local` (
-                                    `type`: | `multi line` ~
-                                )
+                                `value`: | `text` | `global` 'multi line text'
                             )
                             'additional text edits': (
                                 `description`: _
@@ -216,11 +221,6 @@
                                 `description`: _
                                 `value`: | `state` (
                                     `options`: {
-                                        'boolean': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
                                         'component': (
                                             `constraints`: _
                                             `description`: _
@@ -246,7 +246,7 @@
                                             `description`: _
                                             `value`: | `nothing` ~
                                         )
-                                        'number': (
+                                        'simple': (
                                             `constraints`: _
                                             `description`: _
                                             `value`: | `nothing` ~
@@ -291,12 +291,17 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'text': (
+                        `type`: | `single line` ~
+                    )
                 }
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -309,13 +314,11 @@
                             `value`: | `group` {
                                 'document resource identifier': (
                                     `description`: _
-                                    `value`: | `text` | `local` (
-                                        `type`: | `single line` ~
-                                    )
+                                    `value`: | `text` | `global` 'text'
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `global` 'Natural'
+                                    `value`: | `simple` | `global` 'Natural'
                                 )
                             }
                         )
@@ -324,15 +327,11 @@
                             `value`: | `group` {
                                 'indentation': (
                                     `description`: _
-                                    `value`: | `text` | `local` (
-                                        `type`: | `single line` ~
-                                    )
+                                    `value`: | `text` | `global` 'text'
                                 )
                                 'newline': (
                                     `description`: _
-                                    `value`: | `text` | `local` (
-                                        `type`: | `single line` ~
-                                    )
+                                    `value`: | `text` | `global` 'text'
                                 )
                             }
                         )
@@ -346,13 +345,22 @@
             `resolver imports`: {}
             `globals`: (
                 `complexity`: | `unconstrained` ~
-                `text types`: {}
+                `text types`: {
+                    'text': (
+                        `type`: | `single line` ~
+                    )
+                }
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
+                    )
+                    'boolean': (
+                        `type`: | `boolean` ~
                     )
                 }
             )
@@ -368,9 +376,7 @@
                         )
                         'node': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `single line` ~
-                            )
+                            `value`: | `text` | `global` 'text'
                         )
                     }
                 )
@@ -394,9 +400,7 @@
                 )
                 'Context Subpath': (
                     `root value`: | `list` (
-                        `value`: | `text` | `local` (
-                            `type`: | `single line` ~
-                        )
+                        `value`: | `text` | `global` 'text'
                         `results`: _
                     )
                 )
@@ -426,13 +430,13 @@
                     )
                 )
                 'Up Steps': (
-                    `root value`: | `number` | `global` 'Natural'
+                    `root value`: | `simple` | `global` 'Natural'
                 )
                 'Non Normalized Path': (
                     `root value`: | `group` {
                         'leading slash': (
                             `description`: _
-                            `value`: | `boolean` ~
+                            `value`: | `simple` | `global` 'boolean'
                         )
                         'segments': (
                             `description`: _
@@ -447,9 +451,7 @@
                                         'child': (
                                             `constraints`: _
                                             `description`: _
-                                            `value`: | `text` | `local` (
-                                                `type`: | `single line` ~
-                                            )
+                                            `value`: | `text` | `global` 'text'
                                         )
                                         'current': (
                                             `constraints`: _
@@ -469,7 +471,7 @@
                         )
                         'trailing slash': (
                             `description`: _
-                            `value`: | `boolean` ~
+                            `value`: | `simple` | `global` 'boolean'
                         )
                     }
                 )
@@ -494,12 +496,20 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'text': (
+                        `type`: | `single line` ~
+                    )
+                    'multi line text': (
+                        `type`: | `multi line` ~
+                    )
                 }
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -548,9 +558,7 @@
                             )
                             'message': (
                                 `description`: _
-                                `value`: | `text` | `local` (
-                                    `type`: | `single line` ~
-                                )
+                                `value`: | `text` | `global` 'text'
                             )
                             'related information': (
                                 `description`: _
@@ -583,9 +591,7 @@
                                         )
                                         'message': (
                                             `description`: _
-                                            `value`: | `text` | `local` (
-                                                `type`: | `single line` ~
-                                            )
+                                            `value`: | `text` | `global` 'text'
                                         )
                                     }
                                     `results`: _
@@ -610,9 +616,7 @@
                     `root value`: | `group` {
                         'content': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `multi line` ~
-                            )
+                            `value`: | `text` | `global` 'multi line text'
                         )
                         'file path': (
                             `description`: _
@@ -626,7 +630,7 @@
                         )
                         'tab size': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -651,13 +655,21 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'text': (
+                        `type`: | `single line` ~
+                    )
                 }
                 `simple types`: {
                     'Position': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
+                    )
+                    'boolean': (
+                        `type`: | `boolean` ~
                     )
                 }
             )
@@ -675,9 +687,7 @@
                     `root value`: | `group` {
                         'message': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `single line` ~
-                            )
+                            `value`: | `text` | `global` 'text'
                         )
                     }
                 )
@@ -688,25 +698,23 @@
                             `value`: | `group` {
                                 'insert spaces': (
                                     `description`: _
-                                    `value`: | `boolean` ~
+                                    `value`: | `simple` | `global` 'boolean'
                                 )
                                 'preserve delimiters': (
                                     `description`: _
-                                    `value`: | `boolean` ~
+                                    `value`: | `simple` | `global` 'boolean'
                                 )
                                 'preserve final newline state': (
                                     `description`: _
-                                    `value`: | `boolean` ~
+                                    `value`: | `simple` | `global` 'boolean'
                                 )
                                 'preserve commas': (
                                     `description`: _
-                                    `value`: | `boolean` ~
+                                    `value`: | `simple` | `global` 'boolean'
                                 )
                                 'indent string': (
                                     `description`: _
-                                    `value`: | `text` | `local` (
-                                        `type`: | `single line` ~
-                                    )
+                                    `value`: | `text` | `global` 'text'
                                 )
                             }
                         )
@@ -737,12 +745,20 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'multi line text': (
+                        `type`: | `multi line` ~
+                    )
+                    'text': (
+                        `type`: | `single line` ~
+                    )
                 }
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -766,9 +782,7 @@
                     `root value`: | `group` {
                         'content': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `multi line` ~
-                            )
+                            `value`: | `text` | `global` 'multi line text'
                         )
                         'source': (
                             `description`: _
@@ -785,7 +799,7 @@
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `global` 'Natural'
+                                    `value`: | `simple` | `global` 'Natural'
                                 )
                             }
                         )
@@ -801,9 +815,7 @@
                         )
                         'indent': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `single line` ~
-                            )
+                            `value`: | `text` | `global` 'text'
                         )
                     }
                 )
@@ -815,15 +827,17 @@
             `resolver imports`: {}
             `globals`: (
                 `complexity`: | `unconstrained` ~
-                `text types`: {}
+                `text types`: {
+                    'text': (
+                        `type`: | `single line` ~
+                    )
+                }
                 `simple types`: {}
             )
             `modules`: {
                 'Hover Texts': (
                     `root value`: | `optional` | `list` (
-                        `value`: | `text` | `local` (
-                            `type`: | `single line` ~
-                        )
+                        `value`: | `text` | `global` 'text'
                         `results`: _
                     )
                 )
@@ -852,12 +866,17 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'multi line text': (
+                        `type`: | `multi line` ~
+                    )
                 }
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -886,9 +905,7 @@
                     `root value`: | `group` {
                         'content': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `multi line` ~
-                            )
+                            `value`: | `text` | `global` 'multi line text'
                         )
                         'source': (
                             `description`: _
@@ -905,7 +922,7 @@
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `global` 'Natural'
+                                    `value`: | `simple` | `global` 'Natural'
                                 )
                             }
                         )
@@ -932,9 +949,11 @@
                 `text types`: {}
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -997,7 +1016,7 @@
                         )
                         'absolute': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -1005,11 +1024,11 @@
                     `root value`: | `group` {
                         'line': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                         'column': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -1030,29 +1049,33 @@
                     'Text Value': (
                         `type`: | `single line` ~
                     )
+                    'text': (
+                        `type`: | `single line` ~
+                    )
+                    'multi line text': (
+                        `type`: | `multi line` ~
+                    )
                 }
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
             )
             `modules`: {
                 'Result': (
-                    `root value`: | `text` | `local` (
-                        `type`: | `single line` ~
-                    )
+                    `root value`: | `text` | `global` 'text'
                 )
                 'Parameters': (
                     `root value`: | `group` {
                         'content': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `multi line` ~
-                            )
+                            `value`: | `text` | `global` 'multi line text'
                         )
                         'source': (
                             `description`: _
@@ -1069,7 +1092,7 @@
                                 )
                                 'tab size': (
                                     `description`: _
-                                    `value`: | `number` | `global` 'Natural'
+                                    `value`: | `simple` | `global` 'Natural'
                                 )
                             }
                         )
@@ -1078,15 +1101,11 @@
                             `value`: | `group` {
                                 'indentation': (
                                     `description`: _
-                                    `value`: | `text` | `local` (
-                                        `type`: | `single line` ~
-                                    )
+                                    `value`: | `text` | `global` 'text'
                                 )
                                 'newline': (
                                     `description`: _
-                                    `value`: | `text` | `local` (
-                                        `type`: | `single line` ~
-                                    )
+                                    `value`: | `text` | `global` 'text'
                                 )
                             }
                         )
@@ -1112,9 +1131,11 @@
                 }
                 `simple types`: {
                     'Position': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -1147,7 +1168,11 @@
             `resolver imports`: {}
             `globals`: (
                 `complexity`: | `constrained` ~
-                `text types`: {}
+                `text types`: {
+                    'text': (
+                        `type`: | `single line` ~
+                    )
+                }
                 `simple types`: {}
             )
             `modules`: {
@@ -1241,9 +1266,7 @@
                                                         `value`: | `group` {
                                                             'name': (
                                                                 `description`: _
-                                                                `value`: | `text` | `local` (
-                                                                    `type`: | `single line` ~
-                                                                )
+                                                                `value`: | `text` | `global` 'text'
                                                             )
                                                         }
                                                     )
@@ -1253,9 +1276,7 @@
                                                         `value`: | `group` {
                                                             'name': (
                                                                 `description`: _
-                                                                `value`: | `text` | `local` (
-                                                                    `type`: | `single line` ~
-                                                                )
+                                                                `value`: | `text` | `global` 'text'
                                                             )
                                                         }
                                                     )
@@ -1265,9 +1286,7 @@
                                                         `value`: | `group` {
                                                             'name': (
                                                                 `description`: _
-                                                                `value`: | `text` | `local` (
-                                                                    `type`: | `single line` ~
-                                                                )
+                                                                `value`: | `text` | `global` 'text'
                                                             )
                                                         }
                                                     )
@@ -1282,9 +1301,7 @@
                                                         `value`: | `group` {
                                                             'name': (
                                                                 `description`: _
-                                                                `value`: | `text` | `local` (
-                                                                    `type`: | `single line` ~
-                                                                )
+                                                                `value`: | `text` | `global` 'text'
                                                             )
                                                         }
                                                     )
@@ -1294,9 +1311,7 @@
                                                         `value`: | `group` {
                                                             'name': (
                                                                 `description`: _
-                                                                `value`: | `optional` | `text` | `local` (
-                                                                    `type`: | `single line` ~
-                                                                )
+                                                                `value`: | `optional` | `text` | `global` 'text'
                                                             )
                                                         }
                                                     )
@@ -1331,9 +1346,7 @@
                                                                     `value`: | `group` {
                                                                         'found': (
                                                                             `description`: _
-                                                                            `value`: | `text` | `local` (
-                                                                                `type`: | `single line` ~
-                                                                            )
+                                                                            `value`: | `text` | `global` 'text'
                                                                         )
                                                                         'expected': (
                                                                             `description`: _

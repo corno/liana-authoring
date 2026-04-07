@@ -18,7 +18,7 @@ export namespace Completion_Suggestions_ {
         export type additional_text_edits = i_imports_text_edits.Text_Edits
         
         export namespace type_ {
-                        
+            
             export type component = null
             
             export type dictionary = null
