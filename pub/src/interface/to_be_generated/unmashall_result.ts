@@ -174,6 +174,7 @@ export type State_Option =
 export type Valid_State = {
     'property path': string
     'definition': d_schema.Value.state
+    'value instance': d_astn_parse_tree.Value
     'instance':
     | ['state', d_astn_parse_tree.Value.type_.concrete.state]
     | ['list', d_astn_parse_tree.Value.type_.concrete.list]

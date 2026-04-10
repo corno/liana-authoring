@@ -374,6 +374,7 @@ export const Value: Value = ($, $p) => {
                                                                                         (): d_out.State__found_value_type => ['valid', {
                                                                                             'definition': def,
                                                                                             'property path': $p['property path'],
+                                                                                            'value instance': value,
                                                                                             'instance': ['list', list],
                                                                                             'option': ['set', {
                                                                                                 'option token': option_token,
@@ -433,6 +434,7 @@ export const Value: Value = ($, $p) => {
                                                 return ['valid', {
                                                     'definition': def,
                                                     'property path': $p['property path'],
+                                                    'value instance': value,
                                                     'instance': ['state', $],
                                                     'option': _p.decide.state($.status, ($): d_out.State_Option => {
                                                         switch ($[0]) {
