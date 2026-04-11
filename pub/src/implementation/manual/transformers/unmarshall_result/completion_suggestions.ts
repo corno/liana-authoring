@@ -4,12 +4,11 @@ import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_cc from 'pareto-core/dist/_p_change_context'
 
 //data types
-import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
-import * as d_token from "astn-core/dist/interface/generated/liana/schemas/token/data"
-import * as d_ast_target from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
-import * as d_fpblock from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data"
+
+import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
+import * as d_ast_target from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out_text_edits from "../../../../interface/generated/liana/schemas/text_edits/data"
 import * as d_outx from "../../../../interface/to_be_generated/found"

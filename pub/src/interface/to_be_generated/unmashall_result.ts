@@ -5,6 +5,7 @@ import * as d_astn_parse_tree from "astn-core/dist/interface/generated/liana/sch
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 
 export type Document = {
+    'header': _pi.Optional_Value<d_astn_parse_tree.Value>
     'content': Value
 }
 
@@ -20,11 +21,15 @@ export type Value = {
     'property path': string
     'definition': d_schema.Value
     'instance': d_astn_parse_tree.Value
-    'unmarshalled': Unmarshalled_Value_Type //the type is determined by the definition
+    'unmarshalled': Unmarshalled //the type is determined by the definition
 }
 
-export type Unmarshalled_Value_Type =
+export type Unmarshalled =
+    | ['correct', Unmarshalled_Type]
+    | ['incorrect', null]
     | ['missing', null]
+
+export type Unmarshalled_Type =
     | ['component', Component]
     | ['dictionary', Dictionary]
     | ['group', Group]
@@ -43,28 +48,18 @@ export type Component = {
 
 export type Dictionary = {
     'definition': d_schema.Value.dictionary
-    'found value type':
-    | ['valid', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.dictionary
-        'entries': _pi.List<Entry_Data>
-    }]
-    | ['invalid', d_astn_parse_tree.Value]
+    'instance': d_astn_parse_tree.Value.type_.concrete.dictionary
+    'entries': _pi.List<Entry_Data>
 }
 
 export type Group = {
     'definition': d_schema.Value.group
-    'found value type': Group_Found_Value_Type
+    'instance':
+    | ['group', d_astn_parse_tree.Value.type_.concrete.group]
+    | ['dictionary', d_astn_parse_tree.Value.type_.concrete.dictionary]
+    | ['list', d_astn_parse_tree.Value.type_.concrete.list]
+    'type': Group_Type
 }
-
-export type Group_Found_Value_Type =
-    | ['valid', {
-        'instance':
-        | ['group', d_astn_parse_tree.Value.type_.concrete.group]
-        | ['dictionary', d_astn_parse_tree.Value.type_.concrete.dictionary]
-        | ['list', d_astn_parse_tree.Value.type_.concrete.list]
-        'type': Group_Type
-    }]
-    | ['invalid', d_astn_parse_tree.Value]
 
 export type Group_Type =
     | ['verbose', Group_Verbose]
@@ -107,47 +102,32 @@ export type Group_Verbose = {
 
 export type List = {
     'definition': d_schema.Value.list
-    'found value type':
-    | ['valid', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.list
-        'items': _pi.List<Value>
-    }]
-    | ['invalid', d_astn_parse_tree.Value]
+    'instance': d_astn_parse_tree.Value.type_.concrete.list
+    'items': _pi.List<Value>
 }
 
 export type Optional = {
     'definition': d_schema.Value.optional
-    'found value type':
-    | ['valid',
-        | ['set', {
-            'instance': d_astn_parse_tree.Value.type_.concrete.optional.set_
-            'child value': Value
-        }]
-        | ['not set', {
-            'instance':
-            | ['not set', d_astn_parse_tree.Value.type_.concrete.optional.not_set]
-            | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
-        }]
-    ]
-    | ['invalid', d_astn_parse_tree.Value]
+    'status':
+    | ['set', {
+        'instance': d_astn_parse_tree.Value.type_.concrete.optional.set_
+        'child value': Value
+    }]
+    | ['not set', {
+        'instance':
+        | ['not set', d_astn_parse_tree.Value.type_.concrete.optional.not_set]
+        | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+    }]
 }
 
 export type Reference = {
     'definition': d_schema.Value.reference
     'type':
     ['derived', {
-        'found value type':
-        | ['valid', {
-            'instance': d_astn_parse_tree.Value.type_.concrete.nothing
-        }] //FIXME
-        | ['invalid', d_astn_parse_tree.Value]
+        'instance': d_astn_parse_tree.Value.type_.concrete.nothing
     }]
     | ['selected', {
-        'found value type':
-        | ['valid', {
-            'instance': d_astn_parse_tree.Value.type_.concrete.text
-        }] //FIXME
-        | ['invalid', d_astn_parse_tree.Value]
+        'instance': d_astn_parse_tree.Value.type_.concrete.text
     }]
 
 }
@@ -184,7 +164,6 @@ export type Valid_State = {
 
 export type State__found_value_type =
     | ['valid', Valid_State]
-    | ['invalid', d_astn_parse_tree.Value]
     | ['list format error', {
         'list': d_astn_parse_tree.Value.type_.concrete.list
         'type':
@@ -199,32 +178,20 @@ export type State__found_value_type =
 
 export type Nothing = {
     'definition': d_schema.Value.nothing
-    'found value type':
-    | ['valid', {
-        'value':
-        | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
-        | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
-    }]
-    | ['invalid', d_astn_parse_tree.Value]
+    'value':
+    | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
+    | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
 }
 
 export type Text = {
     'definition': d_schema.Value.text
-    'found value type':
-    | ['valid', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.text
-    }]
-    | ['invalid', d_astn_parse_tree.Value]
+    'instance': d_astn_parse_tree.Value.type_.concrete.text
 }
 
 export type Simple = {
     'definition': d_schema.Value.simple
-    'found value type':
-    | ['valid', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.text
-        'correct string type': boolean
-    }]
-    | ['invalid', d_astn_parse_tree.Value]
+    'instance': d_astn_parse_tree.Value.type_.concrete.text
+    'correct string type': boolean
 }
 
 export type Entry_Data = {

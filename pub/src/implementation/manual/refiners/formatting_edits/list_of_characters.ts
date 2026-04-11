@@ -9,7 +9,7 @@ import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schema
 
 //dependencies
 import * as r_unmashall_result_from_list_of_characters from "../unmarshall_result/list_of_characters"
-import * as t_unmashall_result_to_formatting_edits from "../../transformers/unmarshall_result/formatting_edits"
+import * as t_unmashall_result_to_formatting_edits from "./unmarshall_result"
 
 
 export type Document = _pi.Refiner_With_Parameter<
@@ -19,6 +19,9 @@ export type Document = _pi.Refiner_With_Parameter<
     {
         'position': d_location.Position
         'unmarshall': d_function_unmarshall.Parameters
+        'type':
+        | ['concise', null]
+        | ['verbose', null]
     }
 >
 
@@ -32,6 +35,7 @@ export const Document: Document = ($, abort, $p) => {
         {
             'position': $p.position,
             'indent': "    ",
+            'type': $p.type
         }
     )
 }

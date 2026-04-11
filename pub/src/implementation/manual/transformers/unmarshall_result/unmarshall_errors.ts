@@ -30,196 +30,205 @@ export const Document: Document = ($) => {
 
 export const Value: Value = ($, $p) => {
     const instance = $.instance
-    return _p.decide.state($.unmarshalled, ($): d_out.Errors => {
+    const def = $.definition
+    return _p.decide.state($.unmarshalled, ($) => {
         switch ($[0]) {
-            case 'missing': return _p.ss($, ($): d_out.Errors => _p.list.literal([
+            case 'incorrect': return _p.ss($, ($) => _p.list.literal([
                 {
                     'range': t_astn_parse_tree_to_location.Value(instance),
-                    'type': ['error', ['missing value', null]],
-                    // 'type': ['error', ['missing value', null]]
+                    'type': ['error', ['invalid value type', {
+                        'expected': _p.decide.state(def, ($): d_out.Errors.L.type_.error.invalid_value_type.expected => {
+                            switch ($[0]) {
+                                case 'state': return _p.ss($, ($) => _p.list.literal([['state', null]]))
+                                case 'component': return _p.ss($, ($) => _p_unreachable_code_path("a component cannot be incorrect by itself"))
+                                case 'dictionary': return _p.ss($, ($) => _p.list.literal([['dictionary', null]]))
+                                case 'group': return _p.ss($, ($) => _p.list.literal([['verbose group', null]]))
+                                case 'list': return _p.ss($, ($) => _p.list.literal([['list', null]]))
+                                case 'nothing': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
+                                case 'simple': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                case 'optional': return _p.ss($, ($) => _p.list.literal([['set', null], ['not set', null]]))
+                                case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+                                    switch ($[0]) {
+                                        case 'derived': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
+                                        case 'selected': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                        default: return _p.au($[0])
+                                    }
+                                }))
+                                case 'text': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                default: return _p.au($[0])
+                            }
+                        })
+                    }]]
                 }
             ]))
-            case 'group': return _p.ss($, ($) => {
-                const group_def = $.definition
-                return _p.decide.state($['found value type'], ($): d_out.Errors => {
-                    switch ($[0]) {
-                        case 'valid': return _p.ss($, ($) => {
-                            const is_group = $.instance[0] === 'group'
-                            const group_start_token = _p.decide.state($.instance, ($): d_in_astn_parse_tree.Structural_Token => {
-                                switch ($[0]) {
-                                    case 'dictionary': return _p.ss($, ($) => $['{'])
-                                    case 'group': return _p.ss($, ($) => _p.decide.state($, ($) => {
-                                        switch ($[0]) {
-                                            case 'verbose': return _p.ss($, ($) => $['('])
-                                            case 'concise': return _p.ss($, ($) => $['<'])
-                                            default: return _p.au($[0])
-                                        }
-                                    }))
-                                    case 'list': return _p.ss($, ($) => $['['])
-                                    default: return _p.au($[0])
-                                }
-                            })
-                            return _p.list.nested_literal_old([
-                                ((!is_group && $p['report warnings']))
-                                    ? _p.list.literal([
-                                        {
-                                            'range': group_start_token.range,
-                                            'type': ['warning', ['expected a group', null]]
-                                        }
-                                    ])
-                                    : _p.list.literal([]),
-                                _p.decide.state($.type, ($) => {
+            case 'correct': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Errors => {
+                switch ($[0]) {
+                    case 'group': return _p.ss($, ($) => {
+                        const group_def = $.definition
+
+                        const is_group = $.instance[0] === 'group'
+                        const group_start_token = _p.decide.state($.instance, ($): d_in_astn_parse_tree.Structural_Token => {
+                            switch ($[0]) {
+                                case 'dictionary': return _p.ss($, ($) => $['{'])
+                                case 'group': return _p.ss($, ($) => _p.decide.state($, ($) => {
                                     switch ($[0]) {
-                                        case 'concise': return _p.ss($, ($) => _p.list.nested_literal_old([
+                                        case 'verbose': return _p.ss($, ($) => $['('])
+                                        case 'concise': return _p.ss($, ($) => $['<'])
+                                        default: return _p.au($[0])
+                                    }
+                                }))
+                                case 'list': return _p.ss($, ($) => $['['])
+                                default: return _p.au($[0])
+                            }
+                        })
+                        return _p.list.nested_literal_old([
+                            ((!is_group && $p['report warnings']))
+                                ? _p.list.literal([
+                                    {
+                                        'range': group_start_token.range,
+                                        'type': ['warning', ['expected a group', null]]
+                                    }
+                                ])
+                                : _p.list.literal([]),
+                            _p.decide.state($.type, ($) => {
+                                switch ($[0]) {
+                                    case 'concise': return _p.ss($, ($) => _p.list.nested_literal_old([
+                                        _p.list.from.list(
                                             _p.list.from.list(
-                                                _p.list.from.list(
-                                                    _p.list.from.dictionary(group_def).convert(($, id) => ({ 'id': id, 'definition': $ }))
-                                                ).join(
-                                                    $.properties,
-                                                    ($, $o) => ({
-                                                        'implementation': $o,
-                                                        'id': $.id,
-                                                    })
-                                                ),
-                                            ).flatten(
-                                                ($): d_out.Errors => {
-                                                    return $.implementation.__decide(
-                                                        ($) => _p.list.literal([]),
-                                                        () => _p.list.literal([
+                                                _p.list.from.dictionary(group_def).convert(($, id) => ({ 'id': id, 'definition': $ }))
+                                            ).join(
+                                                $.properties,
+                                                ($, $o) => ({
+                                                    'implementation': $o,
+                                                    'id': $.id,
+                                                })
+                                            ),
+                                        ).flatten(
+                                            ($): d_out.Errors => {
+                                                return $.implementation.__decide(
+                                                    ($) => _p.list.literal([]),
+                                                    () => _p.list.literal([
+                                                        {
+                                                            'range': group_start_token.range,
+                                                            'type': ['error', ['missing property', {
+                                                                name: $.id
+                                                            }]]
+                                                        }
+                                                    ])
+                                                )
+                                            }
+                                        ),
+                                        _p.list.from.list(
+                                            $.properties
+                                        ).flatten(
+                                            ($) => {
+                                                const item = $.item
+                                                return _p.decide.state($['definition found'], ($) => {
+                                                    switch ($[0]) {
+                                                        case 'no': return _p.ss($, ($) => _p.list.literal([
                                                             {
-                                                                'range': group_start_token.range,
-                                                                'type': ['error', ['missing property', {
-                                                                    name: $.id
+                                                                'range': t_astn_parse_tree_to_location.Value(item.value),
+                                                                'type': ['error', ['superfluous property', {
+                                                                    'name': _p.optional.literal.not_set()
                                                                 }]]
                                                             }
-                                                        ])
-                                                    )
-                                                }
+                                                        ]))
+                                                        case 'yes': return _p.ss($, ($) => Value($.value, { 'report warnings': is_group && $p['report warnings'] }))
+                                                        default: return _p.au($[0])
+                                                    }
+                                                })
+                                            }
+                                        ),
+                                    ]))
+                                    case 'verbose': return _p.ss($, ($) => _p.list.nested_literal_old([
+                                        //duplicate id's
+                                        _p.list.from.dictionary(
+                                            _p.dictionary.from.dictionary(
+                                                group_def
+                                            ).join(
+                                                _p.dictionary.from.list(
+                                                    $.properties,
+                                                ).group(
+                                                    ($) => $['id value pair'].id.token.value
+                                                ),
+                                                ($, $o, id) => $o
                                             ),
-                                            _p.list.from.list(
-                                                $.properties
-                                            ).flatten(
-                                                ($) => {
-                                                    const item = $.item
-                                                    return _p.decide.state($['definition found'], ($) => {
+                                        ).flatten(
+                                            ($, id): d_out.Errors => {
+                                                return $.__decide(
+                                                    ($) => _p.decide.list($).has_single_item(
+                                                        ($) => _p.list.literal([]),
+                                                        ($) => $.__l_map(($): d_out.Errors.L => ({
+                                                            'range': $['id value pair'].id.range,
+                                                            'type': ['error', ['duplicate property', {
+                                                                name: id
+                                                            }]]
+                                                        })),
+                                                        () => _p_unreachable_code_path("the list is the result of a group operation, it could never have been created if there was not at least one item")
+                                                    ),
+                                                    () => _p.list.literal([
+                                                        {
+                                                            'range': group_start_token.range,
+                                                            'type': ['error', ['missing property', {
+                                                                name: id
+                                                            }]]
+                                                        }
+                                                    ])
+                                                )
+                                            }
+                                        ),
+                                        //diagnostics for each property
+                                        _p.list.from.list(
+                                            $.properties,
+                                        ).flatten<d_out.Errors.L>(
+                                            ($) => {
+                                                const id_value_pair = $['id value pair']
+
+                                                const is_backticked = $['id value pair'].id.token.type[0] === 'backticked'
+                                                return _p.list.nested_literal_old([
+                                                    (!is_backticked && $p['report warnings'])
+                                                        ? _p.list.literal([
+                                                            {
+                                                                'range': id_value_pair.id.range,
+                                                                'type': ['warning', ['expected backticked text', null]]
+                                                            }
+                                                        ])
+                                                        : _p.list.literal([]),
+                                                    _p.decide.state($['definition found'], ($) => {
                                                         switch ($[0]) {
+                                                            case 'yes': return _p.ss($, ($) => $.value.__decide(
+                                                                ($) => Value($, { 'report warnings': is_group && is_backticked && $p['report warnings'] }),
+                                                                (): d_out.Errors => _p.list.literal([
+                                                                    {
+                                                                        'range': id_value_pair.id.range,
+                                                                        'type': ['error', ['missing property', { //'missing property value'
+                                                                            'name': id_value_pair.id.token.value
+                                                                        }]]
+                                                                    }
+                                                                ])
+                                                            ))
                                                             case 'no': return _p.ss($, ($) => _p.list.literal([
                                                                 {
-                                                                    'range': t_astn_parse_tree_to_location.Value(item.value),
+                                                                    'range': id_value_pair.id.range,
                                                                     'type': ['error', ['superfluous property', {
-                                                                        'name': _p.optional.literal.not_set()
+                                                                        'name': _p.optional.literal.set(id_value_pair.id.token.value)
                                                                     }]]
                                                                 }
                                                             ]))
-                                                            case 'yes': return _p.ss($, ($) => Value($.value, { 'report warnings': is_group && $p['report warnings'] }))
                                                             default: return _p.au($[0])
                                                         }
                                                     })
-                                                }
-                                            ),
-                                        ]))
-                                        case 'verbose': return _p.ss($, ($) => _p.list.nested_literal_old([
-                                            //duplicate id's
-                                            _p.list.from.dictionary(
-                                                _p.dictionary.from.dictionary(
-                                                    group_def
-                                                ).join(
-                                                    _p.dictionary.from.list(
-                                                        $.properties,
-                                                    ).group(
-                                                        ($) => $['id value pair'].id.token.value
-                                                    ),
-                                                    ($, $o, id) => $o
-                                                ),
-                                            ).flatten(
-                                                ($, id): d_out.Errors => {
-                                                    return $.__decide(
-                                                        ($) => _p.decide.list($).has_single_item(
-                                                            ($) => _p.list.literal([]),
-                                                            ($) => $.__l_map(($): d_out.Errors.L => ({
-                                                                'range': $['id value pair'].id.range,
-                                                                'type': ['error', ['duplicate property', {
-                                                                    name: id
-                                                                }]]
-                                                            })),
-                                                            () => _p_unreachable_code_path("the list is the result of a group operation, it could never have been created if there was not at least one item")
-                                                        ),
-                                                        () => _p.list.literal([
-                                                            {
-                                                                'range': group_start_token.range,
-                                                                'type': ['error', ['missing property', {
-                                                                    name: id
-                                                                }]]
-                                                            }
-                                                        ])
-                                                    )
-                                                }
-                                            ),
-                                            //diagnostics for each property
-                                            _p.list.from.list(
-                                                $.properties,
-                                            ).flatten<d_out.Errors.L>(
-                                                ($) => {
-                                                    const id_value_pair = $['id value pair']
+                                                ])
+                                            }
+                                        )
+                                    ]))
+                                    default: return _p.au($[0])
+                                }
+                            })
+                        ])
+                    })
+                    case 'dictionary': return _p.ss($, ($) => {
 
-                                                    const is_backticked = $['id value pair'].id.token.type[0] === 'backticked'
-                                                    return _p.list.nested_literal_old([
-                                                        (!is_backticked && $p['report warnings'])
-                                                            ? _p.list.literal([
-                                                                {
-                                                                    'range': id_value_pair.id.range,
-                                                                    'type': ['warning', ['expected backticked text', null]]
-                                                                }
-                                                            ])
-                                                            : _p.list.literal([]),
-                                                        _p.decide.state($['definition found'], ($) => {
-                                                            switch ($[0]) {
-                                                                case 'yes': return _p.ss($, ($) => $.value.__decide(
-                                                                    ($) => Value($, { 'report warnings': is_group && is_backticked && $p['report warnings'] }),
-                                                                    (): d_out.Errors => _p.list.literal([
-                                                                        {
-                                                                            'range': id_value_pair.id.range,
-                                                                            'type': ['error', ['missing property', { //'missing property value'
-                                                                                'name': id_value_pair.id.token.value
-                                                                            }]]
-                                                                        }
-                                                                    ])
-                                                                ))
-                                                                case 'no': return _p.ss($, ($) => _p.list.literal([
-                                                                    {
-                                                                        'range': id_value_pair.id.range,
-                                                                        'type': ['error', ['superfluous property', {
-                                                                            'name': _p.optional.literal.set(id_value_pair.id.token.value)
-                                                                        }]]
-                                                                    }
-                                                                ]))
-                                                                default: return _p.au($[0])
-                                                            }
-                                                        })
-                                                    ])
-                                                }
-                                            )
-                                        ]))
-                                        default: return _p.au($[0])
-                                    }
-                                })
-                            ])
-                        })
-                        case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                            {
-                                'range': t_astn_parse_tree_to_location.Value($),
-                                'type': ['error', ['invalid value type', {
-                                    'expected': _p.list.literal([['verbose group', null]]),
-                                }]]
-                            }
-                        ]))
-                        default: return _p.au($[0])
-                    }
-                })
-            })
-            case 'dictionary': return _p.ss($, ($) => _p.decide.state($['found value type'], ($): d_out.Errors => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($) => {
                         return _p.list.nested_literal_old([
                             //duplicate id's
                             _p.list.from.dictionary(
@@ -275,88 +284,23 @@ export const Value: Value = ($, $p) => {
                             )
                         ])
                     })
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['dictionary', null]]),
-                            }]]
-                        }
-                    ]))
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'simple': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Errors => $['correct string type']
+                    case 'simple': return _p.ss($, ($) => $['correct string type']
                         ? _p.list.literal([])
                         : _p.list.literal<d_out.Errors.L>([{
                             'range': $.instance.range,
                             'type': ['warning', ['expected undelimited text', null]]
                         }]))
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['text', null]]),
-                            }]]
-                        }
-                    ]))
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'list': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.from.list(
+                    case 'list': return _p.ss($, ($) => _p.list.from.list(
                         $.items
                     ).flatten(
                         ($) => Value($, $p)
                     ))
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['list', null]]),
-                            }]]
-                        }
-                    ]))
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'nothing': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.literal([]))
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['not set', null]]),
-                            }]]
-                        }
-                    ]))
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($): d_out.Errors => {
-                switch ($[0]) {
-                    case 'derived': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
+                    case 'nothing': return _p.ss($, ($) => _p.list.literal([]))
+                    case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($): d_out.Errors => {
                         switch ($[0]) {
-                            case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.nested_literal_old([
+                            case 'derived': return _p.ss($, ($) => _p.list.nested_literal_old([
                             ]))
-                            case 'invalid': return _p.ss($, ($): d_out.Errors => _p.list.literal([
-                                {
-                                    'range': t_astn_parse_tree_to_location.Value($),
-                                    'type': ['error', ['invalid value type', {
-                                        'expected': _p.list.literal([['nothing', null]]),
-                                    }]]
-                                }
-                            ]))
-                            default: return _p.au($[0])
-                        }
-                    }))
-                    case 'selected': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                        switch ($[0]) {
-                            case 'valid': return _p.ss($, ($): d_out.Errors => _p.list.nested_literal_old([
+                            case 'selected': return _p.ss($, ($) => _p.list.nested_literal_old([
                                 $.instance.token.type[0] !== 'apostrophed' && $p['report warnings']
                                     ? _p.list.literal([{
                                         'range': $.instance.range,
@@ -364,160 +308,126 @@ export const Value: Value = ($, $p) => {
                                     }])
                                     : _p.list.literal([]),
                             ]))
-                            case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                                {
-                                    'range': t_astn_parse_tree_to_location.Value($),
-                                    'type': ['error', ['invalid value type', {
-                                        'expected': _p.list.literal([['text', null]]),
-                                    }]]
-                                }
-                            ]))
                             default: return _p.au($[0])
                         }
                     }))
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'component': return _p.ss($, ($) => {
-                return Value($.value, $p)
-            })
-            case 'optional': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Errors => _p.decide.state($, ($) => {
+                    case 'component': return _p.ss($, ($) => {
+                        return Value($.value, $p)
+                    })
+                    case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => Value($['child value'], $p))
                             case 'not set': return _p.ss($, ($) => _p.list.literal([]))
                             default: return _p.au($[0])
                         }
                     }))
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['set', null], ['not set', null]]),
-                            }]]
-                        }
-                    ]))
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'state': return _p.ss($, ($) => {
-                const sg_def = $.definition
-                return _p.decide.state($['found value type'], ($): d_out.Errors => {
-                    switch ($[0]) {
-                        case 'valid': return _p.ss($, ($): d_out.Errors => {
-                            return _p.decide.state($['option'], ($): d_out.Errors => {
-                                switch ($[0]) {
-                                    case 'missing data': return _p.ss($, ($) => _p.list.literal([
-                                        {
-                                            'range': $.range,
-                                            'type': ['error', ['state', ['missing option', null]]]
-                                        }
-                                    ]))
-                                    case 'set': return _p.ss($, ($) => {
-                                        const option_token = $['option token']
-                                        const is_backticked = $['option token'].token.type[0] === 'backticked'
-                                        return _p.list.nested_literal_old([
-                                            (!is_backticked && $p['report warnings'])
-                                                ? _p.list.literal([
-                                                    {
-                                                        'range': option_token.range,
-                                                        'type': ['warning', ['expected apostrophed text', null]]
-                                                    }
-                                                ])
-                                                : _p.list.literal([]),
-                                            _p.decide.state($.option, ($) => {
-                                                switch ($[0]) {
-                                                    case 'known': return _p.ss($, ($) => Value($.value, { 'report warnings': is_backticked && $p['report warnings'] }))
-                                                    case 'unknown': return _p.ss($, ($) => _p.list.literal([
-                                                        {
-                                                            'range': option_token.range,
-                                                            'type': ['error', ['state', ['unknown option', {
-                                                                'found': option_token.token.value,
-                                                                'expected': sg_def.options.__d_map(($) => null)
-                                                            }]]]
-                                                        }
-                                                    ]))
-
-                                                    default: return _p.au($[0])
+                    case 'state': return _p.ss($, ($) => {
+                        const sg_def = $.definition
+                        return _p.decide.state($['found value type'], ($): d_out.Errors => {
+                            switch ($[0]) {
+                                case 'valid': return _p.ss($, ($): d_out.Errors => {
+                                    return _p.decide.state($['option'], ($): d_out.Errors => {
+                                        switch ($[0]) {
+                                            case 'missing data': return _p.ss($, ($) => _p.list.literal([
+                                                {
+                                                    'range': $.range,
+                                                    'type': ['error', ['state', ['missing option', null]]]
                                                 }
+                                            ]))
+                                            case 'set': return _p.ss($, ($) => {
+                                                const option_token = $['option token']
+                                                const is_backticked = $['option token'].token.type[0] === 'backticked'
+                                                return _p.list.nested_literal_old([
+                                                    (!is_backticked && $p['report warnings'])
+                                                        ? _p.list.literal([
+                                                            {
+                                                                'range': option_token.range,
+                                                                'type': ['warning', ['expected apostrophed text', null]]
+                                                            }
+                                                        ])
+                                                        : _p.list.literal([]),
+                                                    _p.decide.state($.option, ($) => {
+                                                        switch ($[0]) {
+                                                            case 'known': return _p.ss($, ($) => Value($.value, { 'report warnings': is_backticked && $p['report warnings'] }))
+                                                            case 'unknown': return _p.ss($, ($) => _p.list.literal([
+                                                                {
+                                                                    'range': option_token.range,
+                                                                    'type': ['error', ['state', ['unknown option', {
+                                                                        'found': option_token.token.value,
+                                                                        'expected': sg_def.options.__d_map(($) => null)
+                                                                    }]]]
+                                                                }
+                                                            ]))
+
+                                                            default: return _p.au($[0])
+                                                        }
+                                                    })
+                                                ])
                                             })
-                                        ])
+                                            default: return _p.au($[0])
+                                        }
                                     })
-                                    default: return _p.au($[0])
-                                }
-                            })
-                        })
-                        case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                            {
-                                'range': t_astn_parse_tree_to_location.Value($),
-                                'type': ['error', ['invalid value type', {
-                                    'expected': _p.list.literal([['state', null]]),
-                                }]]
+                                })
+                                case 'list format error': return _p.ss($, ($) => {
+                                    const start_token = $.list['[']
+                                    return _p.decide.state($.type, ($): d_out.Errors => {
+                                        switch ($[0]) {
+                                            case 'missing option item': return _p.ss($, ($): d_out.Errors => _p.list.literal([
+                                                {
+                                                    'range': start_token.range,
+                                                    'type': ['error', ['state', ['missing option name', null]]] //FIXME wrong error
+                                                }
+                                            ]))
+                                            case 'option item is not a text': return _p.ss($, ($) => _p.list.literal([
+                                                {
+                                                    'range': start_token.range,
+                                                    'type': ['error', ['state', ['option name is not a text', null]]] //FIXME wrong error
+                                                }
+                                            ]))
+                                            case 'missing value item': return _p.ss($, ($) => _p.list.literal([
+                                                {
+                                                    'range': start_token.range,
+                                                    'type': ['error', ['state', ['missing value', null]]] //FIXME wrong error
+                                                }
+                                            ]))
+                                            case 'too many items': return _p.ss($, ($) => _p.list.literal([
+                                                {
+                                                    'range': start_token.range,
+                                                    'type': ['error', ['state', ['more than 2 items', null]]] //FIXME wrong error
+                                                }
+                                            ]))
+                                            default: return _p.au($[0])
+                                        }
+                                    })
+                                })
+                                // case 'more than 2 elements': return _p.ss($, ($) => _p.list.literal([{
+                                //     'range': $,
+                                //     'type': ['error', ['state', ['more than 2 elements', null]]]
+                                // }]))
+                                // case 'missing state name': return _p.ss($, ($) => _p.list.literal([{
+                                //     'range': $,
+                                //     'type': ['error', ['state', ['missing state name', null]]]
+                                // }]))
+                                // case 'state is not a string': return _p.ss($, ($) => _p.list.literal([{
+                                //     'range': $,
+                                //     'type': ['error', ['state', ['state is not a string', null]]]
+                                // }]))
+                                // case 'missing value': return _p.ss($, ($) => _p.list.literal([{
+                                //     'range': $,
+                                //     'type': ['error', ['state', ['missing value', null]]]
+                                // }]))
+                                // case 'unknown state': return _p.ss($, ($) => _p.list.literal([{
+                                //     'range': $.range,
+                                //     'type': ['error', ['state', ['unknown state', {
+                                //         'found': $.found,
+                                //         'expected': $.expected
+                                //     }]]]
+                                // }]))
+                                default: return _p.au($[0])
                             }
-                        ]))
-                        case 'list format error': return _p.ss($, ($) => {
-                            const start_token = $.list['[']
-                            return _p.decide.state($.type, ($): d_out.Errors => {
-                                switch ($[0]) {
-                                    case 'missing option item': return _p.ss($, ($): d_out.Errors => _p.list.literal([
-                                        {
-                                            'range': start_token.range,
-                                            'type': ['error', ['state', ['missing option name', null]]] //FIXME wrong error
-                                        }
-                                    ]))
-                                    case 'option item is not a text': return _p.ss($, ($) => _p.list.literal([
-                                        {
-                                            'range': start_token.range,
-                                            'type': ['error', ['state', ['option name is not a text', null]]] //FIXME wrong error
-                                        }
-                                    ]))
-                                    case 'missing value item': return _p.ss($, ($) => _p.list.literal([
-                                        {
-                                            'range': start_token.range,
-                                            'type': ['error', ['state', ['missing value', null]]] //FIXME wrong error
-                                        }
-                                    ]))
-                                    case 'too many items': return _p.ss($, ($) => _p.list.literal([
-                                        {
-                                            'range': start_token.range,
-                                            'type': ['error', ['state', ['more than 2 items', null]]] //FIXME wrong error
-                                        }
-                                    ]))
-                                    default: return _p.au($[0])
-                                }
-                            })
                         })
-                        // case 'more than 2 elements': return _p.ss($, ($) => _p.list.literal([{
-                        //     'range': $,
-                        //     'type': ['error', ['state', ['more than 2 elements', null]]]
-                        // }]))
-                        // case 'missing state name': return _p.ss($, ($) => _p.list.literal([{
-                        //     'range': $,
-                        //     'type': ['error', ['state', ['missing state name', null]]]
-                        // }]))
-                        // case 'state is not a string': return _p.ss($, ($) => _p.list.literal([{
-                        //     'range': $,
-                        //     'type': ['error', ['state', ['state is not a string', null]]]
-                        // }]))
-                        // case 'missing value': return _p.ss($, ($) => _p.list.literal([{
-                        //     'range': $,
-                        //     'type': ['error', ['state', ['missing value', null]]]
-                        // }]))
-                        // case 'unknown state': return _p.ss($, ($) => _p.list.literal([{
-                        //     'range': $.range,
-                        //     'type': ['error', ['state', ['unknown state', {
-                        //         'found': $.found,
-                        //         'expected': $.expected
-                        //     }]]]
-                        // }]))
-                        default: return _p.au($[0])
-                    }
-                })
-            })
-            case 'text': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($) => _p.list.nested_literal_old([
+                    })
+                    case 'text': return _p.ss($, ($) => _p.list.nested_literal_old([
                         ($.instance.token.type[0] !== 'quoted' && $p['report warnings'])
                             ? _p.list.literal([
                                 {
@@ -528,17 +438,16 @@ export const Value: Value = ($, $p) => {
                             ])
                             : _p.list.literal([])
                     ]))
-                    case 'invalid': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value($),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.list.literal([['text', null]]),
-                            }]]
-                        }
-                    ]))
                     default: return _p.au($[0])
                 }
             }))
+            case 'missing': return _p.ss($, ($): d_out.Errors => _p.list.literal([
+                {
+                    'range': t_astn_parse_tree_to_location.Value(instance),
+                    'type': ['error', ['missing value', null]],
+                    // 'type': ['error', ['missing value', null]]
+                }
+            ]))
             default: return _p.au($[0])
         }
     })

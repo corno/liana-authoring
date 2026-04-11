@@ -16,12 +16,6 @@ import * as r_parse_tree_from_text from "astn-core/dist/implementation/manual/re
 import * as r_temp_module_specifier_from_loc from "pareto-liana/dist/implementation/manual/refiners/temp_module_specifier/list_of_characters"
 
 export const Document: Document = ($, abort, $p) => {
-    return {
-        'content': Value($, abort, $p)
-    }
-}
-
-export const Value: Value = ($, abort, $p) => {
     const x = r_temp_module_specifier_from_loc.Module_Specifier(
         $p['schema']['content'],
         ($) => abort(['schema', {
@@ -29,19 +23,23 @@ export const Value: Value = ($, abort, $p) => {
         }]),
     )
 
-    const x3 = tu_dynamic_unmarshall.Value(
+    return tu_dynamic_unmarshall.Document(
         r_parse_tree_from_text.Document(
             $,
             ($) => abort(['deserialize', $]),
             {
                 'tab size': $p['tab size'],
             },
-        ).content,
+        ),
         {
             'definition': x.root.entry['root value'],
             'definition path': x.root.id,
             'property path': "",
         }
     )
-    return x3
 }
+
+// export const Value: Value = ($, abort, $p) => {
+//     .content
+// return x3
+// }

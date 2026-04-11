@@ -105,12 +105,12 @@ export const Value: Value = ($, $p) => {
 
     return _p.decide.state($.unmarshalled, ($) => {
         switch ($[0]) {
-            case 'missing': return _p.ss($, ($) => this_value())
-            case 'simple': return _p.ss($, ($) => this_value())
-            case 'component': return _p.ss($, ($) => Value($.value, $p))
-            case 'dictionary': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
+            case 'incorrect': return _p.ss($, ($) => this_value())
+            case 'correct': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'valid': return _p.ss($, ($) => _p.decide.list($.entries).has_match(
+                    case 'simple': return _p.ss($, ($) => this_value())
+                    case 'component': return _p.ss($, ($) => Value($.value, $p))
+                    case 'dictionary': return _p.ss($, ($) => _p.decide.list($.entries).has_match(
                         ($) => {
                             const entry = $
                             return _p.decide.boolean(
@@ -138,13 +138,7 @@ export const Value: Value = ($, $p) => {
                         },
                         () => this_value()
                     ))
-                    case 'invalid': return _p.ss($, ($) => this_value())
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'group': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+                    case 'group': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
                         switch ($[0]) {
                             case 'verbose': return _p.ss($, ($) => _p.decide.list($.properties).has_match(
                                 ($): d_out.Possibly_Found => {
@@ -205,24 +199,12 @@ export const Value: Value = ($, $p) => {
                             default: return _p.au($[0])
                         }
                     }))
-                    case 'invalid': return _p.ss($, ($) => this_value())
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'list': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($) => _p.decide.list($.items).has_match(
+                    case 'list': return _p.ss($, ($) => _p.decide.list($.items).has_match(
                         ($) => Value_possibly_found($, $p),
                         () => this_value()
                     ))
-                    case 'invalid': return _p.ss($, ($) => this_value())
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'nothing': return _p.ss($, ($) => this_value())
-            case 'optional': return _p.ss($, ($) => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                    case 'nothing': return _p.ss($, ($) => this_value())
+                    case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => Value_possibly_found($['child value'], $p).__decide(
                                 ($): d_out.Found => $,
@@ -232,38 +214,37 @@ export const Value: Value = ($, $p) => {
                             default: return _p.au($[0])
                         }
                     }))
-                    case 'invalid': return _p.ss($, ($) => this_value())
-                    default: return _p.au($[0])
-                }
-            }))
-            case 'reference': return _p.ss($, ($) => this_value())
-            case 'state': return _p.ss($, ($): d_out.Found => _p.decide.state($['found value type'], ($) => {
-                switch ($[0]) {
-                    case 'valid': return _p.ss($, ($): d_out.Found => {
-                        const valid_state = $
-                        return _p.decide.state($['option'], ($) => {
-                            switch ($[0]) {
-                                case 'set': return _p.ss($, ($): d_out.Found => _p.decide.state($.option, ($) => {
+                    case 'reference': return _p.ss($, ($) => this_value())
+                    case 'state': return _p.ss($, ($): d_out.Found => _p.decide.state($['found value type'], ($) => {
+                        switch ($[0]) {
+                            case 'valid': return _p.ss($, ($): d_out.Found => {
+                                const valid_state = $
+                                return _p.decide.state($['option'], ($) => {
                                     switch ($[0]) {
-                                        case 'known': return _p.ss($, ($) => Value_possibly_found($.value, $p).__decide(
-                                            ($): d_out.Found => $,
-                                            (): d_out.Found => ['valid state', valid_state]
-                                        ))
-                                        case 'unknown': return _p.ss($, ($) => ['valid state', valid_state])
+                                        case 'set': return _p.ss($, ($): d_out.Found => _p.decide.state($.option, ($) => {
+                                            switch ($[0]) {
+                                                case 'known': return _p.ss($, ($) => Value_possibly_found($.value, $p).__decide(
+                                                    ($): d_out.Found => $,
+                                                    (): d_out.Found => ['valid state', valid_state]
+                                                ))
+                                                case 'unknown': return _p.ss($, ($) => ['valid state', valid_state])
+                                                default: return _p.au($[0])
+                                            }
+                                        }))
+                                        case 'missing data': return _p.ss($, ($) => ['valid state', valid_state])
                                         default: return _p.au($[0])
                                     }
-                                }))
-                                case 'missing data': return _p.ss($, ($) => ['valid state', valid_state])
-                                default: return _p.au($[0])
-                            }
-                        })
-                    })
-                    case 'invalid': return _p.ss($, ($) => this_value())
-                    case 'list format error': return _p.ss($, ($) => this_value())
+                                })
+                            })
+                            case 'list format error': return _p.ss($, ($) => this_value())
+                            default: return _p.au($[0])
+                        }
+                    }))
+                    case 'text': return _p.ss($, ($) => this_value())
                     default: return _p.au($[0])
                 }
             }))
-            case 'text': return _p.ss($, ($) => this_value())
+            case 'missing': return _p.ss($, ($) => this_value())
             default: return _p.au($[0])
         }
     })
