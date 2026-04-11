@@ -22,6 +22,7 @@ import * as t_authoring_target_to_text from "astn/dist/implementation/manual/tra
 import * as t_astn_location_to_location from "../../transformers/astn_core_location/location"
 import * as t_parse_tree_to_full_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 import * as t_sealed_target_to_text from "astn-core/dist/implementation/manual/transformers/sealed_target/text"
+import * as t_unmarshall_result_to_authoring_target from "../../transformers/unmarshall_result/authoring_target"
 
 // import * as t_astn_target_to_fp from "astn/dist/implementation/manual/schemas/authoring_target/transformers/fountain_pen_block"
 // import * as t_default_initialize from "../liana_schema/authoring_target"
@@ -79,14 +80,23 @@ export type Found = _pi.Transformer_With_Parameter<
 export const Found: Found = ($, $p): d_out.Formatting_Edits => {
     switch ($[0]) {
         case 'value': return _p.ss($, ($): d_out.Formatting_Edits => {
-            const instance = $.instance
+            const value = $
 
             return {
                 'replace': {
                     'range': t_astn_location_to_location.Range(
-                        t_parse_tree_to_full_range.Value(instance)
+                        t_parse_tree_to_full_range.Value(value.instance)
                     ),
-                    'text': "FOOOO VALUE"
+                    'text': t_authoring_target_to_text.Value(
+                        t_unmarshall_result_to_authoring_target.Value(value, {
+                            'style': $p.type,
+                        }),
+                        {
+                            'indentation': $p.indent,
+                            'newline': "\n",
+                            'write delimiters': true,
+                        }
+                    )
                 }
             }
         })
