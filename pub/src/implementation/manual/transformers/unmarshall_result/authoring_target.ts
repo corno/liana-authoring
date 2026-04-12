@@ -182,7 +182,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                 case 'derived': return _p.ss($, ($) => ['nothing', null])
                                 case 'selected': return _p.ss($, ($) => ['text', {
                                     'value': $.instance.token.value,
-                                    'delimiter': ['none', null]
+                                    'delimiter': ['apostrophe', null]
                                 }])
                                 default: return _p.au($[0])
                             }
