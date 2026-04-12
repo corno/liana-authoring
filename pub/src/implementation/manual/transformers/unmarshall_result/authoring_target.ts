@@ -6,6 +6,7 @@ import _p_cc from 'pareto-core/dist/_p_change_context'
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
+import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_to_authoring_target"
 
 //dependencies
 import * as t_parse_tree_to_authoring_target from "astn/dist/implementation/manual/transformers/parse_tree/authoring_target"
@@ -14,21 +15,13 @@ import * as t_parse_tree_to_authoring_target from "astn/dist/implementation/manu
 export type Document = _pi.Transformer_With_Parameter<
     d_in.Document,
     d_out.Document,
-    {
-        'style':
-        | ['concise', null]
-        | ['verbose', null]
-    }
+    d_function.Parameters
 >
 
 export type Value = _pi.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
-    {
-        'style':
-        | ['concise', null]
-        | ['verbose', null]
-    }
+    d_function.Parameters
 >
 
 const temp_value = ($: d_out.Value.data): d_out.Value => ({
@@ -41,7 +34,10 @@ const temp_value = ($: d_out.Value.data): d_out.Value => ({
 export const Document: Document = ($, $p): d_out.Document => {
     return {
         'header': _p.optional.from.optional($['header']).map(($) => t_parse_tree_to_authoring_target.Value($)),
-        'content': Value($['content'], $p)
+        'content': Value($['content'], {
+            'style': $p.style,
+            'impact': ['deep', null]
+        })
     }
 }
 
@@ -57,7 +53,16 @@ export const Value: Value = ($, $p): d_out.Value => {
                         'type': ['dictionary', $.entries.__l_map(($): d_out.ID_Value_Pairs.L => {
                             return {
                                 'id': $['id value pair'].id.token.value,
-                                'value': _p.optional.from.optional($.value).map(($) => Value($, $p))
+                                'value': _p.optional.from.optional($.value).map(($) => {
+                                    const value = $
+                                    return _p.decide.state($p.impact, ($) => {
+                                        switch ($[0]) {
+                                            case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
+                                            case 'deep':return _p.ss($, ($) => Value(value, $p))
+                                            default: return _p.au($[0])
+                                        }
+                                    })
+                                })
                             }
                         })]
                     }]))
@@ -156,7 +161,16 @@ export const Value: Value = ($, $p): d_out.Value => {
                         }])
                     })
                     case 'list': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
-                        'type': ['list', $.items.__l_map(($) => Value($, $p))]
+                        'type': ['list', $.items.__l_map(($) => {
+                            const item = $
+                            return _p.decide.state($p.impact, ($): d_out.Value => {
+                                switch ($[0]) {
+                                    case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.instance))
+                                    case 'deep': return _p.ss($, ($) => Value(item, $p))
+                                    default: return _p.au($[0])
+                                }
+                            })
+                        })]
                     }]))
                     case 'nothing': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['nothing', null]

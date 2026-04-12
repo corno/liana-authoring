@@ -8,6 +8,7 @@ import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
 import * as d_out from "../../../../interface/to_be_generated/formatting_edits"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_outx from "../../../../interface/to_be_generated/found"
+import * as d_function_parameters from "../../../../interface/to_be_generated/unmarshall_result_to_authoring_target"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "../../transformers/unmarshall_result/found"
@@ -24,9 +25,7 @@ export type Document = _pi.Transformer_With_Parameter<
     {
         'position': d_location.Position
         'indent': string
-        'type':
-        | ['concise', null]
-        | ['verbose', null]
+        'conversion': d_function_parameters.Parameters
     }
 >
 
@@ -35,9 +34,7 @@ export type Found = _pi.Transformer_With_Parameter<
     d_out.Formatting_Edits,
     {
         'indent': string
-        'type':
-        | ['concise', null]
-        | ['verbose', null]
+        'conversion': d_function_parameters.Parameters
     }
 >
 
@@ -54,9 +51,7 @@ export const Found: Found = ($, $p): d_out.Formatting_Edits => {
                         t_parse_tree_to_full_range.Value(value.instance)
                     ),
                     'text': t_authoring_target_to_text.Value(
-                        t_unmarshall_result_to_authoring_target.Value(value, {
-                            'style': $p.type,
-                        }),
+                        t_unmarshall_result_to_authoring_target.Value(value, $p.conversion),
                         {
                             'indentation': $p.indent,
                             'newline': "\n",

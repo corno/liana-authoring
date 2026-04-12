@@ -12,6 +12,9 @@ import * as r_unmashall_result_from_list_of_characters from "../unmarshall_resul
 import * as t_unmashall_result_to_formatting_edits from "./unmarshall_result"
 
 
+//data types
+import * as d_function_parameters from "../../../../interface/to_be_generated/unmarshall_result_to_authoring_target"
+
 export type Document = _pi.Refiner_With_Parameter<
     d_out.Formatting_Edits,
     d_function_unmarshall.Error,
@@ -19,9 +22,7 @@ export type Document = _pi.Refiner_With_Parameter<
     {
         'position': d_location.Position
         'unmarshall': d_function_unmarshall.Parameters
-        'type':
-        | ['concise', null]
-        | ['verbose', null]
+        'conversion': d_function_parameters.Parameters
     }
 >
 
@@ -35,7 +36,8 @@ export const Document: Document = ($, abort, $p) => {
         {
             'position': $p.position,
             'indent': "    ",
-            'type': $p.type
+            'conversion': $p.conversion
+            // 'style': $p.style
         }
     )
 }
