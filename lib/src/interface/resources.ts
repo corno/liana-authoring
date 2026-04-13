@@ -1,7 +1,7 @@
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as d_get_unmarshalled_document from "../../../../liana-authoring/pub/src/interface/to_be_generated/get_unmarshalled_document"
-import * as d_get_unmarshalled_file from "../../../../liana-authoring/pub/src/interface/to_be_generated/get_unmarshalled_file"
+import * as d_get_unmarshalled_document from "../../../../liana-authoring/lib/src/interface/to_be_generated/get_unmarshalled_document"
+import * as d_get_unmarshalled_file from "../../../../liana-authoring/lib/src/interface/to_be_generated/get_unmarshalled_file"
 
 export namespace queries {
 
