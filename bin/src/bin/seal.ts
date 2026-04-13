@@ -2,7 +2,7 @@
 
 import * as _pn from 'pareto-host-nodejs'
 
-import { $$ as procedure } from "../implementation/manual/commands/seal"
+import { $$ as procedure } from "lib/dist/implementation/manual/commands/seal"
 
 _pn.run_main_command(
     ($r) => procedure(
