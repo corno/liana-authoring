@@ -4,11 +4,11 @@ import _p_iterate from 'pareto-core/dist/_p_iterate'
 
 
 //data types
-import * as d_file_in_file_out from "../../../../../interface/to_be_generated/file_in_file_out"
+import * as d_file_in_file_out from "../../../../interface/to_be_generated/file_in_file_out"
 import * as d_main from "pareto-resources/dist/interface/to_be_generated/temp_main"
 
 //dependencies
-import * as p_file_in_file_out from "../productions/text"
+import * as p_file_in_file_out from "../../schemas/file_in_file_out/productions/text"
 
 export const Parameters: _pi.Refiner<
     d_file_in_file_out.Parameters,
