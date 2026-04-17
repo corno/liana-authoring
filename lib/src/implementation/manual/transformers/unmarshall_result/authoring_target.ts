@@ -5,11 +5,14 @@ import _p_cc from 'pareto-core/dist/_p_change_context'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_to_authoring_target"
 
 //dependencies
 import * as t_parse_tree_to_authoring_target from "astn/dist/implementation/manual/transformers/parse_tree/authoring_target"
+
+//FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 
 
 export type Document = _pi.Transformer_With_Parameter<
@@ -22,6 +25,11 @@ export type Value = _pi.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
+>
+
+export type Structural_Token = _pi.Transformer<
+    d_in_parse_tree.Structural_Token,
+    d_out.Token_Trivia
 >
 
 const temp_value = ($: d_out.Value.data): d_out.Value => ({
@@ -48,9 +56,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                     case 'component': return _p.ss($, ($): d_out.Value => Value($.value, $p))
                     case 'dictionary': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['dictionary', {
-                            '{': {
-                                'comments': _p.list.literal([])
-                            },
+                            '{': Structural_Token($.instance['{']),
                             'entries': $.entries.__l_map(($): d_out.ID_Value_Pairs.L => {
                                 return {
                                     'id': $['id value pair'].id.token.value,
@@ -66,9 +72,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                     })
                                 }
                             }),
-                            '}': {
-                                'comments': _p.list.literal([])
-                            },
+                            '}': Structural_Token($.instance['}']),
                         }]
                     }]))
                     case 'group': return _p.ss($, ($): d_out.Value => {
@@ -78,7 +82,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                 switch ($[0]) {
                                     case 'concise': return _p.ss($, ($) => ['concise', {
                                         '<': {
-                                            'comments': _p.list.literal([])
+                                            'comments': _p.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                         'properties': _p.decide.state(unmarsalled_group.type, ($): d_out.Items => {
                                             switch ($[0]) {
@@ -135,12 +139,12 @@ export const Value: Value = ($, $p): d_out.Value => {
                                             }
                                         }),
                                         '>': {
-                                            'comments': _p.list.literal([])
+                                            'comments': _p.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                     }])
                                     case 'verbose': return _p.ss($, ($) => ['verbose', {
                                         '(': {
-                                            'comments': _p.list.literal([])
+                                            'comments': _p.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                         'properties': _p.decide.state(unmarsalled_group.type, ($): d_out.ID_Value_Pairs => {
                                             switch ($[0]) {
@@ -193,7 +197,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                             }
                                         }),
                                         ')': {
-                                            'comments': _p.list.literal([])
+                                            'comments': _p.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                     }])
                                     default: return _p.au($[0])
@@ -203,9 +207,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                     })
                     case 'list': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['list', {
-                            '[': {
-                                'comments': _p.list.literal([])
-                            },
+                            '[': Structural_Token($.instance['[']),
                             'items': $.items.__l_map(($) => {
                                 const item = $
                                 return _p.decide.state($p.impact, ($): d_out.Value => {
@@ -216,15 +218,13 @@ export const Value: Value = ($, $p): d_out.Value => {
                                     }
                                 })
                             }),
-                            ']': {
-                                'comments': _p.list.literal([])
-                            },
+                            ']': Structural_Token($.instance[']']),
                         }]
                     }]))
                     case 'nothing': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['nothing', {
                             '~': {
-                                'comments': _p.list.literal([])
+                                'comments': _p.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                             }
                         }]
                     }]))
@@ -233,7 +233,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                             'value': $.instance.token.value,
                             'delimiter': ['none', null],
                             'trivia': {
-                                'comments': _p.list.literal([])
+                                'comments': $.instance['trailing trivia'].comments
                             }
                         }]
                     }]))
@@ -342,3 +342,6 @@ export const Value: Value = ($, $p): d_out.Value => {
         }
     })
 }
+export const Structural_Token: Structural_Token = ($) => ({
+    'comments': $['trailing trivia'].comments
+})

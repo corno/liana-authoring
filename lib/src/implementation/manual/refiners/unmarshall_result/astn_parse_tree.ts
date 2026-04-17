@@ -107,7 +107,9 @@ export const Value: Value = ($, $p) => {
                                 const group_def = $
                                 return _p.decide.state(concrete_value, ($): d_out.Unmarshalled => {
 
-                                    const concise_content = ($: d_in.Items): d_out.Group_Concise => {
+                                    const concise_content = (
+                                        $: d_in.Items
+                                    ): d_out.Group_Concise => {
                                         const property_definitions_as_list = _p.list.from.dictionary(
                                             group_def
                                         ).convert(
