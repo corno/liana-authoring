@@ -191,8 +191,8 @@ export const Value: Value = ($, $p) => {
                                                     'instance': ['group', $],
                                                     'type': _p.decide.state($, ($): d_out.Group_Type => {
                                                         switch ($[0]) {
-                                                            case 'concise': return _p.ss($, ($) => ['concise', concise_content($.items)])
-                                                            case 'verbose': return _p.ss($, ($) => ['verbose', verbose_content($.entries)])
+                                                            case 'concise': return _p.ss($, ($) => ['concise', concise_content($.properties)])
+                                                            case 'verbose': return _p.ss($, ($) => ['verbose', verbose_content($.properties)])
                                                             default: return _p.au($[0])
                                                         }
                                                     })

@@ -25,9 +25,6 @@ export type Value = _pi.Transformer_With_Parameter<
 >
 
 const temp_value = ($: d_out.Value.data): d_out.Value => ({
-    'metadata': {
-        'comments': _p.list.literal([]),
-    },
     'data': $
 })
 
@@ -50,142 +47,210 @@ export const Value: Value = ($, $p): d_out.Value => {
                 switch ($[0]) {
                     case 'component': return _p.ss($, ($): d_out.Value => Value($.value, $p))
                     case 'dictionary': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
-                        'type': ['dictionary', $.entries.__l_map(($): d_out.ID_Value_Pairs.L => {
-                            return {
-                                'id': $['id value pair'].id.token.value,
-                                'value': _p.optional.from.optional($.value).map(($) => {
-                                    const value = $
-                                    return _p.decide.state($p.impact, ($) => {
-                                        switch ($[0]) {
-                                            case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
-                                            case 'deep':return _p.ss($, ($) => Value(value, $p))
-                                            default: return _p.au($[0])
-                                        }
+                        'type': ['dictionary', {
+                            '{': {
+                                'comments': _p.list.literal([])
+                            },
+                            'entries': $.entries.__l_map(($): d_out.ID_Value_Pairs.L => {
+                                return {
+                                    'id': $['id value pair'].id.token.value,
+                                    'value': _p.optional.from.optional($.value).map(($) => {
+                                        const value = $
+                                        return _p.decide.state($p.impact, ($) => {
+                                            switch ($[0]) {
+                                                case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
+                                                case 'deep': return _p.ss($, ($) => Value(value, $p))
+                                                default: return _p.au($[0])
+                                            }
+                                        })
                                     })
-                                })
-                            }
-                        })]
+                                }
+                            }),
+                            '}': {
+                                'comments': _p.list.literal([])
+                            },
+                        }]
                     }]))
                     case 'group': return _p.ss($, ($): d_out.Value => {
                         const unmarsalled_group = $
                         return temp_value(['concrete', {
                             'type': ['group', _p.decide.state($p.style, ($): d_out.Value.data.concrete.type_.group => {
                                 switch ($[0]) {
-                                    case 'concise': return _p.ss($, ($) => ['concise', _p.decide.state(unmarsalled_group.type, ($): d_out.Items => {
-                                        switch ($[0]) {
-                                            //convert concise to concise
-                                            case 'concise': return _p.ss($, ($) => $.properties.__l_map(($) => {
-                                                const item = $.item
-                                                return _p.decide.state($['definition found'], ($) => {
-                                                    switch ($[0]) {
-                                                        case 'no': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.value))
-                                                        case 'yes': return _p.ss($, ($) => Value($.value, $p))
-                                                        default: return _p.au($[0])
-                                                    }
-                                                })
-                                            }))
-                                            //convert verbose to concise
-                                            case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Items.L => {
-                                                const item = $
-                                                return _p.decide.state($['definition found'], ($) => {
-                                                    switch ($[0]) {
-                                                        case 'yes': return _p.ss($, ($): d_out.Items.L => $.value.__decide(
-                                                            ($) => Value($, $p),
-                                                            () => temp_value(['concrete', {
-                                                                'type': ['nothing', null]
-                                                            }])
-                                                        ))
-                                                        case 'no': return _p.ss($, ($): d_out.Items.L => item['id value pair'].assignment.__decide(
-                                                            ($): d_out.Items.L => $.value.__decide(
-                                                                ($) => t_parse_tree_to_authoring_target.Value($),
-                                                                () => temp_value(['concrete', {
-                                                                    'type': ['nothing', null]
-                                                                }])
-                                                            ),
-                                                            (): d_out.Items.L => temp_value(['concrete', {
-                                                                'type': ['nothing', null]
-                                                            }])
-                                                        ))
-                                                        default: return _p.au($[0])
-                                                    }
-                                                })
-                                            }))
-                                            default: return _p.au($[0])
-                                        }
-                                    })])
-                                    case 'verbose': return _p.ss($, ($) => ['verbose', _p.decide.state(unmarsalled_group.type, ($): d_out.ID_Value_Pairs => {
-                                        switch ($[0]) {
-                                            //convert concise to verbose
-                                            case 'concise': return _p.ss($, ($): d_out.ID_Value_Pairs => _p.list.from.list($.properties).filter(($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
-                                                return _p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
-                                                    switch ($[0]) {
-                                                        case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
-                                                        case 'yes': return _p.ss($, ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => _p.optional.literal.set({
-                                                            'id': $.id,
-                                                            'value': _p.optional.literal.set(Value($.value, $p))
-                                                        }))
-                                                        default: return _p.au($[0])
-                                                    }
-                                                })
-                                            }))
-                                            //convert verbose to verbose
-                                            case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.ID_Value_Pairs.L => {
-                                                const item = $
-                                                return {
-                                                    'id': $['id value pair'].id.token.value,
-                                                    'value': _p.decide.state($['definition found'], ($): d_out.ID_Value_Pairs.L.value => {
+                                    case 'concise': return _p.ss($, ($) => ['concise', {
+                                        '<': {
+                                            'comments': _p.list.literal([])
+                                        },
+                                        'properties': _p.decide.state(unmarsalled_group.type, ($): d_out.Items => {
+                                            switch ($[0]) {
+                                                //convert concise to concise
+                                                case 'concise': return _p.ss($, ($) => $.properties.__l_map(($) => {
+                                                    const item = $.item
+                                                    return _p.decide.state($['definition found'], ($) => {
                                                         switch ($[0]) {
-                                                            case 'yes': return _p.ss($, ($) => _p.optional.from.optional($.value).map(($) => Value($, $p)))
-                                                            case 'no': return _p.ss($, ($) => item['id value pair'].assignment.__decide(
-                                                                ($): d_out.ID_Value_Pairs.L.value => $.value.__decide(
-                                                                    ($) => _p.optional.literal.set(t_parse_tree_to_authoring_target.Value($)),
-                                                                    () => _p.optional.literal.set(temp_value(['concrete', {
-                                                                        'type': ['nothing', null]
-                                                                    }]))
-                                                                ),
-                                                                (): d_out.ID_Value_Pairs.L.value => _p.optional.literal.set(temp_value(['concrete', {
-                                                                    'type': ['nothing', null]
-                                                                }])
-                                                                )))
+                                                            case 'no': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.value))
+                                                            case 'yes': return _p.ss($, ($) => Value($.value, $p))
                                                             default: return _p.au($[0])
                                                         }
                                                     })
-                                                }
-                                            }))
-                                            default: return _p.au($[0])
-                                        }
-                                    })])
+                                                }))
+                                                //convert verbose to concise
+                                                case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Items.L => {
+                                                    const item = $
+                                                    return _p.decide.state($['definition found'], ($) => {
+                                                        switch ($[0]) {
+                                                            case 'yes': return _p.ss($, ($): d_out.Items.L => $.value.__decide(
+                                                                ($) => Value($, $p),
+                                                                () => temp_value(['concrete', {
+                                                                    'type': ['nothing', {
+                                                                        '~': {
+                                                                            'comments': _p.list.literal([])
+                                                                        }
+                                                                    }]
+                                                                }])
+                                                            ))
+                                                            case 'no': return _p.ss($, ($): d_out.Items.L => item['id value pair'].assignment.__decide(
+                                                                ($): d_out.Items.L => $.value.__decide(
+                                                                    ($) => t_parse_tree_to_authoring_target.Value($),
+                                                                    () => temp_value(['concrete', {
+                                                                        'type': ['nothing', {
+                                                                            '~': {
+                                                                                'comments': _p.list.literal([])
+                                                                            }
+                                                                        }]
+                                                                    }])
+                                                                ),
+                                                                (): d_out.Items.L => temp_value(['concrete', {
+                                                                    'type': ['nothing', {
+                                                                        '~': {
+                                                                            'comments': _p.list.literal([])
+                                                                        }
+                                                                    }]
+                                                                }])
+                                                            ))
+                                                            default: return _p.au($[0])
+                                                        }
+                                                    })
+                                                }))
+                                                default: return _p.au($[0])
+                                            }
+                                        }),
+                                        '>': {
+                                            'comments': _p.list.literal([])
+                                        },
+                                    }])
+                                    case 'verbose': return _p.ss($, ($) => ['verbose', {
+                                        '(': {
+                                            'comments': _p.list.literal([])
+                                        },
+                                        'properties': _p.decide.state(unmarsalled_group.type, ($): d_out.ID_Value_Pairs => {
+                                            switch ($[0]) {
+                                                //convert concise to verbose
+                                                case 'concise': return _p.ss($, ($): d_out.ID_Value_Pairs => _p.list.from.list($.properties).filter(($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
+                                                    return _p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
+                                                        switch ($[0]) {
+                                                            case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
+                                                            case 'yes': return _p.ss($, ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => _p.optional.literal.set({
+                                                                'id': $.id,
+                                                                'value': _p.optional.literal.set(Value($.value, $p))
+                                                            }))
+                                                            default: return _p.au($[0])
+                                                        }
+                                                    })
+                                                }))
+                                                //convert verbose to verbose
+                                                case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.ID_Value_Pairs.L => {
+                                                    const item = $
+                                                    return {
+                                                        'id': $['id value pair'].id.token.value,
+                                                        'value': _p.decide.state($['definition found'], ($): d_out.ID_Value_Pairs.L.value => {
+                                                            switch ($[0]) {
+                                                                case 'yes': return _p.ss($, ($) => _p.optional.from.optional($.value).map(($) => Value($, $p)))
+                                                                case 'no': return _p.ss($, ($) => item['id value pair'].assignment.__decide(
+                                                                    ($): d_out.ID_Value_Pairs.L.value => $.value.__decide(
+                                                                        ($) => _p.optional.literal.set(t_parse_tree_to_authoring_target.Value($)),
+                                                                        () => _p.optional.literal.set(temp_value(['concrete', {
+                                                                            'type': ['nothing', {
+                                                                                '~': {
+                                                                                    'comments': _p.list.literal([])
+                                                                                }
+                                                                            }]
+                                                                        }]))
+                                                                    ),
+                                                                    (): d_out.ID_Value_Pairs.L.value => _p.optional.literal.set(temp_value(['concrete', {
+                                                                        'type': ['nothing', {
+                                                                            '~': {
+                                                                                'comments': _p.list.literal([])
+                                                                            }
+                                                                        }]
+                                                                    }])
+                                                                    )))
+                                                                default: return _p.au($[0])
+                                                            }
+                                                        })
+                                                    }
+                                                }))
+                                                default: return _p.au($[0])
+                                            }
+                                        }),
+                                        ')': {
+                                            'comments': _p.list.literal([])
+                                        },
+                                    }])
                                     default: return _p.au($[0])
                                 }
                             })]
                         }])
                     })
                     case 'list': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
-                        'type': ['list', $.items.__l_map(($) => {
-                            const item = $
-                            return _p.decide.state($p.impact, ($): d_out.Value => {
-                                switch ($[0]) {
-                                    case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.instance))
-                                    case 'deep': return _p.ss($, ($) => Value(item, $p))
-                                    default: return _p.au($[0])
-                                }
-                            })
-                        })]
+                        'type': ['list', {
+                            '[': {
+                                'comments': _p.list.literal([])
+                            },
+                            'items': $.items.__l_map(($) => {
+                                const item = $
+                                return _p.decide.state($p.impact, ($): d_out.Value => {
+                                    switch ($[0]) {
+                                        case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.instance))
+                                        case 'deep': return _p.ss($, ($) => Value(item, $p))
+                                        default: return _p.au($[0])
+                                    }
+                                })
+                            }),
+                            ']': {
+                                'comments': _p.list.literal([])
+                            },
+                        }]
                     }]))
                     case 'nothing': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
-                        'type': ['nothing', null]
+                        'type': ['nothing', {
+                            '~': {
+                                'comments': _p.list.literal([])
+                            }
+                        }]
                     }]))
                     case 'simple': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['text', {
                             'value': $.instance.token.value,
-                            'delimiter': ['none', null]
+                            'delimiter': ['none', null],
+                            'trivia': {
+                                'comments': _p.list.literal([])
+                            }
                         }]
                     }]))
                     case 'optional': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['optional', _p.decide.state($.status, ($): d_out.Value.data.concrete.type_.optional => {
                             switch ($[0]) {
-                                case 'set': return _p.ss($, ($) => ['set', Value($['child value'], $p)])
-                                case 'not set': return _p.ss($, ($) => ['not set', null])
+                                case 'set': return _p.ss($, ($) => ['set', {
+                                    '*': {
+                                        'comments': _p.list.literal([])
+                                    },
+                                    'value': Value($['child value'], $p)
+                                }])
+                                case 'not set': return _p.ss($, ($) => ['not set', {
+                                    '_': {
+                                        'comments': _p.list.literal([])
+                                    }
+                                }])
                                 default: return _p.au($[0])
                             }
                         })]
@@ -193,10 +258,17 @@ export const Value: Value = ($, $p): d_out.Value => {
                     case 'reference': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': _p.decide.state($.type, ($) => {
                             switch ($[0]) {
-                                case 'derived': return _p.ss($, ($) => ['nothing', null])
+                                case 'derived': return _p.ss($, ($) => ['nothing', {
+                                    '~': {
+                                        'comments': _p.list.literal([])
+                                    }
+                                }])
                                 case 'selected': return _p.ss($, ($) => ['text', {
                                     'value': $.instance.token.value,
-                                    'delimiter': ['apostrophe', null]
+                                    'delimiter': ['apostrophe', null],
+                                    'trivia': {
+                                        'comments': _p.list.literal([])
+                                    }
                                 }])
                                 default: return _p.au($[0])
                             }
@@ -212,10 +284,15 @@ export const Value: Value = ($, $p): d_out.Value => {
                                         return _p.decide.state($.option, ($) => {
                                             switch ($[0]) {
                                                 case 'known': return _p.ss($, ($) => temp_value(['concrete', {
-                                                    'type': ['state', ['set', {
-                                                        'option': token.token.value,
-                                                        'value': Value($.value, $p)
-                                                    }]]
+                                                    'type': ['state', {
+                                                        '|': {
+                                                            'comments': _p.list.literal([])
+                                                        },
+                                                        'status': ['set', {
+                                                            'option': token.token.value,
+                                                            'value': Value($.value, $p)
+                                                        }]
+                                                    }]
                                                 }]))
                                                 case 'unknown': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
                                                 default: return _p.au($[0])
@@ -223,7 +300,16 @@ export const Value: Value = ($, $p): d_out.Value => {
                                         })
                                     })
                                     case 'missing data': return _p.ss($, ($) => temp_value(['concrete', {
-                                        'type': ['state', ['missing', null]]
+                                        'type': ['state', {
+                                            '|': {
+                                                'comments': _p.list.literal([])
+                                            },
+                                            'status': ['missing', {
+                                                '#': {
+                                                    'comments': _p.list.literal([])
+                                                },
+                                            }]
+                                        }]
                                     }]))
                                     default: return _p.au($[0])
                                 }
@@ -238,13 +324,20 @@ export const Value: Value = ($, $p): d_out.Value => {
                     case 'text': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['text', {
                             'value': $.instance.token.value,
-                            'delimiter': ['quote', null]
+                            'delimiter': ['quote', null],
+                            'trivia': {
+                                'comments': _p.list.literal([])
+                            }
                         }]
                     }]))
                     default: return _p.au($[0])
                 }
             }))
-            case 'missing': return _p.ss($, ($): d_out.Value => temp_value(['missing', null]))
+            case 'missing': return _p.ss($, ($): d_out.Value => temp_value(['missing', {
+                '#': {
+                    'comments': _p.list.literal([])
+                }
+            }]))
             default: return _p.au($[0])
         }
     })

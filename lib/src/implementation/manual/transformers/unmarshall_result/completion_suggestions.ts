@@ -97,14 +97,13 @@ const do_def = (
                 {
                     'label': "",
                     'insert value': {
-                        'metadata': {
-                            'comments': _p.list.literal([]),
-
-                        },
                         'data': ['concrete', {
                             'type': ['text', {
                                 'delimiter': ['apostrophe', null],
-                                'value': "..."
+                                'value': "...",
+                                'trivia': {
+                                    'comments': _p.list.literal([])
+                                }
                             }]
                         }]
                     },
@@ -115,18 +114,23 @@ const do_def = (
                 {
                     'label': " (verbose)",
                     'insert value': {
-                        'metadata': {
-                            'comments': _p.list.literal([])
-                        },
                         'data': ['concrete', {
-                            'type': ['group', ['verbose', _p.list.from.dictionary(
-                                $
-                            ).convert(
-                                ($, id) => ({
-                                    'id': id,
-                                    'value': _p.optional.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
-                                })
-                            )]]
+                            'type': ['group', ['verbose', {
+                                '(': {
+                                    'comments': _p.list.literal([])
+                                },
+                                'properties': _p.list.from.dictionary(
+                                    $
+                                ).convert(
+                                    ($, id) => ({
+                                        'id': id,
+                                        'value': _p.optional.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
+                                    })
+                                ),
+                                ')': {
+                                    'comments': _p.list.literal([])
+                                },
+                            }]]
                         }]
                     },
                     'type': ['group', null]
@@ -135,15 +139,20 @@ const do_def = (
                 {
                     'label': " (concise)",
                     'insert value': {
-                        'metadata': {
-                            'comments': _p.list.literal([])
-                        },
                         'data': ['concrete', {
-                            'type': ['group', ['concise', _p.list.from.dictionary(
-                                $
-                            ).convert(
-                                ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
-                            )]]
+                            'type': ['group', ['concise', {
+                                '<': {
+                                    'comments': _p.list.literal([])
+                                },
+                                'properties': _p.list.from.dictionary(
+                                    $
+                                ).convert(
+                                    ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
+                                ),
+                                '>': {
+                                    'comments': _p.list.literal([])
+                                },
+                            }]]
                         }]
                     },
                     'type': ['group', null]
@@ -292,14 +301,16 @@ export const Found: Found = ($, $p) => {
                                                 ),
                                                 'insert text': t_authoring_target_to_text.Value(
                                                     {
-                                                        'metadata': {
-                                                            'comments': _p.list.literal([])
-                                                        },
                                                         'data': ['concrete', {
-                                                            'type': ['state', ['set', {
-                                                                'option': id,
-                                                                'value': $['insert value']
-                                                            }]]
+                                                            'type': ['state', {
+                                                                '|': {
+                                                                    'comments': _p.list.literal([])
+                                                                },
+                                                                'status': ['set', {
+                                                                    'option': id,
+                                                                    'value': $['insert value']
+                                                                }]
+                                                            }]
                                                         }]
                                                     },
                                                     {
