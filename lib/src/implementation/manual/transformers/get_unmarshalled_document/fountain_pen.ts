@@ -13,9 +13,17 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 //dependencies
 import * as t_ur_from_loc_to_fp from "../unmarshall_result_from_loc/fountain_pen"
+import * as t_deserialize_resolved_to_fountain_pen from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
 
 export const Error: signatures.Error = ($) => _p.decide.state($, ($) => {
     switch ($[0]) {
+        case 'schema': return _p.ss($, ($) => {
+            return sh.ph.composed([
+                sh.ph.literal("error in schema"),
+                sh.ph.literal(": "),
+                t_deserialize_resolved_to_fountain_pen.Error($.error)
+            ])
+        })
         case 'no schema file': return _p.ss($, ($) => sh.ph.composed([
             sh.ph.literal("no schema file @ "),
             sh.ph.literal($['file location'])

@@ -5,12 +5,12 @@ import * as resources_pareto from "pareto-resources/dist/interface/resources"
 
 export namespace queries {
 
-    export type get_unmarshalled_document = _pi.Query_Function<
-        resources.queries.get_unmarshalled_document,
+    export type get_schema_path = _pi.Query_Function<
+        resources.queries.get_schema_path,
         {
-            'read file': resources_pareto.queries.read_file
-        }
-    >
+            'stat': resources_pareto.queries.stat
+        }>
+
 
     export type get_unmarshalled_file = _pi.Query_Function<
         resources.queries.get_unmarshalled_file,

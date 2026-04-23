@@ -45,71 +45,21 @@ export const Document: Document = ($, abort, $p) => {
     return t_unmashall_result_to_diagnostics.Document(
         r_unmashall_result_from_list_of_characters.Document(
             $,
-            ($) => abort(_p.decide.state($, ($) => {
-                switch ($[0]) {
-                    case 'schema': return _p.ss($, ($) => ({
-                        'type': ['deserialize', null],
-                        'message': t_fp_to_text.Phrase(
-                            t_deserialize_resolved_to_fp.Error($.error),
-                            {
-                                'indentation': "    ",
-                                'newline': "\n",
-                            }
-                        ),
-                        'range': ({
-                            'start': {
-                                'line': 0,
-                                'character': 0,
-                            },
-                            'end': {
-                                'line': 0,
-                                'character': 0,
-                            }
-                        }),
-                        'related information': _p.optional.literal.set(_p.list.literal<d_out.Diagnostics.L.related_information.O.L>([
-                            {
-                                'message': "The schema is not valid",
-                                'location': {
-                                    'file path': $p['schema path'],
-                                    'range': _p.decide.state(t_deserialize_resolved_to_location.Error($.error), ($): d_loc.Range_FE => {
-                                        switch ($[0]) {
-                                            case 'range': return _p.ss($, ($) => t_astn_location_to_location.Range($))
-                                            case 'end of document': return _p.ss($, ($) => ({
-                                                'start': {
-                                                    'line': $.end.relative.line,
-                                                    'character': $.end.relative.column,
-                                                },
-                                                'end': {
-                                                    'line': $.end.relative.line,
-                                                    'character': $.end.relative.column,
-                                                }
-                                            }))
-                                            default: return _p.au($[0])
-                                        }
-                                    })
-                                }
-                            }
-                        ])),
-                        'severity': ['error', null],
-                    }))
-                    case 'deserialize': return _p.ss($, ($) => ({
-                        'type': ['deserialize', null],
-                        'message': t_fp_to_text.Phrase(
-                            t_deserialize_parse_tree_to_fp.Error($),
-                            {
-                                'indentation': "    ",
-                                'newline': "\n",
-                            }
-                        ),
-                        'range': t_astn_location_to_location.Possible_Range(
-                            t_deserialize_parse_tree_to_location.Error($)
-                        ),
-                        'related information':_p.optional.literal.not_set(),
-                        'severity': ['error', null],
-                    }))
-                    default: return _p.au($[0])
-                }
-            })),
+            ($) => abort({
+                'type': ['deserialize', null],
+                'message': t_fp_to_text.Phrase(
+                    t_deserialize_parse_tree_to_fp.Error($),
+                    {
+                        'indentation': "    ",
+                        'newline': "\n",
+                    }
+                ),
+                'range': t_astn_location_to_location.Possible_Range(
+                    t_deserialize_parse_tree_to_location.Error($)
+                ),
+                'related information': _p.optional.literal.not_set(),
+                'severity': ['error', null],
+            }),
             $p.unmarshall
         ),
     )

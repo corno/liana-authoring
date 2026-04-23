@@ -6,40 +6,29 @@ import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 import * as d_out from "../../../../interface/to_be_generated/unmashall_result"
 import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_from_loc"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_schema from "pareto-liana/dist/interface/to_be_generated/temp_module_specifier"
 
 export type Value = _pi.Refiner_With_Parameter<d_out.Value, d_function.Error, d_in.List_of_Characters, d_function.Parameters>
 export type Document = _pi.Refiner_With_Parameter<d_out.Document, d_function.Error, d_in.List_of_Characters, d_function.Parameters>
 
 //depencencies
 import * as tu_dynamic_unmarshall from "./astn_parse_tree"
-import * as r_parse_tree_from_text from "astn-core/dist/implementation/manual/refiners/parse_tree/list_of_characters"
-import * as r_temp_module_specifier_from_loc from "pareto-liana/dist/implementation/manual/refiners/temp_module_specifier/list_of_characters"
+import * as r_parse_tree_from_list_of_characters from "astn-core/dist/implementation/manual/refiners/parse_tree/list_of_characters"
 
 export const Document: Document = ($, abort, $p) => {
-    const x = r_temp_module_specifier_from_loc.Module_Specifier(
-        $p['schema']['content'],
-        ($) => abort(['schema', {
-            'error': $,
-        }]),
-    )
 
     return tu_dynamic_unmarshall.Document(
-        r_parse_tree_from_text.Document(
+        r_parse_tree_from_list_of_characters.Document(
             $,
-            ($) => abort(['deserialize', $]),
+            ($) => abort($),
             {
                 'tab size': $p['tab size'],
             },
         ),
         {
-            'definition': x.root.entry['root value'],
-            'definition path': x.root.id,
+            'definition': $p.schema.root.entry['root value'],
+            'definition path': $p.schema.root.id,
             'property path': "",
         }
     )
 }
-
-// export const Value: Value = ($, abort, $p) => {
-//     .content
-// return x3
-// }

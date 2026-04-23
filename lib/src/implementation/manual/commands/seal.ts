@@ -9,7 +9,7 @@ import * as d_main from "pareto-resources/dist/interface/to_be_generated/temp_ma
 import * as d_transform_file from "../../../modules/common_tool_signatures/interface/to_be_generated/transform_file"
 
 //dependencies
-import { $$x as q_load_file } from "../queries/get_unmarshalled_file"
+import { $$ as q_load_file } from "../queries/load_unmarshalled_file"
 import * as r_file_in_file_out_from_main from "../../../modules/common_tool_signatures/implementation/manual/refiners/file_in_file_out/main"
 import * as t_transform_file_to_fp from "../../../modules/common_tool_signatures/implementation/manual/schemas/transform_file/transformers/fountain_pen"
 import * as t_load_file_to_fp from "../transformers/load_file/fountain_pen"

@@ -1,17 +1,9 @@
 import * as d_parse_result from "astn-core/dist/interface/generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_deserialize_resolved from "liana-core/dist/interface/to_be_generated/deserialize_resolved"
-import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_schema from "pareto-liana/dist/interface/to_be_generated/temp_module_specifier"
 
 export type Parameters = {
     'tab size': number
-    'schema': {
-        'content': d_loc.List_of_Characters
-    }
+    'schema': d_schema.Temp_Module_Specifier
 }
 
-export type Error =
-    | ['schema', {
-        'error': d_deserialize_resolved.Error,
-    }]
-    | ['deserialize', d_parse_result.Error]
-    // | ['unmarshall', null]
+export type Error = d_parse_result.Error
