@@ -10,7 +10,7 @@ import * as d_function_seal from "../../../../interface/to_be_generated/seal"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
-import * as r_unmashall_result_from_list_of_characters from "../unmarshall_result/list_of_characters"
+import * as r_unmarshall_result_from_list_of_characters from "../unmarshall_result/list_of_characters"
 import * as r_sealed_target_from_unmarshall_result from "./unmarshall_result"
 
 
@@ -25,7 +25,7 @@ export type Document = _pi.Refiner_With_Parameter<
 
 export const Document: Document = ($, abort, $p) => {
     return r_sealed_target_from_unmarshall_result.Document(
-        r_unmashall_result_from_list_of_characters.Document(
+        r_unmarshall_result_from_list_of_characters.Document(
             $,
             ($) => abort(['unmarshall', $]),
             $p.unmarshall
