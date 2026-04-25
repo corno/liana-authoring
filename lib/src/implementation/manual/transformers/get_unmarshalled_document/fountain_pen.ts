@@ -12,7 +12,7 @@ export namespace signatures {
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 //dependencies
-import * as t_ur_from_loc_to_fp from "../unmarshall_result_from_loc/fountain_pen"
+import * as t_deserialize_parse_tree_to_fp from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/fountain_pen"
 import * as t_deserialize_resolved_to_fountain_pen from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
 
 export const Error: signatures.Error = ($) => _p.decide.state($, ($) => {
@@ -28,7 +28,7 @@ export const Error: signatures.Error = ($) => _p.decide.state($, ($) => {
             sh.ph.literal("no schema file @ "),
             sh.ph.literal($['file location'])
         ]))
-        case 'deserialize': return _p.ss($, ($) => t_ur_from_loc_to_fp.Error($))
+        case 'deserialize': return _p.ss($, ($) => t_deserialize_parse_tree_to_fp.Error($))
         default: return _p.au($[0])
     }
 })
