@@ -17,7 +17,6 @@ import * as d_outx from "../../../../interface/to_be_generated/found"
 import * as t_to_unmarshall_result_value_at_position from "./found"
 import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target"
 import * as t_authoring_target_to_text from "astn/dist/implementation/manual/transformers/authoring_target/text"
-import * as t_astn_location_to_location from "../astn_core_location/location"
 import * as t_parse_tree_to_full_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
 // import * as t_astn_target_to_fp from "astn/dist/implementation/manual/schemas/authoring_target/transformers/fountain_pen_block"
@@ -209,9 +208,7 @@ export const Found: Found = ($, $p) => {
                     ),
                     'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
                         ['delete', {
-                            'range': t_astn_location_to_location.Range(
-                                t_parse_tree_to_full_range.Value(instance)
-                            )
+                            'range': t_parse_tree_to_full_range.Value(instance)
                         }]
                     ]),
                     'type': $.type
@@ -321,7 +318,7 @@ export const Found: Found = ($, $p) => {
                                                 ),
                                                 'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
                                                     ['delete', {
-                                                        'range': t_astn_location_to_location.Range(missing_data_marker.range)
+                                                        'range': missing_data_marker.range
                                                     }]
                                                 ]),
                                                 'type': ['state', null]

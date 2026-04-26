@@ -13,7 +13,6 @@ import * as d_function_parameters from "../../../../interface/to_be_generated/un
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found"
 import * as t_authoring_target_to_text from "astn/dist/implementation/manual/transformers/authoring_target/text"
-import * as t_astn_location_to_location from "../astn_core_location/location"
 import * as t_parse_tree_to_full_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target"
 
@@ -45,9 +44,7 @@ export const Found: Found = ($, $p): d_out.Formatting_Edits => {
 
             return {
                 'replace': {
-                    'range': t_astn_location_to_location.Range(
-                        t_parse_tree_to_full_range.Value(value.instance)
-                    ),
+                    'range': t_parse_tree_to_full_range.Value(value.instance),
                     'text': t_authoring_target_to_text.Value(
                         t_unmarshall_result_to_authoring_target.Value(value, $p.conversion),
                         {
@@ -61,18 +58,14 @@ export const Found: Found = ($, $p): d_out.Formatting_Edits => {
         })
         case 'entry': return _p.ss($, ($) => ({
             'replace': {
-                'range': t_astn_location_to_location.Range(
-                    t_parse_tree_to_full_range.ID_Value_Pair($['id value pair'])
-                ),
+                'range': t_parse_tree_to_full_range.ID_Value_Pair($['id value pair']),
                 'text': "FOOOO ENTRY"
             }
         }))
         case 'verbose property': return _p.ss($, ($) => ({
             'replace': {
-                'range': t_astn_location_to_location.Range(
-                    t_parse_tree_to_full_range.ID_Value_Pair(
-                        $['id value pair']
-                    )
+                'range': t_parse_tree_to_full_range.ID_Value_Pair(
+                    $['id value pair']
                 ),
                 'text': "FOOOO VP"
             }
@@ -81,9 +74,7 @@ export const Found: Found = ($, $p): d_out.Formatting_Edits => {
 
             return {
                 'replace': {
-                    'range': t_astn_location_to_location.Range(
-                        t_parse_tree_to_full_range.Value($.item.value)
-                    ),
+                    'range': t_parse_tree_to_full_range.Value($.item.value),
                     'text': "FOOOO CP"
                 }
             }
@@ -93,9 +84,7 @@ export const Found: Found = ($, $p): d_out.Formatting_Edits => {
 
             return {
                 'replace': {
-                    'range': t_astn_location_to_location.Range(
-                        t_parse_tree_to_full_range.Value($['value instance'])
-                    ),
+                    'range': t_parse_tree_to_full_range.Value($['value instance']),
                     'text': "FOOOO CP"
                 }
             }

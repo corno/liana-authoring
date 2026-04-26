@@ -12,7 +12,6 @@ import * as d_out from "../../../../interface/to_be_generated/found"
 //dependencies
 import * as t_parse_tree_to_start_token_range from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 import * as t_parse_tree_to_full_value_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
-import * as t_astn_location_to_location from "../astn_core_location/location"
 
 
 export const range_overlaps_position = (
@@ -21,30 +20,18 @@ export const range_overlaps_position = (
         'position': d_location.Position
 
     }
-): boolean => {
-    const range_overlaps_positionx = (
-        $: d_location.Range_FE,
-        $p: {
-            'position': d_location.Position
-
-        }
-    ): boolean =>
-        (
-            $.start.line < $p.position.line
-            ||
-            ($.start.line === $p.position.line && $.start.character <= $p.position.character)
-        )
-        &&
-        (
-            $.end.line > $p.position.line
-            ||
-            ($.end.line === $p.position.line && $.end.character >= $p.position.character)
-        )
-    return range_overlaps_positionx(
-        t_astn_location_to_location.Range($),
-        $p
+): boolean =>
+    (
+        $.start.relative.line < $p.position.line
+        ||
+        ($.start.relative.line === $p.position.line && $.start.relative.column <= $p.position.character)
     )
-}
+    &&
+    (
+        $.end.relative.line > $p.position.line
+        ||
+        ($.end.relative.line === $p.position.line && $.end.relative.column >= $p.position.character)
+    )
 
 
 export type Document = _pi.Transformer_With_Parameter<

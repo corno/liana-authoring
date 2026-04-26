@@ -7,7 +7,7 @@ import * as t_signatures from "../../../../../../interface/generated/liana/schem
 
 import * as t_out from "../../../../../../interface/generated/liana/schemas/text_edits/data"
 
-import * as v_location from "../../location/transformers/boilerplate_for_migrate"
+import * as v_location from "../../astn_location/transformers/boilerplate_for_migrate"
 
 export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
     $,
@@ -22,7 +22,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
                         ($) => ['replace', {
                             'range': _p_change_context(
                                 $['range'],
-                                ($) => v_location.Range_FE(
+                                ($) => v_location.Range(
                                     $,
                                 ),
                             ),
@@ -38,7 +38,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
                         ($) => ['delete', {
                             'range': _p_change_context(
                                 $['range'],
-                                ($) => v_location.Range_FE(
+                                ($) => v_location.Range(
                                     $,
                                 ),
                             ),
@@ -50,7 +50,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
                         ($) => ['insert', {
                             'location': _p_change_context(
                                 $['location'],
-                                ($) => v_location.Position(
+                                ($) => v_location.Location(
                                     $,
                                 ),
                             ),

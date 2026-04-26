@@ -11,7 +11,7 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-import * as v_external_location from "../../location/transformers/astn_sealed_target"
+import * as v_external_location from "../../astn_location/transformers/astn_sealed_target"
 
 export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.list(
     $,
@@ -29,7 +29,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                                 {
                                     "range": _p_change_context(
                                         $['range'],
-                                        ($) => v_external_location.Range_FE(
+                                        ($) => v_external_location.Range(
                                             $,
                                         ),
                                     ),
@@ -53,7 +53,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                                 {
                                     "range": _p_change_context(
                                         $['range'],
-                                        ($) => v_external_location.Range_FE(
+                                        ($) => v_external_location.Range(
                                             $,
                                         ),
                                     ),
@@ -70,7 +70,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                                 {
                                     "location": _p_change_context(
                                         $['location'],
-                                        ($) => v_external_location.Position(
+                                        ($) => v_external_location.Location(
                                             $,
                                         ),
                                     ),

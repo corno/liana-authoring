@@ -15,7 +15,7 @@ import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/
 
 import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-import * as v_external_location from "../../location/refiners/astn_parse_tree"
+import * as v_external_location from "../../astn_location/refiners/astn_parse_tree"
 
 export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.list(
     v_unmarshalled_from_parse_tree.List(
@@ -81,7 +81,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                             'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
-                                                    ($) => v_external_location.Range_FE(
+                                                    ($) => v_external_location.Range(
                                                         $,
                                                         ($) => abort(
                                                             $,
@@ -150,7 +150,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                             'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
-                                                    ($) => v_external_location.Range_FE(
+                                                    ($) => v_external_location.Range(
                                                         $,
                                                         ($) => abort(
                                                             $,
@@ -202,7 +202,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                             'subdocument context': _p.optional.literal.not_set(),
                                                         },
                                                     ),
-                                                    ($) => v_external_location.Position(
+                                                    ($) => v_external_location.Location(
                                                         $,
                                                         ($) => abort(
                                                             $,

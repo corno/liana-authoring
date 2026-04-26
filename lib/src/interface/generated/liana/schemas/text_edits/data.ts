@@ -1,7 +1,7 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i_imports_location from "../location/data"
+import * as i_imports_location from "../astn_location/data"
 
 export namespace Text_Edits_ {
     
@@ -9,7 +9,7 @@ export namespace Text_Edits_ {
         
         export namespace replace {
             
-            export type range = i_imports_location.Range_FE
+            export type range = i_imports_location.Range
             
             export type text = string
             
@@ -22,7 +22,7 @@ export namespace Text_Edits_ {
         
         export namespace delete_ {
             
-            export type range = i_imports_location.Range_FE
+            export type range = i_imports_location.Range
             
         }
         
@@ -32,7 +32,7 @@ export namespace Text_Edits_ {
         
         export namespace insert {
             
-            export type location = i_imports_location.Position
+            export type location = i_imports_location.Location
             
             export type text = string
             
