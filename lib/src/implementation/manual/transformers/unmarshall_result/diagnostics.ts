@@ -46,7 +46,8 @@ export const Document: Document = ($) => {
                     ))
                     default: return _p.au($[0])
                 }
-            })
+            }),
+            'type': ['semantic', null],
         })
     })
 }

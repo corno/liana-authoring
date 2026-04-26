@@ -102,6 +102,35 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
             ),
         ),
     ),
+    'type': _p_change_context(
+        $['type'],
+        ($) => _p.decide.state(
+            $,
+            ($): t_out.Diagnostic.type_ => {
+                switch ($[0]) {
+                    case 'semantic':
+                        return _p.ss(
+                            $,
+                            ($) => ['semantic', null],
+                        )
+                    case 'deserialize':
+                        return _p.ss(
+                            $,
+                            ($) => ['deserialize', null],
+                        )
+                    case 'schema':
+                        return _p.ss(
+                            $,
+                            ($) => ['schema', null],
+                        )
+                    default:
+                        return _p.au(
+                            $[0],
+                        )
+                }
+            },
+        ),
+    ),
 })
 
 export const Result: t_signatures.Result = ($) => ({

@@ -79,6 +79,21 @@ export namespace Diagnostic_ {
     
     export type related_information = _pi.Optional_Value<related_information.O>
     
+    export namespace type_ {
+        
+        export type semantic = null
+        
+        export type deserialize = null
+        
+        export type schema = null
+        
+    }
+    
+    export type type_ = 
+        | readonly ['semantic', type_.semantic]
+        | readonly ['deserialize', type_.deserialize]
+        | readonly ['schema', type_.schema]
+    
 }
 
 export type Diagnostic_ = {
@@ -86,6 +101,7 @@ export type Diagnostic_ = {
     readonly 'range': Diagnostic_.range
     readonly 'message': Diagnostic_.message
     readonly 'related information': Diagnostic_.related_information
+    readonly 'type': Diagnostic_.type_
 }
 
 export namespace Result_ {

@@ -54,6 +54,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($, abort) => _p_change_conte
                     "range": null,
                     "message": null,
                     "related information": null,
+                    "type": null,
                 },
             ),
             'subdocument context': _p.optional.literal.not_set(),
@@ -352,6 +353,75 @@ export const Diagnostic: t_signatures.Diagnostic = ($, abort) => _p_change_conte
                                     ),
                                 ),
                             ),
+                        ),
+                    ),
+                ),
+                'type': _p_change_context(
+                    v_unmarshalled_from_parse_tree.Property(
+                        $,
+                        ($) => abort(
+                            $,
+                        ),
+                        {
+                            'id': 'type',
+                            'subdocument context': _p.optional.literal.not_set(),
+                        },
+                    ),
+                    ($) => _p_change_context(
+                        v_unmarshalled_from_parse_tree.State(
+                            $,
+                            ($) => abort(
+                                $,
+                            ),
+                        ),
+                        ($) => _p.decide.text(
+                            $['option']['token']['value'],
+                            ($t): t_out.Diagnostic.type_ => {
+                                switch ($t) {
+                                    case 'semantic':
+                                        return _p_change_context(
+                                            $['value'],
+                                            ($) => ['semantic', v_unmarshalled_from_parse_tree.Nothing(
+                                                $,
+                                                ($) => abort(
+                                                    $,
+                                                ),
+                                            )],
+                                        )
+                                    case 'deserialize':
+                                        return _p_change_context(
+                                            $['value'],
+                                            ($) => ['deserialize', v_unmarshalled_from_parse_tree.Nothing(
+                                                $,
+                                                ($) => abort(
+                                                    $,
+                                                ),
+                                            )],
+                                        )
+                                    case 'schema':
+                                        return _p_change_context(
+                                            $['value'],
+                                            ($) => ['schema', v_unmarshalled_from_parse_tree.Nothing(
+                                                $,
+                                                ($) => abort(
+                                                    $,
+                                                ),
+                                            )],
+                                        )
+                                    default:
+                                        return abort(
+                                            ['liana', {
+                                                'type': ['state', ['unknown option', $['option']['token']['value']]],
+                                                'range': v_parse_tree_to_location.Value(
+                                                    $['value'],
+                                                    {
+                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                    },
+                                                ),
+                                            }],
+                                        )
+                                }
+                            },
                         ),
                     ),
                 ),
