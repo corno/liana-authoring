@@ -27,7 +27,7 @@ export const Document: Document = ($, $p) => {
             switch ($[0]) {
                 case 'value': return _p.ss($, ($) => {
                     const def = $.definition
-                    return _p.optional.literal.set(_p.list.nested_literal_old([
+                    return _p.list.nested_literal_old([
                         [
                             $['property path'],
                         ],
@@ -73,12 +73,12 @@ export const Document: Document = ($, $p) => {
                                 default: return _p.au($[0])
                             }
                         }),
-                    ]))
+                    ])
                 })
-                case 'entry': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
+                case 'entry': return _p.ss($, ($) => _p.list.literal([
                     $['property path'],
-                ])))
-                case 'verbose property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
+                ]))
+                case 'verbose property': return _p.ss($, ($) => _p.list.literal([
                     $['id value pair'].id.token.value,
                     _p.decide.state($['definition found'], ($) => {
                         switch ($[0]) {
@@ -90,8 +90,8 @@ export const Document: Document = ($, $p) => {
                             default: return _p.au($[0])
                         }
                     }),
-                ])))
-                case 'concise property': return _p.ss($, ($) => _p.optional.literal.set(_p.decide.state($['definition found'], ($) => {
+                ]))
+                case 'concise property': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
                     switch ($[0]) {
                         case 'yes': return _p.ss($, ($) => _p.list.literal([
                             $.id,
@@ -105,11 +105,11 @@ export const Document: Document = ($, $p) => {
                         ]))
                         default: return _p.au($[0])
                     }
-                })))
+                }))
                 case 'valid state': return _p.ss($, ($) => {
                     const def = $.definition
                     const prop_path = $['property path']
-                    return _p.optional.literal.set(_p.decide.state($.option, ($) => {
+                    return _p.decide.state($.option, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => _p.list.literal([
                                 prop_path,
@@ -130,7 +130,7 @@ export const Document: Document = ($, $p) => {
                             ]))
                             default: return _p.au($[0])
                         }
-                    }))
+                    })
                 })
                 default: return _p.au($[0])
             }

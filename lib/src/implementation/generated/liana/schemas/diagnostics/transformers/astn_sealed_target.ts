@@ -11,118 +11,122 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-import * as v_external_location from "../../location/transformers/astn_sealed_target"
+import * as v_external_location from "../../astn_location/transformers/astn_sealed_target"
 
 import * as v_external_path from "../../path/transformers/astn_sealed_target"
 
 export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', _p.list.from.list(
     $,
 ).map(
-    ($) => ['group', ['verbose', _p.dictionary.literal(
-        {
-            "severity": _p_change_context(
-                $['severity'],
-                ($) => ['state', _p.decide.state(
-                    $,
-                    ($): t_out.Value.state => {
-                        switch ($[0]) {
-                            case 'error':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'error',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'warning':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'warning',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'information':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'information',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'hint':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'hint',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            default:
-                                return _p.au(
-                                    $[0],
-                                )
-                        }
-                    },
-                )],
-            ),
-            "range": _p_change_context(
-                $['range'],
-                ($) => v_external_location.Range_FE(
-                    $,
-                ),
-            ),
-            "message": _p_change_context(
-                $['message'],
-                ($) => ['text', {
-                    'delimiter': ['quote', null],
-                    'value': $,
-                }],
-            ),
-            "related information": _p_change_context(
-                $['related information'],
-                ($) => ['optional', _p.decide.optional(
-                    $,
-                    ($): t_out.Value.optional => ['set', ['list', _p.list.from.list(
-                        $,
-                    ).map(
-                        ($) => ['group', ['verbose', _p.dictionary.literal(
-                            {
-                                "location": _p_change_context(
-                                    $['location'],
-                                    ($) => ['group', ['verbose', _p.dictionary.literal(
-                                        {
-                                            "file path": _p_change_context(
-                                                $['file path'],
-                                                ($) => v_external_path.Node_Path(
-                                                    $,
-                                                ),
-                                            ),
-                                            "range": _p_change_context(
-                                                $['range'],
-                                                ($) => v_external_location.Range_FE(
-                                                    $,
-                                                ),
-                                            ),
-                                        },
-                                    )]],
-                                ),
-                                "message": _p_change_context(
-                                    $['message'],
-                                    ($) => ['text', {
-                                        'delimiter': ['quote', null],
-                                        'value': $,
-                                    }],
-                                ),
-                            },
-                        )]],
-                    )]],
-                    () => ['not set', null],
-                )],
-            ),
-        },
-    )]],
+    ($) => Diagnostic(
+        $,
+    ),
 )]
+
+export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', _p.dictionary.literal(
+    {
+        "severity": _p_change_context(
+            $['severity'],
+            ($) => ['state', _p.decide.state(
+                $,
+                ($): t_out.Value.state => {
+                    switch ($[0]) {
+                        case 'error':
+                            return _p.ss(
+                                $,
+                                ($) => ({
+                                    'option': 'error',
+                                    'value': ['nothing', null],
+                                }),
+                            )
+                        case 'warning':
+                            return _p.ss(
+                                $,
+                                ($) => ({
+                                    'option': 'warning',
+                                    'value': ['nothing', null],
+                                }),
+                            )
+                        case 'information':
+                            return _p.ss(
+                                $,
+                                ($) => ({
+                                    'option': 'information',
+                                    'value': ['nothing', null],
+                                }),
+                            )
+                        case 'hint':
+                            return _p.ss(
+                                $,
+                                ($) => ({
+                                    'option': 'hint',
+                                    'value': ['nothing', null],
+                                }),
+                            )
+                        default:
+                            return _p.au(
+                                $[0],
+                            )
+                    }
+                },
+            )],
+        ),
+        "range": _p_change_context(
+            $['range'],
+            ($) => v_external_location.Possible_Range(
+                $,
+            ),
+        ),
+        "message": _p_change_context(
+            $['message'],
+            ($) => ['text', {
+                'delimiter': ['quote', null],
+                'value': $,
+            }],
+        ),
+        "related information": _p_change_context(
+            $['related information'],
+            ($) => ['optional', _p.decide.optional(
+                $,
+                ($): t_out.Value.optional => ['set', ['list', _p.list.from.list(
+                    $,
+                ).map(
+                    ($) => ['group', ['verbose', _p.dictionary.literal(
+                        {
+                            "location": _p_change_context(
+                                $['location'],
+                                ($) => ['group', ['verbose', _p.dictionary.literal(
+                                    {
+                                        "file path": _p_change_context(
+                                            $['file path'],
+                                            ($) => v_external_path.Node_Path(
+                                                $,
+                                            ),
+                                        ),
+                                        "range": _p_change_context(
+                                            $['range'],
+                                            ($) => v_external_location.Possible_Range(
+                                                $,
+                                            ),
+                                        ),
+                                    },
+                                )]],
+                            ),
+                            "message": _p_change_context(
+                                $['message'],
+                                ($) => ['text', {
+                                    'delimiter': ['quote', null],
+                                    'value': $,
+                                }],
+                            ),
+                        },
+                    )]],
+                )]],
+                () => ['not set', null],
+            )],
+        ),
+    },
+)]]
 
 export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.dictionary.literal(
     {

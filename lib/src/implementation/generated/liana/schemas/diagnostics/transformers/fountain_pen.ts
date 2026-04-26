@@ -13,6 +13,12 @@ export const Diagnostics: t_signatures.Diagnostics = ($) => v_serialize.Document
     ),
 )
 
+export const Diagnostic: t_signatures.Diagnostic = ($) => v_serialize.Document(
+    v_marshall.Diagnostic(
+        $,
+    ),
+)
+
 export const Result: t_signatures.Result = ($) => v_serialize.Document(
     v_marshall.Result(
         $,

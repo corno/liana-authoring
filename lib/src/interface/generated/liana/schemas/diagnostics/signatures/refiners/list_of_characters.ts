@@ -31,6 +31,30 @@ export type Diagnostics_ = (
     },
 ) => Diagnostics_.O
 
+export namespace Diagnostic_ {
+    
+    export type I = i_in.List_of_Characters
+    
+    export type O = i_out.Diagnostic
+    
+    export type E = i_generic.Error
+    
+    export namespace P {
+        
+        export type tab_size = number
+        
+    }
+    
+}
+
+export type Diagnostic_ = (
+    context: Diagnostic_.I,
+    abort: _pi.Abort<Diagnostic_.E>,
+    parameters: {
+        readonly 'tab size': Diagnostic_.P.tab_size
+    },
+) => Diagnostic_.O
+
 export namespace Result_ {
     
     export type I = i_in.List_of_Characters
@@ -81,6 +105,7 @@ export type Parameters_ = (
 
 export { 
     Diagnostics_ as Diagnostics, 
+    Diagnostic_ as Diagnostic, 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }

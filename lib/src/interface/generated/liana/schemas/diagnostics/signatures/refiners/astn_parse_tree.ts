@@ -26,6 +26,25 @@ export type Diagnostics_ = (
     abort: _pi.Abort<Diagnostics_.E>,
 ) => Diagnostics_.O
 
+export namespace Diagnostic_ {
+    
+    export type I = i_in.Value
+    
+    export type O = i_out.Diagnostic
+    
+    export type E = i_generic.Error
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Diagnostic_ = (
+    context: Diagnostic_.I,
+    abort: _pi.Abort<Diagnostic_.E>,
+) => Diagnostic_.O
+
 export namespace Result_ {
     
     export type I = i_in.Value
@@ -66,6 +85,7 @@ export type Parameters_ = (
 
 export { 
     Diagnostics_ as Diagnostics, 
+    Diagnostic_ as Diagnostic, 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }

@@ -24,7 +24,7 @@ export type Temp_Error = {
     'severity':
     | ['error', null]
     | ['warning', null]
-    'related information': d_out.Diagnostics.L.related_information
+    'related information': d_out.Diagnostic.related_information
 }
 
 export const Error = ($: d_in.Error, $p: { 'schema path': d_path.Node_Path }): Temp_Error => ({
@@ -46,27 +46,12 @@ export const Error = ($: d_in.Error, $p: { 'schema path': d_path.Node_Path }): T
             'character': 0,
         }
     }),
-    'related information': _p.optional.literal.set(_p.list.literal<d_out.Diagnostics.L.related_information.O.L>([
+    'related information': _p.optional.literal.set(_p.list.literal<d_out.Diagnostic.related_information.O.L>([
         {
             'message': "The schema is not valid",
             'location': {
                 'file path': $p['schema path'],
-                'range': _p.decide.state(t_deserialize_resolved_to_location.Error($), ($): d_loc.Range_FE => {
-                    switch ($[0]) {
-                        case 'range': return _p.ss($, ($) => t_astn_location_to_location.Range($))
-                        case 'end of document': return _p.ss($, ($) => ({
-                            'start': {
-                                'line': $.end.relative.line,
-                                'character': $.end.relative.column,
-                            },
-                            'end': {
-                                'line': $.end.relative.line,
-                                'character': $.end.relative.column,
-                            }
-                        }))
-                        default: return _p.au($[0])
-                    }
-                })
+                'range': t_deserialize_resolved_to_location.Error($),
             }
         }
     ])),

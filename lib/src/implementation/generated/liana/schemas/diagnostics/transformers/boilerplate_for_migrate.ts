@@ -7,94 +7,98 @@ import * as t_signatures from "../../../../../../interface/generated/liana/schem
 
 import * as t_out from "../../../../../../interface/generated/liana/schemas/diagnostics/data"
 
-import * as v_location from "../../location/transformers/boilerplate_for_migrate"
+import * as v_location from "../../astn_location/transformers/boilerplate_for_migrate"
 
 import * as v_path from "../../path/transformers/boilerplate_for_migrate"
 
 export const Diagnostics: t_signatures.Diagnostics = ($) => _p.list.from.list(
     $,
 ).map(
-    ($) => ({
-        'severity': _p_change_context(
-            $['severity'],
-            ($) => _p.decide.state(
-                $,
-                ($): t_out.Diagnostics.L.severity => {
-                    switch ($[0]) {
-                        case 'error':
-                            return _p.ss(
-                                $,
-                                ($) => ['error', null],
-                            )
-                        case 'warning':
-                            return _p.ss(
-                                $,
-                                ($) => ['warning', null],
-                            )
-                        case 'information':
-                            return _p.ss(
-                                $,
-                                ($) => ['information', null],
-                            )
-                        case 'hint':
-                            return _p.ss(
-                                $,
-                                ($) => ['hint', null],
-                            )
-                        default:
-                            return _p.au(
-                                $[0],
-                            )
-                    }
-                },
-            ),
+    ($) => Diagnostic(
+        $,
+    ),
+)
+
+export const Diagnostic: t_signatures.Diagnostic = ($) => ({
+    'severity': _p_change_context(
+        $['severity'],
+        ($) => _p.decide.state(
+            $,
+            ($): t_out.Diagnostic.severity => {
+                switch ($[0]) {
+                    case 'error':
+                        return _p.ss(
+                            $,
+                            ($) => ['error', null],
+                        )
+                    case 'warning':
+                        return _p.ss(
+                            $,
+                            ($) => ['warning', null],
+                        )
+                    case 'information':
+                        return _p.ss(
+                            $,
+                            ($) => ['information', null],
+                        )
+                    case 'hint':
+                        return _p.ss(
+                            $,
+                            ($) => ['hint', null],
+                        )
+                    default:
+                        return _p.au(
+                            $[0],
+                        )
+                }
+            },
         ),
-        'range': _p_change_context(
-            $['range'],
-            ($) => v_location.Range_FE(
-                $,
-            ),
+    ),
+    'range': _p_change_context(
+        $['range'],
+        ($) => v_location.Possible_Range(
+            $,
         ),
-        'message': _p_change_context(
-            $['message'],
-            ($) => $,
-        ),
-        'related information': _p_change_context(
-            $['related information'],
-            ($) => _p.optional.from.optional(
+    ),
+    'message': _p_change_context(
+        $['message'],
+        ($) => $,
+    ),
+    'related information': _p_change_context(
+        $['related information'],
+        ($) => _p.optional.from.optional(
+            $,
+        ).map(
+            ($) => _p.list.from.list(
                 $,
             ).map(
-                ($) => _p.list.from.list(
-                    $,
-                ).map(
-                    ($) => ({
-                        'location': _p_change_context(
-                            $['location'],
-                            ($) => ({
-                                'file path': _p_change_context(
-                                    $['file path'],
-                                    ($) => v_path.Node_Path(
-                                        $,
-                                    ),
+                ($) => ({
+                    'location': _p_change_context(
+                        $['location'],
+                        ($) => ({
+                            'file path': _p_change_context(
+                                $['file path'],
+                                ($) => v_path.Node_Path(
+                                    $,
                                 ),
-                                'range': _p_change_context(
-                                    $['range'],
-                                    ($) => v_location.Range_FE(
-                                        $,
-                                    ),
+                            ),
+                            'range': _p_change_context(
+                                $['range'],
+                                ($) => v_location.Possible_Range(
+                                    $,
                                 ),
-                            }),
-                        ),
-                        'message': _p_change_context(
-                            $['message'],
-                            ($) => $,
-                        ),
-                    }),
-                ),
+                            ),
+                        }),
+                    ),
+                    'message': _p_change_context(
+                        $['message'],
+                        ($) => $,
+                    ),
+                }),
             ),
         ),
-    }),
-)
+    ),
+})
 
 export const Result: t_signatures.Result = ($) => ({
     'diagnostics': _p_change_context(

@@ -7,7 +7,6 @@ import * as d_out from "../../../../interface/generated/liana/schemas/diagnostic
 
 //dependencies
 import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors"
-import * as t_astn_location_to_location from "../astn_core_location/location"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_unmarshall_errors_to_fp from "../unmarshall_errors/fountain_pen"
 
@@ -27,7 +26,7 @@ export const Document: Document = ($) => {
                     default: return _p.au($[0])
                 }
             }),
-            'range': t_astn_location_to_location.Range($.range),
+            'range': ['range', $.range],
             'related information': _p.optional.literal.not_set(),
             'message': _p.decide.state($.type, ($) => {
                 switch ($[0]) {

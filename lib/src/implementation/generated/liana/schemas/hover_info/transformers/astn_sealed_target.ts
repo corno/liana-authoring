@@ -11,15 +11,11 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Hover_Texts: t_signatures.Hover_Texts = ($) => ['optional', _p.decide.optional(
+export const Hover_Texts: t_signatures.Hover_Texts = ($) => ['list', _p.list.from.list(
     $,
-    ($): t_out.Value.optional => ['set', ['list', _p.list.from.list(
-        $,
-    ).map(
-        ($) => ['text', {
-            'delimiter': ['quote', null],
-            'value': $,
-        }],
-    )]],
-    () => ['not set', null],
+).map(
+    ($) => ['text', {
+        'delimiter': ['quote', null],
+        'value': $,
+    }],
 )]

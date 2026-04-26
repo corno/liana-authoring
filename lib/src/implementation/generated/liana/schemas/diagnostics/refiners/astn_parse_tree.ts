@@ -15,7 +15,7 @@ import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/
 
 import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-import * as v_external_location from "../../location/refiners/astn_parse_tree"
+import * as v_external_location from "../../astn_location/refiners/astn_parse_tree"
 
 import * as v_external_path from "../../path/refiners/astn_parse_tree"
 
@@ -32,315 +32,322 @@ export const Diagnostics: t_signatures.Diagnostics = ($, abort) => _p.list.from.
 ).map(
     ($) => _p_change_context(
         $['value'],
-        ($) => _p_change_context(
-            v_unmarshalled_from_parse_tree.Verbose_Group(
+        ($) => Diagnostic(
+            $,
+            ($) => abort(
                 $,
-                ($) => abort(
-                    $,
-                ),
+            ),
+        ),
+    ),
+)
+
+export const Diagnostic: t_signatures.Diagnostic = ($, abort) => _p_change_context(
+    v_unmarshalled_from_parse_tree.Verbose_Group(
+        $,
+        ($) => abort(
+            $,
+        ),
+        {
+            'expected properties': _p.dictionary.literal(
                 {
-                    'expected properties': _p.dictionary.literal(
-                        {
-                            "severity": null,
-                            "range": null,
-                            "message": null,
-                            "related information": null,
-                        },
-                    ),
-                    'subdocument context': _p.optional.literal.not_set(),
+                    "severity": null,
+                    "range": null,
+                    "message": null,
+                    "related information": null,
                 },
             ),
-            ($) => _p_variables(
-                () => {
-                    
-                    const var_verbose_group_range = v_parse_tree_to_location.Value(
-                        $['value'],
+            'subdocument context': _p.optional.literal.not_set(),
+        },
+    ),
+    ($) => _p_variables(
+        () => {
+            
+            const var_verbose_group_range = v_parse_tree_to_location.Value(
+                $['value'],
+                {
+                    'subdocument context': _p.optional.literal.not_set(),
+                },
+            )
+            return {
+                'severity': _p_change_context(
+                    v_unmarshalled_from_parse_tree.Property(
+                        $,
+                        ($) => abort(
+                            $,
+                        ),
                         {
+                            'id': 'severity',
                             'subdocument context': _p.optional.literal.not_set(),
                         },
-                    )
-                    return {
-                        'severity': _p_change_context(
-                            v_unmarshalled_from_parse_tree.Property(
+                    ),
+                    ($) => _p_change_context(
+                        v_unmarshalled_from_parse_tree.State(
+                            $,
+                            ($) => abort(
+                                $,
+                            ),
+                        ),
+                        ($) => _p.decide.text(
+                            $['option']['token']['value'],
+                            ($t): t_out.Diagnostic.severity => {
+                                switch ($t) {
+                                    case 'error':
+                                        return _p_change_context(
+                                            $['value'],
+                                            ($) => ['error', v_unmarshalled_from_parse_tree.Nothing(
+                                                $,
+                                                ($) => abort(
+                                                    $,
+                                                ),
+                                            )],
+                                        )
+                                    case 'warning':
+                                        return _p_change_context(
+                                            $['value'],
+                                            ($) => ['warning', v_unmarshalled_from_parse_tree.Nothing(
+                                                $,
+                                                ($) => abort(
+                                                    $,
+                                                ),
+                                            )],
+                                        )
+                                    case 'information':
+                                        return _p_change_context(
+                                            $['value'],
+                                            ($) => ['information', v_unmarshalled_from_parse_tree.Nothing(
+                                                $,
+                                                ($) => abort(
+                                                    $,
+                                                ),
+                                            )],
+                                        )
+                                    case 'hint':
+                                        return _p_change_context(
+                                            $['value'],
+                                            ($) => ['hint', v_unmarshalled_from_parse_tree.Nothing(
+                                                $,
+                                                ($) => abort(
+                                                    $,
+                                                ),
+                                            )],
+                                        )
+                                    default:
+                                        return abort(
+                                            ['liana', {
+                                                'type': ['state', ['unknown option', $['option']['token']['value']]],
+                                                'range': v_parse_tree_to_location.Value(
+                                                    $['value'],
+                                                    {
+                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                    },
+                                                ),
+                                            }],
+                                        )
+                                }
+                            },
+                        ),
+                    ),
+                ),
+                'range': _p_change_context(
+                    v_unmarshalled_from_parse_tree.Property(
+                        $,
+                        ($) => abort(
+                            $,
+                        ),
+                        {
+                            'id': 'range',
+                            'subdocument context': _p.optional.literal.not_set(),
+                        },
+                    ),
+                    ($) => v_external_location.Possible_Range(
+                        $,
+                        ($) => abort(
+                            $,
+                        ),
+                    ),
+                ),
+                'message': _p_change_context(
+                    v_unmarshalled_from_parse_tree.Property(
+                        $,
+                        ($) => abort(
+                            $,
+                        ),
+                        {
+                            'id': 'message',
+                            'subdocument context': _p.optional.literal.not_set(),
+                        },
+                    ),
+                    ($) => v_unmarshalled_from_parse_tree.Text(
+                        $,
+                        ($) => abort(
+                            $,
+                        ),
+                    ),
+                ),
+                'related information': _p_change_context(
+                    v_unmarshalled_from_parse_tree.Property(
+                        $,
+                        ($) => abort(
+                            $,
+                        ),
+                        {
+                            'id': 'related information',
+                            'subdocument context': _p.optional.literal.not_set(),
+                        },
+                    ),
+                    ($) => _p.optional.from.optional(
+                        v_unmarshalled_from_parse_tree.Optional(
+                            $,
+                            ($) => abort(
+                                $,
+                            ),
+                        )['optional'],
+                    ).map(
+                        ($) => _p.list.from.list(
+                            v_unmarshalled_from_parse_tree.List(
                                 $,
                                 ($) => abort(
                                     $,
                                 ),
                                 {
-                                    'id': 'severity',
                                     'subdocument context': _p.optional.literal.not_set(),
                                 },
-                            ),
+                            )['items'],
+                        ).map(
                             ($) => _p_change_context(
-                                v_unmarshalled_from_parse_tree.State(
-                                    $,
-                                    ($) => abort(
-                                        $,
-                                    ),
-                                ),
-                                ($) => _p.decide.text(
-                                    $['option']['token']['value'],
-                                    ($t): t_out.Diagnostics.L.severity => {
-                                        switch ($t) {
-                                            case 'error':
-                                                return _p_change_context(
-                                                    $['value'],
-                                                    ($) => ['error', v_unmarshalled_from_parse_tree.Nothing(
-                                                        $,
-                                                        ($) => abort(
-                                                            $,
-                                                        ),
-                                                    )],
-                                                )
-                                            case 'warning':
-                                                return _p_change_context(
-                                                    $['value'],
-                                                    ($) => ['warning', v_unmarshalled_from_parse_tree.Nothing(
-                                                        $,
-                                                        ($) => abort(
-                                                            $,
-                                                        ),
-                                                    )],
-                                                )
-                                            case 'information':
-                                                return _p_change_context(
-                                                    $['value'],
-                                                    ($) => ['information', v_unmarshalled_from_parse_tree.Nothing(
-                                                        $,
-                                                        ($) => abort(
-                                                            $,
-                                                        ),
-                                                    )],
-                                                )
-                                            case 'hint':
-                                                return _p_change_context(
-                                                    $['value'],
-                                                    ($) => ['hint', v_unmarshalled_from_parse_tree.Nothing(
-                                                        $,
-                                                        ($) => abort(
-                                                            $,
-                                                        ),
-                                                    )],
-                                                )
-                                            default:
-                                                return abort(
-                                                    ['liana', {
-                                                        'type': ['state', ['unknown option', $['option']['token']['value']]],
-                                                        'range': v_parse_tree_to_location.Value(
-                                                            $['value'],
-                                                            {
-                                                                'subdocument context': _p.optional.literal.not_set(),
-                                                            },
-                                                        ),
-                                                    }],
-                                                )
-                                        }
-                                    },
-                                ),
-                            ),
-                        ),
-                        'range': _p_change_context(
-                            v_unmarshalled_from_parse_tree.Property(
-                                $,
-                                ($) => abort(
-                                    $,
-                                ),
-                                {
-                                    'id': 'range',
-                                    'subdocument context': _p.optional.literal.not_set(),
-                                },
-                            ),
-                            ($) => v_external_location.Range_FE(
-                                $,
-                                ($) => abort(
-                                    $,
-                                ),
-                            ),
-                        ),
-                        'message': _p_change_context(
-                            v_unmarshalled_from_parse_tree.Property(
-                                $,
-                                ($) => abort(
-                                    $,
-                                ),
-                                {
-                                    'id': 'message',
-                                    'subdocument context': _p.optional.literal.not_set(),
-                                },
-                            ),
-                            ($) => v_unmarshalled_from_parse_tree.Text(
-                                $,
-                                ($) => abort(
-                                    $,
-                                ),
-                            ),
-                        ),
-                        'related information': _p_change_context(
-                            v_unmarshalled_from_parse_tree.Property(
-                                $,
-                                ($) => abort(
-                                    $,
-                                ),
-                                {
-                                    'id': 'related information',
-                                    'subdocument context': _p.optional.literal.not_set(),
-                                },
-                            ),
-                            ($) => _p.optional.from.optional(
-                                v_unmarshalled_from_parse_tree.Optional(
-                                    $,
-                                    ($) => abort(
-                                        $,
-                                    ),
-                                )['optional'],
-                            ).map(
-                                ($) => _p.list.from.list(
-                                    v_unmarshalled_from_parse_tree.List(
+                                $['value'],
+                                ($) => _p_change_context(
+                                    v_unmarshalled_from_parse_tree.Verbose_Group(
                                         $,
                                         ($) => abort(
                                             $,
                                         ),
                                         {
+                                            'expected properties': _p.dictionary.literal(
+                                                {
+                                                    "location": null,
+                                                    "message": null,
+                                                },
+                                            ),
                                             'subdocument context': _p.optional.literal.not_set(),
                                         },
-                                    )['items'],
-                                ).map(
-                                    ($) => _p_change_context(
-                                        $['value'],
-                                        ($) => _p_change_context(
-                                            v_unmarshalled_from_parse_tree.Verbose_Group(
-                                                $,
-                                                ($) => abort(
-                                                    $,
-                                                ),
+                                    ),
+                                    ($) => _p_variables(
+                                        () => {
+                                            
+                                            const var_verbose_group_range = v_parse_tree_to_location.Value(
+                                                $['value'],
                                                 {
-                                                    'expected properties': _p.dictionary.literal(
-                                                        {
-                                                            "location": null,
-                                                            "message": null,
-                                                        },
-                                                    ),
                                                     'subdocument context': _p.optional.literal.not_set(),
                                                 },
-                                            ),
-                                            ($) => _p_variables(
-                                                () => {
-                                                    
-                                                    const var_verbose_group_range = v_parse_tree_to_location.Value(
-                                                        $['value'],
+                                            )
+                                            return {
+                                                'location': _p_change_context(
+                                                    v_unmarshalled_from_parse_tree.Property(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
                                                         {
+                                                            'id': 'location',
                                                             'subdocument context': _p.optional.literal.not_set(),
                                                         },
-                                                    )
-                                                    return {
-                                                        'location': _p_change_context(
-                                                            v_unmarshalled_from_parse_tree.Property(
+                                                    ),
+                                                    ($) => _p_change_context(
+                                                        v_unmarshalled_from_parse_tree.Verbose_Group(
+                                                            $,
+                                                            ($) => abort(
                                                                 $,
-                                                                ($) => abort(
-                                                                    $,
-                                                                ),
-                                                                {
-                                                                    'id': 'location',
-                                                                    'subdocument context': _p.optional.literal.not_set(),
-                                                                },
                                                             ),
-                                                            ($) => _p_change_context(
-                                                                v_unmarshalled_from_parse_tree.Verbose_Group(
-                                                                    $,
-                                                                    ($) => abort(
-                                                                        $,
-                                                                    ),
+                                                            {
+                                                                'expected properties': _p.dictionary.literal(
                                                                     {
-                                                                        'expected properties': _p.dictionary.literal(
-                                                                            {
-                                                                                "file path": null,
-                                                                                "range": null,
-                                                                            },
-                                                                        ),
+                                                                        "file path": null,
+                                                                        "range": null,
+                                                                    },
+                                                                ),
+                                                                'subdocument context': _p.optional.literal.not_set(),
+                                                            },
+                                                        ),
+                                                        ($) => _p_variables(
+                                                            () => {
+                                                                
+                                                                const var_verbose_group_range = v_parse_tree_to_location.Value(
+                                                                    $['value'],
+                                                                    {
                                                                         'subdocument context': _p.optional.literal.not_set(),
                                                                     },
-                                                                ),
-                                                                ($) => _p_variables(
-                                                                    () => {
-                                                                        
-                                                                        const var_verbose_group_range = v_parse_tree_to_location.Value(
-                                                                            $['value'],
+                                                                )
+                                                                return {
+                                                                    'file path': _p_change_context(
+                                                                        v_unmarshalled_from_parse_tree.Property(
+                                                                            $,
+                                                                            ($) => abort(
+                                                                                $,
+                                                                            ),
                                                                             {
+                                                                                'id': 'file path',
                                                                                 'subdocument context': _p.optional.literal.not_set(),
                                                                             },
-                                                                        )
-                                                                        return {
-                                                                            'file path': _p_change_context(
-                                                                                v_unmarshalled_from_parse_tree.Property(
-                                                                                    $,
-                                                                                    ($) => abort(
-                                                                                        $,
-                                                                                    ),
-                                                                                    {
-                                                                                        'id': 'file path',
-                                                                                        'subdocument context': _p.optional.literal.not_set(),
-                                                                                    },
-                                                                                ),
-                                                                                ($) => v_external_path.Node_Path(
-                                                                                    $,
-                                                                                    ($) => abort(
-                                                                                        $,
-                                                                                    ),
-                                                                                ),
+                                                                        ),
+                                                                        ($) => v_external_path.Node_Path(
+                                                                            $,
+                                                                            ($) => abort(
+                                                                                $,
                                                                             ),
-                                                                            'range': _p_change_context(
-                                                                                v_unmarshalled_from_parse_tree.Property(
-                                                                                    $,
-                                                                                    ($) => abort(
-                                                                                        $,
-                                                                                    ),
-                                                                                    {
-                                                                                        'id': 'range',
-                                                                                        'subdocument context': _p.optional.literal.not_set(),
-                                                                                    },
-                                                                                ),
-                                                                                ($) => v_external_location.Range_FE(
-                                                                                    $,
-                                                                                    ($) => abort(
-                                                                                        $,
-                                                                                    ),
-                                                                                ),
+                                                                        ),
+                                                                    ),
+                                                                    'range': _p_change_context(
+                                                                        v_unmarshalled_from_parse_tree.Property(
+                                                                            $,
+                                                                            ($) => abort(
+                                                                                $,
                                                                             ),
-                                                                        }
-                                                                    },
-                                                                ),
-                                                            ),
+                                                                            {
+                                                                                'id': 'range',
+                                                                                'subdocument context': _p.optional.literal.not_set(),
+                                                                            },
+                                                                        ),
+                                                                        ($) => v_external_location.Possible_Range(
+                                                                            $,
+                                                                            ($) => abort(
+                                                                                $,
+                                                                            ),
+                                                                        ),
+                                                                    ),
+                                                                }
+                                                            },
                                                         ),
-                                                        'message': _p_change_context(
-                                                            v_unmarshalled_from_parse_tree.Property(
-                                                                $,
-                                                                ($) => abort(
-                                                                    $,
-                                                                ),
-                                                                {
-                                                                    'id': 'message',
-                                                                    'subdocument context': _p.optional.literal.not_set(),
-                                                                },
-                                                            ),
-                                                            ($) => v_unmarshalled_from_parse_tree.Text(
-                                                                $,
-                                                                ($) => abort(
-                                                                    $,
-                                                                ),
-                                                            ),
+                                                    ),
+                                                ),
+                                                'message': _p_change_context(
+                                                    v_unmarshalled_from_parse_tree.Property(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
                                                         ),
-                                                    }
-                                                },
-                                            ),
-                                        ),
+                                                        {
+                                                            'id': 'message',
+                                                            'subdocument context': _p.optional.literal.not_set(),
+                                                        },
+                                                    ),
+                                                    ($) => v_unmarshalled_from_parse_tree.Text(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    ),
+                                                ),
+                                            }
+                                        },
                                     ),
                                 ),
                             ),
                         ),
-                    }
-                },
-            ),
-        ),
+                    ),
+                ),
+            }
+        },
     ),
 )
 

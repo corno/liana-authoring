@@ -22,6 +22,21 @@ export const Diagnostics: t_signatures.Diagnostics = ($, abort, $p) => v_unmarsh
     ),
 )
 
+export const Diagnostic: t_signatures.Diagnostic = ($, abort, $p) => v_unmarshall.Diagnostic(
+    v_deserialize.Document(
+        $,
+        ($) => abort(
+            ['parse error', $],
+        ),
+        {
+            'tab size': $p['tab size'],
+        },
+    )['content'],
+    ($) => abort(
+        ['unmarshall error', $],
+    ),
+)
+
 export const Result: t_signatures.Result = ($, abort, $p) => v_unmarshall.Result(
     v_deserialize.Document(
         $,

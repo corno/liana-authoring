@@ -21,6 +21,22 @@ export type Diagnostics_ = (
     context: Diagnostics_.I,
 ) => Diagnostics_.O
 
+export namespace Diagnostic_ {
+    
+    export type I = i_in.Diagnostic
+    
+    export type O = i_out.Value
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Diagnostic_ = (
+    context: Diagnostic_.I,
+) => Diagnostic_.O
+
 export namespace Result_ {
     
     export type I = i_in.Result
@@ -55,6 +71,7 @@ export type Parameters_ = (
 
 export { 
     Diagnostics_ as Diagnostics, 
+    Diagnostic_ as Diagnostic, 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }

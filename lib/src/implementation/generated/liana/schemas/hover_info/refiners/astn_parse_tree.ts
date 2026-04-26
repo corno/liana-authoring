@@ -15,32 +15,23 @@ import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/
 
 import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-export const Hover_Texts: t_signatures.Hover_Texts = ($, abort) => _p.optional.from.optional(
-    v_unmarshalled_from_parse_tree.Optional(
+export const Hover_Texts: t_signatures.Hover_Texts = ($, abort) => _p.list.from.list(
+    v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,
         ),
-    )['optional'],
+        {
+            'subdocument context': _p.optional.literal.not_set(),
+        },
+    )['items'],
 ).map(
-    ($) => _p.list.from.list(
-        v_unmarshalled_from_parse_tree.List(
+    ($) => _p_change_context(
+        $['value'],
+        ($) => v_unmarshalled_from_parse_tree.Text(
             $,
             ($) => abort(
                 $,
-            ),
-            {
-                'subdocument context': _p.optional.literal.not_set(),
-            },
-        )['items'],
-    ).map(
-        ($) => _p_change_context(
-            $['value'],
-            ($) => v_unmarshalled_from_parse_tree.Text(
-                $,
-                ($) => abort(
-                    $,
-                ),
             ),
         ),
     ),
