@@ -73,9 +73,13 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
         ),
         "range": _p_change_context(
             $['range'],
-            ($) => v_external_location.Possible_Range(
+            ($) => ['optional', _p.decide.optional(
                 $,
-            ),
+                ($): t_out.Value.optional => ['set', v_external_location.Possible_Range(
+                    $,
+                )],
+                () => ['not set', null],
+            )],
         ),
         "message": _p_change_context(
             $['message'],

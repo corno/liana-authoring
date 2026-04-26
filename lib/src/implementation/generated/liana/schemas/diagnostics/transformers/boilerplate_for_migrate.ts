@@ -56,8 +56,12 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
     ),
     'range': _p_change_context(
         $['range'],
-        ($) => v_location.Possible_Range(
+        ($) => _p.optional.from.optional(
             $,
+        ).map(
+            ($) => v_location.Possible_Range(
+                $,
+            ),
         ),
     ),
     'message': _p_change_context(

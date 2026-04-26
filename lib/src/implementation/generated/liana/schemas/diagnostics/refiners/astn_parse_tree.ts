@@ -159,10 +159,19 @@ export const Diagnostic: t_signatures.Diagnostic = ($, abort) => _p_change_conte
                             'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
-                    ($) => v_external_location.Possible_Range(
-                        $,
-                        ($) => abort(
+                    ($) => _p.optional.from.optional(
+                        v_unmarshalled_from_parse_tree.Optional(
                             $,
+                            ($) => abort(
+                                $,
+                            ),
+                        )['optional'],
+                    ).map(
+                        ($) => v_external_location.Possible_Range(
+                            $,
+                            ($) => abort(
+                                $,
+                            ),
                         ),
                     ),
                 ),

@@ -26,7 +26,7 @@ export const Document: Document = ($) => {
                     default: return _p.au($[0])
                 }
             }),
-            'range': ['range', $.range],
+            'range': _p.optional.literal.set(['range', $.range]),
             'related information': _p.optional.literal.not_set(),
             'message': _p.decide.state($.type, ($) => {
                 switch ($[0]) {

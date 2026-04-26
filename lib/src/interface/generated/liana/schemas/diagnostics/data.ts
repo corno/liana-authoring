@@ -33,7 +33,13 @@ export namespace Diagnostic_ {
         | readonly ['information', severity.information]
         | readonly ['hint', severity.hint]
     
-    export type range = i_imports_location.Possible_Range
+    export namespace range {
+        
+        export type O = i_imports_location.Possible_Range
+        
+    }
+    
+    export type range = _pi.Optional_Value<range.O>
     
     export type message = string
     
