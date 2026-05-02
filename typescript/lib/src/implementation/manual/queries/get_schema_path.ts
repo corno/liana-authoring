@@ -28,8 +28,8 @@ export const $$: signatures.queries.get_schema_path = _p.query_function(
             ($, abort) => _p.decide.state($, ($) => {
                 switch ($[0]) {
                     case 'does not exist': return _p.ss($, ($) => abort(['not found', null]))
-                    case 'file': return _p.ss($, ($) => abort(['not found', null]))
-                    case 'directory': return _p.ss($, ($) => schema_path)
+                    case 'file': return _p.ss($, ($) => schema_path)
+                    case 'directory': return _p.ss($, ($) => abort(['not found', null]))
                     default: return _p.au($[0])
                 }
             })
