@@ -21,7 +21,7 @@ export const $$: signatures.queries.get_unmarshalled_file = _p.query_function(
         ($) => _p_variables(() => {
             const instance = $
             const schema_path = t_path_to_path.create_node_path(
-                t_path_to_path.extend_context_path($p['file path'].context, { 'addition': ".liana" }),
+                t_path_to_path.extend_context_path_with_single_step($p['file path'].context, { 'addition': ".liana" }),
                 { 'node': "schema.slna" }
             )
             return $qr['read file'](
