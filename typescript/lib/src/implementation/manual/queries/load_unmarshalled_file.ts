@@ -17,7 +17,7 @@ export const $$: signatures.queries.get_unmarshalled_file = _p.query_function(
     ($p, $qr) => $qr['read file'](
         $p['file path'],
         ($): d.Error => ['read file', $]
-    ).query_without_error_transformation(
+    ).query(
         ($) => _p_variables(() => {
             const instance = $
             const schema_path = t_path_to_path.create_node_path(
@@ -29,7 +29,7 @@ export const $$: signatures.queries.get_unmarshalled_file = _p.query_function(
                 (): d.Error => ['document', ['no schema file', {
                     'file location': t_path_to_text.Node_Path(schema_path),
                 }]]
-            ).refine_without_error_transformation(
+            ).refine(
                 ($, abort) => _p_variables(() => {
                     const schema = r_temp_module_specifier_from_loc.Module_Specifier(
                         $,

@@ -12,6 +12,13 @@ export namespace queries {
         }>
 
 
+    export type deserialize = _pi.Query_Function<
+        resources.queries.deserialize,
+        {
+            'get schema': resources.queries.get_schema
+            'get schema path': resources.queries.get_schema_path
+        }>
+
     export type get_unmarshalled_file = _pi.Query_Function<
         resources.queries.get_unmarshalled_file,
         {

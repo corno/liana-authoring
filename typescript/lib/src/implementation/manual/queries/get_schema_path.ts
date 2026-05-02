@@ -15,7 +15,7 @@ import * as t_path_to_path from "pareto-resources/dist/implementation/manual/tra
 //     ($p, $qr) => $qr['stat'](
 //         xxx,
 //         xxxx,
-//     ).query_without_error_transformation(
+//     ).query(
 //         ($) => xxxx,
 
 //     )
