@@ -14,7 +14,7 @@ import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/lis
 export const $$: signatures.queries.deserialize = _p.query_function(
     ($p, $qr) => $qr['get schema path'](
         {
-            'instance path': $p['file path'],
+            'context path': $p['file path'].context,
         },
         ($): d.Error => ['schema path', $]
     ).query(

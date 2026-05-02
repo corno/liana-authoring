@@ -5,18 +5,34 @@ import _p_variables from 'pareto-core/dist/_p_variables'
 import * as signatures from "../../../interface/signatures"
 
 //data types
-import * as d from "../../../interface/to_be_generated/get_unmarshalled_file"
+import * as d from "../../../interface/to_be_generated/get_schema_path"
 
 //depencencies
 import * as t_path_to_text from "pareto-resources/dist/implementation/manual/transformers/path/text"
 import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/path/path"
+import _p_implement_me from 'pareto-core-dev/dist/implement_me'
 
-// export const $$: signatures.queries.get_schema_path = _p.query_function(
-//     ($p, $qr) => $qr['stat'](
-//         xxx,
-//         xxxx,
-//     ).query(
-//         ($) => xxxx,
-
-//     )
-// )
+export const $$: signatures.queries.get_schema_path = _p.query_function(
+    ($p, $qr) => _p_variables(() => {
+        const schema_path = t_path_to_path.create_node_path(
+            t_path_to_path.extend_context_path_with_single_step(
+                $p['context path'],
+                { 'addition': ".liana" }
+            ),
+            { 'node': "schema.slna" }
+        )
+        return $qr['stat'](
+            schema_path,
+            ($): d.Error => ['stat error', $]
+        ).refine(
+            ($, abort) => _p.decide.state($, ($) => {
+                switch ($[0]) {
+                    case 'does not exist': return _p.ss($, ($) => abort(['not found', null]))
+                    case 'file': return _p.ss($, ($) => abort(['not found', null]))
+                    case 'directory': return _p.ss($, ($) => schema_path)
+                    default: return _p.au($[0])
+                }
+            })
+        )
+    })
+)

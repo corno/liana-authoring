@@ -5,10 +5,16 @@ import * as resources_pareto from "pareto-resources/dist/interface/resources"
 
 export namespace queries {
 
+    export type get_schema = _pi.Query_Function<
+        resources.queries.get_schema,
+        {
+            'read file': resources_pareto.queries.read_file
+        }>
+
     export type get_schema_path = _pi.Query_Function<
         resources.queries.get_schema_path,
         {
-            'stat': resources_pareto.queries.stat
+            'stat': resources_pareto.queries.stat_possible_node
         }>
 
 
