@@ -42,11 +42,11 @@ export const Value: Value = ($, $p) => {
                                 case 'state': return _p.ss($, ($) => _p.list.literal([['state', null]]))
                                 case 'component': return _p.ss($, ($) => _p_unreachable_code_path("a component cannot be incorrect by itself"))
                                 case 'dictionary': return _p.ss($, ($) => _p.list.literal([['dictionary', null]]))
-                                case 'group': return _p.ss($, ($) => _p.list.literal([['verbose group', null]]))
+                                case 'group': return _p.ss($, ($) => _p.list.literal([['group', null]]))
                                 case 'list': return _p.ss($, ($) => _p.list.literal([['list', null]]))
                                 case 'nothing': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
                                 case 'simple': return _p.ss($, ($) => _p.list.literal([['text', null]]))
-                                case 'optional': return _p.ss($, ($) => _p.list.literal([['set', null], ['not set', null]]))
+                                case 'optional': return _p.ss($, ($) => _p.list.literal([['optional', null]]))
                                 case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
                                     switch ($[0]) {
                                         case 'derived': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))

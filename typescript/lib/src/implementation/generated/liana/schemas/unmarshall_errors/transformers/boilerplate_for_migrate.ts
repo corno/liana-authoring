@@ -45,50 +45,40 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                                                     $,
                                                                     ($): t_out.Errors.L.type_.error.invalid_value_type.expected.L => {
                                                                         switch ($[0]) {
-                                                                            case 'text':
-                                                                                return _p.ss(
-                                                                                    $,
-                                                                                    ($) => ['text', null],
-                                                                                )
-                                                                            case 'verbose group':
-                                                                                return _p.ss(
-                                                                                    $,
-                                                                                    ($) => ['verbose group', null],
-                                                                                )
-                                                                            case 'concise group':
-                                                                                return _p.ss(
-                                                                                    $,
-                                                                                    ($) => ['concise group', null],
-                                                                                )
                                                                             case 'dictionary':
                                                                                 return _p.ss(
                                                                                     $,
                                                                                     ($) => ['dictionary', null],
                                                                                 )
-                                                                            case 'not set':
+                                                                            case 'group':
                                                                                 return _p.ss(
                                                                                     $,
-                                                                                    ($) => ['not set', null],
-                                                                                )
-                                                                            case 'nothing':
-                                                                                return _p.ss(
-                                                                                    $,
-                                                                                    ($) => ['nothing', null],
-                                                                                )
-                                                                            case 'set':
-                                                                                return _p.ss(
-                                                                                    $,
-                                                                                    ($) => ['set', null],
+                                                                                    ($) => ['group', null],
                                                                                 )
                                                                             case 'list':
                                                                                 return _p.ss(
                                                                                     $,
                                                                                     ($) => ['list', null],
                                                                                 )
+                                                                            case 'nothing':
+                                                                                return _p.ss(
+                                                                                    $,
+                                                                                    ($) => ['nothing', null],
+                                                                                )
+                                                                            case 'optional':
+                                                                                return _p.ss(
+                                                                                    $,
+                                                                                    ($) => ['optional', null],
+                                                                                )
                                                                             case 'state':
                                                                                 return _p.ss(
                                                                                     $,
                                                                                     ($) => ['state', null],
+                                                                                )
+                                                                            case 'text':
+                                                                                return _p.ss(
+                                                                                    $,
+                                                                                    ($) => ['text', null],
                                                                                 )
                                                                             default:
                                                                                 return _p.au(

@@ -173,36 +173,6 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                 $['option']['token']['value'],
                                                                                                                 ($t): t_out.Errors.L.type_.error.invalid_value_type.expected.L => {
                                                                                                                     switch ($t) {
-                                                                                                                        case 'text':
-                                                                                                                            return _p_change_context(
-                                                                                                                                $['value'],
-                                                                                                                                ($) => ['text', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                                                    $,
-                                                                                                                                    ($) => abort(
-                                                                                                                                        $,
-                                                                                                                                    ),
-                                                                                                                                )],
-                                                                                                                            )
-                                                                                                                        case 'verbose group':
-                                                                                                                            return _p_change_context(
-                                                                                                                                $['value'],
-                                                                                                                                ($) => ['verbose group', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                                                    $,
-                                                                                                                                    ($) => abort(
-                                                                                                                                        $,
-                                                                                                                                    ),
-                                                                                                                                )],
-                                                                                                                            )
-                                                                                                                        case 'concise group':
-                                                                                                                            return _p_change_context(
-                                                                                                                                $['value'],
-                                                                                                                                ($) => ['concise group', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                                                    $,
-                                                                                                                                    ($) => abort(
-                                                                                                                                        $,
-                                                                                                                                    ),
-                                                                                                                                )],
-                                                                                                                            )
                                                                                                                         case 'dictionary':
                                                                                                                             return _p_change_context(
                                                                                                                                 $['value'],
@@ -213,30 +183,10 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                     ),
                                                                                                                                 )],
                                                                                                                             )
-                                                                                                                        case 'not set':
+                                                                                                                        case 'group':
                                                                                                                             return _p_change_context(
                                                                                                                                 $['value'],
-                                                                                                                                ($) => ['not set', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                                                    $,
-                                                                                                                                    ($) => abort(
-                                                                                                                                        $,
-                                                                                                                                    ),
-                                                                                                                                )],
-                                                                                                                            )
-                                                                                                                        case 'nothing':
-                                                                                                                            return _p_change_context(
-                                                                                                                                $['value'],
-                                                                                                                                ($) => ['nothing', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                                                    $,
-                                                                                                                                    ($) => abort(
-                                                                                                                                        $,
-                                                                                                                                    ),
-                                                                                                                                )],
-                                                                                                                            )
-                                                                                                                        case 'set':
-                                                                                                                            return _p_change_context(
-                                                                                                                                $['value'],
-                                                                                                                                ($) => ['set', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                                                                ($) => ['group', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
                                                                                                                                     ($) => abort(
                                                                                                                                         $,
@@ -253,10 +203,40 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                     ),
                                                                                                                                 )],
                                                                                                                             )
+                                                                                                                        case 'nothing':
+                                                                                                                            return _p_change_context(
+                                                                                                                                $['value'],
+                                                                                                                                ($) => ['nothing', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                                                                    $,
+                                                                                                                                    ($) => abort(
+                                                                                                                                        $,
+                                                                                                                                    ),
+                                                                                                                                )],
+                                                                                                                            )
+                                                                                                                        case 'optional':
+                                                                                                                            return _p_change_context(
+                                                                                                                                $['value'],
+                                                                                                                                ($) => ['optional', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                                                                    $,
+                                                                                                                                    ($) => abort(
+                                                                                                                                        $,
+                                                                                                                                    ),
+                                                                                                                                )],
+                                                                                                                            )
                                                                                                                         case 'state':
                                                                                                                             return _p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['state', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                                                                    $,
+                                                                                                                                    ($) => abort(
+                                                                                                                                        $,
+                                                                                                                                    ),
+                                                                                                                                )],
+                                                                                                                            )
+                                                                                                                        case 'text':
+                                                                                                                            return _p_change_context(
+                                                                                                                                $['value'],
+                                                                                                                                ($) => ['text', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
                                                                                                                                     ($) => abort(
                                                                                                                                         $,

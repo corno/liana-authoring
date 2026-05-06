@@ -19,36 +19,30 @@ export namespace Errors_ {
                         
                         export namespace L {
                             
-                            export type text = null
-                            
-                            export type verbose_group = null
-                            
-                            export type concise_group = null
-                            
                             export type dictionary = null
                             
-                            export type not_set = null
-                            
-                            export type nothing = null
-                            
-                            export type set_ = null
+                            export type group = null
                             
                             export type list = null
                             
+                            export type nothing = null
+                            
+                            export type optional = null
+                            
                             export type state = null
+                            
+                            export type text = null
                             
                         }
                         
                         export type L = 
-                            | readonly ['text', L.text]
-                            | readonly ['verbose group', L.verbose_group]
-                            | readonly ['concise group', L.concise_group]
                             | readonly ['dictionary', L.dictionary]
-                            | readonly ['not set', L.not_set]
-                            | readonly ['nothing', L.nothing]
-                            | readonly ['set', L.set_]
+                            | readonly ['group', L.group]
                             | readonly ['list', L.list]
+                            | readonly ['nothing', L.nothing]
+                            | readonly ['optional', L.optional]
                             | readonly ['state', L.state]
+                            | readonly ['text', L.text]
                         
                     }
                     

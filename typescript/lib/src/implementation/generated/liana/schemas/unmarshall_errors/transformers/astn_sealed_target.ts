@@ -55,30 +55,6 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                     $,
                                                                                     ($): t_out.Value.state => {
                                                                                         switch ($[0]) {
-                                                                                            case 'text':
-                                                                                                return _p.ss(
-                                                                                                    $,
-                                                                                                    ($) => ({
-                                                                                                        'option': 'text',
-                                                                                                        'value': ['nothing', null],
-                                                                                                    }),
-                                                                                                )
-                                                                                            case 'verbose group':
-                                                                                                return _p.ss(
-                                                                                                    $,
-                                                                                                    ($) => ({
-                                                                                                        'option': 'verbose group',
-                                                                                                        'value': ['nothing', null],
-                                                                                                    }),
-                                                                                                )
-                                                                                            case 'concise group':
-                                                                                                return _p.ss(
-                                                                                                    $,
-                                                                                                    ($) => ({
-                                                                                                        'option': 'concise group',
-                                                                                                        'value': ['nothing', null],
-                                                                                                    }),
-                                                                                                )
                                                                                             case 'dictionary':
                                                                                                 return _p.ss(
                                                                                                     $,
@@ -87,27 +63,11 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                         'value': ['nothing', null],
                                                                                                     }),
                                                                                                 )
-                                                                                            case 'not set':
+                                                                                            case 'group':
                                                                                                 return _p.ss(
                                                                                                     $,
                                                                                                     ($) => ({
-                                                                                                        'option': 'not set',
-                                                                                                        'value': ['nothing', null],
-                                                                                                    }),
-                                                                                                )
-                                                                                            case 'nothing':
-                                                                                                return _p.ss(
-                                                                                                    $,
-                                                                                                    ($) => ({
-                                                                                                        'option': 'nothing',
-                                                                                                        'value': ['nothing', null],
-                                                                                                    }),
-                                                                                                )
-                                                                                            case 'set':
-                                                                                                return _p.ss(
-                                                                                                    $,
-                                                                                                    ($) => ({
-                                                                                                        'option': 'set',
+                                                                                                        'option': 'group',
                                                                                                         'value': ['nothing', null],
                                                                                                     }),
                                                                                                 )
@@ -119,11 +79,35 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                         'value': ['nothing', null],
                                                                                                     }),
                                                                                                 )
+                                                                                            case 'nothing':
+                                                                                                return _p.ss(
+                                                                                                    $,
+                                                                                                    ($) => ({
+                                                                                                        'option': 'nothing',
+                                                                                                        'value': ['nothing', null],
+                                                                                                    }),
+                                                                                                )
+                                                                                            case 'optional':
+                                                                                                return _p.ss(
+                                                                                                    $,
+                                                                                                    ($) => ({
+                                                                                                        'option': 'optional',
+                                                                                                        'value': ['nothing', null],
+                                                                                                    }),
+                                                                                                )
                                                                                             case 'state':
                                                                                                 return _p.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'state',
+                                                                                                        'value': ['nothing', null],
+                                                                                                    }),
+                                                                                                )
+                                                                                            case 'text':
+                                                                                                return _p.ss(
+                                                                                                    $,
+                                                                                                    ($) => ({
+                                                                                                        'option': 'text',
                                                                                                         'value': ['nothing', null],
                                                                                                     }),
                                                                                                 )
