@@ -126,7 +126,9 @@ export type Reference = {
     'definition': d_schema.Value.reference
     'type':
     ['derived', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.nothing
+        'instance':
+        | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
+        | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
     }]
     | ['selected', {
         'instance': d_astn_parse_tree.Value.type_.concrete.text

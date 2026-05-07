@@ -241,12 +241,12 @@ export const Value: Value = ($, $p) => {
                                             'definition': def,
                                             'value': ['nothing', $],
                                         }]])
-                                        case 'text': return _p.ss($, ($): d_out.Unmarshalled => $.token.value === "null" ?
-                                            ['correct', ['nothing', {
+                                        case 'text': return _p.ss($, ($): d_out.Unmarshalled => $.token.value === "null"
+                                            ? ['correct', ['nothing', {
                                                 'definition': def,
                                                 'value': ['null literal', $],
-                                            }]] :
-                                            ['incorrect', null]
+                                            }]]
+                                            : ['incorrect', null]
                                         )
                                         default: return ['incorrect', null]
                                     }
@@ -347,9 +347,18 @@ export const Value: Value = ($, $p) => {
                                                 case 'nothing': return _p.ss($, ($): d_out.Unmarshalled => ['correct', ['reference', {
                                                     'definition': def,
                                                     'type': ['derived', {
-                                                        'instance': $,
+                                                        'instance': ['nothing', $],
                                                     }]
                                                 }]])
+                                                case 'text': return _p.ss($, ($): d_out.Unmarshalled => $.token.value === "null"
+                                                    ? ['correct', ['reference', {
+                                                        'definition': def,
+                                                        'type': ['derived', {
+                                                            'instance': ['null literal', $],
+                                                        }]
+                                                    }]]
+                                                    : ['incorrect', null]
+                                                )
                                                 default: return ['incorrect', null]
                                             }
                                         }))
