@@ -25,8 +25,6 @@ export type Parameters = {
     'style':
     | ['verbose', null]
     | ['concise', null]
-    // 'full path': string
-    // 'id path': string
 }
 
 export type Document = _pi.Transformer_With_Parameter<
@@ -248,7 +246,7 @@ export const Found: Found = ($, $p) => {
                                                         {
                                                             'indentation': $p.indent,
                                                             'newline': "\n",
-                                                            'write delimiters': false,
+                                                            'write delimiters': false, //skip the pipe
                                                         }
                                                     ),
                                                     'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
