@@ -6,7 +6,6 @@ import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 import * as d_out from "../../../../interface/to_be_generated/unmashall_result"
 import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_from_loc"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
-import * as d_schema from "pareto-liana/dist/interface/to_be_generated/temp_module_specifier"
 
 export type Value = _pi.Refiner_With_Parameter<d_out.Value, d_function.Error, d_in.List_of_Characters, d_function.Parameters>
 export type Document = _pi.Refiner_With_Parameter<d_out.Document, d_function.Error, d_in.List_of_Characters, d_function.Parameters>
@@ -28,7 +27,7 @@ export const Document: Document = ($, abort, $p) => {
         {
             'definition': $p.schema.root.entry['root value'],
             'definition path': $p.schema.root.id,
-            'property path': "",
+            'property path': _p.list.literal([]),
         }
     )
 }

@@ -18,7 +18,7 @@ import * as t_unmarshall_result_to_authoring_target from "./authoring_target"
 
 export type Document = _pi.Transformer_With_Parameter<
     d_in.Document,
-    d_out.Formatting_Edits,
+    d_out.Optional_Formatting_Edit,
     {
         'position': d_location.Position
         'indent': string
@@ -28,7 +28,7 @@ export type Document = _pi.Transformer_With_Parameter<
 
 export type Found = _pi.Transformer_With_Parameter<
     d_outx.Found,
-    d_out.Formatting_Edits,
+    d_out.Optional_Formatting_Edit,
     {
         'indent': string
         'conversion': d_function_parameters.Parameters
@@ -37,57 +37,58 @@ export type Found = _pi.Transformer_With_Parameter<
 
 
 
-export const Found: Found = ($, $p): d_out.Formatting_Edits => {
+export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
+
+    const do_value = (value: d_in.Value): d_out.Optional_Formatting_Edit => {
+        return _p.optional.literal.set({
+            'range': t_parse_tree_to_full_range.Value(value.instance),
+            'text': t_authoring_target_to_text.Value(
+                t_unmarshall_result_to_authoring_target.Value(value, $p.conversion),
+                {
+                    'indentation': $p.indent,
+                    'newline': "\n",
+                    'write delimiters': true,
+                }
+            )
+        })
+    }
     switch ($[0]) {
-        case 'value': return _p.ss($, ($): d_out.Formatting_Edits => {
-            const value = $
-
-            return {
-                'replace': {
-                    'range': t_parse_tree_to_full_range.Value(value.instance),
-                    'text': t_authoring_target_to_text.Value(
-                        t_unmarshall_result_to_authoring_target.Value(value, $p.conversion),
-                        {
-                            'indentation': $p.indent,
-                            'newline': "\n",
-                            'write delimiters': true,
-                        }
-                    )
-                }
-            }
+        case 'value': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
+            return do_value($)
         })
-        case 'entry': return _p.ss($, ($) => ({
-            'replace': {
-                'range': t_parse_tree_to_full_range.ID_Value_Pair($['id value pair']),
-                'text': "FOOOO ENTRY"
+        case 'entry': return _p.ss($, ($) => $.value.__decide(
+            ($) => do_value($),
+            () => _p.optional.literal.not_set()
+        ))
+        case 'verbose property': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
+            switch ($[0]) {
+                case 'yes': return _p.ss($, ($) => $.value.__decide(
+                    ($) => do_value($),
+                    () => _p.optional.literal.not_set()
+                ))
+                case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
+                default: return _p.au($[0])
             }
         }))
-        case 'verbose property': return _p.ss($, ($) => ({
-            'replace': {
-                'range': t_parse_tree_to_full_range.ID_Value_Pair(
-                    $['id value pair']
-                ),
-                'text': "FOOOO VP"
-            }
-        }))
-        case 'concise property': return _p.ss($, ($) => {
-
-            return {
-                'replace': {
-                    'range': t_parse_tree_to_full_range.Value($.item.value),
-                    'text': "FOOOO CP"
-                }
-            }
+        case 'unknown concise property': return _p.ss($, ($) => {
+            return _p.optional.literal.not_set()
         })
-        case 'valid state': return _p.ss($, ($): d_out.Formatting_Edits => {
+        case 'valid state': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
             const definition = $.definition
 
-            return {
-                'replace': {
-                    'range': t_parse_tree_to_full_range.Value($['value instance']),
-                    'text': "FOOOO CP"
+            return _p.decide.state($.option, ($) => {
+                switch ($[0]) {
+                    case 'set': return _p.ss($, ($) => _p.decide.state($.option, ($) => {
+                        switch ($[0]) {
+                            case 'known': return _p.ss($, ($) => do_value($.value))
+                            case 'unknown':return _p.ss($, ($) => _p.optional.literal.not_set())
+                            default: return _p.au($[0])
+                        }
+                    }))
+                    case 'missing data': return _p.ss($, ($) => _p.optional.literal.not_set())
+                    default: return _p.au($[0])
                 }
-            }
+            })
         })
         default: return _p.au($[0])
     }

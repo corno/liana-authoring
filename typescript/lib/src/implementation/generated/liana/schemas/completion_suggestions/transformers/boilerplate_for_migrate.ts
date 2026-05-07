@@ -11,83 +11,40 @@ import * as v_location from "../../location/transformers/boilerplate_for_migrate
 
 import * as v_text_edits from "../../text_edits/transformers/boilerplate_for_migrate"
 
-export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => _p.list.from.list(
+export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => _p.optional.from.optional(
     $,
 ).map(
     ($) => ({
-        'label': _p_change_context(
-            $['label'],
-            ($) => $,
-        ),
-        'insert text': _p_change_context(
-            $['insert text'],
-            ($) => $,
-        ),
-        'documentation': _p_change_context(
-            $['documentation'],
-            ($) => $,
-        ),
-        'additional text edits': _p_change_context(
-            $['additional text edits'],
-            ($) => v_text_edits.Text_Edits(
-                $,
-            ),
-        ),
         'type': _p_change_context(
             $['type'],
             ($) => _p.decide.state(
                 $,
-                ($): t_out.Completion_Suggestions.L.type_ => {
+                ($): t_out.Completion_Suggestions.O.type_ => {
                     switch ($[0]) {
-                        case 'component':
+                        case 'missing value':
                             return _p.ss(
                                 $,
-                                ($) => ['component', null],
+                                ($) => ['missing value', null],
                             )
-                        case 'dictionary':
+                        case 'missing option':
                             return _p.ss(
                                 $,
-                                ($) => ['dictionary', null],
-                            )
-                        case 'group':
-                            return _p.ss(
-                                $,
-                                ($) => ['group', null],
-                            )
-                        case 'list':
-                            return _p.ss(
-                                $,
-                                ($) => ['list', null],
-                            )
-                        case 'nothing':
-                            return _p.ss(
-                                $,
-                                ($) => ['nothing', null],
-                            )
-                        case 'simple':
-                            return _p.ss(
-                                $,
-                                ($) => ['simple', null],
-                            )
-                        case 'optional':
-                            return _p.ss(
-                                $,
-                                ($) => ['optional', null],
+                                ($) => ['missing option', null],
                             )
                         case 'reference':
                             return _p.ss(
                                 $,
                                 ($) => ['reference', null],
                             )
-                        case 'state':
+                        case 'property name':
                             return _p.ss(
                                 $,
-                                ($) => ['state', null],
+                                ($) => ['property name', null],
                             )
-                        case 'text':
+                        case 'option name':
                             return _p.ss(
                                 $,
-                                ($) => ['text', null],
+                                ($) => ['option name', null],
                             )
                         default:
                             return _p.au(
@@ -95,6 +52,27 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                             )
                     }
                 },
+            ),
+        ),
+        'suggestions': _p_change_context(
+            $['suggestions'],
+            ($) => _p.list.from.list(
+                $,
+            ).map(
+                ($) => ({
+                    'label': _p_change_context(
+                        $['label'],
+                        ($) => $,
+                    ),
+                    'insert text': _p_change_context(
+                        $['insert text'],
+                        ($) => $,
+                    ),
+                    'documentation': _p_change_context(
+                        $['documentation'],
+                        ($) => $,
+                    ),
+                }),
             ),
         ),
     }),

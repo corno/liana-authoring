@@ -15,97 +15,29 @@ import * as v_external_location from "../../location/transformers/astn_sealed_ta
 
 import * as v_external_text_edits from "../../text_edits/transformers/astn_sealed_target"
 
-export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => ['list', _p.list.from.list(
+export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => ['optional', _p.decide.optional(
     $,
-).map(
-    ($) => ['group', ['verbose', _p.dictionary.literal(
+    ($): t_out.Value.optional => ['set', ['group', ['verbose', _p.dictionary.literal(
         {
-            "label": _p_change_context(
-                $['label'],
-                ($) => ['text', {
-                    'delimiter': ['quote', null],
-                    'value': $,
-                }],
-            ),
-            "insert text": _p_change_context(
-                $['insert text'],
-                ($) => ['text', {
-                    'delimiter': ['quote', null],
-                    'value': $,
-                }],
-            ),
-            "documentation": _p_change_context(
-                $['documentation'],
-                ($) => ['text', {
-                    'delimiter': ['quote', null],
-                    'value': $,
-                }],
-            ),
-            "additional text edits": _p_change_context(
-                $['additional text edits'],
-                ($) => v_external_text_edits.Text_Edits(
-                    $,
-                ),
-            ),
             "type": _p_change_context(
                 $['type'],
                 ($) => ['state', _p.decide.state(
                     $,
                     ($): t_out.Value.state => {
                         switch ($[0]) {
-                            case 'component':
+                            case 'missing value':
                                 return _p.ss(
                                     $,
                                     ($) => ({
-                                        'option': 'component',
+                                        'option': 'missing value',
                                         'value': ['nothing', null],
                                     }),
                                 )
-                            case 'dictionary':
+                            case 'missing option':
                                 return _p.ss(
                                     $,
                                     ($) => ({
-                                        'option': 'dictionary',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'group':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'group',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'list':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'list',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'nothing':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'nothing',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'simple':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'simple',
-                                        'value': ['nothing', null],
-                                    }),
-                                )
-                            case 'optional':
-                                return _p.ss(
-                                    $,
-                                    ($) => ({
-                                        'option': 'optional',
+                                        'option': 'missing option',
                                         'value': ['nothing', null],
                                     }),
                                 )
@@ -117,19 +49,19 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                                         'value': ['nothing', null],
                                     }),
                                 )
-                            case 'state':
+                            case 'property name':
                                 return _p.ss(
                                     $,
                                     ($) => ({
-                                        'option': 'state',
+                                        'option': 'property name',
                                         'value': ['nothing', null],
                                     }),
                                 )
-                            case 'text':
+                            case 'option name':
                                 return _p.ss(
                                     $,
                                     ($) => ({
-                                        'option': 'text',
+                                        'option': 'option name',
                                         'value': ['nothing', null],
                                     }),
                                 )
@@ -141,6 +73,39 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                     },
                 )],
             ),
+            "suggestions": _p_change_context(
+                $['suggestions'],
+                ($) => ['list', _p.list.from.list(
+                    $,
+                ).map(
+                    ($) => ['group', ['verbose', _p.dictionary.literal(
+                        {
+                            "label": _p_change_context(
+                                $['label'],
+                                ($) => ['text', {
+                                    'delimiter': ['quote', null],
+                                    'value': $,
+                                }],
+                            ),
+                            "insert text": _p_change_context(
+                                $['insert text'],
+                                ($) => ['text', {
+                                    'delimiter': ['quote', null],
+                                    'value': $,
+                                }],
+                            ),
+                            "documentation": _p_change_context(
+                                $['documentation'],
+                                ($) => ['text', {
+                                    'delimiter': ['quote', null],
+                                    'value': $,
+                                }],
+                            ),
+                        },
+                    )]],
+                )],
+            ),
         },
-    )]],
+    )]]],
+    () => ['not set', null],
 )]

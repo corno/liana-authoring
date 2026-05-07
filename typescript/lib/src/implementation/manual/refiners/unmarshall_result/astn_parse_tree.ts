@@ -88,7 +88,7 @@ export const Value: Value = ($, $p) => {
                                                                     {
                                                                         'definition': prop_def,
                                                                         'definition path': `${$p['definition path']}.D`,
-                                                                        'property path': "",
+                                                                        'property path': _p.list.literal([]),
                                                                     }
                                                                 ),
                                                             ),
@@ -137,7 +137,12 @@ export const Value: Value = ($, $p) => {
                                                                     {
                                                                         'definition': $.definition.value,
                                                                         'definition path': `${$p['definition path']}.${$.id}`,
-                                                                        'property path': $p['property path'] + "." + $.id
+                                                                        'property path': _p.list.nested_literal_old([
+                                                                            $p['property path'],
+                                                                            [
+                                                                                ['group', $.id]
+                                                                            ]
+                                                                        ])
                                                                     }
                                                                 )
                                                             }],
@@ -166,7 +171,12 @@ export const Value: Value = ($, $p) => {
                                                                             {
                                                                                 'definition': prop_def.value,
                                                                                 'definition path': `${$p['definition path']}.${id_value_pair.id.token.value}`,
-                                                                                'property path': $p['property path'] + "." + id_value_pair.id.token.value
+                                                                                'property path': _p.list.nested_literal_old([
+                                                                                    $p['property path'],
+                                                                                    [
+                                                                                        ['group', id_value_pair.id.token.value]
+                                                                                    ]
+                                                                                ])
                                                                             }
                                                                         )
                                                                     ),
@@ -223,7 +233,7 @@ export const Value: Value = ($, $p) => {
                                                     {
                                                         'definition': def.value,
                                                         'definition path': $p['definition path'] + ".L",
-                                                        'property path': ""
+                                                        'property path': _p.list.literal([])
                                                     }
                                                 ))
                                             }]]
@@ -302,7 +312,12 @@ export const Value: Value = ($, $p) => {
                                                                     {
                                                                         'definition': def,
                                                                         'definition path': `${$p['definition path']}.O`,
-                                                                        'property path': $p['property path'] + ".O",
+                                                                        'property path': _p.list.nested_literal_old([
+                                                                            $p['property path'],
+                                                                            [
+                                                                                ['optional', null]
+                                                                            ]
+                                                                        ])
                                                                     }
                                                                 )
                                                             }]
@@ -323,7 +338,12 @@ export const Value: Value = ($, $p) => {
                                                             {
                                                                 'definition': def,
                                                                 'definition path': `${$p['definition path']}.O`,
-                                                                'property path': $p['property path'] + ".O",
+                                                                'property path': _p.list.nested_literal_old([
+                                                                    $p['property path'],
+                                                                    [
+                                                                        ['optional', null]
+                                                                    ]
+                                                                ]),
                                                             }
                                                         )
                                                     }])
@@ -421,7 +441,7 @@ export const Value: Value = ($, $p) => {
                                                                                                                 {
                                                                                                                     'definition': option_def.value,
                                                                                                                     'definition path': `${$p['definition path']}.${option_name}`,
-                                                                                                                    'property path': "",
+                                                                                                                    'property path': _p.list.literal([]),
                                                                                                                 }
                                                                                                             )
                                                                                                         }]
@@ -489,7 +509,12 @@ export const Value: Value = ($, $p) => {
                                                                                 {
                                                                                     'definition': $.value,
                                                                                     'definition path': `${$p['definition path']}.${option_name}`,
-                                                                                    'property path': "",
+                                                                                    'property path': _p.list.nested_literal_old([
+                                                                                        $p['property path'],
+                                                                                        [
+                                                                                            ['state', option_name]
+                                                                                        ]
+                                                                                    ]),
                                                                                 }
                                                                             )
                                                                         }],

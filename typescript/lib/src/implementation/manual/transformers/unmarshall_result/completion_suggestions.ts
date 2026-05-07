@@ -31,27 +31,26 @@ export type Parameters = {
 
 export type Document = _pi.Transformer_With_Parameter<
     d_in.Document,
-    _pi.Optional_Value<d_out.Completion_Suggestions>,
+    d_out.Completion_Suggestions,
     Parameters
 
 >
 
 export type Found = _pi.Transformer_With_Parameter<
     d_outx.Found,
-    _pi.Optional_Value<d_out.Completion_Suggestions>,
+    d_out.Completion_Suggestions,
     Parameters
 >
 
 type Minimal_Completion_Suggestion = {
     'label': string,
     'insert value': d_ast_target.Value,
-    'type': d_out.Completion_Suggestions.L.type_
 }
 
 type Minimal_Completion_Suggestions = _pi.List<Minimal_Completion_Suggestion>
 
 
-const do_def = (
+const d_schema_Value = (
     $: d_schema.Value,
     $p: {
         'style':
@@ -59,10 +58,9 @@ const do_def = (
         | ['concise', null]
     }
 ): Minimal_Completion_Suggestions => {
-
     return _p.decide.state($, ($): Minimal_Completion_Suggestions => {
         switch ($[0]) {
-            case 'component': return _p.ss($, ($) => do_def(
+            case 'component': return _p.ss($, ($) => d_schema_Value(
                 _p.decide.state($.type, ($): d_schema.Value => {
                     switch ($[0]) {
                         case 'external': return _p.ss($, ($) => $.module['l entry']['root value'])
@@ -87,13 +85,12 @@ const do_def = (
                             }]
                         }]
                     },
-                    'type': ['reference', null],
                 }
             ]))
             case 'group': return _p.ss($, ($) => {
                 const group = $
                 return _p.list.literal<Minimal_Completion_Suggestion>([
-                    _p.decide.state($p.style, ($) => {
+                    _p.decide.state($p.style, ($): Minimal_Completion_Suggestion => {
                         switch ($[0]) {
                             case 'verbose': return _p.ss($, ($) => ({
                                 'label': "",
@@ -117,7 +114,6 @@ const do_def = (
                                         }]]
                                     }]
                                 },
-                                'type': ['group', null]
 
                             }))
                             case 'concise': return _p.ss($, ($) => ({
@@ -139,7 +135,6 @@ const do_def = (
                                         }]]
                                     }]
                                 },
-                                'type': ['group', null]
 
                             }))
                             default: return _p.au($[0])
@@ -155,18 +150,7 @@ const do_def = (
                         $,
                         { 'style': ['verbose', null] }
                     ),
-                    'type': _p.decide.state($, ($): d_out.Completion_Suggestions.L.type_ => {
-                        switch ($[0]) {
-                            case 'dictionary': return _p.ss($, ($) => ['dictionary', null])
-                            case 'list': return _p.ss($, ($) => ['list', null])
-                            case 'nothing': return _p.ss($, ($) => ['nothing', null])
-                            case 'simple': return _p.ss($, ($) => ['simple', null])
-                            case 'optional': return _p.ss($, ($) => ['optional', null])
-                            case 'state': return _p.ss($, ($) => ['state', null])
-                            case 'text': return _p.ss($, ($) => ['text', null])
-                            default: return _p.au($[0])
-                        }
-                    })
+
 
                 }
             ])
@@ -177,171 +161,113 @@ const do_def = (
 
 export const Found: Found = ($, $p) => {
     switch ($[0]) {
-        case 'value': return _p.ss($, ($): _pi.Optional_Value<d_out.Completion_Suggestions> => {
+        case 'value': return _p.ss($, ($): d_out.Completion_Suggestions => {
             const instance = $.instance
-
-            return _p.optional.literal.set(_p.list.from.list(
-                do_def(
-                    $.definition,
-                    $p,
-                ),
-            ).map(
-                ($): d_out.Completion_Suggestions.L => ({
-                    'label': "value" + $.label,
-                    'documentation': "value completion",
-                    'insert text': t_authoring_target_to_text.Value(
-                        $['insert value'],
-                        {
-                            'indentation': $p.indent,
-                            'newline': "\n",
-                            'write delimiters': true,
-                        }
-                    ),
-                    'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
-                        ['delete', {
-                            'range': t_parse_tree_to_full_range.Value(instance)
-                        }]
-                    ]),
-                    'type': $.type
-                })
-            ))
-        })
-        case 'entry': return _p.ss($, ($) => $['id value pair'].assignment.__decide(
-            ($) => t_to_unmarshall_result_value_at_position.range_overlaps_position(
-                $[':'].range,
-                {
-                    'position': $p.position
-                }
-            )
-                ? _p.optional.literal.set(_p.list.literal([
-                    // {
-                    //     'label': "entry",
-                    //     'documentation': "DFSFSF",
-                    //     'insert text': " #",
-                    //     'additional text edits': _p.list.literal([]),
-                    //     'type': ['group', null]
-                    // }
-
-                ]))
-                : _p.optional.literal.set(_p.list.literal([
-                    {
-                        'label': "entry-completion (is this possible???? no colon)",
-                        'documentation': "entry completion",
-                        'insert text': "SDFSFDF",
-                        'additional text edits': _p.list.literal([]),
-                        'type': ['group', null]
-                    }
-
-                ])),
-            () => _p.optional.literal.set(_p.list.literal([
-                // {
-                //     'label': "entry-completion (no value)",
-                //     'documentation': "entry completion",
-                //     'insert text': "SDFSFDF",
-                //     'additional text edits': _p.list.literal([]),
-                //     'type': ['group', null]
-                // }
-
-            ]))
-        ))
-        case 'verbose property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
-            {
-                'label': "verbose property-completion",
-                'documentation': "verbose property completion",
-                'insert text': "SDFSFDF",
-                'additional text edits': _p.list.literal([]),
-                'type': ['group', null]
-            }
-
-        ])))
-        case 'concise property': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
-            {
-                'label': "concise property-completion",
-                'documentation': "concise property completion",
-                'insert text': "SDFSFDF",
-                'additional text edits': _p.list.literal([]),
-                'type': ['group', null]
-            }
-
-        ])))
-        case 'valid state': return _p.ss($, ($): _pi.Optional_Value<d_out.Completion_Suggestions> => {
             const definition = $.definition
-            return _p.decide.state($.instance, ($) => {
+
+            return _p.decide.state($.instance.type, ($) => {
                 switch ($[0]) {
-                    case 'state': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
+                    case 'concrete': return _p.ss($, ($) => _p.decide.state(definition, ($) => {
+                        switch ($[0]) {
+                            case 'reference': return _p.ss($, ($) => _p.optional.literal.not_set()) //FIXME
+                            default: return _p.optional.literal.not_set()
+                        }
+                    }))
+                    case 'include': return _p.ss($, ($) => _p.optional.literal.not_set())
+                    case 'missing': return _p.ss($, ($) => _p.optional.literal.set({
+                        'type': ['missing value', null],
+                        'suggestions': _p.list.from.list(
+                            d_schema_Value(
+                                definition,
+                                $p,
+                            ),
+                        ).map(
+                            ($): d_out.Completion_Suggestions.O.suggestions.L => ({
+                                'label': "value" + $.label,
+                                'documentation': "value completion",
+                                'insert text': t_authoring_target_to_text.Value(
+                                    $['insert value'],
+                                    {
+                                        'indentation': $p.indent,
+                                        'newline': "\n",
+                                        'write delimiters': true,
+                                    }
+                                ),
+                            })
+                        )
+
+                    }))
+                    default: return _p.au($[0])
+                }
+            })
+
+        })
+        case 'entry': return _p.ss($, ($) => _p.optional.literal.not_set())
+        case 'verbose property': return _p.ss($, ($) => _p.optional.literal.not_set())
+        case 'unknown concise property': return _p.ss($, ($) => _p.optional.literal.not_set())
+        case 'valid state': return _p.ss($, ($): d_out.Completion_Suggestions => {
+            const definition = $.definition
+            return _p.decide.state($.instance, ($): d_out.Completion_Suggestions => {
+                switch ($[0]) {
+                    case 'state': return _p.ss($, ($) => _p.decide.state($.status, ($): d_out.Completion_Suggestions => {
                         switch ($[0]) {
                             case 'missing': return _p.ss($, ($) => {
                                 const missing_data_marker = $['#']
-                                return _p.optional.literal.set(_p.list.from.dictionary(
-                                    definition.options
-                                ).flatten(($, id) => {
-                                    const desc = $.description
-                                    return do_def(
-                                        $.value,
-                                        $p,
-                                    ).__l_map(
-                                        ($): d_out.Completion_Suggestions.L => _p_cc(
-                                            $,
-                                            ($) => ({
-                                                'label': id + $.label,
-                                                'documentation': desc.__decide<string>(
-                                                    ($) => $,
-                                                    () => ""
-                                                ),
-                                                'insert text': t_authoring_target_to_text.Value(
-                                                    {
-                                                        'data': ['concrete', {
-                                                            'type': ['state', {
-                                                                '|': {
-                                                                    'comments': _p.list.literal([])
-                                                                },
-                                                                'status': ['set', {
-                                                                    'option': id,
-                                                                    'value': $['insert value']
+                                return _p.optional.literal.set({
+                                    'type': ['missing option', null],
+                                    'suggestions': _p.list.from.dictionary(
+                                        definition.options
+                                    ).flatten(($, id) => {
+                                        const desc = $.description
+                                        return d_schema_Value(
+                                            $.value,
+                                            $p,
+                                        ).__l_map(
+                                            ($): d_out.Completion_Suggestions.O.suggestions.L => _p_cc(
+                                                $,
+                                                ($) => ({
+                                                    'label': id + $.label,
+                                                    'documentation': desc.__decide<string>(
+                                                        ($) => $,
+                                                        () => ""
+                                                    ),
+                                                    'insert text': t_authoring_target_to_text.Value(
+                                                        {
+                                                            'data': ['concrete', {
+                                                                'type': ['state', {
+                                                                    '|': {
+                                                                        'comments': _p.list.literal([])
+                                                                    },
+                                                                    'status': ['set', {
+                                                                        'option': id,
+                                                                        'value': $['insert value']
+                                                                    }]
                                                                 }]
                                                             }]
+                                                        },
+                                                        {
+                                                            'indentation': $p.indent,
+                                                            'newline': "\n",
+                                                            'write delimiters': false,
+                                                        }
+                                                    ),
+                                                    'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
+                                                        ['delete', {
+                                                            'range': missing_data_marker.range
                                                         }]
-                                                    },
-                                                    {
-                                                        'indentation': $p.indent,
-                                                        'newline': "\n",
-                                                        'write delimiters': false,
-                                                    }
-                                                ),
-                                                'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
-                                                    ['delete', {
-                                                        'range': missing_data_marker.range
-                                                    }]
-                                                ]),
-                                                'type': ['state', null]
-                                            })
+                                                    ]),
+                                                    'type': ['state', null]
+                                                })
+                                            )
                                         )
-                                    )
-                                }))
+                                    })
+                                })
                             })
-                            case 'set': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
-                                {
-                                    'label': "set state-completion",
-                                    'documentation': "set state completion",
-                                    'insert text': "SDFSFDF",
-                                    'additional text edits': _p.list.literal([]),
-                                    'type': ['state', null]
-                                }
-
-                            ])))
+                            case 'set': return _p.ss($, ($) => _p.optional.literal.not_set()) //check if this is in the actual option name, if so, give suggestions
                             default: return _p.au($[0])
                         }
                     }))
-                    case 'list': return _p.ss($, ($) => _p.optional.literal.set(_p.list.literal([
-                        {
-                            'label': "legacy state-completion",
-                            'documentation': "legacy state completion",
-                            'insert text': "SDFSFDF",
-                            'additional text edits': _p.list.literal([]),
-                            'type': ['state', null]
-                        }
-
-                    ])))
+                    case 'list': return _p.ss($, ($) => _p.optional.literal.not_set())
                     default: return _p.au($[0])
                 }
             })

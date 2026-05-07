@@ -7,65 +7,61 @@ import * as i_imports_text_edits from "../text_edits/data"
 
 export namespace Completion_Suggestions_ {
     
-    export namespace L {
-        
-        export type label = string
-        
-        export type insert_text = string
-        
-        export type documentation = string
-        
-        export type additional_text_edits = i_imports_text_edits.Text_Edits
+    export namespace O {
         
         export namespace type_ {
             
-            export type component = null
+            export type missing_value = null
             
-            export type dictionary = null
-            
-            export type group = null
-            
-            export type list = null
-            
-            export type nothing = null
-            
-            export type simple = null
-            
-            export type optional = null
+            export type missing_option = null
             
             export type reference = null
             
-            export type state = null
+            export type property_name = null
             
-            export type text = null
+            export type option_name = null
             
         }
         
         export type type_ = 
-            | readonly ['component', type_.component]
-            | readonly ['dictionary', type_.dictionary]
-            | readonly ['group', type_.group]
-            | readonly ['list', type_.list]
-            | readonly ['nothing', type_.nothing]
-            | readonly ['simple', type_.simple]
-            | readonly ['optional', type_.optional]
+            | readonly ['missing value', type_.missing_value]
+            | readonly ['missing option', type_.missing_option]
             | readonly ['reference', type_.reference]
-            | readonly ['state', type_.state]
-            | readonly ['text', type_.text]
+            | readonly ['property name', type_.property_name]
+            | readonly ['option name', type_.option_name]
+        
+        export namespace suggestions {
+            
+            export namespace L {
+                
+                export type label = string
+                
+                export type insert_text = string
+                
+                export type documentation = string
+                
+            }
+            
+            export type L = {
+                readonly 'label': L.label
+                readonly 'insert text': L.insert_text
+                readonly 'documentation': L.documentation
+            }
+            
+        }
+        
+        export type suggestions = _pi.List<suggestions.L>
         
     }
     
-    export type L = {
-        readonly 'label': L.label
-        readonly 'insert text': L.insert_text
-        readonly 'documentation': L.documentation
-        readonly 'additional text edits': L.additional_text_edits
-        readonly 'type': L.type_
+    export type O = {
+        readonly 'type': O.type_
+        readonly 'suggestions': O.suggestions
     }
     
 }
 
-export type Completion_Suggestions_ = _pi.List<Completion_Suggestions_.L>
+export type Completion_Suggestions_ = _pi.Optional_Value<Completion_Suggestions_.O>
 
 export { 
     Completion_Suggestions_ as Completion_Suggestions, 

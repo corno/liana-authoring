@@ -15,10 +15,15 @@ export type Optional_Value = _pi.Optional_Value<Value>
 //     'node': Node
 // }
 
+export type Property_Path = _pi.List<
+    | ['group', string]
+    | ['optional', null]
+    | ['state', string]
+>
 
 export type Value = {
     'definition path x': string
-    'property path': string
+    'property path': Property_Path
     'definition': d_schema.Value
     'instance': d_astn_parse_tree.Value
     'unmarshalled': Unmarshalled //the type is determined by the definition
@@ -156,7 +161,7 @@ export type State_Option =
     | ['missing data', d_astn_parse_tree.Structural_Token]
 
 export type Valid_State = {
-    'property path': string
+    'property path': Property_Path
     'definition': d_schema.Value.state
     'value instance': d_astn_parse_tree.Value
     'instance':
@@ -199,7 +204,7 @@ export type Simple = {
 }
 
 export type Entry_Data = {
-    'property path': string
+    'property path': Property_Path
     'definition': d_schema.Dictionary
     'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
     'value': Optional_Value

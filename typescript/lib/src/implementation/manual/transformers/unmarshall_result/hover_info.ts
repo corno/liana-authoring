@@ -1,5 +1,6 @@
 import * as _pi from 'pareto-core/dist/interface'
 import * as _p from 'pareto-core/dist/assign'
+import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
@@ -8,17 +9,39 @@ import * as d_out from "../../../../interface/generated/liana/schemas/hover_info
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found"
+import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
+//shorthands
+import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export type Document = _pi.Transformer_With_Parameter<
     d_in.Document,
     d_out.Hover_Texts,
     {
-        'position': d_location.Position
-        'full path': string
-        'id path': string
+        'position': d_location.Position_
     }
 >
+
+const Property_Path = ($: d_in.Property_Path): string => t_fp_to_text.Phrase(
+    sh.ph.rich(
+        $.__l_map(($) => _p.decide.state($, ($) => {
+            switch ($[0]) {
+                case 'group': return _p.ss($, ($) => sh.ph.literal($))
+                case 'optional': return _p.ss($, ($) => sh.ph.literal("O"))
+                case 'state': return _p.ss($, ($) => sh.ph.literal($))
+                default: return _p.au($[0])
+            }
+        })),
+        sh.ph.nothing(),
+        sh.ph.nothing(),
+        sh.ph.literal(">"),
+        sh.ph.nothing(),
+    ),
+    {
+        'indentation': "",
+        'newline': "",
+    }
+)
 
 export const Document: Document = ($, $p) => {
     return _p.decide.state(
@@ -29,7 +52,7 @@ export const Document: Document = ($, $p) => {
                     const def = $.definition
                     return _p.list.nested_literal_old([
                         [
-                            $['property path'],
+                            Property_Path($['property path']),
                         ],
                         _p.decide.state($.unmarshalled, ($) => {
                             switch ($[0]) {
@@ -76,7 +99,7 @@ export const Document: Document = ($, $p) => {
                     ])
                 })
                 case 'entry': return _p.ss($, ($) => _p.list.literal([
-                    $['property path'],
+                    Property_Path($['property path']),
                 ]))
                 case 'verbose property': return _p.ss($, ($) => _p.list.literal([
                     $['id value pair'].id.token.value,
@@ -91,24 +114,12 @@ export const Document: Document = ($, $p) => {
                         }
                     }),
                 ]))
-                case 'concise property': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
-                    switch ($[0]) {
-                        case 'yes': return _p.ss($, ($) => _p.list.literal([
-                            $.id,
-                            $.definition.description.__decide(
-                                ($) => $,
-                                () => ""
-                            ),
-                        ]))
-                        case 'no': return _p.ss($, ($) => _p.list.literal([
-                            "",
-                        ]))
-                        default: return _p.au($[0])
-                    }
-                }))
+                case 'unknown concise property': return _p.ss($, ($) => _p.list.literal([
+                    "unknown property",
+                ]))
                 case 'valid state': return _p.ss($, ($) => {
                     const def = $.definition
-                    const prop_path = $['property path']
+                    const prop_path = Property_Path($['property path'])
                     return _p.decide.state($.option, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => _p.list.literal([
