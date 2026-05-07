@@ -286,12 +286,38 @@ export const Value: Value = ($, $p) => {
                                             }]]
                                             : ['incorrect', null]
                                         )
+                                        case 'list': return _p.ss($, ($): d_out.Unmarshalled => {
+                                            const list = $
+                                            return _p.decide.list($.items).has_first_item(
+                                                ($, rest): d_out.Unmarshalled => {
+                                                    const item_value = $
+                                                    return _p.decide.list(rest).has_items(
+                                                        ($) => ['incorrect', null], // Error: too many items
+                                                        (): d_out.Unmarshalled => ['correct', ['optional', {
+                                                            'definition': def,
+                                                            'status': ['set', {
+                                                                'instance': ['list', list],
+                                                                'child value': Value(
+                                                                    item_value.value,
+                                                                    {
+                                                                        'definition': def,
+                                                                        'definition path': `${$p['definition path']}.O`,
+                                                                        'property path': $p['property path'] + ".O",
+                                                                    }
+                                                                )
+                                                            }]
+                                                        }]]
+                                                    )
+                                                },
+                                                (): d_out.Unmarshalled => ['incorrect', null] // Error: empty list
+                                            )
+                                        })
                                         case 'optional': return _p.ss($, ($): d_out.Unmarshalled => ['correct', ['optional', {
                                             'definition': def,
                                             'status': _p.decide.state($, ($): d_out.Optional['status'] => {
                                                 switch ($[0]) {
                                                     case 'set': return _p.ss($, ($) => ['set', {
-                                                        'instance': $,
+                                                        'instance': ['optional', $],
                                                         'child value': Value(
                                                             $.value,
                                                             {

@@ -110,7 +110,9 @@ export type Optional = {
     'definition': d_schema.Value.optional
     'status':
     | ['set', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.optional.set_
+        'instance':
+        | ['optional', d_astn_parse_tree.Value.type_.concrete.optional.set_]
+        | ['list', d_astn_parse_tree.Value.type_.concrete.list]
         'child value': Value
     }]
     | ['not set', {
