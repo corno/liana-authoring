@@ -34,7 +34,7 @@ const Property_Path = ($: d_in.Property_Path): string => t_fp_to_text.Phrase(
         })),
         sh.ph.nothing(),
         sh.ph.nothing(),
-        sh.ph.literal(">"),
+        sh.ph.literal(" > "),
         sh.ph.nothing(),
     ),
     {

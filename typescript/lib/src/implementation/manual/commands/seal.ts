@@ -49,9 +49,6 @@ export const $$: signatures.commands.transform_file = _p.command_procedure(($p, 
                             sh.ph.literal("FIX location: "),
                             t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
                                 $,
-                                // {
-                                //     'character location reporting': ['one based', null]
-                                // }
                             )
                         ])
                         ])),
