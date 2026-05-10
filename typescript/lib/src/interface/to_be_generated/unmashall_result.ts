@@ -5,6 +5,11 @@ import * as d_astn_parse_tree from "astn-core/dist/interface/generated/liana/sch
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
+export type Range_Stack = {
+    'range': d_location.Range
+    'parent': _pi.Optional_Value<Range_Stack>
+}
+
 export type Document = {
     'header': _pi.Optional_Value<d_astn_parse_tree.Value>
     'content': Value
@@ -23,7 +28,7 @@ export type Property_Path = _pi.List<
 >
 
 export type Value = {
-    'optional parent range': _pi.Optional_Value<d_location.Range>
+    'optional parent range stack': _pi.Optional_Value<Range_Stack>
     'definition path x': string
     'property path': Property_Path
     'definition': d_schema.Value
@@ -79,7 +84,7 @@ export type Group_Concise = {
 export type Concise_Property = {
     'item': d_astn_parse_tree.Items.L
     'definition found': Concise_Property_Definition_Found
-    'parent range': d_location.Range
+    'parent range stack': Range_Stack
 }
 
 export type Concise_Property_Definition_Found =
@@ -93,7 +98,7 @@ export type Concise_Property_Definition_Found__yes = {
 }
 
 export type Verbose_Property = {
-    'parent range': d_location.Range
+    'parent range stack': Range_Stack
     'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
     'definition found': Verbose_Property_Definition_Found
 }
@@ -172,7 +177,7 @@ export type Valid_State = {
     | ['state', d_astn_parse_tree.Value.type_.concrete.state]
     | ['list', d_astn_parse_tree.Value.type_.concrete.list]
     'option': State_Option
-    'parent range': d_location.Range
+    'parent range stack': Range_Stack
 }
 
 export type State__found_value_type =
@@ -208,7 +213,7 @@ export type Simple = {
 }
 
 export type Entry_Data = {
-    'parent range': d_location.Range
+    'parent range stack': Range_Stack
     'property path': Property_Path
     'definition': d_schema.Dictionary
     'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
