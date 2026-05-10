@@ -1,8 +1,9 @@
 import * as _pi from 'pareto-core/dist/interface'
 
+//data types
 import * as d_astn_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
+import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
 export type Document = {
     'header': _pi.Optional_Value<d_astn_parse_tree.Value>
@@ -22,6 +23,7 @@ export type Property_Path = _pi.List<
 >
 
 export type Value = {
+    'optional parent range': _pi.Optional_Value<d_location.Range>
     'definition path x': string
     'property path': Property_Path
     'definition': d_schema.Value
@@ -77,6 +79,7 @@ export type Group_Concise = {
 export type Concise_Property = {
     'item': d_astn_parse_tree.Items.L
     'definition found': Concise_Property_Definition_Found
+    'parent range': d_location.Range
 }
 
 export type Concise_Property_Definition_Found =
@@ -90,6 +93,7 @@ export type Concise_Property_Definition_Found__yes = {
 }
 
 export type Verbose_Property = {
+    'parent range': d_location.Range
     'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
     'definition found': Verbose_Property_Definition_Found
 }
@@ -168,7 +172,7 @@ export type Valid_State = {
     | ['state', d_astn_parse_tree.Value.type_.concrete.state]
     | ['list', d_astn_parse_tree.Value.type_.concrete.list]
     'option': State_Option
-
+    'parent range': d_location.Range
 }
 
 export type State__found_value_type =
@@ -204,6 +208,7 @@ export type Simple = {
 }
 
 export type Entry_Data = {
+    'parent range': d_location.Range
     'property path': Property_Path
     'definition': d_schema.Dictionary
     'id value pair': d_astn_parse_tree.ID_Value_Pairs.L

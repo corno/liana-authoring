@@ -1,12 +1,17 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import _p_implement_me from 'pareto-core-dev/dist/implement_me'
+import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
+//data types
 import * as d_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../interface/to_be_generated/unmashall_result"
 import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_from_astn_parse_tree"
+import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
+import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
-import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
+//dependencies
+import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
 export type Document = _pi.Refiner_Without_Error_With_Parameter<
     d_out.Document,
@@ -17,19 +22,31 @@ export type Document = _pi.Refiner_Without_Error_With_Parameter<
 export type Value = _pi.Refiner_Without_Error_With_Parameter<
     d_out.Value,
     d_in.Value,
-    d_function.Parameters
+    {
+        'definition': d_in_definition.Value
+        'definition path': string
+        'property path': d_out.Property_Path
+        'parent range': _pi.Optional_Value<d_location.Range>
+    }
 >
 
 export const Document: Document = ($, $p) => ({
     'header': _p.optional.from.optional($['header']).map(($) => $.value),
     'content': Value(
         $.content,
-        $p
+        {
+            'definition': $p.definition,
+            'definition path': $p['definition path'],
+            'property path': $p['property path'],
+            'parent range': _p.optional.literal.not_set()
+        }
     )
 })
 
 export const Value: Value = ($, $p) => {
     const value = $
+    const value_range = t_parse_tree_to_location.Value($)
+    const optional_value_range = _p.optional.literal.set(value_range)
     return _p.decide.state($.type, ($): d_out.Value => {
         switch ($[0]) {
             case 'concrete': return _p.ss($, ($): d_out.Value => {
@@ -62,7 +79,8 @@ export const Value: Value = ($, $p) => {
                                                 default: return _p.au($[0])
                                             }
                                         }),
-                                        'property path': $p['property path']
+                                        'property path': $p['property path'],
+                                        'parent range': optional_value_range,
                                     }
                                 )
                             }]])
@@ -76,6 +94,7 @@ export const Value: Value = ($, $p) => {
                                                 'definition': dict_def,
                                                 'instance': $,
                                                 'entries': $.entries.__l_map(($): d_out.Entry_Data => {
+                                                    const entry = $
                                                     return {
                                                         'definition': dict_def,
                                                         'property path': $p['property path'],
@@ -89,12 +108,14 @@ export const Value: Value = ($, $p) => {
                                                                         'definition': prop_def,
                                                                         'definition path': `${$p['definition path']}.D`,
                                                                         'property path': _p.list.literal([]),
+                                                                        'parent range': _p.optional.literal.set(t_parse_tree_to_location.ID_Value_Pair(entry)),
                                                                     }
                                                                 ),
                                                             ),
                                                             () => _p.optional.literal.not_set()
                                                         ),
-                                                        'id value pair': $
+                                                        'id value pair': $,
+                                                        'parent range': value_range,
                                                     }
                                                 })
                                             }]]
@@ -142,12 +163,14 @@ export const Value: Value = ($, $p) => {
                                                                             [
                                                                                 ['group', $.id]
                                                                             ]
-                                                                        ])
+                                                                        ]),
+                                                                        'parent range': optional_value_range,
                                                                     }
                                                                 )
                                                             }],
                                                             (): d_out.Concise_Property_Definition_Found => ['no', null]
-                                                        )
+                                                        ),
+                                                        'parent range': value_range,
                                                     }
                                                 }
                                             )
@@ -176,7 +199,8 @@ export const Value: Value = ($, $p) => {
                                                                                     [
                                                                                         ['group', id_value_pair.id.token.value]
                                                                                     ]
-                                                                                ])
+                                                                                ]),
+                                                                                'parent range': _p.optional.literal.set(t_parse_tree_to_location.ID_Value_Pair(id_value_pair)),
                                                                             }
                                                                         )
                                                                     ),
@@ -185,7 +209,8 @@ export const Value: Value = ($, $p) => {
                                                             }]
                                                         },
                                                         () => ['no', null]
-                                                    )
+                                                    ),
+                                                    'parent range': value_range,
                                                 }
                                             })
                                         }
@@ -233,7 +258,8 @@ export const Value: Value = ($, $p) => {
                                                     {
                                                         'definition': def.value,
                                                         'definition path': $p['definition path'] + ".L",
-                                                        'property path': _p.list.literal([])
+                                                        'property path': _p.list.literal([]),
+                                                        'parent range': optional_value_range,
                                                     }
                                                 ))
                                             }]]
@@ -317,7 +343,8 @@ export const Value: Value = ($, $p) => {
                                                                             [
                                                                                 ['optional', null]
                                                                             ]
-                                                                        ])
+                                                                        ]),
+                                                                        'parent range': optional_value_range,
                                                                     }
                                                                 )
                                                             }]
@@ -344,6 +371,7 @@ export const Value: Value = ($, $p) => {
                                                                         ['optional', null]
                                                                     ]
                                                                 ]),
+                                                                'parent range': optional_value_range,
                                                             }
                                                         )
                                                     }])
@@ -442,13 +470,15 @@ export const Value: Value = ($, $p) => {
                                                                                                                     'definition': option_def.value,
                                                                                                                     'definition path': `${$p['definition path']}.${option_name}`,
                                                                                                                     'property path': _p.list.literal([]),
+                                                                                                                    'parent range': optional_value_range,
                                                                                                                 }
                                                                                                             )
                                                                                                         }]
                                                                                                     },
                                                                                                     (): d_out.Option_Status => ['unknown', null]
                                                                                                 )
-                                                                                            }]
+                                                                                            }],
+                                                                                            'parent range': value_range,
                                                                                         }]
                                                                                     )
                                                                                 },
@@ -515,6 +545,7 @@ export const Value: Value = ($, $p) => {
                                                                                             ['state', option_name]
                                                                                         ]
                                                                                     ]),
+                                                                                    'parent range': optional_value_range,
                                                                                 }
                                                                             )
                                                                         }],
@@ -525,6 +556,7 @@ export const Value: Value = ($, $p) => {
                                                             default: return _p.au($[0])
                                                         }
                                                     }),
+                                                    'parent range': value_range,
                                                 }]
                                             }]]
                                         })
@@ -546,7 +578,8 @@ export const Value: Value = ($, $p) => {
                             })
                             default: return _p.au($[0])
                         }
-                    })
+                    }),
+                    'optional parent range': $p['parent range']
                 }
             })
             case 'include': return _p.ss($, ($) => _p_implement_me("include node deserialization")) //TODO
@@ -557,6 +590,7 @@ export const Value: Value = ($, $p) => {
                     'property path': $p['property path'],
                     'instance': value,
                     'unmarshalled': ['missing', null],
+                    'optional parent range': optional_value_range,
                 }
             }) //TODO
             default: return _p.au($[0])

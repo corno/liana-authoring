@@ -174,7 +174,7 @@ export const Value: Value = ($, $p) => {
                                         () => _p.optional.literal.set(_p.decide.state($['definition found'], ($): d_out.Found => {
                                             switch ($[0]) {
                                                 case 'yes': return _p.ss($, ($) => Value($.value, $p))
-                                                case 'no': return _p.ss($, ($) => ['unknown concise property', prop.item])
+                                                case 'no': return _p.ss($, ($) => ['unknown concise property', prop])
                                                 default: return _p.au($[0])
                                             }
                                         })),

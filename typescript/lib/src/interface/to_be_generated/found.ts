@@ -7,7 +7,7 @@ export type Found =
     | ['value', d_out.Value]
     | ['entry', d_out.Entry_Data]
     | ['verbose property', d_out.Verbose_Property]
-    | ['unknown concise property', d_astn_parse_tree.Items.L]
+    | ['unknown concise property', d_out.Concise_Property]
     | ['valid state', d_out.Valid_State]
 
 export type Possibly_Found = _pi.Optional_Value<Found>
