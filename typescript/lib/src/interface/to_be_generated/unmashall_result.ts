@@ -28,20 +28,32 @@ export type Property_Path = _pi.List<
 >
 
 export type Value = {
+    'definition': d_schema.Value
+    'instance': d_astn_parse_tree.Value
     'optional parent range stack': _pi.Optional_Value<Range_Stack>
     'definition path x': string
     'property path': Property_Path
-    'definition': d_schema.Value
-    'instance': d_astn_parse_tree.Value
-    'unmarshalled': Unmarshalled //the type is determined by the definition
+    'unmarshall result': Value_Unmarshall_Result //the type is determined by the definition
 }
 
-export type Unmarshalled =
-    | ['correct', Unmarshalled_Type]
-    | ['incorrect', null]
+export type Value_Unmarshall_Result =
+    | ['correct', Unmarshalled_Value]
+    | ['incorrect',
+        | ['wrong type', null]
+        | ['list as state format error', {
+            'list': d_astn_parse_tree.Value.type_.concrete.list
+            'type':
+            | ['missing option item', null]
+            | ['option item is not a text', {
+                'value': d_astn_parse_tree.Value
+            }]
+            | ['missing value item', null]
+            | ['too many items', null]
+        }]
+    ]
     | ['missing', null]
 
-export type Unmarshalled_Type =
+export type Unmarshalled_Value =
     | ['component', Component]
     | ['dictionary', Dictionary]
     | ['group', Group]
@@ -89,7 +101,9 @@ export type Concise_Property = {
 
 export type Concise_Property_Definition_Found =
     | ['yes', Concise_Property_Definition_Found__yes]
-    | ['no', null]
+    | ['no', {
+        'item': d_astn_parse_tree.Items.L
+    }]
 
 export type Concise_Property_Definition_Found__yes = {
     'definition': d_schema.Group.D
@@ -98,9 +112,9 @@ export type Concise_Property_Definition_Found__yes = {
 }
 
 export type Verbose_Property = {
+    'definition found': Verbose_Property_Definition_Found
     'parent range stack': Range_Stack
     'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
-    'definition found': Verbose_Property_Definition_Found
 }
 
 export type Verbose_Property_Definition_Found =
@@ -152,10 +166,15 @@ export type Reference = {
 
 export type State = {
     'definition': d_schema.Value.state
-    'found value type': State__found_value_type
+    'property path': Property_Path
+    'instance':
+    | ['state', d_astn_parse_tree.Value.type_.concrete.state]
+    | ['list', d_astn_parse_tree.Value.type_.concrete.list]
+    'option status': State_Option
+    'parent range stack': Range_Stack
 }
 
-export type Option_Status =
+export type Selected_Option_Status =
     | ['known', {
         'definition': d_schema.Value.state.options.D
         'value': Value
@@ -165,34 +184,9 @@ export type Option_Status =
 export type State_Option =
     | ['set', {
         'option token': d_astn_parse_tree.Text
-        'option': Option_Status
+        'selected option status': Selected_Option_Status
     }]
     | ['missing data', d_astn_parse_tree.Structural_Token]
-
-export type Valid_State = {
-    'property path': Property_Path
-    'definition': d_schema.Value.state
-    'value instance': d_astn_parse_tree.Value
-    'instance':
-    | ['state', d_astn_parse_tree.Value.type_.concrete.state]
-    | ['list', d_astn_parse_tree.Value.type_.concrete.list]
-    'option': State_Option
-    'parent range stack': Range_Stack
-}
-
-export type State__found_value_type =
-    | ['valid', Valid_State]
-    | ['list format error', {
-        'list': d_astn_parse_tree.Value.type_.concrete.list
-        'type':
-        | ['missing option item', null]
-        | ['option item is not a text', {
-            'value': d_astn_parse_tree.Value
-        }]
-        | ['missing value item', null]
-        | ['too many items', null]
-    }
-    ]
 
 export type Nothing = {
     'definition': d_schema.Value.nothing

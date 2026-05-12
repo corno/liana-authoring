@@ -48,7 +48,7 @@ export const Document: Document = ($, $p): d_out.Document => {
 
 export const Value: Value = ($, $p): d_out.Value => {
     const instance = $['instance']
-    return _p.decide.state($.unmarshalled, ($) => {
+    return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
             case 'incorrect': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
             case 'correct': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
@@ -274,50 +274,40 @@ export const Value: Value = ($, $p): d_out.Value => {
                             }
                         })
                     }]))
-                    case 'state': return _p.ss($, ($): d_out.Value => _p.decide.state($['found value type'], ($): d_out.Value => {
+                    case 'state': return _p.ss($, ($) => _p.decide.state($['option status'], ($): d_out.Value => {
                         switch ($[0]) {
-                            case 'list format error': return _p.ss($, ($): d_out.Value => t_parse_tree_to_authoring_target.Value(instance))
-                            case 'valid': return _p.ss($, ($) => _p.decide.state($.option, ($): d_out.Value => {
-                                switch ($[0]) {
-                                    case 'set': return _p.ss($, ($): d_out.Value => {
-                                        const token = $['option token']
-                                        return _p.decide.state($.option, ($) => {
-                                            switch ($[0]) {
-                                                case 'known': return _p.ss($, ($) => temp_value(['concrete', {
-                                                    'type': ['state', {
-                                                        '|': {
-                                                            'comments': _p.list.literal([])
-                                                        },
-                                                        'status': ['set', {
-                                                            'option': token.token.value,
-                                                            'value': Value($.value, $p)
-                                                        }]
-                                                    }]
-                                                }]))
-                                                case 'unknown': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
-                                                default: return _p.au($[0])
-                                            }
-                                        })
-                                    })
-                                    case 'missing data': return _p.ss($, ($) => temp_value(['concrete', {
-                                        'type': ['state', {
-                                            '|': {
-                                                'comments': _p.list.literal([])
-                                            },
-                                            'status': ['missing', {
-                                                '#': {
+                            case 'set': return _p.ss($, ($): d_out.Value => {
+                                const token = $['option token']
+                                return _p.decide.state($['selected option status'], ($) => {
+                                    switch ($[0]) {
+                                        case 'known': return _p.ss($, ($) => temp_value(['concrete', {
+                                            'type': ['state', {
+                                                '|': {
                                                     'comments': _p.list.literal([])
                                                 },
+                                                'status': ['set', {
+                                                    'option': token.token.value,
+                                                    'value': Value($.value, $p)
+                                                }]
                                             }]
-                                        }]
-                                    }]))
-                                    default: return _p.au($[0])
-                                }
+                                        }]))
+                                        case 'unknown': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
+                                        default: return _p.au($[0])
+                                    }
+                                })
                             })
-                                //     temp_value(['concrete', {
-                                //     'type': ['state',]
-                                // }])
-                            )
+                            case 'missing data': return _p.ss($, ($) => temp_value(['concrete', {
+                                'type': ['state', {
+                                    '|': {
+                                        'comments': _p.list.literal([])
+                                    },
+                                    'status': ['missing', {
+                                        '#': {
+                                            'comments': _p.list.literal([])
+                                        },
+                                    }]
+                                }]
+                            }]))
                             default: return _p.au($[0])
                         }
                     }))

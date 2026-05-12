@@ -8,6 +8,6 @@ export type Found =
     | ['entry', d_out.Entry_Data]
     | ['verbose property', d_out.Verbose_Property]
     | ['unknown concise property', d_out.Concise_Property]
-    | ['valid state', d_out.Valid_State]
+    | ['valid state', d_out.State]
 
 export type Possibly_Found = _pi.Optional_Value<Found>

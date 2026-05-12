@@ -76,9 +76,9 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
         case 'valid state': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
             const definition = $.definition
 
-            return _p.decide.state($.option, ($) => {
+            return _p.decide.state($['option status'], ($) => {
                 switch ($[0]) {
-                    case 'set': return _p.ss($, ($) => _p.decide.state($.option, ($) => {
+                    case 'set': return _p.ss($, ($) => _p.decide.state($['selected option status'], ($) => {
                         switch ($[0]) {
                             case 'known': return _p.ss($, ($) => do_value($.value))
                             case 'unknown':return _p.ss($, ($) => _p.optional.literal.not_set())

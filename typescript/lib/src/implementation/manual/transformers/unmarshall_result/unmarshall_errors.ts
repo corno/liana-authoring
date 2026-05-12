@@ -36,36 +36,73 @@ export const Document: Document = ($) => {
 export const Value: Value = ($, $p) => {
     const instance = $.instance
     const def = $.definition
-    return _p.decide.state($.unmarshalled, ($) => {
+    return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'incorrect': return _p.ss($, ($) => _p.list.literal([
-                {
-                    'range': t_astn_parse_tree_to_location.Value(instance),
-                    'type': ['error', ['invalid value type', {
-                        'expected': _p.decide.state(def, ($): d_out.Errors.L.type_.error.invalid_value_type.expected => {
-                            switch ($[0]) {
-                                case 'state': return _p.ss($, ($) => _p.list.literal([['state', null]]))
-                                case 'component': return _p.ss($, ($) => _p_unreachable_code_path("a component cannot be incorrect by itself"))
-                                case 'dictionary': return _p.ss($, ($) => _p.list.literal([['dictionary', null]]))
-                                case 'group': return _p.ss($, ($) => _p.list.literal([['group', null]]))
-                                case 'list': return _p.ss($, ($) => _p.list.literal([['list', null]]))
-                                case 'nothing': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
-                                case 'simple': return _p.ss($, ($) => _p.list.literal([['text', null]]))
-                                case 'optional': return _p.ss($, ($) => _p.list.literal([['optional', null]]))
-                                case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+            case 'incorrect': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                switch ($[0]) {
+                    case 'wrong type': return _p.ss($, ($) => _p.list.literal([
+                        {
+                            'range': t_astn_parse_tree_to_location.Value(instance),
+                            'type': ['error', ['invalid value type', {
+                                'expected': _p.decide.state(def, ($): d_out.Errors.L.type_.error.invalid_value_type.expected => {
                                     switch ($[0]) {
-                                        case 'derived': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
-                                        case 'selected': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                        case 'state': return _p.ss($, ($) => _p.list.literal([['state', null]]))
+                                        case 'component': return _p.ss($, ($) => _p_unreachable_code_path("a component cannot be incorrect by itself"))
+                                        case 'dictionary': return _p.ss($, ($) => _p.list.literal([['dictionary', null]]))
+                                        case 'group': return _p.ss($, ($) => _p.list.literal([['group', null]]))
+                                        case 'list': return _p.ss($, ($) => _p.list.literal([['list', null]]))
+                                        case 'nothing': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
+                                        case 'simple': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                        case 'optional': return _p.ss($, ($) => _p.list.literal([['optional', null]]))
+                                        case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+                                            switch ($[0]) {
+                                                case 'derived': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
+                                                case 'selected': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                                default: return _p.au($[0])
+                                            }
+                                        }))
+                                        case 'text': return _p.ss($, ($) => _p.list.literal([['text', null]]))
                                         default: return _p.au($[0])
                                     }
-                                }))
-                                case 'text': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                })
+                            }]]
+                        }
+                    ]))
+                    case 'list as state format error': return _p.ss($, ($) => {
+                        const start_token = $.list['[']
+                        return _p.decide.state($.type, ($): d_out.Errors => {
+                            switch ($[0]) {
+                                case 'missing option item': return _p.ss($, ($): d_out.Errors => _p.list.literal([
+                                    {
+                                        'range': start_token.range,
+                                        'type': ['error', ['state', ['missing option name', null]]] //FIXME wrong error
+                                    }
+                                ]))
+                                case 'option item is not a text': return _p.ss($, ($) => _p.list.literal([
+                                    {
+                                        'range': start_token.range,
+                                        'type': ['error', ['state', ['option name is not a text', null]]] //FIXME wrong error
+                                    }
+                                ]))
+                                case 'missing value item': return _p.ss($, ($) => _p.list.literal([
+                                    {
+                                        'range': start_token.range,
+                                        'type': ['error', ['state', ['missing value', null]]] //FIXME wrong error
+                                    }
+                                ]))
+                                case 'too many items': return _p.ss($, ($) => _p.list.literal([
+                                    {
+                                        'range': start_token.range,
+                                        'type': ['error', ['state', ['more than 2 items', null]]] //FIXME wrong error
+                                    }
+                                ]))
                                 default: return _p.au($[0])
                             }
                         })
-                    }]]
+                    })
+                    default: return _p.au($[0])
                 }
-            ]))
+            }))
             case 'correct': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Errors => {
                 switch ($[0]) {
                     case 'dictionary': return _p.ss($, ($) => {
@@ -143,7 +180,7 @@ export const Value: Value = ($, $p) => {
                                 default: return _p.au($[0])
                             }
                         })
-                        const report_property_warnings =  $p['report warnings']
+                        const report_property_warnings = $p['report warnings']
                             ? is_group //if it's not a group, there is already going to be an error for the group itself
                             : false
                         return _p.list.nested_literal_old([
@@ -329,108 +366,46 @@ export const Value: Value = ($, $p) => {
                             default: return _p.au($[0])
                         }
                     }))
-                    case 'state': return _p.ss($, ($) => {
+                    case 'state': return _p.ss($, ($): d_out.Errors => {
                         const sg_def = $.definition
-                        return _p.decide.state($['found value type'], ($): d_out.Errors => {
+                        return _p.decide.state($['option status'], ($): d_out.Errors => {
                             switch ($[0]) {
-                                case 'valid': return _p.ss($, ($): d_out.Errors => {
-                                    return _p.decide.state($['option'], ($): d_out.Errors => {
-                                        switch ($[0]) {
-                                            case 'missing data': return _p.ss($, ($) => _p.list.literal([
+                                case 'missing data': return _p.ss($, ($) => _p.list.literal([
+                                    {
+                                        'range': $.range,
+                                        'type': ['error', ['state', ['missing option', null]]]
+                                    }
+                                ]))
+                                case 'set': return _p.ss($, ($) => {
+                                    const option_token = $['option token']
+                                    const is_backticked = $['option token'].token.type[0] === 'backticked'
+                                    return _p.list.nested_literal_old([
+                                        (!is_backticked && $p['report warnings'])
+                                            ? _p.list.literal([
                                                 {
-                                                    'range': $.range,
-                                                    'type': ['error', ['state', ['missing option', null]]]
+                                                    'range': option_token.range,
+                                                    'type': ['warning', ['expected apostrophed text', null]]
                                                 }
-                                            ]))
-                                            case 'set': return _p.ss($, ($) => {
-                                                const option_token = $['option token']
-                                                const is_backticked = $['option token'].token.type[0] === 'backticked'
-                                                return _p.list.nested_literal_old([
-                                                    (!is_backticked && $p['report warnings'])
-                                                        ? _p.list.literal([
-                                                            {
-                                                                'range': option_token.range,
-                                                                'type': ['warning', ['expected apostrophed text', null]]
-                                                            }
-                                                        ])
-                                                        : _p.list.literal([]),
-                                                    _p.decide.state($.option, ($) => {
-                                                        switch ($[0]) {
-                                                            case 'known': return _p.ss($, ($) => Value($.value, { 'report warnings': is_backticked && $p['report warnings'] }))
-                                                            case 'unknown': return _p.ss($, ($) => _p.list.literal([
-                                                                {
-                                                                    'range': option_token.range,
-                                                                    'type': ['error', ['state', ['unknown option', {
-                                                                        'found': option_token.token.value,
-                                                                        'expected': sg_def.options.__d_map(($) => null)
-                                                                    }]]]
-                                                                }
-                                                            ]))
+                                            ])
+                                            : _p.list.literal([]),
+                                        _p.decide.state($['selected option status'], ($) => {
+                                            switch ($[0]) {
+                                                case 'known': return _p.ss($, ($) => Value($.value, { 'report warnings': is_backticked && $p['report warnings'] }))
+                                                case 'unknown': return _p.ss($, ($) => _p.list.literal([
+                                                    {
+                                                        'range': option_token.range,
+                                                        'type': ['error', ['state', ['unknown option', {
+                                                            'found': option_token.token.value,
+                                                            'expected': sg_def.options.__d_map(($) => null)
+                                                        }]]]
+                                                    }
+                                                ]))
 
-                                                            default: return _p.au($[0])
-                                                        }
-                                                    })
-                                                ])
-                                            })
-                                            default: return _p.au($[0])
-                                        }
-                                    })
+                                                default: return _p.au($[0])
+                                            }
+                                        })
+                                    ])
                                 })
-                                case 'list format error': return _p.ss($, ($) => {
-                                    const start_token = $.list['[']
-                                    return _p.decide.state($.type, ($): d_out.Errors => {
-                                        switch ($[0]) {
-                                            case 'missing option item': return _p.ss($, ($): d_out.Errors => _p.list.literal([
-                                                {
-                                                    'range': start_token.range,
-                                                    'type': ['error', ['state', ['missing option name', null]]] //FIXME wrong error
-                                                }
-                                            ]))
-                                            case 'option item is not a text': return _p.ss($, ($) => _p.list.literal([
-                                                {
-                                                    'range': start_token.range,
-                                                    'type': ['error', ['state', ['option name is not a text', null]]] //FIXME wrong error
-                                                }
-                                            ]))
-                                            case 'missing value item': return _p.ss($, ($) => _p.list.literal([
-                                                {
-                                                    'range': start_token.range,
-                                                    'type': ['error', ['state', ['missing value', null]]] //FIXME wrong error
-                                                }
-                                            ]))
-                                            case 'too many items': return _p.ss($, ($) => _p.list.literal([
-                                                {
-                                                    'range': start_token.range,
-                                                    'type': ['error', ['state', ['more than 2 items', null]]] //FIXME wrong error
-                                                }
-                                            ]))
-                                            default: return _p.au($[0])
-                                        }
-                                    })
-                                })
-                                // case 'more than 2 elements': return _p.ss($, ($) => _p.list.literal([{
-                                //     'range': $,
-                                //     'type': ['error', ['state', ['more than 2 elements', null]]]
-                                // }]))
-                                // case 'missing state name': return _p.ss($, ($) => _p.list.literal([{
-                                //     'range': $,
-                                //     'type': ['error', ['state', ['missing state name', null]]]
-                                // }]))
-                                // case 'state is not a string': return _p.ss($, ($) => _p.list.literal([{
-                                //     'range': $,
-                                //     'type': ['error', ['state', ['state is not a string', null]]]
-                                // }]))
-                                // case 'missing value': return _p.ss($, ($) => _p.list.literal([{
-                                //     'range': $,
-                                //     'type': ['error', ['state', ['missing value', null]]]
-                                // }]))
-                                // case 'unknown state': return _p.ss($, ($) => _p.list.literal([{
-                                //     'range': $.range,
-                                //     'type': ['error', ['state', ['unknown state', {
-                                //         'found': $.found,
-                                //         'expected': $.expected
-                                //     }]]]
-                                // }]))
                                 default: return _p.au($[0])
                             }
                         })

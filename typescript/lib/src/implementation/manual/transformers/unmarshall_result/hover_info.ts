@@ -54,7 +54,7 @@ export const Document: Document = ($, $p) => {
                         [
                             Property_Path($['property path']),
                         ],
-                        _p.decide.state($.unmarshalled, ($) => {
+                        _p.decide.state($['unmarshall result'], ($) => {
                             switch ($[0]) {
                                 case 'incorrect': return _p.ss($, ($) => _p.decide.state(def, ($) => {
                                     switch ($[0]) {
@@ -120,11 +120,11 @@ export const Document: Document = ($, $p) => {
                 case 'valid state': return _p.ss($, ($) => {
                     const def = $.definition
                     const prop_path = Property_Path($['property path'])
-                    return _p.decide.state($.option, ($) => {
+                    return _p.decide.state($['option status'], ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => _p.list.literal([
                                 prop_path,
-                                _p.decide.state($.option, ($): string => {
+                                _p.decide.state($['selected option status'], ($): string => {
                                     switch ($[0]) {
                                         case 'known': return _p.ss($, ($) => $.definition.description.__decide(
                                             ($) => $,

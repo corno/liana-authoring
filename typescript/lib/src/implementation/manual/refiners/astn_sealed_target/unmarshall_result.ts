@@ -48,12 +48,45 @@ export const Document: Document = ($, abort) => {
 export const Value: Value = ($, abort) => {
     const definition_path = $['definition path x']
     const instance = $.instance
-    return _p.decide.state($.unmarshalled, ($) => {
+    return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'incorrect': return _p.ss($, ($) => abort({
-                'definition path': definition_path,
-                'type': ['number', ['wrong type', null]], //FIXME!!!
-                'range': t_astn_parse_tree_to_location.Value(instance)
+            case 'incorrect': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                switch ($[0]) {
+                    case 'wrong type': return _p.ss($, ($) => abort({
+                        'definition path': definition_path,
+                        'type': ['number', ['wrong type', null]], //FIXME!!!
+                        'range': t_astn_parse_tree_to_location.Value(instance)
+                    }))
+                    case 'list as state format error': return _p.ss($, ($) => {
+                        const start_token = $.list['[']
+                        return _p.decide.state($.type, ($) => {
+                            switch ($[0]) {
+                                case 'missing option item': return _p.ss($, ($) => abort({
+                                    'definition path': definition_path,
+                                    'type': ['state', ['missing option item', null]],
+                                    'range': start_token.range
+                                }))
+                                case 'option item is not a text': return _p.ss($, ($) => abort({
+                                    'definition path': definition_path,
+                                    'type': ['state', ['option item is not a text', null]],
+                                    'range': t_astn_parse_tree_to_location.Value($.value)
+                                }))
+                                case 'missing value item': return _p.ss($, ($) => abort({
+                                    'definition path': definition_path,
+                                    'type': ['state', ['missing value item', null]],
+                                    'range': start_token.range
+                                }))
+                                case 'too many items': return _p.ss($, ($) => abort({
+                                    'definition path': definition_path,
+                                    'type': ['state', ['too many items', null]],
+                                    'range': start_token.range
+                                }))
+                                default: return _p.au($[0])
+                            }
+                        })
+                    })
+                    default: return _p.au($[0])
+                }
             }))
             case 'correct': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
                 switch ($[0]) {
@@ -227,77 +260,43 @@ export const Value: Value = ($, abort) => {
                             default: return _p.au($[0])
                         }
                     }))
-                    case 'state': return _p.ss($, ($): d_out.Value => ['state', _p.decide.state($['found value type'], ($): d_out.Value.state => {
-                        switch ($[0]) {
-                            case 'valid': return _p.ss($, ($) => {
-                                const start_token = _p.decide.state($.instance, ($): d_in_astn_parse_tree.Structural_Token => {
-                                    switch ($[0]) {
-                                        case 'list': return _p.ss($, ($) => $['['])
-                                        case 'state': return _p.ss($, ($) => $['|'])
-                                        default: return _p.au($[0])
-                                    }
-                                })
-                                return _p.decide.state($['option'], ($) => {
-                                    switch ($[0]) {
-                                        case 'missing data': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
-                                            'type': ['state', ['missing data', null]],
-                                            'range': $.range
-                                        }))
-                                        case 'set': return _p.ss($, ($) => {
-                                            const option_token = $['option token']
-                                            return _p.decide.state($.option, ($) => {
-                                                switch ($[0]) {
-                                                    case 'known': return _p.ss($, ($) => ({
-                                                        'option': option_token.token.value,
-                                                        'value': Value($.value, abort)
-                                                    }))
-                                                    case 'unknown': return _p.ss($, ($) => abort({
-                                                        'definition path': definition_path,
-                                                        'type': ['state', ['unknown option', null]],
-                                                        'range': option_token.range
-                                                    }))
+                    case 'state': return _p.ss($, ($): d_out.Value => {
+                        const start_token = _p.decide.state($.instance, ($): d_in_astn_parse_tree.Structural_Token => {
+                            switch ($[0]) {
+                                case 'list': return _p.ss($, ($) => $['['])
+                                case 'state': return _p.ss($, ($) => $['|'])
+                                default: return _p.au($[0])
+                            }
+                        })
+                        return _p.decide.state($['option status'], ($): d_out.Value => {
+                            switch ($[0]) {
+                                case 'missing data': return _p.ss($, ($) => abort({
+                                    'definition path': definition_path,
+                                    'type': ['state', ['missing data', null]],
+                                    'range': $.range
+                                }))
+                                case 'set': return _p.ss($, ($): d_out.Value => {
+                                    const option_token = $['option token']
+                                    return _p.decide.state($['selected option status'], ($): d_out.Value => {
+                                        switch ($[0]) {
+                                            case 'known': return _p.ss($, ($): d_out.Value => ['state', {
+                                                'option': option_token.token.value,
+                                                'value': Value($.value, abort)
+                                            }])
+                                            case 'unknown': return _p.ss($, ($) => abort({
+                                                'definition path': definition_path,
+                                                'type': ['state', ['unknown option', null]],
+                                                'range': option_token.range
+                                            }))
 
-                                                    default: return _p.au($[0])
-                                                }
-                                            })
-                                        })
-                                        default: return _p.au($[0])
-                                    }
+                                            default: return _p.au($[0])
+                                        }
+                                    })
                                 })
-                            })
-                            case 'list format error': return _p.ss($, ($) => {
-                                const start_token = $.list['[']
-                                return _p.decide.state($.type, ($) => {
-                                    switch ($[0]) {
-                                        case 'missing option item': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
-                                            'type': ['state', ['missing option item', null]],
-                                            'range': start_token.range
-                                        }))
-                                        case 'option item is not a text': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
-                                            'type': ['state', ['option item is not a text', null]],
-                                            'range': t_astn_parse_tree_to_location.Value($.value)
-                                        }))
-                                        case 'missing value item': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
-                                            'type': ['state', ['missing value item', null]],
-                                            'range': start_token.range
-                                        }))
-                                        case 'too many items': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
-                                            'type': ['state', ['too many items', null]],
-                                            'range': start_token.range
-                                        }))
-                                        default: return _p.au($[0])
-                                    }
-                                })
-                            })
-
-                            default: return _p.au($[0])
-                        }
-                    })])
+                                default: return _p.au($[0])
+                            }
+                        })
+                    })
                     case 'text': return _p.ss($, ($): d_out.Value => ['text', {
                         'value': $.instance.token.value,
                         'delimiter': ['quote', null],

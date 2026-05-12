@@ -90,7 +90,7 @@ export const Value: Value = ($, $p) => {
     ): d_out.Found => ['value', $]
 
 
-    return _p.decide.state($.unmarshalled, ($) => {
+    return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
             case 'incorrect': return _p.ss($, ($) => this_value())
             case 'correct': return _p.ss($, ($) => _p.decide.state($, ($) => {
@@ -202,31 +202,25 @@ export const Value: Value = ($, $p) => {
                         }
                     }))
                     case 'reference': return _p.ss($, ($) => this_value())
-                    case 'state': return _p.ss($, ($): d_out.Found => _p.decide.state($['found value type'], ($) => {
-                        switch ($[0]) {
-                            case 'valid': return _p.ss($, ($): d_out.Found => {
-                                const valid_state = $
-                                return _p.decide.state($['option'], ($) => {
+                    case 'state': return _p.ss($, ($): d_out.Found => {
+                        const valid_state = $
+                        return _p.decide.state($['option status'], ($) => {
+                            switch ($[0]) {
+                                case 'set': return _p.ss($, ($): d_out.Found => _p.decide.state($['selected option status'], ($) => {
                                     switch ($[0]) {
-                                        case 'set': return _p.ss($, ($): d_out.Found => _p.decide.state($.option, ($) => {
-                                            switch ($[0]) {
-                                                case 'known': return _p.ss($, ($) => Value_possibly_found($.value, $p).__decide(
-                                                    ($): d_out.Found => $,
-                                                    (): d_out.Found => ['valid state', valid_state]
-                                                ))
-                                                case 'unknown': return _p.ss($, ($) => ['valid state', valid_state])
-                                                default: return _p.au($[0])
-                                            }
-                                        }))
-                                        case 'missing data': return _p.ss($, ($) => ['valid state', valid_state])
+                                        case 'known': return _p.ss($, ($) => Value_possibly_found($.value, $p).__decide(
+                                            ($): d_out.Found => $,
+                                            (): d_out.Found => ['valid state', valid_state]
+                                        ))
+                                        case 'unknown': return _p.ss($, ($) => ['valid state', valid_state])
                                         default: return _p.au($[0])
                                     }
-                                })
-                            })
-                            case 'list format error': return _p.ss($, ($) => this_value())
-                            default: return _p.au($[0])
-                        }
-                    }))
+                                }))
+                                case 'missing data': return _p.ss($, ($) => ['valid state', valid_state])
+                                default: return _p.au($[0])
+                            }
+                        })
+                    })
                     case 'text': return _p.ss($, ($) => this_value())
                     default: return _p.au($[0])
                 }
