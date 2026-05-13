@@ -12,7 +12,6 @@ export type Symbol = {
 
 export type Value = {
     'type': Value_Type
-    'deprecated': boolean
 }
 
 export type Value_Type =

@@ -126,14 +126,12 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                     'type': ['primitive', {
                                         'kind': ['null', null],
                                     }],
-                                    'deprecated': false,
                                 })
                             ),
                             'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
                             'selection range': $['id value pair'].id.range,
                         })),
                     }],
-                    'deprecated': false,
                 }))
                 case 'group': return _p.ss($, ($) => ({
                     'type': ['composite', {
@@ -151,7 +149,6 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                                     'type': ['primitive', {
                                                         'kind': ['null', null],
                                                     }],
-                                                    'deprecated': false,
                                                 })
                                             ))
                                             case 'no': return _p.ss($, ($) => ({
@@ -174,7 +171,6 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                                 'type': ['primitive', {
                                                     'kind': ['null', null],
                                                 }],
-                                                'deprecated': false,
                                             },
                                             'detail': "property",
                                             'name': "-unknown-",
@@ -187,7 +183,6 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                                 'type': ['primitive', {
                                                     'kind': ['null', null],
                                                 }],
-                                                'deprecated': false,
                                             },
                                             'detail': "property",
                                             'name': $.id,
