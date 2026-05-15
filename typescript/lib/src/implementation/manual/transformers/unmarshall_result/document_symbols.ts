@@ -178,12 +178,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                             'selection range': t_parse_tree_to_location.Value($.item.value),
                                         }))
                                         case 'yes': return _p.ss($, ($): d_out.Symbol => ({
-                                            'value': {
-
-                                                'type': ['primitive', {
-                                                    'kind': ['null', null],
-                                                }],
-                                            },
+                                            'value': Value($.value),
                                             'detail': "property",
                                             'name': $.id,
                                             'range': t_parse_tree_to_location.Value($.value.instance),
