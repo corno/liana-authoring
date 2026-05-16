@@ -9,6 +9,23 @@ import * as d_out from "../../../../interface/to_be_generated/resolve_result"
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_variables from 'pareto-core/dist/_p_variables'
 
+export const Document = (
+    $: d_in.Document,
+    $p: {
+        'definition': d_in_definition.Resolver_Modules.D,
+        'resolver': d_in_definition.Resolver
+    }
+) => ({
+    'value': Value(
+        $.content,
+        {
+            'definition': $p.definition['root value resolver'],
+            'module parameters': _p.dictionary.literal({}),
+            'resolver': $p.resolver
+        }
+    )
+})
+
 
 export const Value = (
     $: d_in.Value,
@@ -22,18 +39,12 @@ export const Value = (
     return {
         'definition': $p.definition,
         'unmarshalled': $,
-        'resolved': _p.decide.state($['unmarshall result'], ($): d_out.Resolved_Value_Type => {
+        'resolve result': _p.decide.state($['unmarshall result'], ($): d_out.Resolve_Result => {
             switch ($[0]) {
-                case 'incorrect': return _p.ss($, ($) => _p.decide.state($, ($) => {
-                    switch ($[0]) {
-                        case 'wrong type': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
-                        case 'list as state format error': return _p.ss($, ($): d_out.Resolved_Value_Type => _p_implement_me("!!!!!!!"))
-                        default: return _p.au($[0])
-                    }
-                }))
-                case 'correct': return _p.ss($, ($) => {
+                case 'error': return _p.ss($, ($) => ['unmarshall error', $])
+                case 'success': return _p.ss($, ($) => {
                     const correct = $
-                    return _p.decide.state($p.definition, ($): d_out.Resolved_Value_Type => {
+                    return ['success', _p.decide.state($p.definition, ($): d_out.Resolved_Value_Type => {
                         switch ($[0]) {
                             case 'component': return _p.ss($, ($) => {
                                 const def = $
@@ -231,28 +242,19 @@ export const Value = (
                                             'unmarshalled': $,
                                             'option': _p.decide.state($['option status'], ($) => {
                                                 switch ($[0]) {
-                                                    case 'set': return _p.ss($, ($) => {
-                                                        const option_token = $['option token']
-                                                        return _p.decide.state($['selected option status'], ($) => {
-                                                            switch ($[0]) {
-                                                                case 'known': return _p.ss($, ($) => _p.optional.literal.set(Value(
-                                                                    $.value,
-                                                                    {
-                                                                        'definition': def.options.__get_entry_deprecated(
-                                                                            option_token.token.value,
-                                                                            {
-                                                                                'no_such_entry': _p_unreachable_code_path("the definition is resolved")
-                                                                            }
-                                                                        ).resolver,
-                                                                        'resolver': $p.resolver,
-                                                                        'module parameters': $p['module parameters'],
-                                                                    }
-                                                                )))
-                                                                case 'unknown': return _p.ss($, ($) => _p.optional.literal.not_set())
-                                                                default: return _p.au($[0])
-                                                            }
-                                                        })
-                                                    })
+                                                    case 'set': return _p.ss($, ($) => _p.optional.literal.set(Value(
+                                                        $.value,
+                                                        {
+                                                            'definition': def.options.__get_entry_deprecated(
+                                                                $['option token'].token.value,
+                                                                {
+                                                                    'no_such_entry': _p_unreachable_code_path("the definition is resolved")
+                                                                }
+                                                            ).resolver,
+                                                            'resolver': $p.resolver,
+                                                            'module parameters': $p['module parameters'],
+                                                        }
+                                                    )))
                                                     case 'missing data': return _p.ss($, ($) => _p.optional.literal.not_set())
                                                     default: return _p.au($[0])
                                                 }
@@ -270,9 +272,8 @@ export const Value = (
                             })])
                             default: return _p.au($[0])
                         }
-                    })
+                    })]
                 })
-                case 'missing': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
 
                 default: return _p.au($[0])
             }

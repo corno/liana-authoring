@@ -11,12 +11,12 @@ export type Value = _pi.Refiner_With_Parameter<d_out.Value, d_function.Error, d_
 export type Document = _pi.Refiner_With_Parameter<d_out.Document, d_function.Error, d_in.List_of_Characters, d_function.Parameters>
 
 //depencencies
-import * as tu_dynamic_unmarshall from "./astn_parse_tree"
+import * as r_from_parse_tree from "./astn_parse_tree"
 import * as r_parse_tree_from_list_of_characters from "astn-core/dist/implementation/manual/refiners/parse_tree/list_of_characters"
 
 export const Document: Document = ($, abort, $p) => {
 
-    return tu_dynamic_unmarshall.Document(
+    return r_from_parse_tree.Document(
         r_parse_tree_from_list_of_characters.Document(
             $,
             ($) => abort($),
@@ -25,8 +25,20 @@ export const Document: Document = ($, abort, $p) => {
             },
         ),
         {
-            'definition': $p.schema.root.entry['root value'],
-            'definition path': $p.schema.root.id,
+            'definition': _p.decide.state($p.schema, ($) => {
+                switch ($[0]) {
+                    case 'constrained': return _p.ss($, ($) => $.entry.signature.module)
+                    case 'unconstrained':return _p.ss($, ($) => $.entry)
+                    default: return _p.au($[0])
+                }
+            }),
+            'definition path': _p.decide.state($p.schema, ($) => {
+                switch ($[0]) {
+                    case 'constrained': return _p.ss($, ($) => $.id)
+                    case 'unconstrained':return _p.ss($, ($) => $.id)
+                    default: return _p.au($[0])
+                }
+            }),
             'property path': _p.list.literal([]),
         }
     )

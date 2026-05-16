@@ -38,72 +38,94 @@ export const Value: Value = ($, $p) => {
     const def = $.definition
     return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'incorrect': return _p.ss($, ($) => _p.decide.state($, ($) => {
+            case 'error': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'wrong type': return _p.ss($, ($) => _p.list.literal([
-                        {
-                            'range': t_astn_parse_tree_to_location.Value(instance),
-                            'type': ['error', ['invalid value type', {
-                                'expected': _p.decide.state(def, ($): d_out.Errors.L.type_.error.invalid_value_type.expected => {
-                                    switch ($[0]) {
-                                        case 'state': return _p.ss($, ($) => _p.list.literal([['state', null]]))
-                                        case 'component': return _p.ss($, ($) => _p_unreachable_code_path("a component cannot be incorrect by itself"))
-                                        case 'dictionary': return _p.ss($, ($) => _p.list.literal([['dictionary', null]]))
-                                        case 'group': return _p.ss($, ($) => _p.list.literal([['group', null]]))
-                                        case 'list': return _p.ss($, ($) => _p.list.literal([['list', null]]))
-                                        case 'nothing': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
-                                        case 'simple': return _p.ss($, ($) => _p.list.literal([['text', null]]))
-                                        case 'optional': return _p.ss($, ($) => _p.list.literal([['optional', null]]))
-                                        case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+                    case 'incorrect': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                        switch ($[0]) {
+                            case 'wrong type': return _p.ss($, ($) => _p.list.literal([
+                                {
+                                    'range': t_astn_parse_tree_to_location.Value(instance),
+                                    'type': ['error', ['invalid value type', {
+                                        'expected': _p.decide.state(def, ($): d_out.Errors.L.type_.error.invalid_value_type.expected => {
                                             switch ($[0]) {
-                                                case 'derived': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
-                                                case 'selected': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                                case 'state': return _p.ss($, ($) => _p.list.literal([['state', null]]))
+                                                case 'component': return _p.ss($, ($) => _p_unreachable_code_path("a component cannot be incorrect by itself"))
+                                                case 'dictionary': return _p.ss($, ($) => _p.list.literal([['dictionary', null]]))
+                                                case 'group': return _p.ss($, ($) => _p.list.literal([['group', null]]))
+                                                case 'list': return _p.ss($, ($) => _p.list.literal([['list', null]]))
+                                                case 'nothing': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
+                                                case 'simple': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                                case 'optional': return _p.ss($, ($) => _p.list.literal([['optional', null]]))
+                                                case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+                                                    switch ($[0]) {
+                                                        case 'derived': return _p.ss($, ($) => _p.list.literal([['nothing', null]]))
+                                                        case 'selected': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                                        default: return _p.au($[0])
+                                                    }
+                                                }))
+                                                case 'text': return _p.ss($, ($) => _p.list.literal([['text', null]]))
                                                 default: return _p.au($[0])
                                             }
-                                        }))
-                                        case 'text': return _p.ss($, ($) => _p.list.literal([['text', null]]))
+                                        })
+                                    }]]
+                                }
+                            ]))
+                            case 'list as state format error': return _p.ss($, ($) => {
+                                const start_token = $.list['[']
+                                return _p.decide.state($.type, ($): d_out.Errors => {
+                                    switch ($[0]) {
+                                        case 'missing option item': return _p.ss($, ($): d_out.Errors => _p.list.literal([
+                                            {
+                                                'range': start_token.range,
+                                                'type': ['error', ['state', ['missing option name', null]]] //FIXME wrong error
+                                            }
+                                        ]))
+                                        case 'option item is not a text': return _p.ss($, ($) => _p.list.literal([
+                                            {
+                                                'range': start_token.range,
+                                                'type': ['error', ['state', ['option name is not a text', null]]] //FIXME wrong error
+                                            }
+                                        ]))
+                                        case 'missing value item': return _p.ss($, ($) => _p.list.literal([
+                                            {
+                                                'range': start_token.range,
+                                                'type': ['error', ['state', ['missing value', null]]] //FIXME wrong error
+                                            }
+                                        ]))
+                                        case 'too many items': return _p.ss($, ($) => _p.list.literal([
+                                            {
+                                                'range': start_token.range,
+                                                'type': ['error', ['state', ['more than 2 items', null]]] //FIXME wrong error
+                                            }
+                                        ]))
                                         default: return _p.au($[0])
                                     }
                                 })
-                            }]]
+                            })
+                            default: return _p.au($[0])
+                        }
+                    }))
+                    case 'missing': return _p.ss($, ($): d_out.Errors => _p.list.literal([
+                        {
+                            'range': t_astn_parse_tree_to_location.Value(instance),
+                            'type': ['error', ['missing value', null]],
+                            // 'type': ['error', ['missing value', null]]
                         }
                     ]))
-                    case 'list as state format error': return _p.ss($, ($) => {
-                        const start_token = $.list['[']
-                        return _p.decide.state($.type, ($): d_out.Errors => {
-                            switch ($[0]) {
-                                case 'missing option item': return _p.ss($, ($): d_out.Errors => _p.list.literal([
-                                    {
-                                        'range': start_token.range,
-                                        'type': ['error', ['state', ['missing option name', null]]] //FIXME wrong error
-                                    }
-                                ]))
-                                case 'option item is not a text': return _p.ss($, ($) => _p.list.literal([
-                                    {
-                                        'range': start_token.range,
-                                        'type': ['error', ['state', ['option name is not a text', null]]] //FIXME wrong error
-                                    }
-                                ]))
-                                case 'missing value item': return _p.ss($, ($) => _p.list.literal([
-                                    {
-                                        'range': start_token.range,
-                                        'type': ['error', ['state', ['missing value', null]]] //FIXME wrong error
-                                    }
-                                ]))
-                                case 'too many items': return _p.ss($, ($) => _p.list.literal([
-                                    {
-                                        'range': start_token.range,
-                                        'type': ['error', ['state', ['more than 2 items', null]]] //FIXME wrong error
-                                    }
-                                ]))
-                                default: return _p.au($[0])
-                            }
-                        })
-                    })
+                    case 'unknown option': return _p.ss($, ($) => _p.list.literal([
+                        {
+                            'range': $['option token'].range,
+                            'type': ['error', ['state', ['unknown option', {
+                                'found': $['option token'].token.value,
+                                'expected': $.definition.options.__d_map(($) => null)
+                            }]]]
+                        }
+                    ]))
+
                     default: return _p.au($[0])
                 }
             }))
-            case 'correct': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Errors => {
+            case 'success': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Errors => {
                 switch ($[0]) {
                     case 'dictionary': return _p.ss($, ($) => {
 
@@ -388,22 +410,8 @@ export const Value: Value = ($, $p) => {
                                                 }
                                             ])
                                             : _p.list.literal([]),
-                                        _p.decide.state($['selected option status'], ($) => {
-                                            switch ($[0]) {
-                                                case 'known': return _p.ss($, ($) => Value($.value, { 'report warnings': is_backticked && $p['report warnings'] }))
-                                                case 'unknown': return _p.ss($, ($) => _p.list.literal([
-                                                    {
-                                                        'range': option_token.range,
-                                                        'type': ['error', ['state', ['unknown option', {
-                                                            'found': option_token.token.value,
-                                                            'expected': sg_def.options.__d_map(($) => null)
-                                                        }]]]
-                                                    }
-                                                ]))
+                                        Value($.value, { 'report warnings': is_backticked && $p['report warnings'] })
 
-                                                default: return _p.au($[0])
-                                            }
-                                        })
                                     ])
                                 })
                                 default: return _p.au($[0])
@@ -424,13 +432,6 @@ export const Value: Value = ($, $p) => {
                     default: return _p.au($[0])
                 }
             }))
-            case 'missing': return _p.ss($, ($): d_out.Errors => _p.list.literal([
-                {
-                    'range': t_astn_parse_tree_to_location.Value(instance),
-                    'type': ['error', ['missing value', null]],
-                    // 'type': ['error', ['missing value', null]]
-                }
-            ]))
             default: return _p.au($[0])
         }
     })

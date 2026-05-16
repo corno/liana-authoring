@@ -11,8 +11,12 @@ export type Document = {
 export type Value = {
     'definition': d_schema.Resolver_Value
     'unmarshalled': d_unmarshall_result.Value
-    'resolved': Resolved_Value_Type //the type is determined by the definition
+    'resolve result': Resolve_Result //the type is determined by the definition
 }
+
+export type Resolve_Result =
+    | ['success', Resolved_Value_Type]
+    | ['unmarshall error', d_unmarshall_result.Unmarshall_Error]
 
 export type Resolved_Value_Type =
     | ['component', Component]

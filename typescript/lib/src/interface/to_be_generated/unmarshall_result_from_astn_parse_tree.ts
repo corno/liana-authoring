@@ -4,7 +4,7 @@ import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/sc
 import * as d_out from "./unmashall_result"
 
 export type Parameters = {
-    'definition': d_in_definition.Value,
+    'definition': d_in_definition.Module,
     'definition path': string
     'property path': d_out.Property_Path
 }

@@ -92,8 +92,8 @@ export const Value: Value = ($, $p) => {
 
     return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'incorrect': return _p.ss($, ($) => this_value())
-            case 'correct': return _p.ss($, ($) => _p.decide.state($, ($) => {
+            case 'error': return _p.ss($, ($) => this_value())
+            case 'success': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
                     case 'simple': return _p.ss($, ($) => this_value())
                     case 'component': return _p.ss($, ($) => Value($.value, $p))
@@ -143,15 +143,15 @@ export const Value: Value = ($, $p) => {
                                                 case 'yes': return _p.ss($, ($) => $.value.__decide(
                                                     ($): d_out.Possibly_Found => _p.optional.literal.set(Value_possibly_found($, $p).__decide(
                                                         ($) => $,
-                                                        (): d_out.Found => ['verbose property', prop]
+                                                        (): d_out.Found => ['property', {'style': ['verbose', prop]}]
                                                     )),
                                                     () => {
-                                                        return _p.optional.literal.set(['verbose property', prop])
+                                                        return _p.optional.literal.set(['property', {'style': ['verbose', prop]}])
                                                     }
                                                 ))
                                                 case 'no': return _p.ss($, ($) => {
 
-                                                    return _p.optional.literal.set(['verbose property', prop])
+                                                    return _p.optional.literal.set(['property', {'style': ['verbose', prop]}])
                                                 })
                                                 default: return _p.au($[0])
                                             }
@@ -174,7 +174,7 @@ export const Value: Value = ($, $p) => {
                                         () => _p.optional.literal.set(_p.decide.state($['definition found'], ($): d_out.Found => {
                                             switch ($[0]) {
                                                 case 'yes': return _p.ss($, ($) => Value($.value, $p))
-                                                case 'no': return _p.ss($, ($) => ['unknown concise property', prop])
+                                                case 'no': return _p.ss($, ($) => ['property', {'style': ['unknown concise', prop]}])
                                                 default: return _p.au($[0])
                                             }
                                         })),
@@ -206,17 +206,11 @@ export const Value: Value = ($, $p) => {
                         const valid_state = $
                         return _p.decide.state($['option status'], ($) => {
                             switch ($[0]) {
-                                case 'set': return _p.ss($, ($): d_out.Found => _p.decide.state($['selected option status'], ($) => {
-                                    switch ($[0]) {
-                                        case 'known': return _p.ss($, ($) => Value_possibly_found($.value, $p).__decide(
-                                            ($): d_out.Found => $,
-                                            (): d_out.Found => ['valid state', valid_state]
-                                        ))
-                                        case 'unknown': return _p.ss($, ($) => ['valid state', valid_state])
-                                        default: return _p.au($[0])
-                                    }
-                                }))
-                                case 'missing data': return _p.ss($, ($) => ['valid state', valid_state])
+                                case 'set': return _p.ss($, ($): d_out.Found => Value_possibly_found($.value, $p).__decide(
+                                    ($): d_out.Found => $,
+                                    (): d_out.Found => ['state', valid_state]
+                                ))
+                                case 'missing data': return _p.ss($, ($) => ['state', valid_state])
                                 default: return _p.au($[0])
                             }
                         })
@@ -225,7 +219,6 @@ export const Value: Value = ($, $p) => {
                     default: return _p.au($[0])
                 }
             }))
-            case 'missing': return _p.ss($, ($) => this_value())
             default: return _p.au($[0])
         }
     })

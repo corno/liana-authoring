@@ -37,7 +37,11 @@ export type Value = {
 }
 
 export type Value_Unmarshall_Result =
-    | ['correct', Unmarshalled_Value]
+    | ['success', Unmarshalled_Value]
+    | ['error', Unmarshall_Error
+    ]
+
+export type Unmarshall_Error =
     | ['incorrect',
         | ['wrong type', null]
         | ['list as state format error', {
@@ -52,6 +56,10 @@ export type Value_Unmarshall_Result =
         }]
     ]
     | ['missing', null]
+    | ['unknown option', {
+        'option token': d_astn_parse_tree.Text
+        'definition': d_schema.Value.state
+    }]
 
 export type Unmarshalled_Value =
     | ['component', Component]
@@ -73,7 +81,7 @@ export type Component = {
 export type Dictionary = {
     'definition': d_schema.Value.dictionary
     'instance': d_astn_parse_tree.Value.type_.concrete.dictionary
-    'entries': _pi.List<Entry_Data>
+    'entries': _pi.List<Entry>
 }
 
 export type Group = {
@@ -174,19 +182,15 @@ export type State = {
     'parent range stack': Range_Stack
 }
 
-export type Selected_Option_Status =
-    | ['known', {
+export type State_Option =
+    | ['set', State_Set]
+    | ['missing data', d_astn_parse_tree.Structural_Token]
+
+export type State_Set = {
+        'option token': d_astn_parse_tree.Text
         'definition': d_schema.Value.state.options.D
         'value': Value
-    }]
-    | ['unknown', null]
-
-export type State_Option =
-    | ['set', {
-        'option token': d_astn_parse_tree.Text
-        'selected option status': Selected_Option_Status
-    }]
-    | ['missing data', d_astn_parse_tree.Structural_Token]
+    }
 
 export type Nothing = {
     'definition': d_schema.Value.nothing
@@ -206,7 +210,7 @@ export type Simple = {
     'correct string type': boolean
 }
 
-export type Entry_Data = {
+export type Entry = {
     'parent range stack': Range_Stack
     'property path': Property_Path
     'definition': d_schema.Dictionary

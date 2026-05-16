@@ -50,8 +50,19 @@ export const Value: Value = ($, $p): d_out.Value => {
     const instance = $['instance']
     return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'incorrect': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
-            case 'correct': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
+            case 'error': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                switch ($[0]) {
+                    case 'incorrect': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
+                    case 'missing': return _p.ss($, ($): d_out.Value => temp_value(['missing', {
+                        '#': {
+                            'comments': _p.list.literal([])
+                        }
+                    }]))
+                    case 'unknown option': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
+                    default: return _p.au($[0])
+                }
+            }))
+            case 'success': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
                 switch ($[0]) {
                     case 'component': return _p.ss($, ($): d_out.Value => Value($.value, $p))
                     case 'dictionary': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
@@ -276,26 +287,17 @@ export const Value: Value = ($, $p): d_out.Value => {
                     }]))
                     case 'state': return _p.ss($, ($) => _p.decide.state($['option status'], ($): d_out.Value => {
                         switch ($[0]) {
-                            case 'set': return _p.ss($, ($): d_out.Value => {
-                                const token = $['option token']
-                                return _p.decide.state($['selected option status'], ($) => {
-                                    switch ($[0]) {
-                                        case 'known': return _p.ss($, ($) => temp_value(['concrete', {
-                                            'type': ['state', {
-                                                '|': {
-                                                    'comments': _p.list.literal([])
-                                                },
-                                                'status': ['set', {
-                                                    'option': token.token.value,
-                                                    'value': Value($.value, $p)
-                                                }]
-                                            }]
-                                        }]))
-                                        case 'unknown': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
-                                        default: return _p.au($[0])
-                                    }
-                                })
-                            })
+                            case 'set': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
+                                'type': ['state', {
+                                    '|': {
+                                        'comments': _p.list.literal([])
+                                    },
+                                    'status': ['set', {
+                                        'option': $['option token'].token.value,
+                                        'value': Value($.value, $p)
+                                    }]
+                                }]
+                            }]))
                             case 'missing data': return _p.ss($, ($) => temp_value(['concrete', {
                                 'type': ['state', {
                                     '|': {
@@ -323,11 +325,6 @@ export const Value: Value = ($, $p): d_out.Value => {
                     default: return _p.au($[0])
                 }
             }))
-            case 'missing': return _p.ss($, ($): d_out.Value => temp_value(['missing', {
-                '#': {
-                    'comments': _p.list.literal([])
-                }
-            }]))
             default: return _p.au($[0])
         }
     })

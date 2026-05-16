@@ -60,31 +60,31 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
             ($) => do_value($),
             () => _p.optional.literal.not_set()
         ))
-        case 'verbose property': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
+        case 'property': return _p.ss($, ($) => _p.decide.state($.style, ($) => {
             switch ($[0]) {
-                case 'yes': return _p.ss($, ($) => $.value.__decide(
-                    ($) => do_value($),
-                    () => _p.optional.literal.not_set()
-                ))
-                case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
+                case 'verbose': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
+                    switch ($[0]) {
+                        case 'yes': return _p.ss($, ($) => $.value.__decide(
+                            ($) => do_value($),
+                            () => _p.optional.literal.not_set()
+                        ))
+                        case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
+                        default: return _p.au($[0])
+                    }
+                }))
+                case 'unknown concise': return _p.ss($, ($) => {
+                    return _p.optional.literal.not_set()
+                })
+
                 default: return _p.au($[0])
             }
         }))
-        case 'unknown concise property': return _p.ss($, ($) => {
-            return _p.optional.literal.not_set()
-        })
-        case 'valid state': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
+        case 'state': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
             const definition = $.definition
 
             return _p.decide.state($['option status'], ($) => {
                 switch ($[0]) {
-                    case 'set': return _p.ss($, ($) => _p.decide.state($['selected option status'], ($) => {
-                        switch ($[0]) {
-                            case 'known': return _p.ss($, ($) => do_value($.value))
-                            case 'unknown':return _p.ss($, ($) => _p.optional.literal.not_set())
-                            default: return _p.au($[0])
-                        }
-                    }))
+                    case 'set': return _p.ss($, ($) => do_value($.value))
                     case 'missing data': return _p.ss($, ($) => _p.optional.literal.not_set())
                     default: return _p.au($[0])
                 }

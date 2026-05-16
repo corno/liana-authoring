@@ -43,15 +43,21 @@ export const Document: Document = ($, $p) => {
                     'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
                     'parent': _p.optional.literal.set($['parent range stack'])
                 }))
-                case 'verbose property': return _p.ss($, ($) => ({
-                    'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
-                    'parent': _p.optional.literal.set($['parent range stack'])
+                case 'property': return _p.ss($, ($) => _p.decide.state($.style, ($) => {
+                    switch ($[0]) {
+                        case 'verbose': return _p.ss($, ($) => ({
+                            'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
+                            'parent': _p.optional.literal.set($['parent range stack'])
+                        }))
+                        case 'unknown concise': return _p.ss($, ($) => ({
+                            'range': t_parse_tree_to_location.Value($.item.value),
+                            'parent': _p.optional.literal.set($['parent range stack'])
+                        }))
+
+                        default: return _p.au($[0])
+                    }
                 }))
-                case 'unknown concise property': return _p.ss($, ($) => ({
-                    'range': t_parse_tree_to_location.Value($.item.value),
-                    'parent': _p.optional.literal.set($['parent range stack'])
-                }))
-                case 'valid state': return _p.ss($, ($) => ({
+                case 'state': return _p.ss($, ($) => ({
                     'range': _p.decide.state($.instance, ($) => {
                         switch ($[0]) {
                             case 'state': return _p.ss($, ($) => t_parse_tree_to_location.State($))

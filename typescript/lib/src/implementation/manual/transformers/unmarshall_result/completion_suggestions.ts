@@ -201,9 +201,8 @@ export const Found: Found = ($, $p) => {
 
         })
         case 'entry': return _p.ss($, ($) => _p.optional.literal.not_set())
-        case 'verbose property': return _p.ss($, ($) => _p.optional.literal.not_set())
-        case 'unknown concise property': return _p.ss($, ($) => _p.optional.literal.not_set())
-        case 'valid state': return _p.ss($, ($): d_out.Completion_Suggestions => {
+        case 'property': return _p.ss($, ($) => _p.optional.literal.not_set())
+        case 'state': return _p.ss($, ($): d_out.Completion_Suggestions => {
             const definition = $.definition
             return _p.decide.state($.instance, ($): d_out.Completion_Suggestions => {
                 switch ($[0]) {

@@ -56,22 +56,30 @@ export const Document: Document = ($, $p) => {
                         ],
                         _p.decide.state($['unmarshall result'], ($) => {
                             switch ($[0]) {
-                                case 'incorrect': return _p.ss($, ($) => _p.decide.state(def, ($) => {
+                                case 'error': return _p.ss($, ($) => _p.decide.state($, ($) => {
                                     switch ($[0]) {
-                                        case 'component': return _p.ss($, ($) => ["component"])
-                                        case 'dictionary': return _p.ss($, ($) => ["dictionary"])
-                                        case 'group': return _p.ss($, ($) => ["group"])
-                                        case 'list': return _p.ss($, ($) => ["list"])
-                                        case 'nothing': return _p.ss($, ($) => ["nothing"])
-                                        case 'simple': return _p.ss($, ($) => ["simple"])
-                                        case 'optional': return _p.ss($, ($) => ["optional"])
-                                        case 'reference': return _p.ss($, ($) => ["reference"])
-                                        case 'state': return _p.ss($, ($) => ["state"])
-                                        case 'text': return _p.ss($, ($) => ["text"])
+                                        case 'incorrect': return _p.ss($, ($) => _p.decide.state(def, ($) => {
+                                            switch ($[0]) {
+                                                case 'component': return _p.ss($, ($) => ["component"])
+                                                case 'dictionary': return _p.ss($, ($) => ["dictionary"])
+                                                case 'group': return _p.ss($, ($) => ["group"])
+                                                case 'list': return _p.ss($, ($) => ["list"])
+                                                case 'nothing': return _p.ss($, ($) => ["nothing"])
+                                                case 'simple': return _p.ss($, ($) => ["simple"])
+                                                case 'optional': return _p.ss($, ($) => ["optional"])
+                                                case 'reference': return _p.ss($, ($) => ["reference"])
+                                                case 'state': return _p.ss($, ($) => ["state"])
+                                                case 'text': return _p.ss($, ($) => ["text"])
+                                                default: return _p.au($[0])
+                                            }
+                                        }))
+                                        case 'missing': return _p.ss($, ($) => ["use ctrl+d to get suggestions"])
+
+                                        case 'unknown option': return _p.ss($, ($) => ["unknown option"])
                                         default: return _p.au($[0])
                                     }
                                 }))
-                                case 'correct': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                                case 'success': return _p.ss($, ($) => _p.decide.state($, ($) => {
                                     switch ($[0]) {
                                         case 'simple': return _p.ss($, ($) => ["simple value"])
                                         case 'component': return _p.ss($, ($) => ["component"])
@@ -92,7 +100,6 @@ export const Document: Document = ($, $p) => {
                                         default: return _p.au($[0])
                                     }
                                 }))
-                                case 'missing': return _p.ss($, ($) => ["use ctrl+d to get suggestions"])
                                 default: return _p.au($[0])
                             }
                         }),
@@ -101,39 +108,39 @@ export const Document: Document = ($, $p) => {
                 case 'entry': return _p.ss($, ($) => _p.list.literal([
                     Property_Path($['property path']),
                 ]))
-                case 'verbose property': return _p.ss($, ($) => _p.list.literal([
-                    $['id value pair'].id.token.value,
-                    _p.decide.state($['definition found'], ($) => {
-                        switch ($[0]) {
-                            case 'yes': return _p.ss($, ($) => $.definition.description.__decide(
-                                ($) => $,
-                                () => ""
-                            ))
-                            case 'no': return _p.ss($, ($) => "")
-                            default: return _p.au($[0])
-                        }
-                    }),
-                ]))
-                case 'unknown concise property': return _p.ss($, ($) => _p.list.literal([
-                    "unknown property",
-                ]))
-                case 'valid state': return _p.ss($, ($) => {
+                case 'property': return _p.ss($, ($) => _p.decide.state($.style, ($) => {
+                    switch ($[0]) {
+                        case 'verbose': return _p.ss($, ($) => _p.list.literal([
+                            $['id value pair'].id.token.value,
+                            _p.decide.state($['definition found'], ($) => {
+                                switch ($[0]) {
+                                    case 'yes': return _p.ss($, ($) => $.definition.description.__decide(
+                                        ($) => $,
+                                        () => ""
+                                    ))
+                                    case 'no': return _p.ss($, ($) => "")
+                                    default: return _p.au($[0])
+                                }
+                            }),
+                        ]))
+                        case 'unknown concise': return _p.ss($, ($) => _p.list.literal([
+                            "unknown property",
+                        ]))
+
+                        default: return _p.au($[0])
+                    }
+                }))
+                case 'state': return _p.ss($, ($) => {
                     const def = $.definition
                     const prop_path = Property_Path($['property path'])
                     return _p.decide.state($['option status'], ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => _p.list.literal([
                                 prop_path,
-                                _p.decide.state($['selected option status'], ($): string => {
-                                    switch ($[0]) {
-                                        case 'known': return _p.ss($, ($) => $.definition.description.__decide(
-                                            ($) => $,
-                                            () => "no description"
-                                        ))
-                                        case 'unknown': return _p.ss($, ($) => "unknown option")
-                                        default: return _p.au($[0])
-                                    }
-                                }),
+                                $.definition.description.__decide(
+                                    ($) => $,
+                                    () => "no description"
+                                ),
                             ]))
                             case 'missing data': return _p.ss($, ($) => _p.list.literal([
                                 "property: " + prop_path,

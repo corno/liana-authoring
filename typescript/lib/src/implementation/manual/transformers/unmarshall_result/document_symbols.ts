@@ -24,19 +24,13 @@ export const Document: Document = ($) => Value($.content)
 
 export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): d_out.Value => {
     switch ($[0]) {
-        case 'incorrect': return _p.ss($, ($) => ({
+        case 'error': return _p.ss($, ($) => ({
             'type': ['primitive', {
                 'kind': ['null', null],
             }],
             'deprecated': false,
         }))
-        case 'missing': return _p.ss($, ($) => ({
-            'type': ['primitive', {
-                'kind': ['null', null],
-            }],
-            'deprecated': true,
-        }))
-        case 'correct': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
+        case 'success': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
             switch ($[0]) {
                 case 'nothing': return _p.ss($, ($) => ({
                     'type': ['primitive', {
@@ -92,18 +86,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                 }))
                 case 'state': return _p.ss($, ($) => _p.decide.state($['option status'], ($): d_out.Value => {
                     switch ($[0]) {
-                        case 'set': return _p.ss($, ($) => _p.decide.state($['selected option status'], ($) => {
-                            switch ($[0]) {
-                                case 'known': return _p.ss($, ($) => Value($.value))
-                                case 'unknown': return _p.ss($, ($) => ({
-                                    'type': ['primitive', {
-                                        'kind': ['null', null],
-                                    }],
-                                    'deprecated': true,
-                                }))
-                                default: return _p.au($[0])
-                            }
-                        }))
+                        case 'set': return _p.ss($, ($) => Value($.value))
                         case 'missing data': return _p.ss($, ($) => ({
                             'type': ['primitive', {
                                 'kind': ['null', null],
@@ -223,159 +206,3 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
         default: return _p.au($[0])
     }
 })
-
-
-// export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($) => {
-//     switch ($[0]) {
-//         case 'incorrect': return _p.ss($, ($) => _p.list.literal([]))
-//         case 'missing': return _p.ss($, ($) => _p.list.literal([]))
-//         case 'correct': return _p.ss($, ($) => _p.decide.state($, ($) => {
-//             switch ($[0]) {
-//                 case 'component': return _p.ss($, ($) => Value($.value))
-//                 case 'dictionary': return _p.ss($, ($) => $.entries.__l_map(($): d_out.Symbol => ({
-//                     'name': $['id value pair'].id.token.value,
-//                     'detail': "dictionary entry",
-//                     'value': $.value.__decide(
-//                         ($) => Value($),
-//                         () => ({
-//                             'kind': ['null', null],
-//                             'deprecated': false,
-//                         })
-//                     ),
-//                     'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
-//                     'selection range': $['id value pair'].id.range,
-//                     'children': $.value.__decide(
-//                         ($) => Value($),
-//                         () => _p.list.literal([])
-//                     ),
-//                 })))
-//                 case 'group': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
-//                     switch ($[0]) {
-//                         case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => ({
-//                             'name': $['id value pair'].id.token.value,
-//                             'detail': "property",
-//                             'value': _p.decide.state($['definition found'], ($) => {
-//                                 switch ($[0]) {
-//                                     case 'yes': return _p.ss($, ($) => $.value.__decide(
-//                                         ($) => Value($),
-//                                         () => ({
-//                                             'kind': ['null', null],
-//                                             'deprecated': false,
-//                                         })
-//                                     ))
-//                                     case 'no': return _p.ss($, ($) => ({
-//                                         'kind': ['null', null],
-//                                         'deprecated': false,
-//                                     }))
-//                                     default: return _p.au($[0])
-//                                 }
-//                             }),
-//                             'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
-//                             'selection range': $['id value pair'].id.range,
-//                             'children': _p.decide.state($['definition found'], ($) => {
-//                                 switch ($[0]) {
-//                                     case 'yes': return _p.ss($, ($) => $.value.__decide(
-//                                         ($) => Value($),
-//                                         () => _p.list.literal([])
-//                                     ))
-//                                     case 'no': return _p.ss($, ($) => _p.list.literal([]))
-//                                     default: return _p.au($[0])
-//                                 }
-//                             }),
-//                         })))
-//                         case 'concise': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => {
-//                             const item = $.item
-//                             return _p.decide.state($['definition found'], ($) => {
-//                                 switch ($[0]) {
-//                                     case 'no': return _p.ss($, ($) => ({
-//                                         'name': "-unknown-",
-//                                         'detail': "property",
-//                                         'value': {
-//                                             'kind': ['null', null],
-//                                             'deprecated': false,
-//                                         },
-//                                         'range': t_parse_tree_to_location.Value($),
-//                                         'selection range': $['id value pair'].id.range,
-//                                         'children': _p.decide.state($['definition found'], ($) => {
-//                                             switch ($[0]) {
-//                                                 case 'yes': return _p.ss($, ($) => $.value.__decide(
-//                                                     ($) => Value($),
-//                                                     () => _p.list.literal([])
-//                                                 ))
-//                                                 case 'no': return _p.ss($, ($) => _p.list.literal([]))
-//                                                 default: return _p.au($[0])
-//                                             }
-//                                         }),
-
-//                                     }))
-//                                     case 'yes': return _p.ss($, ($) => ({
-//                                         'name': $['id value pair'].id.token.value,
-//                                         'detail': "property",
-//                                         'value': _p.decide.state($['definition found'], ($) => {
-//                                             switch ($[0]) {
-//                                                 case 'yes': return _p.ss($, ($) => $.value.__decide(
-//                                                     ($) => Value($),
-//                                                     () => ({
-//                                                         'kind': ['null', null],
-//                                                         'deprecated': false,
-//                                                     })
-//                                                 ))
-//                                                 case 'no': return _p.ss($, ($) => ({
-//                                                     'kind': ['null', null],
-//                                                     'deprecated': false,
-//                                                 }))
-//                                                 default: return _p.au($[0])
-//                                             }
-//                                         }),
-//                                         'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
-//                                         'selection range': $['id value pair'].id.range,
-//                                         'children': _p.decide.state($['definition found'], ($) => {
-//                                             switch ($[0]) {
-//                                                 case 'yes': return _p.ss($, ($) => $.value.__decide(
-//                                                     ($) => Value($),
-//                                                     () => _p.list.literal([])
-//                                                 ))
-//                                                 case 'no': return _p.ss($, ($) => _p.list.literal([]))
-//                                                 default: return _p.au($[0])
-//                                             }
-//                                         }),
-
-//                                     }))
-//                                     default: return _p.au($[0])
-//                                 }
-//                             })
-//                         }))
-//                         default: return _p.au($[0])
-//                     }
-//                 }))
-//                 case 'list': return _p.ss($, ($) => $.items.__l_map(($): d_out.Symbol => xxxx))
-//                 case 'nothing': return _p.ss($, ($) => _p.list.literal([]))
-//                 case 'simple': return _p.ss($, ($) => _p.list.literal([]))
-//                 case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
-//                     switch ($[0]) {
-//                         case 'set': return _p.ss($, ($) => Value($['child value']))
-//                         case 'not set': return _p.ss($, ($) => _p.list.literal([]))
-//                         default: return _p.au($[0])
-//                     }
-//                 }))
-//                 case 'reference': return _p.ss($, ($) => _p.list.literal([]))
-//                 case 'state': return _p.ss($, ($) => _p.decide.state($['option status'], ($) => {
-//                     switch ($[0]) {
-//                         case 'set': return _p.ss($, ($) => _p.decide.state($['selected option status'], ($) => {
-//                             switch ($[0]) {
-//                                 case 'known': return _p.ss($, ($) => Value($.value))
-//                                 case 'unknown': return _p.ss($, ($) => _p.list.literal([]))
-//                                 default: return _p.au($[0])
-//                             }
-//                         }))
-//                         case 'missing data': return _p.ss($, ($) => _p.list.literal([]))
-//                         default: return _p.au($[0])
-//                     }
-//                 }))
-//                 case 'text': return _p.ss($, ($) => _p.list.literal([]))
-//                 default: return _p.au($[0])
-//             }
-//         }))
-//         default: return _p.au($[0])
-//     }
-// })
