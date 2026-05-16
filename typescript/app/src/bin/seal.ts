@@ -12,6 +12,7 @@ _pn.run_main_command(
         },
         {
             'read file': $r.queries['read file'],
+            'stat': $r.queries['stat possible node']
         },
     ),
 )

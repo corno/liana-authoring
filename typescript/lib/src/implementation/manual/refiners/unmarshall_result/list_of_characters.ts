@@ -25,20 +25,7 @@ export const Document: Document = ($, abort, $p) => {
             },
         ),
         {
-            'definition': _p.decide.state($p.schema, ($) => {
-                switch ($[0]) {
-                    case 'constrained': return _p.ss($, ($) => $.entry.signature.module)
-                    case 'unconstrained':return _p.ss($, ($) => $.entry)
-                    default: return _p.au($[0])
-                }
-            }),
-            'definition path': _p.decide.state($p.schema, ($) => {
-                switch ($[0]) {
-                    case 'constrained': return _p.ss($, ($) => $.id)
-                    case 'unconstrained':return _p.ss($, ($) => $.id)
-                    default: return _p.au($[0])
-                }
-            }),
+            'definition': $p.module,
             'property path': _p.list.literal([]),
         }
     )

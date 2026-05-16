@@ -32,7 +32,8 @@ export const $$: signatures.commands.transform_file = _p.command_procedure(($p, 
                 ($r) => [
                     _p.query(
                         q_load_file({
-                            'read file': $qr['read file']
+                            'read file': $qr['read file'],
+                            'stat': $qr['stat'],
                         })(
                             {
                                 'file path': $r.in,
@@ -45,13 +46,22 @@ export const $$: signatures.commands.transform_file = _p.command_procedure(($p, 
                                 )
                             ])]
                         ),
-                        ($, abort) => r_astn_sealed_target_from_unmarshall_result.Document($, ($) => abort(['processing', sh.ph.composed([
-                            sh.ph.literal("FIX location: "),
-                            t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
-                                $,
-                            )
-                        ])
-                        ])),
+                        ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
+                            _p.decide.state($, ($) => {
+                                switch ($[0]) {
+                                    case 'unconstrained': return _p.ss($, ($) => $.content)
+                                    case 'constrained':return _p.ss($, ($) => $.content.unmarshalled)
+                                    default: return _p.au($[0])
+                                }
+                            }),
+                            ($) => abort(['processing', sh.ph.composed([
+                                sh.ph.literal("FIX location: "),
+                                t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
+                                    $,
+                                )
+                            ])
+                            ])
+                        ),
                         ($) => [
 
                             $cr['write file'].execute(

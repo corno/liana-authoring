@@ -25,10 +25,12 @@ export namespace queries {
             'get schema path': resources.queries.get_schema_path
         }>
 
-    export type get_unmarshalled_file = _pi.Query_Function<
-        resources.queries.get_unmarshalled_file,
+    export type load_unmarshalled_file = _pi.Query_Function<
+        resources.queries.load_unmarshalled_file,
         {
             'read file': resources_pareto.queries.read_file
+            'stat': resources_pareto.queries.stat_possible_node
+
         }>
 
 }

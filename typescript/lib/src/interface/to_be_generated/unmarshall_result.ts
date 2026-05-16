@@ -31,7 +31,6 @@ export type Value = {
     'definition': d_schema.Value
     'instance': d_astn_parse_tree.Value
     'optional parent range stack': _pi.Optional_Value<Range_Stack>
-    'definition path x': string
     'property path': Property_Path
     'unmarshall result': Value_Unmarshall_Result //the type is determined by the definition
 }

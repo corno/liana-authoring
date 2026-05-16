@@ -25,7 +25,6 @@ export type Value = _pi.Refiner_Without_Error_With_Parameter<
     d_in.Value,
     {
         'definition': d_in_definition.Value
-        'definition path': string
         'property path': d_out.Property_Path
         'parent range stack': _pi.Optional_Value<d_out.Range_Stack>
     }
@@ -37,7 +36,6 @@ export const Document: Document = ($, $p) => ({
         $.content,
         {
             'definition': $p.definition['root value'],
-            'definition path': $p['definition path'],
             'property path': $p['property path'],
             'parent range stack': _p.optional.literal.not_set()
         }
@@ -58,7 +56,6 @@ export const Value: Value = ($, $p) => {
                 const concrete_value = $
                 return {
                     'definition': $p.definition,
-                    'definition path x': $p['definition path'],
                     'property path': $p['property path'],
                     'instance': value,
                     'unmarshall result': _p_create_refinement_context<d_out.Unmarshalled_Value, d_out.Value_Unmarshall_Error>(
@@ -74,14 +71,6 @@ export const Value: Value = ($, $p) => {
                                                     case 'external': return _p.ss($, ($) => $.module['l entry']['root value'])
                                                     case 'internal acyclic': return _p.ss($, ($) => $['l entry']['root value'])
                                                     case 'internal': return _p.ss($, ($) => $['l entry'].get_circular_dependent()['root value'])
-                                                    default: return _p.au($[0])
-                                                }
-                                            }),
-                                            'definition path': _p.decide.state($.type, ($) => {
-                                                switch ($[0]) {
-                                                    case 'external': return _p.ss($, ($) => `${$.import['l id']}:${$.module['l id']}`)
-                                                    case 'internal acyclic': return _p.ss($, ($) => $['l id'])
-                                                    case 'internal': return _p.ss($, ($) => $['l id'])
                                                     default: return _p.au($[0])
                                                 }
                                             }),
@@ -110,7 +99,6 @@ export const Value: Value = ($, $p) => {
                                                                     $,
                                                                     {
                                                                         'definition': prop_def,
-                                                                        'definition path': `${$p['definition path']}.D`,
                                                                         'property path': _p.list.literal([]),
                                                                         'parent range stack': _p.optional.literal.set({
                                                                             'range': t_parse_tree_to_full_location.ID_Value_Pair(entry),
@@ -188,7 +176,6 @@ export const Value: Value = ($, $p) => {
                                                                         instance.value,
                                                                         {
                                                                             'definition': $.definition.value,
-                                                                            'definition path': `${$p['definition path']}.${$.id}`,
                                                                             'property path': _p.list.nested_literal_old([
                                                                                 $p['property path'],
                                                                                 [
@@ -229,7 +216,6 @@ export const Value: Value = ($, $p) => {
                                                                                 $,
                                                                                 {
                                                                                     'definition': prop_def.value,
-                                                                                    'definition path': `${$p['definition path']}.${id_value_pair.id.token.value}`,
                                                                                     'property path': _p.list.nested_literal_old([
                                                                                         $p['property path'],
                                                                                         [
@@ -378,7 +364,6 @@ export const Value: Value = ($, $p) => {
                                                         $.value,
                                                         {
                                                             'definition': def.value,
-                                                            'definition path': $p['definition path'] + ".L",
                                                             'property path': _p.list.literal([]),
                                                             'parent range stack': optional_value_range_stack,
                                                         }
@@ -471,7 +456,6 @@ export const Value: Value = ($, $p) => {
                                                                         item_value.value,
                                                                         {
                                                                             'definition': def,
-                                                                            'definition path': `${$p['definition path']}.O`,
                                                                             'property path': _p.list.nested_literal_old([
                                                                                 $p['property path'],
                                                                                 [
@@ -500,7 +484,6 @@ export const Value: Value = ($, $p) => {
                                                                 $.value,
                                                                 {
                                                                     'definition': def,
-                                                                    'definition path': `${$p['definition path']}.O`,
                                                                     'property path': _p.list.nested_literal_old([
                                                                         $p['property path'],
                                                                         [
@@ -617,7 +600,6 @@ export const Value: Value = ($, $p) => {
                                                                                                             raw_value.value,
                                                                                                             {
                                                                                                                 'definition': option_def.value,
-                                                                                                                'definition path': `${$p['definition path']}.${option_name}`,
                                                                                                                 'property path': _p.list.literal([]),
                                                                                                                 'parent range stack': optional_value_range_stack,
                                                                                                             }
@@ -690,7 +672,6 @@ export const Value: Value = ($, $p) => {
                                                                             value,
                                                                             {
                                                                                 'definition': $.value,
-                                                                                'definition path': `${$p['definition path']}.${option_name}`,
                                                                                 'property path': _p.list.nested_literal_old([
                                                                                     $p['property path'],
                                                                                     [
@@ -746,7 +727,6 @@ export const Value: Value = ($, $p) => {
             case 'missing': return _p.ss($, ($): d_out.Value => {
                 return {
                     'definition': $p.definition,
-                    'definition path x': $p['definition path'],
                     'property path': $p['property path'],
                     'instance': value,
                     'unmarshall result': ['error', ['missing', null]],

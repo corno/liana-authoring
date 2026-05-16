@@ -1,7 +1,6 @@
 import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
 export type Error = {
-    'definition path': string
     'type': Error_Type
     'range': d_location.Range
 }

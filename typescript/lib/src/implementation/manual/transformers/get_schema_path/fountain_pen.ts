@@ -2,26 +2,25 @@ import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/get_unmarshalled_file"
+import * as d_in from "../../../../interface/to_be_generated/get_schema_path"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
 import * as d_function_loc from "astn-core/dist/interface/to_be_generated/location_to_fountain_pen"
+
+//dependencies
+import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
+import * as t_stat_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/stat_possible_node/fountain_pen"
 
 export namespace signatures {
     export type Error = _pi.Transformer<d_in.Error, d_out.Phrase>
 }
 
-//dependencies
-import * as t_read_file_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
-import * as t_deserialize_to_fp from "../deserialize/fountain_pen"
-
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-
 export const Error: signatures.Error = ($) => _p.decide.state($, ($) => {
     switch ($[0]) {
-        case 'deserialize': return _p.ss($, ($) => t_deserialize_to_fp.Error($))
-        case 'read file': return _p.ss($, ($) => t_read_file_to_fountain_pen.Error($))
+        case 'not found': return _p.ss($, ($) => sh.ph.literal("schema not found"))
+        case 'stat error': return _p.ss($, ($) => t_stat_to_fountain_pen.Error($))
         default: return _p.au($[0])
     }
 })

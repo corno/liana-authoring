@@ -24,12 +24,12 @@ export type Document = _pi.Refiner_With_Parameter<
 >
 
 export const Document: Document = ($, abort, $p) => {
-    return r_sealed_target_from_unmarshall_result.Document(
+    return r_sealed_target_from_unmarshall_result.Value(
         r_unmarshall_result_from_list_of_characters.Document(
             $,
             ($) => abort(['unmarshall', $]),
             $p.unmarshall
-        ),
+        ).content,
         ($) => abort(['seal', $]
         )
     )

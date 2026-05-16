@@ -36,9 +36,6 @@ export const Error: _pi.Transformer<d_in.Error, d_out.Phrase> = (
     $,
 ) => {
     return sh.ph.composed([
-        sh.ph.literal(`(`),
-        sh.ph.literal($['definition path']),
-        sh.ph.literal(") > "),
         _p.decide.state($.type, ($) => {
             switch ($[0]) {
                 case 'boolean': return _p.ss($, ($) => _p.decide.state($, ($) => {

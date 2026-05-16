@@ -22,7 +22,7 @@ export const Error: _pi.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
 				'type': ['deserialize', null]
 			}))
 			case 'schema': return _p.ss($, ($) => t_get_schema.Error($))
-			case 'deserialize': return _p.ss($, ($) => ({
+			case 'deserialize parse tree': return _p.ss($, ($) => ({
 				'severity': ['error', null],
 				'message': t_fp_to_text.Phrase(
 					t_deserialize_to_fp.Error($),

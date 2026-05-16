@@ -5,6 +5,5 @@ import * as d_out from "./unmarshall_result"
 
 export type Parameters = {
     'definition': d_in_definition.Module,
-    'definition path': string
     'property path': d_out.Property_Path
 }

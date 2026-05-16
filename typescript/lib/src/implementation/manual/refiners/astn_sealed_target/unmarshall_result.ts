@@ -13,7 +13,7 @@ import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_variables from 'pareto-core/dist/_p_variables'
 
 //signatures
-export type Document = _pi.Refiner<d_out.Document, d_function.Error, d_in.Document>
+// export type Document = _pi.Refiner<d_out.Document, d_function.Error, d_in.Document>
 export type Value = _pi.Refiner<d_out.Value, d_function.Error, d_in.Value>
 
 export const Found = ($: d_in_astn_parse_tree.Value): d_function.Found => {
@@ -41,12 +41,11 @@ export const Found = ($: d_in_astn_parse_tree.Value): d_function.Found => {
 }
 
 //implementations
-export const Document: Document = ($, abort) => {
-    return Value($.content, abort)
-}
+// export const Document: Document = ($, abort) => {
+//     return Value($.content, abort)
+// }
 
 export const Value: Value = ($, abort) => {
-    const definition_path = $['definition path x']
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
@@ -55,7 +54,6 @@ export const Value: Value = ($, abort) => {
                     case 'incorrect': return _p.ss($, ($) => _p.decide.state($, ($) => {
                         switch ($[0]) {
                             case 'wrong type': return _p.ss($, ($) => abort({
-                                'definition path': definition_path,
                                 'type': ['number', ['wrong type', null]], //FIXME!!!
                                 'range': start_token_range
                             }))
@@ -64,22 +62,18 @@ export const Value: Value = ($, abort) => {
                                 return _p.decide.state($.type, ($) => {
                                     switch ($[0]) {
                                         case 'missing option item': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
                                             'type': ['state', ['missing option item', null]],
                                             'range': start_token.range
                                         }))
                                         case 'option item is not a text': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
                                             'type': ['state', ['option item is not a text', null]],
                                             'range': t_astn_parse_tree_to_location.Value($.value)
                                         }))
                                         case 'missing value item': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
                                             'type': ['state', ['missing value item', null]],
                                             'range': start_token.range
                                         }))
                                         case 'too many items': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
                                             'type': ['state', ['too many items', null]],
                                             'range': start_token.range
                                         }))
@@ -88,7 +82,6 @@ export const Value: Value = ($, abort) => {
                                 })
                             })
                             case 'unknown option': return _p.ss($, ($) => abort({
-                                'definition path': definition_path,
                                 'type': ['state', ['unknown option', null]],
                                 'range': $['option token'].range
                             }))
@@ -96,7 +89,6 @@ export const Value: Value = ($, abort) => {
                         }
                     }))
                     case 'missing': return _p.ss($, ($) => abort({
-                        'definition path': definition_path,
                         'type': ['dictionary', ['foo', null]],
                         'range': start_token_range
                     }))
@@ -117,7 +109,6 @@ export const Value: Value = ($, abort) => {
                                 case 'success': return _p.ss($, ($) => $.value.__decide(
                                     ($) => Value($, abort),
                                     () => abort({
-                                        'definition path': definition_path,
                                         'type': ['dictionary', ['foo', null]],
                                         'range': $.intermediate['id value pair'].id.range
                                     }),
@@ -125,7 +116,6 @@ export const Value: Value = ($, abort) => {
                                 case 'error': return _p.ss($, ($) => _p.decide.state($, ($) => {
                                     switch ($[0]) {
                                         case 'duplicate': return _p.ss($, ($) => abort({
-                                            'definition path': definition_path,
                                             'type': ['dictionary', ['foo', null]],
                                             'range': dictionary_range
                                         }))
@@ -146,14 +136,12 @@ export const Value: Value = ($, abort) => {
                                     case 'error': return _p.ss($, ($) => _p.decide.state($, ($) => {
                                         switch ($[0]) {
                                             case 'missing': return _p.ss($, ($) => abort({
-                                                'definition path': definition_path,
                                                 'type': ['group', ['missing property', {
                                                     'name': id
                                                 }]],
                                                 'range': start_token_range
                                             }))
                                             case 'multiple': return _p.ss($, ($) => abort({
-                                                'definition path': definition_path,
                                                 'type': ['group', ['multiple instances for property', {
                                                     'name': id
                                                 }]],
@@ -196,7 +184,6 @@ export const Value: Value = ($, abort) => {
                         return _p.decide.state($['option status'], ($): d_out.Value => {
                             switch ($[0]) {
                                 case 'missing data': return _p.ss($, ($) => abort({
-                                    'definition path': definition_path,
                                     'type': ['state', ['missing data', null]],
                                     'range': $.intermediate.range
                                 }))

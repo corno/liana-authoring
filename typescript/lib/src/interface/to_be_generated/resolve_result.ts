@@ -37,7 +37,7 @@ export type Component = {
 
 export type Dictionary = {
     'unmarshalled': d_unmarshall_result.Dictionary
-    'entries': _pi.Optional_Value<_pi.Dictionary<Optional_Entry>>
+    'entries': _pi.Dictionary<Optional_Entry>
 }
 
 export type Optional_Entry = _pi.Optional_Value<Value>
@@ -47,9 +47,9 @@ export type Group = {
     'properties': _pi.Dictionary<Property_Resolve_Result>
 }
 
-export type Property_Resolve_Result = 
-| ['success', Property]
-| ['unmarshall error', d_unmarshall_result.Property_Unmarshall_Error]
+export type Property_Resolve_Result =
+    | ['success', Property]
+    | ['unmarshall error', d_unmarshall_result.Property_Unmarshall_Error]
 
 export type Property = {
     'definition': d_schema.Resolver_Value
@@ -58,7 +58,7 @@ export type Property = {
 
 export type List = {
     'unmarshalled': d_unmarshall_result.List
-    'items': _pi.Optional_Value<_pi.List<Value>>
+    'items': _pi.List<Value>
 }
 
 export type Optional = {
@@ -72,8 +72,12 @@ export type Optional = {
 
 export type Reference = {
     'unmarshalled': d_unmarshall_result.Reference
-    'resolve status': 
-    | ['to be implemented', null]
+    'type':
+    | ['derived', null]
+    | ['selected', {
+        'resolve status':
+        | ['to be implemented', null]
+    }]
 }
 
 export type State = {

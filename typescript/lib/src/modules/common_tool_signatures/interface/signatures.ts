@@ -16,6 +16,7 @@ export namespace commands {
         },
         {
             'read file': resources_pareto.queries.read_file
+            'stat': resources_pareto.queries.stat_possible_node
         }
     >
 

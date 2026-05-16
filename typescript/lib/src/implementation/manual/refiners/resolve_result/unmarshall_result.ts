@@ -15,8 +15,8 @@ export const Document = (
         'definition': d_in_definition.Resolver_Modules.D,
         'resolver': d_in_definition.Resolver
     }
-) => ({
-    'value': Value(
+): d_out.Document => ({
+    'content': Value(
         $.content,
         {
             'definition': $p.definition['root value resolver'],
@@ -81,7 +81,7 @@ export const Value = (
                                     switch ($[0]) {
                                         case 'dictionary': return _p.ss($, ($): d_out.Dictionary => ({
                                             'unmarshalled': $,
-                                            'entries': _p.optional.literal.set(_p.dictionary.from.dictionary(
+                                            'entries': _p.dictionary.from.dictionary(
                                                 _p.dictionary.from.list(
                                                     $.intermediate['entries as list']
                                                 ).group(
@@ -101,7 +101,7 @@ export const Value = (
                                                 ),
                                                 () => _p.optional.literal.not_set(),
                                                 () => _p.optional.literal.not_set(),
-                                            )))
+                                            ))
                                         }))
                                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                     }
@@ -155,14 +155,14 @@ export const Value = (
                                     switch ($[0]) {
                                         case 'list': return _p.ss($, ($): d_out.List => ({
                                             'unmarshalled': $,
-                                            'items': _p.optional.literal.set($.items.__l_map(($) => Value(
+                                            'items': $.items.__l_map(($) => Value(
                                                 $,
                                                 {
                                                     'definition': def.resolver,
                                                     'resolver': $p.resolver,
                                                     'module parameters': $p['module parameters'],
                                                 }
-                                            )))
+                                            ))
                                         }))
                                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                     }
@@ -214,7 +214,16 @@ export const Value = (
                                     switch ($[0]) {
                                         case 'reference': return _p.ss($, ($) => ({
                                             'unmarshalled': $,
-                                            'resolve status': ['to be implemented', null]
+                                            'type': _p.decide.state($.type, ($) => {
+                                                switch ($[0]) {
+                                                    case 'derived': return _p.ss($, ($) => ['derived', null])
+                                                    case 'selected': return _p.ss($, ($) => ['selected', {
+                                                        'unmarshalled': $,
+                                                        'resolve status': ['to be implemented', null]
+                                                    }])
+                                                    default: return _p.au($[0])
+                                                }
+                                            })
                                         }))
                                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                     }
