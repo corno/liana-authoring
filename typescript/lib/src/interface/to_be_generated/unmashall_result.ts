@@ -87,9 +87,15 @@ export type Dictionary = {
 export type Group = {
     'definition': d_schema.Value.group
     'instance':
-    | ['group', d_astn_parse_tree.Value.type_.concrete.group]
-    | ['dictionary', d_astn_parse_tree.Value.type_.concrete.dictionary]
-    | ['list', d_astn_parse_tree.Value.type_.concrete.list]
+    | ['group', {
+        'dummy': null
+    }]
+    | ['dictionary', {
+        'dummy': null
+    }]
+    | ['list', {
+        'dummy': null
+    }]
     'type': Group_Type
 }
 

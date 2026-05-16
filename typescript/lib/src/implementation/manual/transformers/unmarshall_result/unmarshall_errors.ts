@@ -34,7 +34,7 @@ export const Document: Document = ($) => {
 }
 
 export const Value: Value = ($, $p) => {
-    const instance = $.instance
+    const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     const def = $.definition
     return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
@@ -44,7 +44,7 @@ export const Value: Value = ($, $p) => {
                         switch ($[0]) {
                             case 'wrong type': return _p.ss($, ($) => _p.list.literal([
                                 {
-                                    'range': t_astn_parse_tree_to_location.Value(instance),
+                                    'range': start_token_range,
                                     'type': ['error', ['invalid value type', {
                                         'expected': _p.decide.state(def, ($): d_out.Errors.L.type_.error.invalid_value_type.expected => {
                                             switch ($[0]) {
@@ -107,7 +107,7 @@ export const Value: Value = ($, $p) => {
                     }))
                     case 'missing': return _p.ss($, ($): d_out.Errors => _p.list.literal([
                         {
-                            'range': t_astn_parse_tree_to_location.Value(instance),
+                            'range': start_token_range,
                             'type': ['error', ['missing value', null]],
                             // 'type': ['error', ['missing value', null]]
                         }
@@ -188,20 +188,7 @@ export const Value: Value = ($, $p) => {
                         const group_def = $.definition
 
                         const is_group = $.instance[0] === 'group'
-                        const group_start_token = _p.decide.state($.instance, ($): d_in_astn_parse_tree.Structural_Token => {
-                            switch ($[0]) {
-                                case 'dictionary': return _p.ss($, ($) => $['{'])
-                                case 'group': return _p.ss($, ($) => _p.decide.state($, ($) => {
-                                    switch ($[0]) {
-                                        case 'verbose': return _p.ss($, ($) => $['('])
-                                        case 'concise': return _p.ss($, ($) => $['<'])
-                                        default: return _p.au($[0])
-                                    }
-                                }))
-                                case 'list': return _p.ss($, ($) => $['['])
-                                default: return _p.au($[0])
-                            }
-                        })
+                        
                         const report_property_warnings = $p['report warnings']
                             ? is_group //if it's not a group, there is already going to be an error for the group itself
                             : false
@@ -209,7 +196,7 @@ export const Value: Value = ($, $p) => {
                             ((!is_group && $p['report warnings']))
                                 ? _p.list.literal([
                                     {
-                                        'range': group_start_token.range,
+                                        'range': start_token_range,
                                         'type': ['warning', ['expected a group', null]]
                                     }
                                 ])
@@ -233,7 +220,7 @@ export const Value: Value = ($, $p) => {
                                                     ($) => _p.list.literal([]),
                                                     () => _p.list.literal([
                                                         {
-                                                            'range': group_start_token.range,
+                                                            'range': start_token_range,
                                                             'type': ['error', ['missing property', {
                                                                 name: $.id
                                                             }]]
@@ -292,7 +279,7 @@ export const Value: Value = ($, $p) => {
                                                     ),
                                                     () => _p.list.literal([
                                                         {
-                                                            'range': group_start_token.range,
+                                                            'range': start_token_range,
                                                             'type': ['error', ['missing property', {
                                                                 name: id
                                                             }]]

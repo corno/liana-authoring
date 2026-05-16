@@ -231,13 +231,17 @@ export const Value: Value = ($, $p) => {
                                             switch ($[0]) {
                                                 case 'dictionary': return _p.ss($, ($) => ({
                                                     'definition': group_def,
-                                                    'instance': ['dictionary', $],
+                                                    'instance': ['dictionary', {
+                                                        'dummy': null
+                                                    }],
                                                     'type': ['verbose', verbose_content($.entries)]
                                                 }))
                                                 case 'group': return _p.ss($, ($) => {
                                                     return {
                                                         'definition': group_def,
-                                                        'instance': ['group', $],
+                                                        'instance': ['group', {
+                                                            'dummy': null
+                                                        }],
                                                         'type': _p.decide.state($, ($): d_out.Group_Type => {
                                                             switch ($[0]) {
                                                                 case 'concise': return _p.ss($, ($) => ['concise', concise_content($.properties)])
@@ -249,7 +253,9 @@ export const Value: Value = ($, $p) => {
                                                 })
                                                 case 'list': return _p.ss($, ($) => ({
                                                     'definition': group_def,
-                                                    'instance': ['list', $],
+                                                    'instance': ['list', {
+                                                        'dummy': null
+                                                    }],
                                                     'type': ['concise', concise_content($.items)]
                                                 }))
                                                 default: return abort(['incorrect', ['wrong type', null]])

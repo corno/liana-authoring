@@ -47,7 +47,7 @@ export const Document: Document = ($, abort) => {
 
 export const Value: Value = ($, abort) => {
     const definition_path = $['definition path x']
-    const instance = $.instance
+    const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
             case 'error': return _p.ss($, ($) => _p.decide.state($, ($) => {
@@ -57,7 +57,7 @@ export const Value: Value = ($, abort) => {
                             case 'wrong type': return _p.ss($, ($) => abort({
                                 'definition path': definition_path,
                                 'type': ['number', ['wrong type', null]], //FIXME!!!
-                                'range': t_astn_parse_tree_to_location.Value(instance)
+                                'range': start_token_range
                             }))
                             case 'list as state format error': return _p.ss($, ($) => {
                                 const start_token = $.list['[']
@@ -93,7 +93,7 @@ export const Value: Value = ($, abort) => {
                     case 'missing': return _p.ss($, ($) => abort({
                         'definition path': definition_path,
                         'type': ['dictionary', ['foo', null]],
-                        'range': t_astn_parse_tree_to_location.Value(instance)
+                        'range': start_token_range
                     }))
                     case 'unknown option': return _p.ss($, ($) => abort({
                         'definition path': definition_path,
@@ -144,20 +144,7 @@ export const Value: Value = ($, abort) => {
                         const def = $
                         return ['group', ['verbose', _p_variables(() => {
 
-                            const group_start_token = _p.decide.state($.instance, ($): d_in_astn_parse_tree.Structural_Token => {
-                                switch ($[0]) {
-                                    case 'dictionary': return _p.ss($, ($) => $['{'])
-                                    case 'group': return _p.ss($, ($) => _p.decide.state($, ($) => {
-                                        switch ($[0]) {
-                                            case 'verbose': return _p.ss($, ($) => $['('])
-                                            case 'concise': return _p.ss($, ($) => $['<'])
-                                            default: return _p.au($[0])
-                                        }
-                                    }))
-                                    case 'list': return _p.ss($, ($) => $['['])
-                                    default: return _p.au($[0])
-                                }
-                            })
+                            
                             return _p.decide.state($.type, ($): d_out.Value.group.verbose => {
                                 switch ($[0]) {
                                     case 'verbose': return _p.ss($, ($): d_out.Value.group.verbose => _p.dictionary.from.dictionary(
@@ -196,7 +183,7 @@ export const Value: Value = ($, abort) => {
                                                     'type': ['group', ['multiple instances for property', {
                                                         'name': id
                                                     }]],
-                                                    'range': group_start_token.range
+                                                    'range': start_token_range
                                                 }),
                                                 () => _p_unreachable_code_path("the list is the result of a group operation, it could never have been created if there was not at least one item")
                                             ),
@@ -205,7 +192,7 @@ export const Value: Value = ($, abort) => {
                                                 'type': ['group', ['missing property', {
                                                     'name': id
                                                 }]],
-                                                'range': group_start_token.range
+                                                'range': start_token_range
                                             })
                                         )
                                     ))
@@ -241,7 +228,7 @@ export const Value: Value = ($, abort) => {
                                                     'type': ['group', ['missing property', {
                                                         'name': id
                                                     }]],
-                                                    'range': group_start_token.range
+                                                    'range': start_token_range
                                                 })
                                             )
                                         )
