@@ -97,6 +97,11 @@ export type Group = {
         'dummy': null
     }]
     'type': Group_Type
+    'properties': _pi.Dictionary<Property>
+}
+
+export type Property = {
+    'definition': d_schema.Group.D
 }
 
 export type Group_Type =

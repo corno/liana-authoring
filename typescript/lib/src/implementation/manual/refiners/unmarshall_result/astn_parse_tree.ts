@@ -227,40 +227,40 @@ export const Value: Value = ($, $p) => {
                                                 })
                                             }
                                         }
-                                        return _p.decide.state($, ($) => {
-                                            switch ($[0]) {
-                                                case 'dictionary': return _p.ss($, ($) => ({
-                                                    'definition': group_def,
-                                                    'instance': ['dictionary', {
+                                        return {
+                                            'definition': group_def,
+                                            'instance': _p.decide.state($, ($) => {
+                                                switch ($[0]) {
+                                                    case 'dictionary': return _p.ss($, ($) => ['dictionary', {
                                                         'dummy': null
-                                                    }],
-                                                    'type': ['verbose', verbose_content($.entries)]
-                                                }))
-                                                case 'group': return _p.ss($, ($) => {
-                                                    return {
-                                                        'definition': group_def,
-                                                        'instance': ['group', {
-                                                            'dummy': null
-                                                        }],
-                                                        'type': _p.decide.state($, ($): d_out.Group_Type => {
-                                                            switch ($[0]) {
-                                                                case 'concise': return _p.ss($, ($) => ['concise', concise_content($.properties)])
-                                                                case 'verbose': return _p.ss($, ($) => ['verbose', verbose_content($.properties)])
-                                                                default: return _p.au($[0])
-                                                            }
-                                                        })
-                                                    }
-                                                })
-                                                case 'list': return _p.ss($, ($) => ({
-                                                    'definition': group_def,
-                                                    'instance': ['list', {
+                                                    }])
+                                                    case 'group': return _p.ss($, ($) => ['group', {
                                                         'dummy': null
-                                                    }],
-                                                    'type': ['concise', concise_content($.items)]
-                                                }))
-                                                default: return abort(['incorrect', ['wrong type', null]])
-                                            }
-                                        })
+                                                    }])
+                                                    case 'list': return _p.ss($, ($) => ['list', {
+                                                        'dummy': null
+                                                    }])
+                                                    default: return abort(['incorrect', ['wrong type', null]])
+                                                }
+                                            }),
+                                            'type': _p.decide.state($, ($) => {
+                                                switch ($[0]) {
+                                                    case 'dictionary': return _p.ss($, ($) => ['verbose', verbose_content($.entries)])
+                                                    case 'group': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Group_Type => {
+                                                        switch ($[0]) {
+                                                            case 'concise': return _p.ss($, ($) => ['concise', concise_content($.properties)])
+                                                            case 'verbose': return _p.ss($, ($) => ['verbose', verbose_content($.properties)])
+                                                            default: return _p.au($[0])
+                                                        }
+                                                    }))
+                                                    case 'list': return _p.ss($, ($) => ['concise', concise_content($.items)])
+                                                    default: return abort(['incorrect', ['wrong type', null]])
+                                                }
+                                            }),
+                                            'properties': group_def.__d_map(($) => ({
+                                                'definition': $,
+                                            })),
+                                        }
                                     })]
                                 })
                                 case 'list': return _p.ss($, ($) => {
@@ -542,30 +542,30 @@ export const Value: Value = ($, $p) => {
                                                                 const option_name = $.option.token.value
                                                                 const option_token = $.option
                                                                 return ['set', _p.decide.optional(
-                                                                        def.options.__get_possible_entry_deprecated(option_name),
-                                                                        ($): d_out.State_Set => ({
-                                                                            'option token': option_token,
-                                                                            'definition': $,
-                                                                            'value': Value(
-                                                                                value,
-                                                                                {
-                                                                                    'definition': $.value,
-                                                                                    'definition path': `${$p['definition path']}.${option_name}`,
-                                                                                    'property path': _p.list.nested_literal_old([
-                                                                                        $p['property path'],
-                                                                                        [
-                                                                                            ['state', option_name]
-                                                                                        ]
-                                                                                    ]),
-                                                                                    'parent range stack': optional_value_range_stack,
-                                                                                }
-                                                                            )
-                                                                        }),
-                                                                        () => abort(['unknown option', {
-                                                                            'definition': def,
-                                                                            'option token': $.option
-                                                                        }])
-                                                                    )]
+                                                                    def.options.__get_possible_entry_deprecated(option_name),
+                                                                    ($): d_out.State_Set => ({
+                                                                        'option token': option_token,
+                                                                        'definition': $,
+                                                                        'value': Value(
+                                                                            value,
+                                                                            {
+                                                                                'definition': $.value,
+                                                                                'definition path': `${$p['definition path']}.${option_name}`,
+                                                                                'property path': _p.list.nested_literal_old([
+                                                                                    $p['property path'],
+                                                                                    [
+                                                                                        ['state', option_name]
+                                                                                    ]
+                                                                                ]),
+                                                                                'parent range stack': optional_value_range_stack,
+                                                                            }
+                                                                        )
+                                                                    }),
+                                                                    () => abort(['unknown option', {
+                                                                        'definition': def,
+                                                                        'option token': $.option
+                                                                    }])
+                                                                )]
                                                             })
                                                             default: return _p.au($[0])
                                                         }
