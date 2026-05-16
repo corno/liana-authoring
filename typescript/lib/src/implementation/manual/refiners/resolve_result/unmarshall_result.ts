@@ -61,7 +61,7 @@ export const Value = (
                                                             case 'internal': return _p.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
                                                                 $['l id'],
                                                                 {
-                                                                    'no_such_entry': _p_unreachable_code_path("for every signature, there must be a resolver implemented")
+                                                                    'no_such_entry': () => _p_unreachable_code_path("for every signature, there must be a resolver implemented")
                                                                 }
                                                             )['root value resolver'])
                                                             default: return _p.au($[0])
