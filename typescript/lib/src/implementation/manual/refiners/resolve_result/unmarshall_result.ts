@@ -244,7 +244,7 @@ export const Value = (
                                                             'definition': def.options.__get_entry_deprecated(
                                                                 $.option,
                                                                 {
-                                                                    'no_such_entry': _p_unreachable_code_path("the definition is resolved")
+                                                                    'no_such_entry': () => _p_unreachable_code_path("the definition is resolved")
                                                                 }
                                                             ).resolver,
                                                             'resolver': $p.resolver,
