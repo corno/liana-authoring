@@ -5,6 +5,7 @@ import * as d_unmarshall_result from "./unmarshall_result"
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 
 export type Document = {
+    'unmarshalled': d_unmarshall_result.Document
     'content': Value
 }
 

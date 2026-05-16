@@ -16,6 +16,7 @@ export const Document = (
         'resolver': d_in_definition.Resolver
     }
 ): d_out.Document => ({
+    'unmarshalled': $,
     'content': Value(
         $.content,
         {
