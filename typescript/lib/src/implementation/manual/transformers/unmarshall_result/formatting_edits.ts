@@ -4,7 +4,7 @@ import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_cc from 'pareto-core/dist/_p_change_context'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_out from "../../../../interface/to_be_generated/formatting_edits"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_outx from "../../../../interface/to_be_generated/found"

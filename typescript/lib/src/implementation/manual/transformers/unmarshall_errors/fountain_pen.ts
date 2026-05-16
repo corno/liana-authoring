@@ -10,62 +10,83 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const Error_Type_Error = (
-    $: d_in.Errors.L.type_.error,
-): d_out.Phrase => _p.decide.state($, ($) => {
+export const Error = (
+    $: d_in.Errors.L,
+): d_out.Phrase => _p.decide.state($.type, ($) => {
     switch ($[0]) {
-        case 'duplicate entry': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("duplicate entry \""),
-            sh.ph.literal($.name),
-            sh.ph.literal("\"")
-        ]))
-        case 'duplicate property': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("duplicate property \""),
-            sh.ph.literal($.name),
-            sh.ph.literal("\"")
-        ]))
-        case 'invalid value type': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("invalid value type, expected "),
-            sh.ph.rich(
-                $.expected.__l_map(($) => sh.ph.composed([
-                    sh.ph.literal("'"),
-                    sh.ph.literal($[0]),
-                    sh.ph.literal("'")
-                ])),
-                sh.ph.literal(" something"),
-                sh.ph.nothing(),
-                sh.ph.literal(" or "),
-                sh.ph.nothing(),
+        case 'dictionary': return _p.ss($, ($) => _p.decide.state($, ($) => {
+            switch ($[0]) {
+                case 'duplicate entry': return _p.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("duplicate entry \""),
+                    sh.ph.literal($.name),
+                    sh.ph.literal("\"")
+                ]))
 
-            )
-        ]))
-        case 'missing property': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("missing property '"),
-            sh.ph.literal($.name),
-            sh.ph.literal("'")
-        ]))
-        case 'missing property value': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("missing property value'"),
-            sh.ph.literal($.name),
-            sh.ph.literal("'")
-        ]))
-        case 'superfluous property': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("superfluous property"),
-            $.name.__decide(
-                ($) => sh.ph.composed([
-                    sh.ph.literal(" '"),
-                    sh.ph.literal($),
+                default: return _p.au($[0])
+            }
+        }))
+        case 'value': return _p.ss($, ($) => _p.decide.state($, ($) => {
+            switch ($[0]) {
+                case 'invalid type': return _p.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("invalid value type, expected "),
+                    sh.ph.rich(
+                        $.expected.__l_map(($) => sh.ph.composed([
+                            sh.ph.literal("'"),
+                            sh.ph.literal($[0]),
+                            sh.ph.literal("'")
+                        ])),
+                        sh.ph.literal(" something"),
+                        sh.ph.nothing(),
+                        sh.ph.literal(" or "),
+                        sh.ph.nothing(),
+
+                    )
+                ]))
+                case 'missing': return _p.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("missing value")
+                ]))
+
+                default: return _p.au($[0])
+            }
+        }))
+        case 'group': return _p.ss($, ($) => _p.decide.state($, ($) => {
+            switch ($[0]) {
+                case 'duplicate property': return _p.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("duplicate property \""),
+                    sh.ph.literal($.name),
+                    sh.ph.literal("\"")
+                ]))
+                case 'missing property': return _p.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("missing property '"),
+                    sh.ph.literal($.name),
                     sh.ph.literal("'")
-                ]),
-                () => sh.ph.nothing()
-            )
-        ]))
+                ]))
+                case 'missing property value': return _p.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("missing property value'"),
+                    sh.ph.literal($.name),
+                    sh.ph.literal("'")
+                ]))
+                case 'superfluous property': return _p.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("superfluous property"),
+                    $.name.__decide(
+                        ($) => sh.ph.composed([
+                            sh.ph.literal(" '"),
+                            sh.ph.literal($),
+                            sh.ph.literal("'")
+                        ]),
+                        () => sh.ph.nothing()
+                    )
+                ]))
+
+                default: return _p.au($[0])
+            }
+        }))
         case 'state': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'missing option name': return _p.ss($, ($) => sh.ph.literal("missing option name"))
                 case 'missing option': return _p.ss($, ($) => sh.ph.literal("missing option"))
                 case 'missing value': return _p.ss($, ($) => sh.ph.literal("missing value"))
-                case 'more than 2 items': return _p.ss($, ($) => sh.ph.literal("more than 2 items"))
+                case 'more than 2 items in list': return _p.ss($, ($) => sh.ph.literal("more than 2 items in list"))
                 case 'option name is not a text': return _p.ss($, ($) => sh.ph.literal("option name is not a text"))
                 case 'unknown option': return _p.ss($, ($) => sh.ph.composed([
                     sh.ph.literal("unknown option: '"),
@@ -86,22 +107,6 @@ export const Error_Type_Error = (
                 default: return _p.au($[0])
             }
         }))
-        case 'missing value':  return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("missing value")
-        ]))
-        default: return _p.au($[0])
-    }
-})
-
-export const Error_Type_Warning = (
-    $: d_in.Errors.L.type_.warning,
-): d_out.Phrase => _p.decide.state($, ($) => {
-    switch ($[0]) {
-        case 'expected apostrophed text': return _p.ss($, ($) => sh.ph.literal("Expected a text with apostrophes (')"))
-        case 'expected backticked text': return _p.ss($, ($) => sh.ph.literal("Expected a text with backticks (`)"))
-        case 'expected quoted text': return _p.ss($, ($) => sh.ph.literal("Expected a text with quotes (\")"))
-        case 'expected undelimited text': return _p.ss($, ($) => sh.ph.literal("Expected a text without delimiters"))
-        case 'expected a group': return _p.ss($, ($) => sh.ph.literal("Expected a group"))
         default: return _p.au($[0])
     }
 })

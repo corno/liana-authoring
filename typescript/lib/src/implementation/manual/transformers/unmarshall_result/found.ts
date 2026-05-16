@@ -2,7 +2,7 @@ import * as _pi from 'pareto-core/dist/interface'
 import * as _p from 'pareto-core/dist/assign'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_astn_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 import * as d_out from "../../../../interface/to_be_generated/found"
@@ -97,16 +97,16 @@ export const Value: Value = ($, $p) => {
                 switch ($[0]) {
                     case 'simple': return _p.ss($, ($) => this_value())
                     case 'component': return _p.ss($, ($) => Value($.value, $p))
-                    case 'dictionary': return _p.ss($, ($) => _p.decide.list($.entries).has_match(
+                    case 'dictionary': return _p.ss($, ($) => _p.decide.list($.intermediate['entries as list']).has_match(
                         ($) => {
                             const entry = $
                             return _p.decide.boolean(
                                 range_overlaps_position(
                                     {
-                                        'start': $['id value pair'].id.range.start,
+                                        'start': $.intermediate['id value pair'].id.range.start,
                                         'end': $.value.__decide(
                                             ($) => t_parse_tree_to_full_value_range.Value($.instance).end,
-                                            () => $['id value pair'].id.range.end
+                                            () => $.intermediate['id value pair'].id.range.end
                                         ),
                                     },
                                     {
@@ -125,14 +125,14 @@ export const Value: Value = ($, $p) => {
                         },
                         () => this_value()
                     ))
-                    case 'group': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+                    case 'group': return _p.ss($, ($) => _p.decide.state($.intermediate.type, ($) => {
                         switch ($[0]) {
                             case 'verbose': return _p.ss($, ($) => _p.decide.list($.properties).has_match(
                                 ($): d_out.Possibly_Found => {
                                     const prop = $
                                     return _p.decide.boolean(
                                         range_overlaps_position(
-                                            t_parse_tree_to_full_value_range.ID_Value_Pair(prop['id value pair']),
+                                            t_parse_tree_to_full_value_range.ID_Value_Pair(prop.intermediate['id value pair']),
                                             {
                                                 'position': $p.position,
                                             }

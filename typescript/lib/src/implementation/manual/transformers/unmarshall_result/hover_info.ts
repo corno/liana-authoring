@@ -3,7 +3,7 @@ import * as _p from 'pareto-core/dist/assign'
 import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/hover_info/data"
 
@@ -74,8 +74,6 @@ export const Document: Document = ($, $p) => {
                                             }
                                         }))
                                         case 'missing': return _p.ss($, ($) => ["use ctrl+d to get suggestions"])
-
-                                        case 'unknown option': return _p.ss($, ($) => ["unknown option"])
                                         default: return _p.au($[0])
                                     }
                                 }))
@@ -111,7 +109,7 @@ export const Document: Document = ($, $p) => {
                 case 'property': return _p.ss($, ($) => _p.decide.state($.style, ($) => {
                     switch ($[0]) {
                         case 'verbose': return _p.ss($, ($) => _p.list.literal([
-                            $['id value pair'].id.token.value,
+                            $.id,
                             _p.decide.state($['definition found'], ($) => {
                                 switch ($[0]) {
                                     case 'yes': return _p.ss($, ($) => $.definition.description.__decide(

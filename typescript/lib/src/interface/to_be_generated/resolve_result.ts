@@ -1,6 +1,6 @@
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as d_unmarshall_result from "./unmashall_result"
+import * as d_unmarshall_result from "./unmarshall_result"
 
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 
@@ -11,12 +11,12 @@ export type Document = {
 export type Value = {
     'definition': d_schema.Resolver_Value
     'unmarshalled': d_unmarshall_result.Value
-    'resolve result': Resolve_Result //the type is determined by the definition
+    'resolve result': Value_Resolve_Result //the type is determined by the definition
 }
 
-export type Resolve_Result =
+export type Value_Resolve_Result =
     | ['success', Resolved_Value_Type]
-    | ['unmarshall error', d_unmarshall_result.Unmarshall_Error]
+    | ['unmarshall error', d_unmarshall_result.Value_Unmarshall_Error]
 
 export type Resolved_Value_Type =
     | ['component', Component]
@@ -44,12 +44,16 @@ export type Optional_Entry = _pi.Optional_Value<Value>
 
 export type Group = {
     'unmarshalled': d_unmarshall_result.Group
-    'properties': _pi.Dictionary<Property>
+    'properties': _pi.Dictionary<Property_Resolve_Result>
 }
+
+export type Property_Resolve_Result = 
+| ['success', Property]
+| ['unmarshall error', d_unmarshall_result.Property_Unmarshall_Error]
 
 export type Property = {
     'definition': d_schema.Resolver_Value
-    'resolved': _pi.Optional_Value<Value>
+    'resolved': Value
 }
 
 export type List = {
@@ -59,11 +63,17 @@ export type List = {
 
 export type Optional = {
     'unmarshalled': d_unmarshall_result.Optional
-    'optional optional value': _pi.Optional_Value<_pi.Optional_Value<Value>>
+    'status':
+    | ['set', {
+        'child value': Value
+    }]
+    | ['not set', null]
 }
 
 export type Reference = {
     'unmarshalled': d_unmarshall_result.Reference
+    'resolve status': 
+    | ['to be implemented', null]
 }
 
 export type State = {

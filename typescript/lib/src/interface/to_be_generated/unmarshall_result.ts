@@ -38,10 +38,10 @@ export type Value = {
 
 export type Value_Unmarshall_Result =
     | ['success', Unmarshalled_Value]
-    | ['error', Unmarshall_Error
+    | ['error', Value_Unmarshall_Error
     ]
 
-export type Unmarshall_Error =
+export type Value_Unmarshall_Error =
     | ['incorrect',
         | ['wrong type', null]
         | ['list as state format error', {
@@ -54,12 +54,12 @@ export type Unmarshall_Error =
             | ['missing value item', null]
             | ['too many items', null]
         }]
+        | ['unknown option', {
+            'option token': d_astn_parse_tree.Text
+            'definition': d_schema.Value.state
+        }]
     ]
     | ['missing', null]
-    | ['unknown option', {
-        'option token': d_astn_parse_tree.Text
-        'definition': d_schema.Value.state
-    }]
 
 export type Unmarshalled_Value =
     | ['component', Component]
@@ -80,33 +80,62 @@ export type Component = {
 
 export type Dictionary = {
     'definition': d_schema.Value.dictionary
-    'instance': d_astn_parse_tree.Value.type_.concrete.dictionary
-    'entries': _pi.List<Entry>
+    'intermediate': {
+        'instance': d_astn_parse_tree.Value.type_.concrete.dictionary
+        'entries as list': _pi.List<Entry>
+    }
+    'entries': _pi.Dictionary<{
+        'result': Entry_Unmarshall_Result
+    }>
 }
+
+export type Entry_Unmarshall_Result =
+    | ['error', Entry_Unmarshall_Error]
+    | ['success', Entry]
+
+export type Entry_Unmarshall_Error =
+    | ['duplicate', {
+        'instances': _pi.List<Entry>
+    }]
 
 export type Group = {
     'definition': d_schema.Value.group
-    'instance':
-    | ['group', {
-        'dummy': null
-    }]
-    | ['dictionary', {
-        'dummy': null
-    }]
-    | ['list', {
-        'dummy': null
-    }]
-    'type': Group_Type
+    'intermediate': {
+        'instance':
+        | ['group', {
+            'dummy': null
+        }]
+        | ['dictionary', {
+            'dummy': null
+        }]
+        | ['list', {
+            'dummy': null
+        }]
+        'type': Group_Type
+    }
     'properties': _pi.Dictionary<Property>
 }
 
 export type Property = {
     'definition': d_schema.Group.D
+    'result':
+    | ['error', Property_Unmarshall_Error]
+    | ['success', Value]
 }
+
+export type Property_Unmarshall_Error =
+    | ['multiple', {
+        'instances': Verbose_Properties
+    }]
+    | ['missing', {
+        'start token range': d_location.Range
+    }]
 
 export type Group_Type =
     | ['verbose', Group_Verbose]
     | ['concise', Group_Concise]
+
+export type Verbose_Properties = _pi.List<Verbose_Property>
 
 export type Group_Concise = {
     'properties': _pi.List<Concise_Property>
@@ -131,9 +160,12 @@ export type Concise_Property_Definition_Found__yes = {
 }
 
 export type Verbose_Property = {
+    'id': string
     'definition found': Verbose_Property_Definition_Found
     'parent range stack': Range_Stack
-    'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
+    'intermediate': {
+        'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
+    }
 }
 
 export type Verbose_Property_Definition_Found =
@@ -144,12 +176,14 @@ export type Verbose_Property_Definition_Found =
     | ['no', null]
 
 export type Group_Verbose = {
-    'properties': _pi.List<Verbose_Property>
+    'properties': Verbose_Properties
 }
 
 export type List = {
     'definition': d_schema.Value.list
-    'instance': d_astn_parse_tree.Value.type_.concrete.list
+    'intermediate': {
+        'instance': d_astn_parse_tree.Value.type_.concrete.list
+    }
     'items': _pi.List<Value>
 }
 
@@ -157,15 +191,19 @@ export type Optional = {
     'definition': d_schema.Value.optional
     'status':
     | ['set', {
-        'instance':
-        | ['optional', d_astn_parse_tree.Value.type_.concrete.optional.set_]
-        | ['list', d_astn_parse_tree.Value.type_.concrete.list]
+        'intermediate': {
+            'instance':
+            | ['optional', d_astn_parse_tree.Value.type_.concrete.optional.set_]
+            | ['list', d_astn_parse_tree.Value.type_.concrete.list]
+        }
         'child value': Value
     }]
     | ['not set', {
-        'instance':
-        | ['not set', d_astn_parse_tree.Value.type_.concrete.optional.not_set]
-        | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+        'intermediate': {
+            'instance':
+            | ['not set', d_astn_parse_tree.Value.type_.concrete.optional.not_set]
+            | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+        }
     }]
 }
 
@@ -173,12 +211,17 @@ export type Reference = {
     'definition': d_schema.Value.reference
     'type':
     ['derived', {
-        'instance':
-        | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
-        | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+        'intermediate': {
+            'instance':
+            | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
+            | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+        }
     }]
     | ['selected', {
-        'instance': d_astn_parse_tree.Value.type_.concrete.text
+        'value': string
+        'intermediate': {
+            'instance': d_astn_parse_tree.Value.type_.concrete.text
+        }
     }]
 
 }
@@ -186,45 +229,63 @@ export type Reference = {
 export type State = {
     'definition': d_schema.Value.state
     'property path': Property_Path
-    'instance':
-    | ['state', d_astn_parse_tree.Value.type_.concrete.state]
-    | ['list', d_astn_parse_tree.Value.type_.concrete.list]
+    'intermediate': {
+        'instance':
+        | ['state', d_astn_parse_tree.Value.type_.concrete.state]
+        | ['list', d_astn_parse_tree.Value.type_.concrete.list]
+    }
     'option status': State_Option
     'parent range stack': Range_Stack
 }
 
 export type State_Option =
     | ['set', State_Set]
-    | ['missing data', d_astn_parse_tree.Structural_Token]
+    | ['missing data', {
+        'intermediate': d_astn_parse_tree.Structural_Token
+    }]
 
 export type State_Set = {
+    'definition': d_schema.Value.state.options.D
+    'intermediate': {
         'option token': d_astn_parse_tree.Text
-        'definition': d_schema.Value.state.options.D
-        'value': Value
     }
+    'option': string
+    'value': Value
+}
 
 export type Nothing = {
     'definition': d_schema.Value.nothing
-    'value':
-    | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
-    | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+    'intermediate': {
+        'value':
+        | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
+        | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+    }
 }
 
 export type Text = {
     'definition': d_schema.Value.text
-    'instance': d_astn_parse_tree.Value.type_.concrete.text
+    'value': string
+    'intermediate': {
+        'instance': d_astn_parse_tree.Value.type_.concrete.text
+    }
 }
 
 export type Simple = {
     'definition': d_schema.Value.simple
-    'instance': d_astn_parse_tree.Value.type_.concrete.text
-    'correct string type': boolean
+    'value': string
+    'intermediate': {
+        'instance': d_astn_parse_tree.Value.type_.concrete.text
+        'invalid string type': boolean
+    }
 }
 
 export type Entry = {
     'parent range stack': Range_Stack
     'property path': Property_Path
     'definition': d_schema.Dictionary
-    'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
+    'intermediate': {
+        'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
+    }
+    'id': string
     'value': Optional_Value
 }

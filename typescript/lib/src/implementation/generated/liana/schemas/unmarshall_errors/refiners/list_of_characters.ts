@@ -21,3 +21,18 @@ export const Errors: t_signatures.Errors = ($, abort, $p) => v_unmarshall.Errors
         ['unmarshall error', $],
     ),
 )
+
+export const Warnings: t_signatures.Warnings = ($, abort, $p) => v_unmarshall.Warnings(
+    v_deserialize.Document(
+        $,
+        ($) => abort(
+            ['parse error', $],
+        ),
+        {
+            'tab size': $p['tab size'],
+        },
+    )['content'],
+    ($) => abort(
+        ['unmarshall error', $],
+    ),
+)

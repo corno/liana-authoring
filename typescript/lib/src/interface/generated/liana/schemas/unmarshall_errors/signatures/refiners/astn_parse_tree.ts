@@ -26,6 +26,26 @@ export type Errors_ = (
     abort: _pi.Abort<Errors_.E>,
 ) => Errors_.O
 
+export namespace Warnings_ {
+    
+    export type I = i_in.Value
+    
+    export type O = i_out.Warnings
+    
+    export type E = i_generic.Error
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Warnings_ = (
+    context: Warnings_.I,
+    abort: _pi.Abort<Warnings_.E>,
+) => Warnings_.O
+
 export { 
     Errors_ as Errors, 
+    Warnings_ as Warnings, 
 }

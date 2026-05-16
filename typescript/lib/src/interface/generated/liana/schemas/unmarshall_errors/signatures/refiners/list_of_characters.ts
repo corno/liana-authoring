@@ -31,6 +31,31 @@ export type Errors_ = (
     },
 ) => Errors_.O
 
+export namespace Warnings_ {
+    
+    export type I = i_in.List_of_Characters
+    
+    export type O = i_out.Warnings
+    
+    export type E = i_generic.Error
+    
+    export namespace P {
+        
+        export type tab_size = number
+        
+    }
+    
+}
+
+export type Warnings_ = (
+    context: Warnings_.I,
+    abort: _pi.Abort<Warnings_.E>,
+    parameters: {
+        readonly 'tab size': Warnings_.P.tab_size
+    },
+) => Warnings_.O
+
 export { 
     Errors_ as Errors, 
+    Warnings_ as Warnings, 
 }

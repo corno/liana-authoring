@@ -3,8 +3,8 @@ import * as _p from 'pareto-core/dist/assign'
 import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
-import * as d_out from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
+import * as d_out from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 //dependencies
@@ -40,13 +40,13 @@ export const Document: Document = ($, $p) => {
                     }
                 })
                 case 'entry': return _p.ss($, ($) => ({
-                    'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
+                    'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                     'parent': _p.optional.literal.set($['parent range stack'])
                 }))
                 case 'property': return _p.ss($, ($) => _p.decide.state($.style, ($) => {
                     switch ($[0]) {
                         case 'verbose': return _p.ss($, ($) => ({
-                            'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
+                            'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                             'parent': _p.optional.literal.set($['parent range stack'])
                         }))
                         case 'unknown concise': return _p.ss($, ($) => ({
@@ -58,7 +58,7 @@ export const Document: Document = ($, $p) => {
                     }
                 }))
                 case 'state': return _p.ss($, ($) => ({
-                    'range': _p.decide.state($.instance, ($) => {
+                    'range': _p.decide.state($.intermediate.instance, ($) => {
                         switch ($[0]) {
                             case 'state': return _p.ss($, ($) => t_parse_tree_to_location.State($))
                             case 'list': return _p.ss($, ($) => t_parse_tree_to_location.List($))

@@ -6,12 +6,13 @@ import _p_create_refinement_context from 'pareto-core/dist/__internals/async/cre
 
 //data types
 import * as d_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_out from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_from_astn_parse_tree"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 
 //dependencies
-import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_full_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_start_token_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
 export type Document = _pi.Refiner_Without_Error_With_Parameter<
     d_out.Document,
@@ -46,9 +47,10 @@ export const Document: Document = ($, $p) => ({
 export const Value: Value = ($, $p) => {
     const value = $
     const value_range_stack: d_out.Range_Stack = {
-        'range': t_parse_tree_to_location.Value($),
+        'range': t_parse_tree_to_full_location.Value($),
         'parent': $p['parent range stack']
     }
+    const start_token_range = t_parse_tree_to_start_token_location.Value($)
     const optional_value_range_stack = _p.optional.literal.set(value_range_stack)
     return _p.decide.state($.type, ($): d_out.Value => {
         switch ($[0]) {
@@ -59,7 +61,7 @@ export const Value: Value = ($, $p) => {
                     'definition path x': $p['definition path'],
                     'property path': $p['property path'],
                     'instance': value,
-                    'unmarshall result': _p_create_refinement_context<d_out.Unmarshalled_Value, d_out.Unmarshall_Error>(
+                    'unmarshall result': _p_create_refinement_context<d_out.Unmarshalled_Value, d_out.Value_Unmarshall_Error>(
                         (abort) => _p.decide.state($p.definition, ($): d_out.Unmarshalled_Value => {
                             switch ($[0]) {
                                 case 'component': return _p.ss($, ($): d_out.Unmarshalled_Value => ['component', {
@@ -91,38 +93,60 @@ export const Value: Value = ($, $p) => {
                                 case 'dictionary': return _p.ss($, ($): d_out.Unmarshalled_Value => {
                                     const dict_def = $
                                     const prop_def = $.value
-                                    return ['dictionary', _p.decide.state(concrete_value, ($) => {
+                                    return ['dictionary', _p.decide.state(concrete_value, ($): d_out.Dictionary => {
                                         switch ($[0]) {
-                                            case 'dictionary': return _p.ss($, ($) => {
+                                            case 'dictionary': return _p.ss($, ($): d_out.Dictionary => {
+                                                const entries = $.entries.__l_map(($): d_out.Entry => {
+                                                    const entry = $
+                                                    return {
+                                                        'definition': dict_def,
+                                                        'property path': $p['property path'],
+                                                        'id': $.id.token.value,
+                                                        'value': $.assignment.__decide(
+                                                            ($) => _p.optional.from.optional(
+                                                                $.value,
+                                                            ).map(
+                                                                ($) => Value(
+                                                                    $,
+                                                                    {
+                                                                        'definition': prop_def,
+                                                                        'definition path': `${$p['definition path']}.D`,
+                                                                        'property path': _p.list.literal([]),
+                                                                        'parent range stack': _p.optional.literal.set({
+                                                                            'range': t_parse_tree_to_full_location.ID_Value_Pair(entry),
+                                                                            'parent': optional_value_range_stack,
+                                                                        }),
+                                                                    }
+                                                                ),
+                                                            ),
+                                                            () => _p.optional.literal.not_set()
+                                                        ),
+                                                        'intermediate': {
+                                                            'id value pair': $,
+
+                                                        },
+                                                        'parent range stack': value_range_stack,
+                                                    }
+                                                })
                                                 return {
                                                     'definition': dict_def,
-                                                    'instance': $,
-                                                    'entries': $.entries.__l_map(($): d_out.Entry => {
-                                                        const entry = $
+                                                    'intermediate': {
+                                                        'instance': $,
+
+                                                        'entries as list': entries,
+                                                    },
+                                                    'entries': _p.dictionary.from.list(entries).group(
+                                                        ($) => $.intermediate['id value pair'].id.token.value,
+
+                                                    ).__d_map(($) => {
                                                         return {
-                                                            'definition': dict_def,
-                                                            'property path': $p['property path'],
-                                                            'value': $.assignment.__decide(
-                                                                ($) => _p.optional.from.optional(
-                                                                    $.value,
-                                                                ).map(
-                                                                    ($) => Value(
-                                                                        $,
-                                                                        {
-                                                                            'definition': prop_def,
-                                                                            'definition path': `${$p['definition path']}.D`,
-                                                                            'property path': _p.list.literal([]),
-                                                                            'parent range stack': _p.optional.literal.set({
-                                                                                'range': t_parse_tree_to_location.ID_Value_Pair(entry),
-                                                                                'parent': optional_value_range_stack,
-                                                                            }),
-                                                                        }
-                                                                    ),
-                                                                ),
-                                                                () => _p.optional.literal.not_set()
-                                                            ),
-                                                            'id value pair': $,
-                                                            'parent range stack': value_range_stack,
+                                                            'result': _p.decide.list($).has_single_item(
+                                                                ($): d_out.Entry_Unmarshall_Result => ['success', $],
+                                                                ($): d_out.Entry_Unmarshall_Result => ['error', ['duplicate', {
+                                                                    'instances': $
+                                                                }]],
+                                                                (): d_out.Entry_Unmarshall_Result => _p_unreachable_code_path("we are grouping by id, so there cannot be no entries having this id")
+                                                            )
                                                         }
                                                     })
                                                 }
@@ -133,7 +157,7 @@ export const Value: Value = ($, $p) => {
                                 })
                                 case 'group': return _p.ss($, ($): d_out.Unmarshalled_Value => {
                                     const group_def = $
-                                    return ['group', _p.decide.state(concrete_value, ($) => {
+                                    return ['group', _p.decide.state(concrete_value, ($): d_out.Group => {
 
                                         const concise_content = (
                                             $: d_in.Items
@@ -190,7 +214,10 @@ export const Value: Value = ($, $p) => {
                                                 'properties': $.__l_map(($) => {
                                                     const id_value_pair = $
                                                     return {
-                                                        'id value pair': $,
+                                                        'id': $.id.token.value,
+                                                        'intermediate': {
+                                                            'id value pair': $,
+                                                        },
                                                         'definition found': group_def.__get_possible_entry_deprecated($.id.token.value).__decide(
                                                             ($): d_out.Verbose_Property_Definition_Found => {
                                                                 const prop_def = $
@@ -210,7 +237,7 @@ export const Value: Value = ($, $p) => {
                                                                                         ]
                                                                                     ]),
                                                                                     'parent range stack': _p.optional.literal.set({
-                                                                                        'range': t_parse_tree_to_location.ID_Value_Pair(id_value_pair),
+                                                                                        'range': t_parse_tree_to_full_location.ID_Value_Pair(id_value_pair),
                                                                                         'parent': optional_value_range_stack,
                                                                                     }),
                                                                                 }
@@ -227,39 +254,112 @@ export const Value: Value = ($, $p) => {
                                                 })
                                             }
                                         }
+                                        const group_type: d_out.Group_Type = _p.decide.state($, ($) => {
+                                            switch ($[0]) {
+                                                case 'dictionary': return _p.ss($, ($) => ['verbose', verbose_content($.entries)])
+                                                case 'group': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Group_Type => {
+                                                    switch ($[0]) {
+                                                        case 'concise': return _p.ss($, ($) => ['concise', concise_content($.properties)])
+                                                        case 'verbose': return _p.ss($, ($) => ['verbose', verbose_content($.properties)])
+                                                        default: return _p.au($[0])
+                                                    }
+                                                }))
+                                                case 'list': return _p.ss($, ($) => ['concise', concise_content($.items)])
+                                                default: return abort(['incorrect', ['wrong type', null]])
+                                            }
+                                        })
                                         return {
                                             'definition': group_def,
-                                            'instance': _p.decide.state($, ($) => {
+                                            'intermediate': {
+
+
+                                                'instance': _p.decide.state($, ($) => {
+                                                    switch ($[0]) {
+                                                        case 'dictionary': return _p.ss($, ($) => ['dictionary', {
+                                                            'dummy': null
+                                                        }])
+                                                        case 'group': return _p.ss($, ($) => ['group', {
+                                                            'dummy': null
+                                                        }])
+                                                        case 'list': return _p.ss($, ($) => ['list', {
+                                                            'dummy': null
+                                                        }])
+                                                        default: return abort(['incorrect', ['wrong type', null]])
+                                                    }
+                                                }),
+                                                'type': group_type,
+                                            },
+                                            'properties': _p.decide.state(group_type, ($): d_out.Group['properties'] => {
                                                 switch ($[0]) {
-                                                    case 'dictionary': return _p.ss($, ($) => ['dictionary', {
-                                                        'dummy': null
-                                                    }])
-                                                    case 'group': return _p.ss($, ($) => ['group', {
-                                                        'dummy': null
-                                                    }])
-                                                    case 'list': return _p.ss($, ($) => ['list', {
-                                                        'dummy': null
-                                                    }])
-                                                    default: return abort(['incorrect', ['wrong type', null]])
+                                                    case 'verbose': return _p.ss($, ($) => {
+                                                        const instance_lookup = _p.dictionary.from.list($.properties).group(
+                                                            ($) => $.intermediate['id value pair'].id.token.value
+                                                        )
+                                                        return group_def.__d_map(($, id) => ({
+                                                            'definition': $,
+                                                            'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
+                                                                ($): d_out.Property['result'] => _p.decide.list($).has_single_item(
+                                                                    ($): d_out.Property['result'] => _p.decide.state($['definition found'], ($) => {
+                                                                        switch ($[0]) {
+                                                                            case 'yes': return _p.ss($, ($): d_out.Property['result'] => $.value.__decide(
+                                                                                ($): d_out.Property['result'] => ['success', $],
+                                                                                (): d_out.Property['result'] => ['error', ['missing', {
+                                                                                    'start token range': start_token_range
+                                                                                }]]
+                                                                            ))
+                                                                            case 'no': return _p.ss($, ($) => _p_unreachable_code_path("we are iterating over the definitions"))
+                                                                            default: return _p.au($[0])
+                                                                        }
+                                                                    }),
+                                                                    ($): d_out.Property['result'] => {
+                                                                        const x: d_out.Property_Unmarshall_Error = ['multiple', {
+                                                                            'instances': $
+                                                                        }]
+                                                                        return ['error', x]
+                                                                    },
+                                                                    (): d_out.Property['result'] => ['error', ['missing', {
+                                                                        'start token range': start_token_range
+                                                                    }]]
+                                                                ),
+                                                                (): d_out.Property['result'] => ['error', ['missing', {
+                                                                    'start token range': start_token_range
+                                                                }]]
+                                                            )
+                                                        }))
+                                                    })
+                                                    case 'concise': return _p.ss($, ($) => {
+                                                        const instance_lookup = _p.dictionary.from.list(
+                                                            _p.list.from.list(
+                                                                $.properties
+                                                            ).filter(($) => _p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
+                                                                switch ($[0]) {
+                                                                    case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
+                                                                    case 'yes': return _p.ss($, ($) => _p.optional.literal.set($))
+                                                                    default: return _p.au($[0])
+                                                                }
+                                                            }))
+                                                        ).group(
+                                                            ($) => $.id
+                                                        )
+                                                        return group_def.__d_map(($, id) => ({
+                                                            'definition': $,
+                                                            'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
+                                                                ($): d_out.Property['result'] => _p.decide.list($).has_single_item(
+                                                                    ($): d_out.Property['result'] => ['success', $.value],
+                                                                    ($): d_out.Property['result'] => _p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
+                                                                    (): d_out.Property['result'] => ['error', ['missing', {
+                                                                        'start token range': start_token_range
+                                                                    }]]
+                                                                ),
+                                                                (): d_out.Property['result'] => ['error', ['missing', {
+                                                                    'start token range': start_token_range
+                                                                }]]
+                                                            )
+                                                        }))
+                                                    })
+                                                    default: return _p.au($[0])
                                                 }
                                             }),
-                                            'type': _p.decide.state($, ($) => {
-                                                switch ($[0]) {
-                                                    case 'dictionary': return _p.ss($, ($) => ['verbose', verbose_content($.entries)])
-                                                    case 'group': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Group_Type => {
-                                                        switch ($[0]) {
-                                                            case 'concise': return _p.ss($, ($) => ['concise', concise_content($.properties)])
-                                                            case 'verbose': return _p.ss($, ($) => ['verbose', verbose_content($.properties)])
-                                                            default: return _p.au($[0])
-                                                        }
-                                                    }))
-                                                    case 'list': return _p.ss($, ($) => ['concise', concise_content($.items)])
-                                                    default: return abort(['incorrect', ['wrong type', null]])
-                                                }
-                                            }),
-                                            'properties': group_def.__d_map(($) => ({
-                                                'definition': $,
-                                            })),
                                         }
                                     })]
                                 })
@@ -270,7 +370,10 @@ export const Value: Value = ($, $p) => {
                                             case 'list': return _p.ss($, ($) => {
                                                 return {
                                                     'definition': def,
-                                                    'instance': $,
+                                                    'intermediate': {
+
+                                                        'instance': $,
+                                                    },
                                                     'items': $.items.__l_map(($) => Value(
                                                         $.value,
                                                         {
@@ -293,12 +396,16 @@ export const Value: Value = ($, $p) => {
                                         switch ($[0]) {
                                             case 'nothing': return _p.ss($, ($) => ({
                                                 'definition': def,
-                                                'value': ['nothing', $],
+                                                'intermediate': {
+                                                    'value': ['nothing', $],
+                                                }
                                             }))
                                             case 'text': return _p.ss($, ($) => $.token.value === "null"
                                                 ? {
                                                     'definition': def,
-                                                    'value': ['null literal', $],
+                                                    'intermediate': {
+                                                        'value': ['null literal', $],
+                                                    }
                                                 }
                                                 : abort(['incorrect', ['wrong type', null]])
                                             )
@@ -312,16 +419,19 @@ export const Value: Value = ($, $p) => {
                                         switch ($[0]) {
                                             case 'text': return _p.ss($, ($) => ({
                                                 'definition': def,
-                                                'instance': $,
-                                                'correct string type': _p.decide.state($.token.type, ($) => {
-                                                    switch ($[0]) {
-                                                        case 'quoted': return true
-                                                        case 'apostrophed': return false
-                                                        case 'undelimited': return true
-                                                        case 'backticked': return false
-                                                        default: return _p.au($[0])
-                                                    }
-                                                })
+                                                'value': $.token.value,
+                                                'intermediate': {
+                                                    'instance': $,
+                                                    'invalid string type': _p.decide.state($.token.type, ($) => {
+                                                        switch ($[0]) {
+                                                            case 'quoted': return false
+                                                            case 'apostrophed': return true
+                                                            case 'undelimited': return false
+                                                            case 'backticked': return true
+                                                            default: return _p.au($[0])
+                                                        }
+                                                    })
+                                                },
                                             }))
                                             default: return abort(['incorrect', ['wrong type', null]])
                                         }
@@ -335,7 +445,10 @@ export const Value: Value = ($, $p) => {
                                                 ? {
                                                     'definition': def,
                                                     'status': ['not set', {
-                                                        'instance': ['null literal', $],
+                                                        'intermediate': {
+
+                                                            'instance': ['null literal', $],
+                                                        }
                                                     }],
                                                 }
                                                 : abort(['incorrect', ['wrong type', null]])
@@ -350,7 +463,10 @@ export const Value: Value = ($, $p) => {
                                                             () => ({
                                                                 'definition': def,
                                                                 'status': ['set', {
-                                                                    'instance': ['list', list],
+                                                                    'intermediate': {
+
+                                                                        'instance': ['list', list],
+                                                                    },
                                                                     'child value': Value(
                                                                         item_value.value,
                                                                         {
@@ -377,7 +493,9 @@ export const Value: Value = ($, $p) => {
                                                 'status': _p.decide.state($, ($): d_out.Optional['status'] => {
                                                     switch ($[0]) {
                                                         case 'set': return _p.ss($, ($) => ['set', {
-                                                            'instance': ['optional', $],
+                                                            'intermediate': {
+                                                                'instance': ['optional', $],
+                                                            },
                                                             'child value': Value(
                                                                 $.value,
                                                                 {
@@ -394,7 +512,10 @@ export const Value: Value = ($, $p) => {
                                                             )
                                                         }])
                                                         case 'not set': return _p.ss($, ($) => ['not set', {
-                                                            'instance': ['not set', $],
+                                                            'intermediate': {
+
+                                                                'instance': ['not set', $],
+                                                            }
                                                         }])
                                                         default: return _p.au($[0])
                                                     }
@@ -413,14 +534,20 @@ export const Value: Value = ($, $p) => {
                                                     case 'nothing': return _p.ss($, ($) => ({
                                                         'definition': def,
                                                         'type': ['derived', {
-                                                            'instance': ['nothing', $],
+                                                            'intermediate': {
+
+                                                                'instance': ['nothing', $],
+                                                            }
                                                         }]
                                                     }))
                                                     case 'text': return _p.ss($, ($) => $.token.value === "null"
                                                         ? {
                                                             'definition': def,
                                                             'type': ['derived', {
-                                                                'instance': ['null literal', $],
+                                                                'intermediate': {
+
+                                                                    'instance': ['null literal', $],
+                                                                }
                                                             }]
                                                         }
                                                         : abort(['incorrect', ['wrong type', null]])
@@ -433,7 +560,10 @@ export const Value: Value = ($, $p) => {
                                                     case 'text': return _p.ss($, ($) => ({
                                                         'definition': def,
                                                         'type': ['selected', {
-                                                            'instance': $,
+                                                            'value': $.token.value,
+                                                            'intermediate': {
+                                                                'instance': $,
+                                                            }
                                                         }]
                                                     }))
                                                     default: return abort(['incorrect', ['wrong type', null]])
@@ -460,7 +590,7 @@ export const Value: Value = ($, $p) => {
                                                                             const option_token = $
                                                                             const option_name = $.token.value
                                                                             return _p.decide.list(rest).has_first_item(
-                                                                                ($, rest) => {
+                                                                                ($, rest): d_out.State => {
                                                                                     const raw_value = $
                                                                                     return _p.decide.list(rest).has_items(
                                                                                         ($) => abort(['incorrect', ['list as state format error', {
@@ -470,13 +600,18 @@ export const Value: Value = ($, $p) => {
                                                                                         () => ({
                                                                                             'definition': def,
                                                                                             'property path': $p['property path'],
-                                                                                            'instance': ['list', list],
+                                                                                            'intermediate': {
+                                                                                                'instance': ['list', list],
+                                                                                            },
                                                                                             'option status': ['set', _p.decide.optional(
                                                                                                 def.options.__get_possible_entry_deprecated(option_name),
                                                                                                 ($): d_out.State_Set => {
                                                                                                     const option_def = $
                                                                                                     return {
-                                                                                                        'option token': option_token,
+                                                                                                        'option': option_name,
+                                                                                                        'intermediate': {
+                                                                                                            'option token': option_token,
+                                                                                                        },
                                                                                                         'definition': option_def,
                                                                                                         'value': Value(
                                                                                                             raw_value.value,
@@ -489,10 +624,10 @@ export const Value: Value = ($, $p) => {
                                                                                                         )
                                                                                                     }
                                                                                                 },
-                                                                                                () => abort(['unknown option', {
+                                                                                                () => abort(['incorrect', ['unknown option', {
                                                                                                     'definition': def,
                                                                                                     'option token': option_token,
-                                                                                                }])
+                                                                                                }]])
                                                                                             )],
                                                                                             'parent range stack': value_range_stack,
                                                                                         })
@@ -533,10 +668,12 @@ export const Value: Value = ($, $p) => {
                                                 return {
                                                     'definition': def,
                                                     'property path': $p['property path'],
-                                                    'instance': ['state', $],
+                                                    'intermediate': {
+                                                        'instance': ['state', $],
+                                                    },
                                                     'option status': _p.decide.state($.status, ($): d_out.State_Option => {
                                                         switch ($[0]) {
-                                                            case 'missing': return _p.ss($, ($) => ['missing data', $['#']])
+                                                            case 'missing': return _p.ss($, ($) => ['missing data', { 'intermediate': $['#'] }])
                                                             case 'set': return _p.ss($, ($): d_out.State_Option => {
                                                                 const value = $.value
                                                                 const option_name = $.option.token.value
@@ -544,7 +681,10 @@ export const Value: Value = ($, $p) => {
                                                                 return ['set', _p.decide.optional(
                                                                     def.options.__get_possible_entry_deprecated(option_name),
                                                                     ($): d_out.State_Set => ({
-                                                                        'option token': option_token,
+                                                                        'intermediate': {
+                                                                            'option token': option_token,
+                                                                        },
+                                                                        'option': option_name,
                                                                         'definition': $,
                                                                         'value': Value(
                                                                             value,
@@ -561,10 +701,10 @@ export const Value: Value = ($, $p) => {
                                                                             }
                                                                         )
                                                                     }),
-                                                                    () => abort(['unknown option', {
+                                                                    () => abort(['incorrect', ['unknown option', {
                                                                         'definition': def,
                                                                         'option token': $.option
-                                                                    }])
+                                                                    }]])
                                                                 )]
                                                             })
                                                             default: return _p.au($[0])
@@ -583,7 +723,10 @@ export const Value: Value = ($, $p) => {
                                         switch ($[0]) {
                                             case 'text': return _p.ss($, ($) => ({
                                                 'definition': def,
-                                                'instance': $,
+                                                'value': $.token.value,
+                                                'intermediate': {
+                                                    'instance': $,
+                                                }
                                             }))
                                             default: return abort(['incorrect', ['wrong type', null]])
                                         }

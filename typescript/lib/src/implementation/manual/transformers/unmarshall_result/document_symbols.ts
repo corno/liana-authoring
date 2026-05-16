@@ -3,7 +3,7 @@ import * as _p from 'pareto-core/dist/assign'
 import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_out from "../../../../interface/to_be_generated/document_symbols"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
@@ -100,8 +100,8 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                 case 'dictionary': return _p.ss($, ($): d_out.Value => ({
                     'type': ['composite', {
                         'kind': ['object', null],
-                        'children': $.entries.__l_map(($): d_out.Symbol => ({
-                            'name': $['id value pair'].id.token.value,
+                        'children': $.intermediate['entries as list'].__l_map(($): d_out.Symbol => ({
+                            'name': $.intermediate['id value pair'].id.token.value,
                             'detail': "dictionary entry",
                             'value': $.value.__decide(
                                 ($): d_out.Value => Value($),
@@ -111,18 +111,18 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                     }],
                                 })
                             ),
-                            'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
-                            'selection range': $['id value pair'].id.range,
+                            'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                            'selection range': $.intermediate['id value pair'].id.range,
                         })),
                     }],
                 }))
                 case 'group': return _p.ss($, ($) => ({
                     'type': ['composite', {
                         'kind': ['struct', null],
-                        'children': _p.decide.state($.type, ($) => {
+                        'children': _p.decide.state($.intermediate.type, ($) => {
                             switch ($[0]) {
                                 case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => ({
-                                    'name': $['id value pair'].id.token.value,
+                                    'name': $.id,
                                     'detail': "property",
                                     'value': _p.decide.state($['definition found'], ($) => {
                                         switch ($[0]) {
@@ -143,8 +143,8 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                             default: return _p.au($[0])
                                         }
                                     }),
-                                    'range': t_parse_tree_to_location.ID_Value_Pair($['id value pair']),
-                                    'selection range': $['id value pair'].id.range,
+                                    'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                                    'selection range': $.intermediate['id value pair'].id.range,
                                 })))
                                 case 'concise': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => _p.decide.state($['definition found'], ($) => {
                                     switch ($[0]) {

@@ -2,7 +2,7 @@ import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import _p_implement_me from 'pareto-core-dev/dist/implement_me'
 
-import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_out from "../../../../interface/to_be_generated/resolve_result"
 
@@ -35,11 +35,10 @@ export const Value = (
         'module parameters': d_out.Parameters
     }
 ): d_out.Value => {
-    const unmarshall_result = $
     return {
         'definition': $p.definition,
         'unmarshalled': $,
-        'resolve result': _p.decide.state($['unmarshall result'], ($): d_out.Resolve_Result => {
+        'resolve result': _p.decide.state($['unmarshall result'], ($): d_out.Value_Resolve_Result => {
             switch ($[0]) {
                 case 'error': return _p.ss($, ($) => ['unmarshall error', $])
                 case 'success': return _p.ss($, ($) => {
@@ -61,9 +60,9 @@ export const Value = (
                                                             case 'internal': return _p.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
                                                                 $['l id'],
                                                                 {
-                                                                    'no_such_entry': _p_unreachable_code_path("the definition is resolved")
+                                                                    'no_such_entry': _p_unreachable_code_path("for every signature, there must be a resolver implemented")
                                                                 }
-                                                            ))['root value resolver']
+                                                            )['root value resolver'])
                                                             default: return _p.au($[0])
                                                         }
                                                     }),
@@ -84,9 +83,9 @@ export const Value = (
                                             'unmarshalled': $,
                                             'entries': _p.optional.literal.set(_p.dictionary.from.dictionary(
                                                 _p.dictionary.from.list(
-                                                    $.entries
+                                                    $.intermediate['entries as list']
                                                 ).group(
-                                                    ($) => $['id value pair'].id.token.value
+                                                    ($) => $.intermediate['id value pair'].id.token.value
                                                 )
                                             ).map(($, id): d_out.Optional_Entry => _p.decide.list($).has_single_item(
                                                 ($) => $.value.__decide(
@@ -110,54 +109,37 @@ export const Value = (
                             })
                             case 'group': return _p.ss($, ($) => {
                                 const def = $
-                                return ['group', _p.decide.state(correct, ($) => {
+                                return ['group', _p.decide.state(correct, ($): d_out.Group => {
                                     switch ($[0]) {
-                                        case 'group': return _p.ss($, ($) => ({
+                                        case 'group': return _p.ss($, ($): d_out.Group => ({
                                             'unmarshalled': $,
                                             'properties': _p_variables(() => {
-                                                const unmarshalled_properties: _pi.Dictionary<_pi.Optional_Value<d_in.Value>> = _p_implement_me("!!!!!!!")
-                                                // const unmarshalled_properties: _pi.Dictionary<_pi.Optional_Value<d_in.Value>> = _p.decide.state($.type, ($) => {
-                                                //     switch ($[0]) {
-                                                //         case 'verbose': return _p.ss($, ($) => $.properties.__d_map(($) => $.__get_number_of_items() === 0
-                                                //             ? _p.optional.literal.not_set()
-                                                //             : $.__deprecated_get_possible_item_at(0).__decide(
-                                                //                 ($) => $.value.__decide(
-                                                //                     ($) => _p.optional.literal.set($),
-                                                //                     () => _p.optional.literal.not_set(),
-                                                //                 ),
-                                                //                 () => _p.optional.literal.not_set(),
-                                                //             )
-                                                //         ))
-                                                //         case 'concise': return _p.ss($, ($) => $.properties.__d_map(($) => $.__decide(
-                                                //             ($) => _p.optional.literal.set($),
-                                                //             () => _p.optional.literal.not_set(),
-                                                //         )))
-                                                //         default: return _p.au($[0])
-                                                //     }
-                                                // })
                                                 return _p.dictionary.from.dictionary(
                                                     def
                                                 ).join(
-                                                    unmarshalled_properties,
-                                                    ($, $o, id) => {
+                                                    $.properties,
+                                                    ($, $o, id): d_out.Property_Resolve_Result => {
                                                         const resolver = $.resolver
-                                                        return {
-                                                            'definition': $.resolver,
-                                                            'resolved': $o.__decide(
-                                                                ($) => $.__decide(
-                                                                    ($) => _p.optional.literal.set(Value(
-                                                                        $,
-                                                                        {
-                                                                            'definition': resolver,
-                                                                            'resolver': $p.resolver,
-                                                                            'module parameters': $p['module parameters'],
-                                                                        }
-                                                                    )),
-                                                                    () => _p.optional.literal.not_set(),
-                                                                ),
-                                                                () => _p.optional.literal.not_set(),
-                                                            )
-                                                        }
+                                                        return $o.__decide(
+                                                            ($) => _p.decide.state($.result, ($): d_out.Property_Resolve_Result => {
+                                                                switch ($[0]) {
+                                                                    case 'success': return _p.ss($, ($): d_out.Property_Resolve_Result => ['success', {
+                                                                        'definition': resolver,
+                                                                        'resolved': Value(
+                                                                            $,
+                                                                            {
+                                                                                'definition': resolver,
+                                                                                'resolver': $p.resolver,
+                                                                                'module parameters': $p['module parameters'],
+                                                                            }
+                                                                        )
+                                                                    }])
+                                                                    case 'error': return _p.ss($, ($): d_out.Property_Resolve_Result => ['unmarshall error', $])
+                                                                    default: return _p.au($[0])
+                                                                }
+                                                            }),
+                                                            () => _p_unreachable_code_path("both dictionaries are driven by the definitions in the schema")
+                                                        )
                                                     }
                                                 )
                                             }),
@@ -200,24 +182,27 @@ export const Value = (
                             })])
                             case 'optional': return _p.ss($, ($) => {
                                 const def = $
-                                return ['optional', _p.decide.state(correct, ($) => {
+                                return ['optional', _p.decide.state(correct, ($): d_out.Optional => {
                                     switch ($[0]) {
-                                        case 'optional': return _p.ss($, ($) => ({
+                                        case 'optional': return _p.ss($, ($): d_out.Optional => ({
                                             'unmarshalled': $,
-                                            'optional optional value': _p.optional.literal.set(_p.decide.state($.status, ($) => {
+                                            'status': _p.decide.state($.status, ($) => {
                                                 switch ($[0]) {
-                                                    case 'set': return _p.ss($, ($) => _p.optional.literal.set(Value(
-                                                        $['child value'],
-                                                        {
-                                                            'definition': def.resolver,
-                                                            'resolver': $p.resolver,
-                                                            'module parameters': $p['module parameters'],
-                                                        }
-                                                    )))
-                                                    case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
+                                                    case 'set': return _p.ss($, ($) => ['set', {
+                                                        'child value': Value(
+                                                            $['child value'],
+                                                            {
+                                                                'definition': def.resolver,
+                                                                'resolver': $p.resolver,
+                                                                'module parameters': $p['module parameters'],
+                                                            }
+                                                        )
+                                                    }])
+                                                    case 'not set': return _p.ss($, ($) => ['not set', null])
                                                     default: return _p.au($[0])
                                                 }
-                                            }))
+
+                                            }),
                                         }))
                                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                     }
@@ -225,10 +210,11 @@ export const Value = (
                             })
                             case 'reference': return _p.ss($, ($) => {
                                 const def = $
-                                return ['reference', _p.decide.state(correct, ($) => {
+                                return ['reference', _p.decide.state(correct, ($): d_out.Reference => {
                                     switch ($[0]) {
                                         case 'reference': return _p.ss($, ($) => ({
-                                            'unmarshalled': $
+                                            'unmarshalled': $,
+                                            'resolve status': ['to be implemented', null]
                                         }))
                                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                     }
@@ -246,7 +232,7 @@ export const Value = (
                                                         $.value,
                                                         {
                                                             'definition': def.options.__get_entry_deprecated(
-                                                                $['option token'].token.value,
+                                                                $.option,
                                                                 {
                                                                     'no_such_entry': _p_unreachable_code_path("the definition is resolved")
                                                                 }
@@ -274,7 +260,6 @@ export const Value = (
                         }
                     })]
                 })
-
                 default: return _p.au($[0])
             }
         })

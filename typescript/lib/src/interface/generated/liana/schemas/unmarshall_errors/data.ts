@@ -11,9 +11,9 @@ export namespace Errors_ {
         
         export namespace type_ {
             
-            export namespace error {
+            export namespace value {
                 
-                export namespace invalid_value_type {
+                export namespace invalid_type {
                     
                     export namespace expected {
                         
@@ -50,19 +50,19 @@ export namespace Errors_ {
                     
                 }
                 
-                export type invalid_value_type = {
-                    readonly 'expected': invalid_value_type.expected
+                export type invalid_type = {
+                    readonly 'expected': invalid_type.expected
                 }
                 
-                export namespace duplicate_property {
-                    
-                    export type name = string
-                    
-                }
+                export type missing = null
                 
-                export type duplicate_property = {
-                    readonly 'name': duplicate_property.name
-                }
+            }
+            
+            export type value = 
+                | readonly ['invalid type', value.invalid_type]
+                | readonly ['missing', value.missing]
+            
+            export namespace dictionary {
                 
                 export namespace duplicate_entry {
                     
@@ -74,6 +74,23 @@ export namespace Errors_ {
                     readonly 'name': duplicate_entry.name
                 }
                 
+            }
+            
+            export type dictionary = 
+                | readonly ['duplicate entry', dictionary.duplicate_entry]
+            
+            export namespace group {
+                
+                export namespace duplicate_property {
+                    
+                    export type name = string
+                    
+                }
+                
+                export type duplicate_property = {
+                    readonly 'name': duplicate_property.name
+                }
+                
                 export namespace missing_property {
                     
                     export type name = string
@@ -83,8 +100,6 @@ export namespace Errors_ {
                 export type missing_property = {
                     readonly 'name': missing_property.name
                 }
-                
-                export type missing_value = null
                 
                 export namespace missing_property_value {
                     
@@ -112,85 +127,62 @@ export namespace Errors_ {
                     readonly 'name': superfluous_property.name
                 }
                 
-                export namespace state {
+            }
+            
+            export type group = 
+                | readonly ['duplicate property', group.duplicate_property]
+                | readonly ['missing property', group.missing_property]
+                | readonly ['missing property value', group.missing_property_value]
+                | readonly ['superfluous property', group.superfluous_property]
+            
+            export namespace state {
+                
+                export type more_than_2_items_in_list = null
+                
+                export type missing_option_name = null
+                
+                export type option_name_is_not_a_text = null
+                
+                export type missing_value = null
+                
+                export namespace unknown_option {
                     
-                    export type more_than_2_items = null
+                    export type found = string
                     
-                    export type missing_option_name = null
-                    
-                    export type option_name_is_not_a_text = null
-                    
-                    export type missing_value = null
-                    
-                    export namespace unknown_option {
+                    export namespace expected {
                         
-                        export type found = string
-                        
-                        export namespace expected {
-                            
-                            export type D = null
-                            
-                        }
-                        
-                        export type expected = _pi.Dictionary<expected.D>
+                        export type D = null
                         
                     }
                     
-                    export type unknown_option = {
-                        readonly 'found': unknown_option.found
-                        readonly 'expected': unknown_option.expected
-                    }
-                    
-                    export type missing_option = null
+                    export type expected = _pi.Dictionary<expected.D>
                     
                 }
                 
-                export type state = 
-                    | readonly ['more than 2 items', state.more_than_2_items]
-                    | readonly ['missing option name', state.missing_option_name]
-                    | readonly ['option name is not a text', state.option_name_is_not_a_text]
-                    | readonly ['missing value', state.missing_value]
-                    | readonly ['unknown option', state.unknown_option]
-                    | readonly ['missing option', state.missing_option]
+                export type unknown_option = {
+                    readonly 'found': unknown_option.found
+                    readonly 'expected': unknown_option.expected
+                }
+                
+                export type missing_option = null
                 
             }
             
-            export type error = 
-                | readonly ['invalid value type', error.invalid_value_type]
-                | readonly ['duplicate property', error.duplicate_property]
-                | readonly ['duplicate entry', error.duplicate_entry]
-                | readonly ['missing property', error.missing_property]
-                | readonly ['missing value', error.missing_value]
-                | readonly ['missing property value', error.missing_property_value]
-                | readonly ['superfluous property', error.superfluous_property]
-                | readonly ['state', error.state]
-            
-            export namespace warning {
-                
-                export type expected_apostrophed_text = null
-                
-                export type expected_quoted_text = null
-                
-                export type expected_backticked_text = null
-                
-                export type expected_undelimited_text = null
-                
-                export type expected_a_group = null
-                
-            }
-            
-            export type warning = 
-                | readonly ['expected apostrophed text', warning.expected_apostrophed_text]
-                | readonly ['expected quoted text', warning.expected_quoted_text]
-                | readonly ['expected backticked text', warning.expected_backticked_text]
-                | readonly ['expected undelimited text', warning.expected_undelimited_text]
-                | readonly ['expected a group', warning.expected_a_group]
+            export type state = 
+                | readonly ['more than 2 items in list', state.more_than_2_items_in_list]
+                | readonly ['missing option name', state.missing_option_name]
+                | readonly ['option name is not a text', state.option_name_is_not_a_text]
+                | readonly ['missing value', state.missing_value]
+                | readonly ['unknown option', state.unknown_option]
+                | readonly ['missing option', state.missing_option]
             
         }
         
         export type type_ = 
-            | readonly ['error', type_.error]
-            | readonly ['warning', type_.warning]
+            | readonly ['value', type_.value]
+            | readonly ['dictionary', type_.dictionary]
+            | readonly ['group', type_.group]
+            | readonly ['state', type_.state]
         
     }
     
@@ -203,6 +195,45 @@ export namespace Errors_ {
 
 export type Errors_ = _pi.List<Errors_.L>
 
+export namespace Warnings_ {
+    
+    export namespace L {
+        
+        export type range = i_imports_location.Range
+        
+        export namespace type_ {
+            
+            export type expected_apostrophed_text = null
+            
+            export type expected_quoted_text = null
+            
+            export type expected_backticked_text = null
+            
+            export type expected_undelimited_text = null
+            
+            export type expected_a_group = null
+            
+        }
+        
+        export type type_ = 
+            | readonly ['expected apostrophed text', type_.expected_apostrophed_text]
+            | readonly ['expected quoted text', type_.expected_quoted_text]
+            | readonly ['expected backticked text', type_.expected_backticked_text]
+            | readonly ['expected undelimited text', type_.expected_undelimited_text]
+            | readonly ['expected a group', type_.expected_a_group]
+        
+    }
+    
+    export type L = {
+        readonly 'range': L.range
+        readonly 'type': L.type_
+    }
+    
+}
+
+export type Warnings_ = _pi.List<Warnings_.L>
+
 export { 
     Errors_ as Errors, 
+    Warnings_ as Warnings, 
 }

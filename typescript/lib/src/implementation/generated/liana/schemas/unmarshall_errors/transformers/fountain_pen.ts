@@ -12,3 +12,9 @@ export const Errors: t_signatures.Errors = ($) => v_serialize.Document(
         $,
     ),
 )
+
+export const Warnings: t_signatures.Warnings = ($) => v_serialize.Document(
+    v_marshall.Warnings(
+        $,
+    ),
+)

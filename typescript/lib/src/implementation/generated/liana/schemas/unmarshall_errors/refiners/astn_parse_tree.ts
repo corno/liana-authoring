@@ -96,10 +96,10 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                     $['option']['token']['value'],
                                     ($t): t_out.Errors.L.type_ => {
                                         switch ($t) {
-                                            case 'error':
+                                            case 'value':
                                                 return _p_change_context(
                                                     $['value'],
-                                                    ($) => ['error', _p_change_context(
+                                                    ($) => ['value', _p_change_context(
                                                         v_unmarshalled_from_parse_tree.State(
                                                             $,
                                                             ($) => abort(
@@ -108,12 +108,12 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                         ),
                                                         ($) => _p.decide.text(
                                                             $['option']['token']['value'],
-                                                            ($t): t_out.Errors.L.type_.error => {
+                                                            ($t): t_out.Errors.L.type_.value => {
                                                                 switch ($t) {
-                                                                    case 'invalid value type':
+                                                                    case 'invalid type':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['invalid value type', _p_change_context(
+                                                                            ($) => ['invalid type', _p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
@@ -171,7 +171,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                             ),
                                                                                                             ($) => _p.decide.text(
                                                                                                                 $['option']['token']['value'],
-                                                                                                                ($t): t_out.Errors.L.type_.error.invalid_value_type.expected.L => {
+                                                                                                                ($t): t_out.Errors.L.type_.value.invalid_type.expected.L => {
                                                                                                                     switch ($t) {
                                                                                                                         case 'dictionary':
                                                                                                                             return _p_change_context(
@@ -267,10 +267,51 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 ),
                                                                             )],
                                                                         )
-                                                                    case 'duplicate property':
+                                                                    case 'missing':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['duplicate property', _p_change_context(
+                                                                            ($) => ['missing', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                $,
+                                                                                ($) => abort(
+                                                                                    $,
+                                                                                ),
+                                                                            )],
+                                                                        )
+                                                                    default:
+                                                                        return abort(
+                                                                            ['liana', {
+                                                                                'type': ['state', ['unknown option', $['option']['token']['value']]],
+                                                                                'range': v_parse_tree_to_location.Value(
+                                                                                    $['value'],
+                                                                                    {
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                                                    },
+                                                                                ),
+                                                                            }],
+                                                                        )
+                                                                }
+                                                            },
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'dictionary':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['dictionary', _p_change_context(
+                                                        v_unmarshalled_from_parse_tree.State(
+                                                            $,
+                                                            ($) => abort(
+                                                                $,
+                                                            ),
+                                                        ),
+                                                        ($) => _p.decide.text(
+                                                            $['option']['token']['value'],
+                                                            ($t): t_out.Errors.L.type_.dictionary => {
+                                                                switch ($t) {
+                                                                    case 'duplicate entry':
+                                                                        return _p_change_context(
+                                                                            $['value'],
+                                                                            ($) => ['duplicate entry', _p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
@@ -318,10 +359,41 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 ),
                                                                             )],
                                                                         )
-                                                                    case 'duplicate entry':
+                                                                    default:
+                                                                        return abort(
+                                                                            ['liana', {
+                                                                                'type': ['state', ['unknown option', $['option']['token']['value']]],
+                                                                                'range': v_parse_tree_to_location.Value(
+                                                                                    $['value'],
+                                                                                    {
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                                                    },
+                                                                                ),
+                                                                            }],
+                                                                        )
+                                                                }
+                                                            },
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'group':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['group', _p_change_context(
+                                                        v_unmarshalled_from_parse_tree.State(
+                                                            $,
+                                                            ($) => abort(
+                                                                $,
+                                                            ),
+                                                        ),
+                                                        ($) => _p.decide.text(
+                                                            $['option']['token']['value'],
+                                                            ($t): t_out.Errors.L.type_.group => {
+                                                                switch ($t) {
+                                                                    case 'duplicate property':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['duplicate entry', _p_change_context(
+                                                                            ($) => ['duplicate property', _p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
@@ -417,16 +489,6 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                             ),
                                                                                         }
                                                                                     },
-                                                                                ),
-                                                                            )],
-                                                                        )
-                                                                    case 'missing value':
-                                                                        return _p_change_context(
-                                                                            $['value'],
-                                                                            ($) => ['missing value', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                $,
-                                                                                ($) => abort(
-                                                                                    $,
                                                                                 ),
                                                                             )],
                                                                         )
@@ -541,169 +603,169 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 ),
                                                                             )],
                                                                         )
-                                                                    case 'state':
+                                                                    default:
+                                                                        return abort(
+                                                                            ['liana', {
+                                                                                'type': ['state', ['unknown option', $['option']['token']['value']]],
+                                                                                'range': v_parse_tree_to_location.Value(
+                                                                                    $['value'],
+                                                                                    {
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                                                    },
+                                                                                ),
+                                                                            }],
+                                                                        )
+                                                                }
+                                                            },
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'state':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['state', _p_change_context(
+                                                        v_unmarshalled_from_parse_tree.State(
+                                                            $,
+                                                            ($) => abort(
+                                                                $,
+                                                            ),
+                                                        ),
+                                                        ($) => _p.decide.text(
+                                                            $['option']['token']['value'],
+                                                            ($t): t_out.Errors.L.type_.state => {
+                                                                switch ($t) {
+                                                                    case 'more than 2 items in list':
                                                                         return _p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['state', _p_change_context(
-                                                                                v_unmarshalled_from_parse_tree.State(
+                                                                            ($) => ['more than 2 items in list', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                $,
+                                                                                ($) => abort(
+                                                                                    $,
+                                                                                ),
+                                                                            )],
+                                                                        )
+                                                                    case 'missing option name':
+                                                                        return _p_change_context(
+                                                                            $['value'],
+                                                                            ($) => ['missing option name', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                $,
+                                                                                ($) => abort(
+                                                                                    $,
+                                                                                ),
+                                                                            )],
+                                                                        )
+                                                                    case 'option name is not a text':
+                                                                        return _p_change_context(
+                                                                            $['value'],
+                                                                            ($) => ['option name is not a text', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                $,
+                                                                                ($) => abort(
+                                                                                    $,
+                                                                                ),
+                                                                            )],
+                                                                        )
+                                                                    case 'missing value':
+                                                                        return _p_change_context(
+                                                                            $['value'],
+                                                                            ($) => ['missing value', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                $,
+                                                                                ($) => abort(
+                                                                                    $,
+                                                                                ),
+                                                                            )],
+                                                                        )
+                                                                    case 'unknown option':
+                                                                        return _p_change_context(
+                                                                            $['value'],
+                                                                            ($) => ['unknown option', _p_change_context(
+                                                                                v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
+                                                                                    {
+                                                                                        'expected properties': _p.dictionary.literal(
+                                                                                            {
+                                                                                                "found": null,
+                                                                                                "expected": null,
+                                                                                            },
+                                                                                        ),
+                                                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                                                    },
                                                                                 ),
-                                                                                ($) => _p.decide.text(
-                                                                                    $['option']['token']['value'],
-                                                                                    ($t): t_out.Errors.L.type_.error.state => {
-                                                                                        switch ($t) {
-                                                                                            case 'more than 2 items':
-                                                                                                return _p_change_context(
-                                                                                                    $['value'],
-                                                                                                    ($) => ['more than 2 items', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                ($) => _p_variables(
+                                                                                    () => {
+                                                                                        
+                                                                                        const var_verbose_group_range = v_parse_tree_to_location.Value(
+                                                                                            $['value'],
+                                                                                            {
+                                                                                                'subdocument context': _p.optional.literal.not_set(),
+                                                                                            },
+                                                                                        )
+                                                                                        return {
+                                                                                            'found': _p_change_context(
+                                                                                                v_unmarshalled_from_parse_tree.Property(
+                                                                                                    $,
+                                                                                                    ($) => abort(
+                                                                                                        $,
+                                                                                                    ),
+                                                                                                    {
+                                                                                                        'id': 'found',
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                                                                    },
+                                                                                                ),
+                                                                                                ($) => v_unmarshalled_from_parse_tree.Text(
+                                                                                                    $,
+                                                                                                    ($) => abort(
+                                                                                                        $,
+                                                                                                    ),
+                                                                                                ),
+                                                                                            ),
+                                                                                            'expected': _p_change_context(
+                                                                                                v_unmarshalled_from_parse_tree.Property(
+                                                                                                    $,
+                                                                                                    ($) => abort(
+                                                                                                        $,
+                                                                                                    ),
+                                                                                                    {
+                                                                                                        'id': 'expected',
+                                                                                                        'subdocument context': _p.optional.literal.not_set(),
+                                                                                                    },
+                                                                                                ),
+                                                                                                ($) => _p_change_context(
+                                                                                                    v_unmarshalled_from_parse_tree.Dictionary(
                                                                                                         $,
                                                                                                         ($) => abort(
                                                                                                             $,
                                                                                                         ),
-                                                                                                    )],
-                                                                                                )
-                                                                                            case 'missing option name':
-                                                                                                return _p_change_context(
-                                                                                                    $['value'],
-                                                                                                    ($) => ['missing option name', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                        $,
-                                                                                                        ($) => abort(
-                                                                                                            $,
-                                                                                                        ),
-                                                                                                    )],
-                                                                                                )
-                                                                                            case 'option name is not a text':
-                                                                                                return _p_change_context(
-                                                                                                    $['value'],
-                                                                                                    ($) => ['option name is not a text', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                        $,
-                                                                                                        ($) => abort(
-                                                                                                            $,
-                                                                                                        ),
-                                                                                                    )],
-                                                                                                )
-                                                                                            case 'missing value':
-                                                                                                return _p_change_context(
-                                                                                                    $['value'],
-                                                                                                    ($) => ['missing value', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                        $,
-                                                                                                        ($) => abort(
-                                                                                                            $,
-                                                                                                        ),
-                                                                                                    )],
-                                                                                                )
-                                                                                            case 'unknown option':
-                                                                                                return _p_change_context(
-                                                                                                    $['value'],
-                                                                                                    ($) => ['unknown option', _p_change_context(
-                                                                                                        v_unmarshalled_from_parse_tree.Verbose_Group(
+                                                                                                        {
+                                                                                                            'subdocument context': _p.optional.literal.not_set(),
+                                                                                                        },
+                                                                                                    ),
+                                                                                                    ($) => _p.dictionary.from.dictionary(
+                                                                                                        $['entries'],
+                                                                                                    ).map(
+                                                                                                        ($, id) => v_unmarshalled_from_parse_tree.Nothing(
                                                                                                             $,
                                                                                                             ($) => abort(
                                                                                                                 $,
                                                                                                             ),
-                                                                                                            {
-                                                                                                                'expected properties': _p.dictionary.literal(
-                                                                                                                    {
-                                                                                                                        "found": null,
-                                                                                                                        "expected": null,
-                                                                                                                    },
-                                                                                                                ),
-                                                                                                                'subdocument context': _p.optional.literal.not_set(),
-                                                                                                            },
                                                                                                         ),
-                                                                                                        ($) => _p_variables(
-                                                                                                            () => {
-                                                                                                                
-                                                                                                                const var_verbose_group_range = v_parse_tree_to_location.Value(
-                                                                                                                    $['value'],
-                                                                                                                    {
-                                                                                                                        'subdocument context': _p.optional.literal.not_set(),
-                                                                                                                    },
-                                                                                                                )
-                                                                                                                return {
-                                                                                                                    'found': _p_change_context(
-                                                                                                                        v_unmarshalled_from_parse_tree.Property(
-                                                                                                                            $,
-                                                                                                                            ($) => abort(
-                                                                                                                                $,
-                                                                                                                            ),
-                                                                                                                            {
-                                                                                                                                'id': 'found',
-                                                                                                                                'subdocument context': _p.optional.literal.not_set(),
-                                                                                                                            },
-                                                                                                                        ),
-                                                                                                                        ($) => v_unmarshalled_from_parse_tree.Text(
-                                                                                                                            $,
-                                                                                                                            ($) => abort(
-                                                                                                                                $,
-                                                                                                                            ),
-                                                                                                                        ),
-                                                                                                                    ),
-                                                                                                                    'expected': _p_change_context(
-                                                                                                                        v_unmarshalled_from_parse_tree.Property(
-                                                                                                                            $,
-                                                                                                                            ($) => abort(
-                                                                                                                                $,
-                                                                                                                            ),
-                                                                                                                            {
-                                                                                                                                'id': 'expected',
-                                                                                                                                'subdocument context': _p.optional.literal.not_set(),
-                                                                                                                            },
-                                                                                                                        ),
-                                                                                                                        ($) => _p_change_context(
-                                                                                                                            v_unmarshalled_from_parse_tree.Dictionary(
-                                                                                                                                $,
-                                                                                                                                ($) => abort(
-                                                                                                                                    $,
-                                                                                                                                ),
-                                                                                                                                {
-                                                                                                                                    'subdocument context': _p.optional.literal.not_set(),
-                                                                                                                                },
-                                                                                                                            ),
-                                                                                                                            ($) => _p.dictionary.from.dictionary(
-                                                                                                                                $['entries'],
-                                                                                                                            ).map(
-                                                                                                                                ($, id) => v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                                                    $,
-                                                                                                                                    ($) => abort(
-                                                                                                                                        $,
-                                                                                                                                    ),
-                                                                                                                                ),
-                                                                                                                            ),
-                                                                                                                        ),
-                                                                                                                    ),
-                                                                                                                }
-                                                                                                            },
-                                                                                                        ),
-                                                                                                    )],
-                                                                                                )
-                                                                                            case 'missing option':
-                                                                                                return _p_change_context(
-                                                                                                    $['value'],
-                                                                                                    ($) => ['missing option', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                                        $,
-                                                                                                        ($) => abort(
-                                                                                                            $,
-                                                                                                        ),
-                                                                                                    )],
-                                                                                                )
-                                                                                            default:
-                                                                                                return abort(
-                                                                                                    ['liana', {
-                                                                                                        'type': ['state', ['unknown option', $['option']['token']['value']]],
-                                                                                                        'range': v_parse_tree_to_location.Value(
-                                                                                                            $['value'],
-                                                                                                            {
-                                                                                                                'subdocument context': _p.optional.literal.not_set(),
-                                                                                                            },
-                                                                                                        ),
-                                                                                                    }],
-                                                                                                )
+                                                                                                    ),
+                                                                                                ),
+                                                                                            ),
                                                                                         }
                                                                                     },
+                                                                                ),
+                                                                            )],
+                                                                        )
+                                                                    case 'missing option':
+                                                                        return _p_change_context(
+                                                                            $['value'],
+                                                                            ($) => ['missing option', v_unmarshalled_from_parse_tree.Nothing(
+                                                                                $,
+                                                                                ($) => abort(
+                                                                                    $,
                                                                                 ),
                                                                             )],
                                                                         )
@@ -724,84 +786,156 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                         ),
                                                     )],
                                                 )
-                                            case 'warning':
+                                            default:
+                                                return abort(
+                                                    ['liana', {
+                                                        'type': ['state', ['unknown option', $['option']['token']['value']]],
+                                                        'range': v_parse_tree_to_location.Value(
+                                                            $['value'],
+                                                            {
+                                                                'subdocument context': _p.optional.literal.not_set(),
+                                                            },
+                                                        ),
+                                                    }],
+                                                )
+                                        }
+                                    },
+                                ),
+                            ),
+                        ),
+                    }
+                },
+            ),
+        ),
+    ),
+)
+
+export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
+    v_unmarshalled_from_parse_tree.List(
+        $,
+        ($) => abort(
+            $,
+        ),
+        {
+            'subdocument context': _p.optional.literal.not_set(),
+        },
+    )['items'],
+).map(
+    ($) => _p_change_context(
+        $['value'],
+        ($) => _p_change_context(
+            v_unmarshalled_from_parse_tree.Verbose_Group(
+                $,
+                ($) => abort(
+                    $,
+                ),
+                {
+                    'expected properties': _p.dictionary.literal(
+                        {
+                            "range": null,
+                            "type": null,
+                        },
+                    ),
+                    'subdocument context': _p.optional.literal.not_set(),
+                },
+            ),
+            ($) => _p_variables(
+                () => {
+                    
+                    const var_verbose_group_range = v_parse_tree_to_location.Value(
+                        $['value'],
+                        {
+                            'subdocument context': _p.optional.literal.not_set(),
+                        },
+                    )
+                    return {
+                        'range': _p_change_context(
+                            v_unmarshalled_from_parse_tree.Property(
+                                $,
+                                ($) => abort(
+                                    $,
+                                ),
+                                {
+                                    'id': 'range',
+                                    'subdocument context': _p.optional.literal.not_set(),
+                                },
+                            ),
+                            ($) => v_external_location.Range(
+                                $,
+                                ($) => abort(
+                                    $,
+                                ),
+                            ),
+                        ),
+                        'type': _p_change_context(
+                            v_unmarshalled_from_parse_tree.Property(
+                                $,
+                                ($) => abort(
+                                    $,
+                                ),
+                                {
+                                    'id': 'type',
+                                    'subdocument context': _p.optional.literal.not_set(),
+                                },
+                            ),
+                            ($) => _p_change_context(
+                                v_unmarshalled_from_parse_tree.State(
+                                    $,
+                                    ($) => abort(
+                                        $,
+                                    ),
+                                ),
+                                ($) => _p.decide.text(
+                                    $['option']['token']['value'],
+                                    ($t): t_out.Warnings.L.type_ => {
+                                        switch ($t) {
+                                            case 'expected apostrophed text':
                                                 return _p_change_context(
                                                     $['value'],
-                                                    ($) => ['warning', _p_change_context(
-                                                        v_unmarshalled_from_parse_tree.State(
+                                                    ($) => ['expected apostrophed text', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
                                                             $,
-                                                            ($) => abort(
-                                                                $,
-                                                            ),
                                                         ),
-                                                        ($) => _p.decide.text(
-                                                            $['option']['token']['value'],
-                                                            ($t): t_out.Errors.L.type_.warning => {
-                                                                switch ($t) {
-                                                                    case 'expected apostrophed text':
-                                                                        return _p_change_context(
-                                                                            $['value'],
-                                                                            ($) => ['expected apostrophed text', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                $,
-                                                                                ($) => abort(
-                                                                                    $,
-                                                                                ),
-                                                                            )],
-                                                                        )
-                                                                    case 'expected quoted text':
-                                                                        return _p_change_context(
-                                                                            $['value'],
-                                                                            ($) => ['expected quoted text', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                $,
-                                                                                ($) => abort(
-                                                                                    $,
-                                                                                ),
-                                                                            )],
-                                                                        )
-                                                                    case 'expected backticked text':
-                                                                        return _p_change_context(
-                                                                            $['value'],
-                                                                            ($) => ['expected backticked text', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                $,
-                                                                                ($) => abort(
-                                                                                    $,
-                                                                                ),
-                                                                            )],
-                                                                        )
-                                                                    case 'expected undelimited text':
-                                                                        return _p_change_context(
-                                                                            $['value'],
-                                                                            ($) => ['expected undelimited text', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                $,
-                                                                                ($) => abort(
-                                                                                    $,
-                                                                                ),
-                                                                            )],
-                                                                        )
-                                                                    case 'expected a group':
-                                                                        return _p_change_context(
-                                                                            $['value'],
-                                                                            ($) => ['expected a group', v_unmarshalled_from_parse_tree.Nothing(
-                                                                                $,
-                                                                                ($) => abort(
-                                                                                    $,
-                                                                                ),
-                                                                            )],
-                                                                        )
-                                                                    default:
-                                                                        return abort(
-                                                                            ['liana', {
-                                                                                'type': ['state', ['unknown option', $['option']['token']['value']]],
-                                                                                'range': v_parse_tree_to_location.Value(
-                                                                                    $['value'],
-                                                                                    {
-                                                                                        'subdocument context': _p.optional.literal.not_set(),
-                                                                                    },
-                                                                                ),
-                                                                            }],
-                                                                        )
-                                                                }
-                                                            },
+                                                    )],
+                                                )
+                                            case 'expected quoted text':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['expected quoted text', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'expected backticked text':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['expected backticked text', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'expected undelimited text':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['expected undelimited text', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
+                                                        ),
+                                                    )],
+                                                )
+                                            case 'expected a group':
+                                                return _p_change_context(
+                                                    $['value'],
+                                                    ($) => ['expected a group', v_unmarshalled_from_parse_tree.Nothing(
+                                                        $,
+                                                        ($) => abort(
+                                                            $,
                                                         ),
                                                     )],
                                                 )

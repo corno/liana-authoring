@@ -4,7 +4,7 @@ import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_cc from 'pareto-core/dist/_p_change_context'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmashall_result"
+import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data"
 
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
@@ -204,7 +204,7 @@ export const Found: Found = ($, $p) => {
         case 'property': return _p.ss($, ($) => _p.optional.literal.not_set())
         case 'state': return _p.ss($, ($): d_out.Completion_Suggestions => {
             const definition = $.definition
-            return _p.decide.state($.instance, ($): d_out.Completion_Suggestions => {
+            return _p.decide.state($.intermediate.instance, ($): d_out.Completion_Suggestions => {
                 switch ($[0]) {
                     case 'state': return _p.ss($, ($) => _p.decide.state($.status, ($): d_out.Completion_Suggestions => {
                         switch ($[0]) {
