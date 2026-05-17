@@ -93,12 +93,3 @@ export type State = {
     'unmarshalled': d_unmarshall_result.State
     'option': _pi.Optional_Value<Value>
 }
-
-export type Parameters = {
-    'lookups': _pi.Optional_Value<_pi.Dictionary<Lookup>>
-    'modules': _pi.Optional_Value<_pi.Dictionary<Module>>
-}
-
-export type Lookup = null
-
-export type Module = null

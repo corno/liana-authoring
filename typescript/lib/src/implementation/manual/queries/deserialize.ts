@@ -43,7 +43,7 @@ export const $$: signatures.queries.deserialize = _p.query_function(
                     ),
                     {
                         'definition': $['module resolver'].entry,
-                        'resolver': $.resolver
+                        'resolvers': $.resolver
                     }
                 )])
                 case 'unconstrained': return _p.ss($, ($) => ['unconstrained', r_unmarshall_result_from_loc.Document(
