@@ -91,10 +91,8 @@ export const Value: Value = ($, $p) => {
                                                         'property path': $p['property path'],
                                                         'id': $.id.token.value,
                                                         'value': $.assignment.__decide(
-                                                            ($) => _p.optional.from.optional(
-                                                                $.value,
-                                                            ).map(
-                                                                ($) => Value(
+                                                            ($): d_out.Entry['value'] => $.value.__decide(
+                                                                ($): d_out.Entry['value'] => ['set', Value(
                                                                     $,
                                                                     {
                                                                         'definition': dict_def.value,
@@ -104,9 +102,10 @@ export const Value: Value = ($, $p) => {
                                                                             'parent': optional_value_range_stack,
                                                                         }),
                                                                     }
-                                                                ),
+                                                                )],
+                                                                () => ['not set', null]
                                                             ),
-                                                            () => _p.optional.literal.not_set()
+                                                            () => ['not set', null]
                                                         ),
                                                         'intermediate': {
                                                             'id value pair': $,
@@ -295,7 +294,7 @@ export const Value: Value = ($, $p) => {
                                                                                         'start token range': start_token_range
                                                                                     }]]
                                                                                 ))
-                                                                                case 'no': return _p.ss($, ($) => _p_unreachable_code_path("we are iterating over the definitions"))
+                                                                                case 'no': return _p.ss($, () => _p_unreachable_code_path("we are iterating over the definitions"))
                                                                                 default: return _p.au($[0])
                                                                             }
                                                                         }),
@@ -334,7 +333,7 @@ export const Value: Value = ($, $p) => {
                                                                 'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
                                                                     ($): d_out.Property['result'] => _p.decide.list($).has_single_item(
                                                                         ($): d_out.Property['result'] => ['success', $.value],
-                                                                        ($): d_out.Property['result'] => _p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
+                                                                        () => _p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
                                                                         (): d_out.Property['result'] => ['error', ['missing', {
                                                                             'start token range': start_token_range
                                                                         }]]

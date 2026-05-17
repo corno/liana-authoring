@@ -152,21 +152,22 @@ export const Value: Value = ($) => {
                                 $.intermediate['entries as list'],
                             ).flatten(
                                 ($) => {
-                                    const is_apostrophed = $.intermediate['id value pair'].id.token.type[0] === 'apostrophed'
-
+                                    const intermediate = $.intermediate
                                     return _p.list.nested_literal_old([
-                                        $.value.__decide(
-                                            ($) => Value($),
-
-                                            () => _p.list.literal<d_out.Errors.L>([
+                                        _p.decide.state($.value, ($) => {
+                                            switch ($[0]) {
+                                                case 'set': return _p.ss($, ($) => Value($))
+                                                case 'not set': return _p.ss($, ($) => _p.list.literal<d_out.Errors.L>([
                                                 {
-                                                    'range': $.intermediate['id value pair'].id.range,
+                                                    'range': intermediate['id value pair'].id.range,
                                                     'type': ['group', ['missing property value', { //missing property value
-                                                        name: $.intermediate['id value pair'].id.token.value
+                                                        name: intermediate['id value pair'].id.token.value
                                                     }]]
                                                 }
-                                            ]), //FIXME! optional node not set is often an error
-                                        )
+                                            ]))
+                                                default: return _p.au($[0])
+                                            }
+                                        })
                                     ])
                                 }
                             )

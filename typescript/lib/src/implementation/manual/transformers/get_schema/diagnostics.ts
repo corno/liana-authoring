@@ -7,7 +7,6 @@ import * as d_out from "../../../../interface/generated/liana/schemas/diagnostic
 import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
-import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
 export const Error: _pi.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
 	const schema_path = $['schema path']

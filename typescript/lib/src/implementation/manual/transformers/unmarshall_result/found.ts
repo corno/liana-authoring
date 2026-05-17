@@ -98,28 +98,31 @@ export const Value: Value = ($, $p) => {
                     case 'simple': return _p.ss($, ($) => this_value())
                     case 'component': return _p.ss($, ($) => Value($.value, $p))
                     case 'dictionary': return _p.ss($, ($) => _p.decide.list($.intermediate['entries as list']).has_match(
-                        ($) => {
+                        ($): d_out.Possibly_Found => {
                             const entry = $
-                            return _p.decide.boolean(
+                            return _p.decide.boolean<d_out.Possibly_Found>(
                                 range_overlaps_position(
                                     {
                                         'start': $.intermediate['id value pair'].id.range.start,
-                                        'end': $.value.__decide(
-                                            ($) => t_parse_tree_to_full_value_range.Value($.instance).end,
-                                            () => $.intermediate['id value pair'].id.range.end
-                                        ),
+                                        'end': _p.decide.state($.value, ($) => {
+                                            switch ($[0]) {
+                                                case 'set': return _p.ss($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
+                                                case 'not set':return _p.ss($, ($) => entry.intermediate['id value pair'].id.range.end)
+                                                default: return _p.au($[0])
+                                            }
+                                        }),
                                     },
                                     {
                                         'position': $p.position,
                                     }
                                 ),
-                                () => _p.optional.literal.set($.value.__decide(
-                                    ($) => Value_possibly_found($, $p).__decide(
-                                        ($): d_out.Found => $,
-                                        (): d_out.Found => ['entry', entry]
-                                    ),
-                                    (): d_out.Found => ['entry', entry]
-                                )),
+                                (): d_out.Possibly_Found => _p.decide.state($.value, ($): d_out.Possibly_Found => {
+                                    switch ($[0]) {
+                                        case 'set': return _p.ss($, ($) =>  Value_possibly_found($, $p))
+                                        case 'not set':return _p.ss($, ($) => _p.optional.literal.set(['entry', entry]))
+                                        default: return _p.au($[0])
+                                    }
+                                }),
                                 () => _p.optional.literal.not_set()
                             )
                         },

@@ -12,12 +12,12 @@ export type Document = {
 export type Value = {
     'definition': d_schema.Resolver_Value
     'unmarshalled': d_unmarshall_result.Value
-    'resolve result': Value_Resolve_Result //the type is determined by the definition
+    'unmarshall result': Value_Unmarshall_Result
 }
 
-export type Value_Resolve_Result =
+export type Value_Unmarshall_Result =
     | ['success', Resolved_Value_Type]
-    | ['unmarshall error', d_unmarshall_result.Value_Unmarshall_Error]
+    | ['error', d_unmarshall_result.Value_Unmarshall_Error]
 
 export type Resolved_Value_Type =
     | ['component', Component]
@@ -38,21 +38,31 @@ export type Component = {
 
 export type Dictionary = {
     'unmarshalled': d_unmarshall_result.Dictionary
-    'entries': _pi.Dictionary<Optional_Entry>
+    'entries': _pi.Dictionary<Entry>
 }
 
-export type Optional_Entry = _pi.Optional_Value<Value>
+export type Entry = {
+    'unmarshall result':
+    | ['success',{
+        'value': 
+        | ['set', Value]
+        | ['not set', null]
+    }]
+    | ['error', null]
+}
 
 export type Group = {
     'unmarshalled': d_unmarshall_result.Group
-    'properties': _pi.Dictionary<Property_Resolve_Result>
+    'properties': _pi.Dictionary<Property>
 }
 
-export type Property_Resolve_Result =
-    | ['success', Property]
-    | ['unmarshall error', d_unmarshall_result.Property_Unmarshall_Error]
-
 export type Property = {
+    'unmarshall result':
+    | ['success', Property_Unmarshalled]
+    | ['error', d_unmarshall_result.Property_Unmarshall_Error]
+}
+
+export type Property_Unmarshalled = {
     'definition': d_schema.Resolver_Value
     'resolved': Value
 }
@@ -71,22 +81,24 @@ export type Optional = {
     | ['not set', null]
 }
 
-export type Reference = {
-    'unmarshalled': d_unmarshall_result.Reference
-    'type':
+export type Reference =
     | ['derived', null]
     | ['selected', {
+        'unmarshalled': d_unmarshall_result.Reference_Selected
         'resolve status':
         | ['to be implemented', null]
     }]
-}
 
 export type State = {
     'unmarshalled': d_unmarshall_result.State
     'option': _pi.Optional_Value<Value>
 }
 
-export type Parameters = _pi.Dictionary<Parameter>
+export type Parameters = {
+    'lookups': _pi.Optional_Value<_pi.Dictionary<Lookup>>
+    'modules': _pi.Optional_Value<_pi.Dictionary<Module>>
+}
 
-export type Parameter =
-    | ['needs implementation', null]
+export type Lookup = null
+
+export type Module = null

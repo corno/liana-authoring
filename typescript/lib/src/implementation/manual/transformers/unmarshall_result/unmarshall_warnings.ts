@@ -43,10 +43,13 @@ export const Value: Value = ($) => {
                                     'type': ['expected apostrophed text', null]
                                 }
                             ])
-                            : $.value.__decide(
-                                ($) => Value($),
-                                () => _p.list.literal<d_out.Warnings.L>([])
-                            )
+                            : _p.decide.state($.value, ($) => {
+                                switch ($[0]) {
+                                    case 'set': return _p.ss($, ($) => Value($))
+                                    case 'not set': return _p.ss($, ($) => _p.list.literal<d_out.Warnings.L>([]))
+                                    default: return _p.au($[0])
+                                }
+                            })
                     ))
                     case 'group': return _p.ss($, ($) => $.intermediate.instance[0] !== 'group'
                         ? _p.list.literal([

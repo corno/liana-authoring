@@ -15,8 +15,6 @@ export type Document = {
     'content': Value
 }
 
-export type Optional_Value = _pi.Optional_Value<Value>
-
 // export type Key_Value_Pair = {
 //     'node': Node
 // }
@@ -222,22 +220,26 @@ export type Optional = {
     }
 }
 
+export type Reference_Derived = {
+    'definition': d_schema.Value.reference.type_.derived
+    'intermediate': {
+        'instance':
+        | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
+        | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
+    }
+}
+
+export type Reference_Selected = {
+    'definition': d_schema.Value.reference.type_.selected
+    'intermediate': {
+        'instance': d_astn_parse_tree.Value.type_.concrete.text
+    }
+}
+
 export type Reference = {
     'type':
-    ['derived', {
-        'definition': d_schema.Value.reference.type_.derived
-        'intermediate': {
-            'instance':
-            | ['nothing', d_astn_parse_tree.Value.type_.concrete.nothing]
-            | ['null literal', d_astn_parse_tree.Value.type_.concrete.text]
-        }
-    }]
-    | ['selected', {
-        'definition': d_schema.Value.reference.type_.selected
-        'intermediate': {
-            'instance': d_astn_parse_tree.Value.type_.concrete.text
-        }
-    }]
+    ['derived', Reference_Derived]
+    | ['selected', Reference_Selected]
 
 }
 
@@ -302,5 +304,7 @@ export type Entry = {
         'id value pair': d_astn_parse_tree.ID_Value_Pairs.L
     }
     'id': string
-    'value': Optional_Value
+    'value': 
+    | ['set', Value]
+    | ['not set', null]
 }

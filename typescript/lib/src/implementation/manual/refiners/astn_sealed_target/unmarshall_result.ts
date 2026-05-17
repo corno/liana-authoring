@@ -9,7 +9,6 @@ import * as d_function from "../../../../interface/to_be_generated/sealed_target
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
-import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_variables from 'pareto-core/dist/_p_variables'
 
 //signatures
@@ -106,13 +105,19 @@ export const Value: Value = ($, abort) => {
                         const grouped = $.derived.entries
                         return ['dictionary', grouped.__d_map(($, id) => _p.decide.state($.result, ($) => {
                             switch ($[0]) {
-                                case 'success': return _p.ss($, ($) => $.value.__decide(
-                                    ($) => Value($, abort),
-                                    () => abort({
-                                        'type': ['dictionary', ['foo', null]],
-                                        'range': $.intermediate['id value pair'].id.range
-                                    }),
-                                ))
+                                case 'success': return _p.ss($, ($) => {
+                                    const intermediate = $.intermediate
+                                    return _p.decide.state($.value, ($) => {
+                                        switch ($[0]) {
+                                            case 'not set': return _p.ss($, ($) =>  abort({
+                                                'type': ['dictionary', ['foo', null]],
+                                                'range': intermediate['id value pair'].id.range
+                                            }))
+                                            case 'set': return _p.ss($, ($) => Value($, abort))
+                                            default: return _p.au($[0])
+                                        }
+                                    })
+                                })
                                 case 'error': return _p.ss($, ($) => _p.decide.state($, ($) => {
                                     switch ($[0]) {
                                         case 'duplicate': return _p.ss($, ($) => abort({

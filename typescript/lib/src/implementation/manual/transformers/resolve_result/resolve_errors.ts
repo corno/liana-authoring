@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/resolve_result"
@@ -28,26 +27,35 @@ export const Document: Document = ($) => {
 
 export const Value: Value = ($) => {
     const range = t_astn_parse_tree_to_location.Value($.unmarshalled.instance)
-    return _p.decide.state($['resolve result'], ($) => {
+    return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'unmarshall error': return _p.ss($, ($) => _p.list.literal([])) //reported by the unmarshaller, it is not the responsibility of this transformer to report them
+            case 'error': return _p.ss($, ($) => _p.list.literal([])) //reported by the unmarshaller, it is not the responsibility of this transformer to report them
             case 'success': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Errors => {
                 switch ($[0]) {
                     case 'dictionary': return _p.ss($, ($) => _p.list.from.dictionary(
                         $.entries
                     ).flatten(
-                        ($) => $.__decide(
-                            ($) => Value($),
-                            () => _p.list.literal([])
-                        )
+                        ($) => _p.decide.state($['unmarshall result'], ($) => {
+                            switch ($[0]) {
+                                case 'success': return _p.ss($, ($) => _p.decide.state($.value, ($) => {
+                                    switch ($[0]) {
+                                        case 'set': return _p.ss($, ($) => Value($))
+                                        case 'not set': return _p.ss($, ($) => _p.list.literal([]))
+                                        default: return _p.au($[0])
+                                    }
+                                }))
+                                case 'error': return _p.ss($, ($) => _p.list.literal([]))
+                                default: return _p.au($[0])
+                            }
+                        })
                     ))
                     case 'group': return _p.ss($, ($) => _p.list.from.dictionary(
                         $.properties
                     ).flatten(
-                        ($) => _p.decide.state($, ($) => {
+                        ($) => _p.decide.state($['unmarshall result'], ($) => {
                             switch ($[0]) {
                                 case 'success': return _p.ss($, ($) => Value($.resolved))
-                                case 'unmarshall error': return _p.ss($, ($) => _p.list.literal([]))
+                                case 'error': return _p.ss($, ($) => _p.list.literal([]))
                                 default: return _p.au($[0])
                             }
                         })
@@ -60,8 +68,7 @@ export const Value: Value = ($) => {
                     ))
                     case 'nothing': return _p.ss($, ($) => _p.list.literal([]))
                     case 'reference': return _p.ss($, ($) => {
-                        const unmarshalled = $.unmarshalled
-                        return _p.decide.state($.type, ($): d_out.Errors => {
+                        return _p.decide.state($, ($): d_out.Errors => {
                             switch ($[0]) {
                                 case 'derived': return _p.ss($, ($) => _p.list.literal([]))
                                 case 'selected': return _p.ss($, ($) => _p.decide.state($['resolve status'], ($): d_out.Errors => {

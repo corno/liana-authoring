@@ -103,14 +103,17 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                         'children': $.intermediate['entries as list'].__l_map(($): d_out.Symbol => ({
                             'name': $.intermediate['id value pair'].id.token.value,
                             'detail': "dictionary entry",
-                            'value': $.value.__decide(
-                                ($): d_out.Value => Value($),
-                                (): d_out.Value => ({
-                                    'type': ['primitive', {
-                                        'kind': ['null', null],
-                                    }],
-                                })
-                            ),
+                            'value': _p.decide.state($.value, ($) => {
+                                switch ($[0]) {
+                                    case 'set': return _p.ss($, ($) => Value($))
+                                    case 'not set': return _p.ss($, ($) => ({
+                                        'type': ['primitive', {
+                                            'kind': ['null', null],
+                                        }],
+                                    }))
+                                    default: return _p.au($[0])
+                                }
+                            }),
                             'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                             'selection range': $.intermediate['id value pair'].id.range,
                         })),

@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_cc from 'pareto-core/dist/_p_change_context'
 
 //data types
@@ -35,37 +34,49 @@ export type Found = _pi.Transformer_With_Parameter<
     }
 >
 
+export type Value = _pi.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Optional_Formatting_Edit,
+    {
+        'indent': string
+        'conversion': d_function_parameters.Parameters
+    }
+>
 
+
+const Value: Value = (value, $p) => {
+    return _p.optional.literal.set({
+        'range': t_parse_tree_to_full_range.Value(value.instance),
+        'text': t_authoring_target_to_text.Value(
+            t_unmarshall_result_to_authoring_target.Value(value, $p.conversion),
+            {
+                'indentation': $p.indent,
+                'newline': "\n",
+                'write delimiters': true,
+            }
+        )
+    })
+}
 
 export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
 
-    const do_value = (value: d_in.Value): d_out.Optional_Formatting_Edit => {
-        return _p.optional.literal.set({
-            'range': t_parse_tree_to_full_range.Value(value.instance),
-            'text': t_authoring_target_to_text.Value(
-                t_unmarshall_result_to_authoring_target.Value(value, $p.conversion),
-                {
-                    'indentation': $p.indent,
-                    'newline': "\n",
-                    'write delimiters': true,
-                }
-            )
-        })
-    }
     switch ($[0]) {
         case 'value': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
-            return do_value($)
+            return Value($, $p)
         })
-        case 'entry': return _p.ss($, ($) => $.value.__decide(
-            ($) => do_value($),
-            () => _p.optional.literal.not_set()
-        ))
+        case 'entry': return _p.ss($, ($) => _p.decide.state($.value, ($) => {
+            switch ($[0]) {
+                case 'set': return _p.ss($, ($) => Value($, $p))
+                case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
+                default: return _p.au($[0])
+            }
+        }))
         case 'property': return _p.ss($, ($) => _p.decide.state($.style, ($) => {
             switch ($[0]) {
                 case 'verbose': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
                     switch ($[0]) {
                         case 'yes': return _p.ss($, ($) => $.value.__decide(
-                            ($) => do_value($),
+                            ($) => Value($, $p),
                             () => _p.optional.literal.not_set()
                         ))
                         case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
@@ -84,7 +95,7 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
 
             return _p.decide.state($.derived['option status'], ($) => {
                 switch ($[0]) {
-                    case 'set': return _p.ss($, ($) => do_value($.value))
+                    case 'set': return _p.ss($, ($) => Value($.value, $p))
                     case 'missing data': return _p.ss($, ($) => _p.optional.literal.not_set())
                     default: return _p.au($[0])
                 }

@@ -21,11 +21,27 @@ export const Document = (
         $.content,
         {
             'definition': $p.definition['root value resolver'],
-            'module parameters': _p.dictionary.literal({}),
+            'module parameters': _p.optional.literal.not_set(),
             'resolver': $p.resolver
         }
     )
 })
+
+export const Resolver_Lookup_Selection = (
+    $: null,
+    $p: {
+        definition: d_in_definition.Resolver_Lookup_Selection
+    }
+): void => {
+    return _p.decide.state($p.definition.type, ($) => {
+        switch ($[0]) {
+            case 'acyclic': return _p.ss($, ($) => _p_implement_me("to be implemented"))
+            case 'cyclic': return _p.ss($, ($) => _p_implement_me("to be implemented"))
+            case 'parameter': return _p.ss($, ($) => _p_implement_me("to be implemented"))
+            default: return _p.au($[0])
+        }
+    })
+}
 
 
 export const Value = (
@@ -33,22 +49,22 @@ export const Value = (
     $p: {
         'definition': d_in_definition.Resolver_Value,
         'resolver': d_in_definition.Resolver
-        'module parameters': d_out.Parameters
+        'module parameters': _pi.Optional_Value<d_out.Parameters>
     }
 ): d_out.Value => {
     return {
         'definition': $p.definition,
         'unmarshalled': $,
-        'resolve result': _p.decide.state($['unmarshall result'], ($): d_out.Value_Resolve_Result => {
+        'unmarshall result': _p.decide.state($['unmarshall result'], ($): d_out.Value_Unmarshall_Result => {
             switch ($[0]) {
-                case 'error': return _p.ss($, ($) => ['unmarshall error', $])
+                case 'error': return _p.ss($, ($) => ['error', $])
                 case 'success': return _p.ss($, ($) => {
-                    const correct = $
+                    const unmarshalled_value = $
                     return ['success', _p.decide.state($p.definition, ($): d_out.Resolved_Value_Type => {
                         switch ($[0]) {
                             case 'component': return _p.ss($, ($) => {
                                 const def = $
-                                return ['component', _p.decide.state(correct, ($) => {
+                                return ['component', _p.decide.state(unmarshalled_value, ($) => {
                                     switch ($[0]) {
                                         case 'component': return _p.ss($, ($) => ({
                                             'unmarshalled': $,
@@ -68,7 +84,52 @@ export const Value = (
                                                         }
                                                     }),
                                                     'resolver': $p.resolver,
-                                                    'module parameters': def.signature['resolved parameters'].modules.__d_map(($) => ['needs implementation', null])
+                                                    'module parameters': _p.optional.from.optional(def.arguments).map(
+                                                        ($) => ({
+                                                            'lookups': _p.optional.from.optional($.lookups).map(
+                                                                ($) => $.__d_map(($) => _p.decide.state($, ($) => {
+                                                                    switch ($[0]) {
+                                                                        case 'stack': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                                                                            switch ($[0]) {
+                                                                                case 'empty': return _p.ss($, ($) => null)
+                                                                                case 'push': return _p.ss($, ($) => {
+                                                                                    Resolver_Lookup_Selection(
+                                                                                        null,
+                                                                                        {
+                                                                                            'definition': $.item
+                                                                                        }
+                                                                                    )
+                                                                                    Resolver_Lookup_Selection(
+                                                                                        null,
+                                                                                        {
+                                                                                            'definition': $.stack
+                                                                                        }
+                                                                                    )
+                                                                                    return null
+                                                                                })
+                                                                                default: return _p.au($[0])
+                                                                            }
+                                                                        }))
+                                                                        case 'acyclic': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+                                                                        case 'cyclic': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+                                                                        case 'selection': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+                                                                        default: return _p.au($[0])
+                                                                    }
+                                                                }))
+
+                                                            ),
+                                                            'modules': _p.optional.from.optional($.modules).map(
+                                                                ($) => $.__d_map(($) => _p.decide.state($, ($) => {
+                                                                    switch ($[0]) {
+                                                                        case 'optional': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+                                                                        case 'required': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+                                                                        case 'parameter': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+                                                                        default: return _p.au($[0])
+                                                                    }
+                                                                }))
+                                                            )
+                                                        })
+                                                    )
                                                 }
                                             )
                                         }))
@@ -78,31 +139,38 @@ export const Value = (
                             })
                             case 'dictionary': return _p.ss($, ($) => {
                                 const def = $
-                                return ['dictionary', _p.decide.state(correct, ($): d_out.Dictionary => {
+                                return ['dictionary', _p.decide.state(unmarshalled_value, ($): d_out.Dictionary => {
                                     switch ($[0]) {
                                         case 'dictionary': return _p.ss($, ($): d_out.Dictionary => ({
                                             'unmarshalled': $,
                                             'entries': _p.dictionary.from.dictionary(
-                                                _p.dictionary.from.list(
-                                                    $.intermediate['entries as list']
-                                                ).group(
-                                                    ($) => $.intermediate['id value pair'].id.token.value
-                                                )
-                                            ).map(($, id): d_out.Optional_Entry => _p.decide.list($).has_single_item(
-                                                ($) => $.value.__decide(
-                                                    ($) => _p.optional.literal.set(Value(
-                                                        $,
-                                                        {
-                                                            'definition': def.resolver,
-                                                            'resolver': $p.resolver,
-                                                            'module parameters': $p['module parameters'],
-                                                        }
-                                                    )),
-                                                    () => _p.optional.literal.not_set(),
-                                                ),
-                                                () => _p.optional.literal.not_set(),
-                                                () => _p.optional.literal.not_set(),
-                                            ))
+                                                $.derived.entries,
+                                            ).resolve(($, id, $al, $cl): d_out.Entry => ({
+                                                'unmarshall result': _p.decide.state($.result, ($): d_out.Entry['unmarshall result'] => {
+                                                    switch ($[0]) {
+                                                        case 'success': return _p.ss($, ($) => _p.decide.state($.value, ($) => {
+                                                            switch ($[0]) {
+                                                                case 'set': return _p.ss($, ($) => ['success', {
+                                                                    'value': ['set', Value(
+                                                                        $,
+                                                                        {
+                                                                            'definition': def.resolver,
+                                                                            'resolver': $p.resolver,
+                                                                            'module parameters': $p['module parameters'],
+                                                                        }
+                                                                    )]
+                                                                }])
+                                                                case 'not set': return _p.ss($, ($) => ['success', {
+                                                                    'value': ['not set', null]
+                                                                }])
+                                                                default: return _p.au($[0])
+                                                            }
+                                                        }))
+                                                        case 'error': return _p.ss($, ($) => ['error', null])
+                                                        default: return _p.au($[0])
+                                                    }
+                                                })
+                                            }))
                                         }))
                                         default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                     }
@@ -110,21 +178,30 @@ export const Value = (
                             })
                             case 'group': return _p.ss($, ($) => {
                                 const def = $
-                                return ['group', _p.decide.state(correct, ($): d_out.Group => {
+                                return ['group', _p.decide.state(unmarshalled_value, ($): d_out.Group => {
                                     switch ($[0]) {
                                         case 'group': return _p.ss($, ($): d_out.Group => ({
                                             'unmarshalled': $,
                                             'properties': _p_variables(() => {
                                                 return _p.dictionary.from.dictionary(
-                                                    def
-                                                ).join(
-                                                    $.derived.properties,
-                                                    ($, $o, id): d_out.Property_Resolve_Result => {
-                                                        const resolver = $.resolver
-                                                        return $o.__decide(
-                                                            ($) => _p.decide.state($.result, ($): d_out.Property_Resolve_Result => {
-                                                                switch ($[0]) {
-                                                                    case 'success': return _p.ss($, ($): d_out.Property_Resolve_Result => ['success', {
+                                                    _p.dictionary.from.dictionary(
+                                                        def
+                                                    ).join(
+                                                        $.derived.properties,
+                                                        ($, $o, id) => {
+                                                            return {
+                                                                'definition': $.resolver,
+                                                                'unmarshalled': $o,
+                                                            }
+                                                        }
+                                                    )
+                                                ).resolve(($, id, $al, $cl) => {
+                                                    const resolver = $.definition
+                                                    return $.unmarshalled.__decide(
+                                                        ($) => _p.decide.state($.result, ($): d_out.Property => {
+                                                            switch ($[0]) {
+                                                                case 'success': return _p.ss($, ($): d_out.Property => ({
+                                                                    'unmarshall result': ['success', {
                                                                         'definition': resolver,
                                                                         'resolved': Value(
                                                                             $,
@@ -134,15 +211,17 @@ export const Value = (
                                                                                 'module parameters': $p['module parameters'],
                                                                             }
                                                                         )
-                                                                    }])
-                                                                    case 'error': return _p.ss($, ($): d_out.Property_Resolve_Result => ['unmarshall error', $])
-                                                                    default: return _p.au($[0])
-                                                                }
-                                                            }),
-                                                            () => _p_unreachable_code_path("both dictionaries are driven by the definitions in the schema")
-                                                        )
-                                                    }
-                                                )
+                                                                    }]
+                                                                }))
+                                                                case 'error': return _p.ss($, ($): d_out.Property => ({
+                                                                    'unmarshall result': ['error', $]
+                                                                }))
+                                                                default: return _p.au($[0])
+                                                            }
+                                                        }),
+                                                        () => _p_unreachable_code_path("both dictionaries are driven by the definitions in the schema")
+                                                    )
+                                                })
                                             }),
 
                                         }))
@@ -152,7 +231,7 @@ export const Value = (
                             })
                             case 'list': return _p.ss($, ($) => {
                                 const def = $
-                                return ['list', _p.decide.state(correct, ($): d_out.List => {
+                                return ['list', _p.decide.state(unmarshalled_value, ($): d_out.List => {
                                     switch ($[0]) {
                                         case 'list': return _p.ss($, ($): d_out.List => ({
                                             'unmarshalled': $,
@@ -169,13 +248,13 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'nothing': return _p.ss($, ($) => ['nothing', _p.decide.state(correct, ($) => {
+                            case 'nothing': return _p.ss($, ($) => ['nothing', _p.decide.state(unmarshalled_value, ($) => {
                                 switch ($[0]) {
                                     case 'nothing': return _p.ss($, ($) => $)
                                     default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                 }
                             })])
-                            case 'simple': return _p.ss($, ($) => ['simple', _p.decide.state(correct, ($) => {
+                            case 'simple': return _p.ss($, ($) => ['simple', _p.decide.state(unmarshalled_value, ($) => {
                                 switch ($[0]) {
                                     case 'simple': return _p.ss($, ($) => $)
                                     default: return _p_unreachable_code_path("unmarshalled value should match the definition")
@@ -183,7 +262,7 @@ export const Value = (
                             })])
                             case 'optional': return _p.ss($, ($) => {
                                 const def = $
-                                return ['optional', _p.decide.state(correct, ($): d_out.Optional => {
+                                return ['optional', _p.decide.state(unmarshalled_value, ($): d_out.Optional => {
                                     switch ($[0]) {
                                         case 'optional': return _p.ss($, ($): d_out.Optional => ({
                                             'unmarshalled': $,
@@ -211,28 +290,39 @@ export const Value = (
                             })
                             case 'reference': return _p.ss($, ($) => {
                                 const def = $
-                                return ['reference', _p.decide.state(correct, ($): d_out.Reference => {
+                                return ['reference', _p.decide.state(def.type, ($): d_out.Reference => {
                                     switch ($[0]) {
-                                        case 'reference': return _p.ss($, ($) => ({
-                                            'unmarshalled': $,
-                                            'type': _p.decide.state($.type, ($) => {
+                                        case 'derived': return _p.ss($, ($) => ['derived', null])
+                                        case 'selected': return _p.ss($, ($) => {
+                                            const unmarshalled = _p.decide.state(unmarshalled_value, ($) => {
                                                 switch ($[0]) {
-                                                    case 'derived': return _p.ss($, ($) => ['derived', null])
-                                                    case 'selected': return _p.ss($, ($) => ['selected', {
-                                                        'unmarshalled': $,
-                                                        'resolve status': ['to be implemented', null]
-                                                    }])
-                                                    default: return _p.au($[0])
+                                                    case 'reference': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+                                                        switch ($[0]) {
+                                                            case 'selected': return _p.ss($, ($) => $)
+                                                            default: return _p_unreachable_code_path("unmarshalled value should match the definition")
+                                                        }
+                                                    }))
+                                                    default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                                 }
                                             })
-                                        }))
-                                        default: return _p_unreachable_code_path("unmarshalled value should match the definition")
+                                            Resolver_Lookup_Selection(
+                                                null,
+                                                {
+                                                    'definition': $.lookup
+                                                }
+                                            )
+                                            return ['selected', {
+                                                'unmarshalled': unmarshalled,
+                                                'resolve status': ['to be implemented', null]
+                                            }]
+                                        })
+                                        default: return _p.au($[0])
                                     }
                                 })]
                             })
                             case 'state': return _p.ss($, ($) => {
                                 const def = $
-                                return ['state', _p.decide.state(correct, ($) => {
+                                return ['state', _p.decide.state(unmarshalled_value, ($) => {
                                     switch ($[0]) {
                                         case 'state': return _p.ss($, ($) => ({
                                             'unmarshalled': $,
@@ -260,7 +350,7 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'text': return _p.ss($, ($) => ['text', _p.decide.state(correct, ($) => {
+                            case 'text': return _p.ss($, ($) => ['text', _p.decide.state(unmarshalled_value, ($) => {
                                 switch ($[0]) {
                                     case 'text': return _p.ss($, ($) => $)
                                     default: return _p_unreachable_code_path("unmarshalled value should match the definition")

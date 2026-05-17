@@ -10,7 +10,7 @@ import * as d from "../../../interface/to_be_generated/get_schema_path"
 //depencencies
 import * as t_path_to_text from "pareto-resources/dist/implementation/manual/transformers/path/text"
 import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/path/path"
-import _p_implement_me from 'pareto-core-dev/dist/implement_me'
+
 
 export const $$: signatures.queries.get_schema_path = _p.query_function(
     ($p, $qr) => _p_variables(() => {

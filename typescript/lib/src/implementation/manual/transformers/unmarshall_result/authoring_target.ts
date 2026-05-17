@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_cc from 'pareto-core/dist/_p_change_context'
 
 //data types
@@ -70,16 +69,22 @@ export const Value: Value = ($, $p): d_out.Value => {
                             'entries': $.intermediate['entries as list'].__l_map(($): d_out.ID_Value_Pairs.L => {
                                 return {
                                     'id': $.intermediate['id value pair'].id.token.value,
-                                    'value': _p.optional.from.optional($.value).map(($) => {
-                                        const value = $
-                                        return _p.decide.state($p.impact, ($) => {
-                                            switch ($[0]) {
-                                                case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
-                                                case 'deep': return _p.ss($, ($) => Value(value, $p))
-                                                default: return _p.au($[0])
-                                            }
-                                        })
-                                    })
+                                    'value': _p.decide.state($.value, ($) => {
+                                        switch ($[0]) {
+                                            case 'set': return _p.ss($, ($) => {
+                                                const value = $
+                                                return _p.optional.literal.set(_p.decide.state($p.impact, ($) => {
+                                                    switch ($[0]) {
+                                                        case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
+                                                        case 'deep': return _p.ss($, ($) => Value(value, $p))
+                                                        default: return _p.au($[0])
+                                                    }
+                                                }))
+                                            })
+                                            case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
+                                            default: return _p.au($[0])
+                                        }
+                                    }),
                                 }
                             }),
                             '}': Structural_Token($.intermediate.instance['}']),
