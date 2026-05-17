@@ -94,7 +94,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                         '<': {
                                             'comments': _p.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
-                                        'properties': _p.decide.state(unmarsalled_group.intermediate.type, ($): d_out.Items => {
+                                        'properties': _p.decide.state(unmarsalled_group.derived.style, ($): d_out.Items => {
                                             switch ($[0]) {
                                                 //convert concise to concise
                                                 case 'concise': return _p.ss($, ($) => $.properties.__l_map(($) => {
@@ -156,7 +156,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                         '(': {
                                             'comments': _p.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
-                                        'properties': _p.decide.state(unmarsalled_group.intermediate.type, ($): d_out.ID_Value_Pairs => {
+                                        'properties': _p.decide.state(unmarsalled_group.derived.style, ($): d_out.ID_Value_Pairs => {
                                             switch ($[0]) {
                                                 //convert concise to verbose
                                                 case 'concise': return _p.ss($, ($): d_out.ID_Value_Pairs => _p.list.from.list($.properties).filter(($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
@@ -217,8 +217,8 @@ export const Value: Value = ($, $p): d_out.Value => {
                     })
                     case 'list': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['list', {
-                            '[': Structural_Token($.intermediate.instance['[']),
-                            'items': $.items.__l_map(($) => {
+                            '[': Structural_Token($.instance['[']),
+                            'items': $.derived.items.__l_map(($) => {
                                 const item = $
                                 return _p.decide.state($p.impact, ($): d_out.Value => {
                                     switch ($[0]) {
@@ -228,7 +228,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                     }
                                 })
                             }),
-                            ']': Structural_Token($.intermediate.instance[']']),
+                            ']': Structural_Token($.instance[']']),
                         }]
                     }]))
                     case 'nothing': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
@@ -240,27 +240,44 @@ export const Value: Value = ($, $p): d_out.Value => {
                     }]))
                     case 'simple': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['text', {
-                            'value': $.intermediate.instance.token.value,
+                            'value': $.instance.token.value,
                             'delimiter': ['none', null],
                             'trivia': {
-                                'comments': $.intermediate.instance['trailing trivia'].comments
+                                'comments': $.instance['trailing trivia'].comments
                             }
                         }]
                     }]))
                     case 'optional': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
-                        'type': ['optional', _p.decide.state($.status, ($): d_out.Value.data.concrete.type_.optional => {
+                        'type': ['optional', _p.decide.state($.instance, ($): d_out.Value.data.concrete.type_.optional => {
                             switch ($[0]) {
-                                case 'set': return _p.ss($, ($) => ['set', {
+                                case 'list': return _p.ss($, ($) => ['set', {
                                     '*': {
                                         'comments': _p.list.literal([])
                                     },
                                     'value': Value($['child value'], $p)
                                 }])
-                                case 'not set': return _p.ss($, ($) => ['not set', {
+                                case 'null literal': return _p.ss($, ($) => ['not set', {
                                     '_': {
                                         'comments': _p.list.literal([])
                                     }
                                 }])
+                                case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
+                                    switch ($[0]) {
+                                        case 'set': return _p.ss($, ($) => ['set', {
+                                            '*': {
+                                                'comments': _p.list.literal([])
+                                            },
+                                            'value': Value($['child value'], $p)
+                                        }])
+                                        case 'not set': return _p.ss($, ($) => ['not set', {
+                                            '_': {
+                                                'comments': _p.list.literal([])
+                                            }
+                                        }])
+
+                                        default: return _p.au($[0])
+                                    }
+                                }))
                                 default: return _p.au($[0])
                             }
                         })]
@@ -284,7 +301,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                             }
                         })
                     }]))
-                    case 'state': return _p.ss($, ($) => _p.decide.state($['option status'], ($): d_out.Value => {
+                    case 'state': return _p.ss($, ($) => _p.decide.state($.derived['option status'], ($): d_out.Value => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                                 'type': ['state', {
@@ -314,7 +331,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                     }))
                     case 'text': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['text', {
-                            'value': $.intermediate.instance.token.value,
+                            'value': $.instance.token.value,
                             'delimiter': ['quote', null],
                             'trivia': {
                                 'comments': _p.list.literal([])

@@ -206,7 +206,7 @@ export const Found: Found = ($, $p) => {
             const definition = $.definition
             return _p.decide.state($.intermediate.instance, ($): d_out.Completion_Suggestions => {
                 switch ($[0]) {
-                    case 'state': return _p.ss($, ($) => _p.decide.state($.status, ($): d_out.Completion_Suggestions => {
+                    case 'state': return _p.ss($, ($) => _p.decide.state($.xxx.status, ($): d_out.Completion_Suggestions => {
                         switch ($[0]) {
                             case 'missing': return _p.ss($, ($) => {
                                 const missing_data_marker = $['#']

@@ -125,7 +125,7 @@ export const Value: Value = ($, $p) => {
                         },
                         () => this_value()
                     ))
-                    case 'group': return _p.ss($, ($) => _p.decide.state($.intermediate.type, ($) => {
+                    case 'group': return _p.ss($, ($) => _p.decide.state($.derived.style, ($) => {
                         switch ($[0]) {
                             case 'verbose': return _p.ss($, ($) => _p.decide.list($.properties).has_match(
                                 ($): d_out.Possibly_Found => {
@@ -186,12 +186,12 @@ export const Value: Value = ($, $p) => {
                             default: return _p.au($[0])
                         }
                     }))
-                    case 'list': return _p.ss($, ($) => _p.decide.list($.items).has_match(
+                    case 'list': return _p.ss($, ($) => _p.decide.list($.derived.items).has_match(
                         ($) => Value_possibly_found($, $p),
                         () => this_value()
                     ))
                     case 'nothing': return _p.ss($, ($) => this_value())
-                    case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
+                    case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => Value_possibly_found($['child value'], $p).__decide(
                                 ($): d_out.Found => $,
@@ -204,7 +204,7 @@ export const Value: Value = ($, $p) => {
                     case 'reference': return _p.ss($, ($) => this_value())
                     case 'state': return _p.ss($, ($): d_out.Found => {
                         const valid_state = $
-                        return _p.decide.state($['option status'], ($) => {
+                        return _p.decide.state($.derived['option status'], ($) => {
                             switch ($[0]) {
                                 case 'set': return _p.ss($, ($): d_out.Found => Value_possibly_found($.value, $p).__decide(
                                     ($): d_out.Found => $,

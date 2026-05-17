@@ -85,7 +85,7 @@ export const Document: Document = ($, $p) => {
                                         case 'group': return _p.ss($, ($) => ["group"])
                                         case 'list': return _p.ss($, ($) => ["list"])
                                         case 'nothing': return _p.ss($, ($) => ["nothing"])
-                                        case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
+                                        case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
                                             switch ($[0]) {
                                                 case 'set': return _p.ss($, ($) => ["optional"])
                                                 case 'not set': return _p.ss($, ($) => ["not set optional", "replace by '*' to set the value"])
@@ -130,8 +130,8 @@ export const Document: Document = ($, $p) => {
                 }))
                 case 'state': return _p.ss($, ($) => {
                     const def = $.definition
-                    const prop_path = Property_Path($['property path'])
-                    return _p.decide.state($['option status'], ($) => {
+                    const prop_path = Property_Path($['property pathx'])
+                    return _p.decide.state($.derived['option status'], ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => _p.list.literal([
                                 prop_path,

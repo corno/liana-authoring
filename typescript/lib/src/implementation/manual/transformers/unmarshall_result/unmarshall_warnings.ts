@@ -55,7 +55,7 @@ export const Value: Value = ($) => {
                                 'type': ['expected a group', null]
                             }
                         ])
-                        : _p.decide.state($.intermediate.type, ($) => {
+                        : _p.decide.state($.derived.style, ($) => {
                             switch ($[0]) {
                                 case 'concise': return _p.ss($, ($) => _p.list.from.list(
                                     $.properties
@@ -95,15 +95,23 @@ export const Value: Value = ($) => {
                                 default: return _p.au($[0])
                             }
                         }))
-                    case 'simple': return _p.ss($, ($) => $.intermediate['invalid string type']
+                    case 'simple': return _p.ss($, ($) => _p.decide.state($.instance.token.type, ($) => {
+                        switch ($[0]) {
+                            case 'quoted': return false
+                            case 'apostrophed': return true
+                            case 'undelimited': return false
+                            case 'backticked': return true
+                            default: return _p.au($[0])
+                        }
+                    })
                         ? _p.list.literal<d_out.Warnings.L>([{
-                            'range': $.intermediate.instance.range,
+                            'range': $.instance.range,
                             'type': ['expected undelimited text', null]
                         }])
                         : _p.list.literal([])
                     )
                     case 'list': return _p.ss($, ($) => _p.list.from.list(
-                        $.items
+                        $.derived.items
                     ).flatten(
                         ($) => Value($)
                     ))
@@ -122,7 +130,7 @@ export const Value: Value = ($) => {
                         }
                     }))
                     case 'component': return _p.ss($, ($) => Value($.value))
-                    case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
+                    case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => Value($['child value']))
                             case 'not set': return _p.ss($, ($) => _p.list.literal([]))
@@ -130,7 +138,7 @@ export const Value: Value = ($) => {
                         }
                     }))
                     case 'state': return _p.ss($, ($): d_out.Warnings => {
-                        return _p.decide.state($['option status'], ($): d_out.Warnings => {
+                        return _p.decide.state($.derived['option status'], ($): d_out.Warnings => {
                             switch ($[0]) {
                                 case 'missing data': return _p.ss($, ($) => _p.list.literal([]))
                                 case 'set': return _p.ss($, ($) => $.intermediate['option token'].token.type[0] !== 'backticked'
@@ -145,10 +153,10 @@ export const Value: Value = ($) => {
                             }
                         })
                     })
-                    case 'text': return _p.ss($, ($) => $.intermediate.instance.token.type[0] !== 'quoted'
+                    case 'text': return _p.ss($, ($) => $.instance.token.type[0] !== 'quoted'
                         ? _p.list.literal([
                             {
-                                'range': $.intermediate.instance.range,
+                                'range': $.instance.range,
                                 'type': ['expected quoted text', null]
                             }
 

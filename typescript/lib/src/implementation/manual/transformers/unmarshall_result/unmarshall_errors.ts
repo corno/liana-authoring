@@ -125,7 +125,7 @@ export const Value: Value = ($) => {
                         return _p.list.nested_literal_old([
                             //duplicate id's
                             _p.list.from.dictionary(
-                                $.entries
+                                $.derived.entries
                             ).flatten(
                                 ($, id): d_out.Errors => {
                                     return _p.decide.state($.result, ($): d_out.Errors => {
@@ -175,7 +175,7 @@ export const Value: Value = ($) => {
                     case 'group': return _p.ss($, ($) => {
 
                         return _p.list.nested_literal_old([
-                            _p.decide.state($.intermediate.type, ($) => {
+                            _p.decide.state($.derived.style, ($) => {
                                 switch ($[0]) {
                                     case 'concise': return _p.ss($, ($) => _p.list.nested_literal_old([
                                         _p.list.from.list(
@@ -236,7 +236,7 @@ export const Value: Value = ($) => {
                                 }
                             }),
                             _p.list.from.list(
-                                $.properties.__to_list(($, id) => ({
+                                $.derived.properties.__to_list(($, id) => ({
                                     'id': id,
                                     'value': $
                                 }))
@@ -274,7 +274,7 @@ export const Value: Value = ($) => {
                     })
                     case 'simple': return _p.ss($, ($) => _p.list.literal([]))
                     case 'list': return _p.ss($, ($) => _p.list.from.list(
-                        $.items
+                        $.derived.items
                     ).flatten(
                         ($) => Value($)
                     ))
@@ -291,7 +291,7 @@ export const Value: Value = ($) => {
                     case 'component': return _p.ss($, ($) => {
                         return Value($.value)
                     })
-                    case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
+                    case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => Value($['child value']))
                             case 'not set': return _p.ss($, ($) => _p.list.literal([]))
@@ -299,7 +299,7 @@ export const Value: Value = ($) => {
                         }
                     }))
                     case 'state': return _p.ss($, ($): d_out.Errors => {
-                        return _p.decide.state($['option status'], ($): d_out.Errors => {
+                        return _p.decide.state($.derived['option status'], ($): d_out.Errors => {
                             switch ($[0]) {
                                 case 'missing data': return _p.ss($, ($) => _p.list.literal([
                                     {

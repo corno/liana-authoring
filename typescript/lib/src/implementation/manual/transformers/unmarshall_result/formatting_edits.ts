@@ -82,7 +82,7 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
         case 'state': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
             const definition = $.definition
 
-            return _p.decide.state($['option status'], ($) => {
+            return _p.decide.state($.derived['option status'], ($) => {
                 switch ($[0]) {
                     case 'set': return _p.ss($, ($) => do_value($.value))
                     case 'missing data': return _p.ss($, ($) => _p.optional.literal.not_set())

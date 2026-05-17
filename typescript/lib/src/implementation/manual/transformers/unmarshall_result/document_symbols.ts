@@ -38,7 +38,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                     }],
                     'deprecated': false,
                 }))
-                case 'optional': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
+                case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
                     switch ($[0]) {
                         case 'set': return _p.ss($, ($) => Value($['child value']))
                         case 'not set': return _p.ss($, ($) => ({
@@ -84,7 +84,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                     }],
                     'deprecated': false,
                 }))
-                case 'state': return _p.ss($, ($) => _p.decide.state($['option status'], ($): d_out.Value => {
+                case 'state': return _p.ss($, ($) => _p.decide.state($.derived['option status'], ($): d_out.Value => {
                     switch ($[0]) {
                         case 'set': return _p.ss($, ($) => Value($.value))
                         case 'missing data': return _p.ss($, ($) => ({
@@ -119,7 +119,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                 case 'group': return _p.ss($, ($) => ({
                     'type': ['composite', {
                         'kind': ['struct', null],
-                        'children': _p.decide.state($.intermediate.type, ($) => {
+                        'children': _p.decide.state($.derived.style, ($) => {
                             switch ($[0]) {
                                 case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => ({
                                     'name': $.id,
@@ -179,7 +179,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                 case 'list': return _p.ss($, ($) => ({
                     'type': ['composite', {
                         'kind': ['array', null],
-                        'children': _p.list.from.list($.items).map_with_state(
+                        'children': _p.list.from.list($.derived.items).map_with_state(
                             0,
                             ($, state): d_out.Symbol => ({
                                 'name': `[${state}]`,

@@ -118,7 +118,7 @@ export const Value = (
                                                 return _p.dictionary.from.dictionary(
                                                     def
                                                 ).join(
-                                                    $.properties,
+                                                    $.derived.properties,
                                                     ($, $o, id): d_out.Property_Resolve_Result => {
                                                         const resolver = $.resolver
                                                         return $o.__decide(
@@ -156,7 +156,7 @@ export const Value = (
                                     switch ($[0]) {
                                         case 'list': return _p.ss($, ($): d_out.List => ({
                                             'unmarshalled': $,
-                                            'items': $.items.__l_map(($) => Value(
+                                            'items': $.derived.items.__l_map(($) => Value(
                                                 $,
                                                 {
                                                     'definition': def.resolver,
@@ -187,7 +187,7 @@ export const Value = (
                                     switch ($[0]) {
                                         case 'optional': return _p.ss($, ($): d_out.Optional => ({
                                             'unmarshalled': $,
-                                            'status': _p.decide.state($.status, ($) => {
+                                            'status': _p.decide.state($.derived.status, ($) => {
                                                 switch ($[0]) {
                                                     case 'set': return _p.ss($, ($) => ['set', {
                                                         'child value': Value(
@@ -236,7 +236,7 @@ export const Value = (
                                     switch ($[0]) {
                                         case 'state': return _p.ss($, ($) => ({
                                             'unmarshalled': $,
-                                            'option': _p.decide.state($['option status'], ($) => {
+                                            'option': _p.decide.state($.derived['option status'], ($) => {
                                                 switch ($[0]) {
                                                     case 'set': return _p.ss($, ($) => _p.optional.literal.set(Value(
                                                         $.value,

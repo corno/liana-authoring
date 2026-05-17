@@ -60,8 +60,8 @@ export const Document: Document = ($, $p) => {
                 case 'state': return _p.ss($, ($) => ({
                     'range': _p.decide.state($.intermediate.instance, ($) => {
                         switch ($[0]) {
-                            case 'state': return _p.ss($, ($) => t_parse_tree_to_location.State($))
-                            case 'list': return _p.ss($, ($) => t_parse_tree_to_location.List($))
+                            case 'state': return _p.ss($, ($) => t_parse_tree_to_location.State($.xxx))
+                            case 'list': return _p.ss($, ($) => t_parse_tree_to_location.List($.xxx))
                             default: return _p.au($[0])
                         }
                     }),
