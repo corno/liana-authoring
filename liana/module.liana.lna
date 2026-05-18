@@ -56,10 +56,104 @@
             }
             `complexity`: | `unconstrained` ~
         )
+        'astn location': | `schema` (
+            `schema imports`: {}
+            `resolver imports`: {}
+            `globals`: (
+                `complexity`: | `unconstrained` ~
+                `text types`: {}
+                `simple types`: {
+                    'Natural': (
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
+                        )
+                    )
+                }
+            )
+            `modules`: {
+                'Range': (
+                    `root value`: | `group` {
+                        'start': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Location'
+                                `results`: _
+                            )
+                        )
+                        'end': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Location'
+                                `results`: _
+                            )
+                        )
+                    }
+                )
+                'Possible Range': (
+                    `root value`: | `state` (
+                        `options`: {
+                            'range': (
+                                `constraints`: _
+                                `description`: _
+                                `value`: | `component` (
+                                    `type`: | `internal` 'Range'
+                                    `results`: _
+                                )
+                            )
+                            'end of document': (
+                                `constraints`: _
+                                `description`: _
+                                `value`: | `group` {
+                                    'end': (
+                                        `description`: _
+                                        `value`: | `component` (
+                                            `type`: | `internal` 'Location'
+                                            `results`: _
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        `results`: _
+                    )
+                )
+                'Location': (
+                    `root value`: | `group` {
+                        'relative': (
+                            `description`: _
+                            `value`: | `component` (
+                                `type`: | `internal` 'Relative Location'
+                                `results`: _
+                            )
+                        )
+                        'absolute': (
+                            `description`: _
+                            `value`: | `simple` | `global` 'Natural'
+                        )
+                    }
+                )
+                'Relative Location': (
+                    `root value`: | `group` {
+                        'line': (
+                            `description`: _
+                            `value`: | `simple` | `global` 'Natural'
+                        )
+                        'column': (
+                            `description`: _
+                            `value`: | `simple` | `global` 'Natural'
+                        )
+                    }
+                )
+            }
+            `complexity`: | `unconstrained` ~
+        )
         'text edits': | `schema` (
             `schema imports`: {
                 'location': (
-                    `schema set child`: 'location'
+                    `schema set child`: 'astn location'
                     `schema`: ~
                 )
             }
@@ -99,7 +193,7 @@
                                             `value`: | `component` (
                                                 `type`: | `external` (
                                                     `import`: 'location'
-                                                    `module`: 'Range FE'
+                                                    `module`: 'Range'
                                                 )
                                                 `results`: _
                                             )
@@ -119,7 +213,7 @@
                                             `value`: | `component` (
                                                 `type`: | `external` (
                                                     `import`: 'location'
-                                                    `module`: 'Range FE'
+                                                    `module`: 'Range'
                                                 )
                                                 `results`: _
                                             )
@@ -135,7 +229,7 @@
                                             `value`: | `component` (
                                                 `type`: | `external` (
                                                     `import`: 'location'
-                                                    `module`: 'Position'
+                                                    `module`: 'Location'
                                                 )
                                                 `results`: _
                                             )
@@ -193,91 +287,61 @@
             )
             `modules`: {
                 'Completion Suggestions': (
-                    `root value`: | `list` (
-                        `value`: | `group` {
-                            'label': (
-                                `description`: _
-                                `value`: | `text` | `global` 'text'
-                            )
-                            'insert text': (
-                                `description`: _
-                                `value`: | `text` | `global` 'text'
-                            )
-                            'documentation': (
-                                `description`: _
-                                `value`: | `text` | `global` 'multi line text'
-                            )
-                            'additional text edits': (
-                                `description`: _
-                                `value`: | `component` (
-                                    `type`: | `external` (
-                                        `import`: 'text edits'
-                                        `module`: 'Text Edits'
+                    `root value`: | `optional` | `group` {
+                        'type': (
+                            `description`: _
+                            `value`: | `state` (
+                                `options`: {
+                                    'missing value': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
                                     )
-                                    `results`: _
-                                )
+                                    'missing option': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'reference': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'property name': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'option name': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                }
+                                `results`: _
                             )
-                            'type': (
-                                `description`: _
-                                `value`: | `state` (
-                                    `options`: {
-                                        'component': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'dictionary': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'group': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'list': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'nothing': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'simple': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'optional': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'reference': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'state': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'text': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                    }
-                                    `results`: _
-                                )
+                        )
+                        'suggestions': (
+                            `description`: _
+                            `value`: | `list` (
+                                `value`: | `group` {
+                                    'label': (
+                                        `description`: _
+                                        `value`: | `text` | `global` 'text'
+                                    )
+                                    'insert text': (
+                                        `description`: _
+                                        `value`: | `text` | `global` 'text'
+                                    )
+                                    'documentation': (
+                                        `description`: _
+                                        `value`: | `text` | `global` 'multi line text'
+                                    )
+                                }
+                                `results`: _
                             )
-                        }
-                        `results`: _
-                    )
+                        )
+                    }
                 )
             }
             `complexity`: | `unconstrained` ~
@@ -481,7 +545,7 @@
         'diagnostics': | `schema` (
             `schema imports`: {
                 'location': (
-                    `schema set child`: 'location'
+                    `schema set child`: 'astn location'
                     `schema`: ~
                 )
                 'path': (
@@ -517,89 +581,118 @@
             `modules`: {
                 'Diagnostics': (
                     `root value`: | `list` (
-                        `value`: | `group` {
-                            'severity': (
-                                `description`: _
-                                `value`: | `state` (
-                                    `options`: {
-                                        'error': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'warning': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'information': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'hint': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                    }
-                                    `results`: _
-                                )
-                            )
-                            'range': (
-                                `description`: _
-                                `value`: | `component` (
-                                    `type`: | `external` (
-                                        `import`: 'location'
-                                        `module`: 'Range FE'
-                                    )
-                                    `results`: _
-                                )
-                            )
-                            'message': (
-                                `description`: _
-                                `value`: | `text` | `global` 'text'
-                            )
-                            'related information': (
-                                `description`: _
-                                `value`: | `optional` | `list` (
-                                    `value`: | `group` {
-                                        'location': (
-                                            `description`: _
-                                            `value`: | `group` {
-                                                'file path': (
-                                                    `description`: _
-                                                    `value`: | `component` (
-                                                        `type`: | `external` (
-                                                            `import`: 'path'
-                                                            `module`: 'Node Path'
-                                                        )
-                                                        `results`: _
-                                                    )
-                                                )
-                                                'range': (
-                                                    `description`: _
-                                                    `value`: | `component` (
-                                                        `type`: | `external` (
-                                                            `import`: 'location'
-                                                            `module`: 'Range FE'
-                                                        )
-                                                        `results`: _
-                                                    )
-                                                )
-                                            }
-                                        )
-                                        'message': (
-                                            `description`: _
-                                            `value`: | `text` | `global` 'text'
-                                        )
-                                    }
-                                    `results`: _
-                                )
-                            )
-                        }
+                        `value`: | `component` (
+                            `type`: | `internal` 'Diagnostic'
+                            `results`: _
+                        )
                         `results`: _
                     )
+                )
+                'Diagnostic': (
+                    `root value`: | `group` {
+                        'severity': (
+                            `description`: _
+                            `value`: | `state` (
+                                `options`: {
+                                    'error': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'warning': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'information': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'hint': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                }
+                                `results`: _
+                            )
+                        )
+                        'range': (
+                            `description`: _
+                            `value`: | `optional` | `component` (
+                                `type`: | `external` (
+                                    `import`: 'location'
+                                    `module`: 'Possible Range'
+                                )
+                                `results`: _
+                            )
+                        )
+                        'message': (
+                            `description`: _
+                            `value`: | `text` | `global` 'text'
+                        )
+                        'related information': (
+                            `description`: _
+                            `value`: | `optional` | `list` (
+                                `value`: | `group` {
+                                    'location': (
+                                        `description`: _
+                                        `value`: | `group` {
+                                            'file path': (
+                                                `description`: _
+                                                `value`: | `component` (
+                                                    `type`: | `external` (
+                                                        `import`: 'path'
+                                                        `module`: 'Node Path'
+                                                    )
+                                                    `results`: _
+                                                )
+                                            )
+                                            'range': (
+                                                `description`: _
+                                                `value`: | `component` (
+                                                    `type`: | `external` (
+                                                        `import`: 'location'
+                                                        `module`: 'Possible Range'
+                                                    )
+                                                    `results`: _
+                                                )
+                                            )
+                                        }
+                                    )
+                                    'message': (
+                                        `description`: _
+                                        `value`: | `text` | `global` 'text'
+                                    )
+                                }
+                                `results`: _
+                            )
+                        )
+                        'type': (
+                            `description`: _
+                            `value`: | `state` (
+                                `options`: {
+                                    'semantic': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'deserialize': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                    'schema': (
+                                        `constraints`: _
+                                        `description`: _
+                                        `value`: | `nothing` ~
+                                    )
+                                }
+                                `results`: _
+                            )
+                        )
+                    }
                 )
                 'Result': (
                     `root value`: | `group` {
@@ -836,7 +929,7 @@
             )
             `modules`: {
                 'Hover Texts': (
-                    `root value`: | `optional` | `list` (
+                    `root value`: | `list` (
                         `value`: | `text` | `global` 'text'
                         `results`: _
                     )
@@ -935,100 +1028,6 @@
                                 )
                                 `results`: _
                             )
-                        )
-                    }
-                )
-            }
-            `complexity`: | `unconstrained` ~
-        )
-        'astn location': | `schema` (
-            `schema imports`: {}
-            `resolver imports`: {}
-            `globals`: (
-                `complexity`: | `unconstrained` ~
-                `text types`: {}
-                `simple types`: {
-                    'Natural': (
-                        `type`: | `number` (
-                            `precision`: | `exact` (
-                                `number of fractional digits`: _
-                                `type`: | `natural` ~
-                            )
-                        )
-                    )
-                }
-            )
-            `modules`: {
-                'Range': (
-                    `root value`: | `group` {
-                        'start': (
-                            `description`: _
-                            `value`: | `component` (
-                                `type`: | `internal` 'Location'
-                                `results`: _
-                            )
-                        )
-                        'end': (
-                            `description`: _
-                            `value`: | `component` (
-                                `type`: | `internal` 'Location'
-                                `results`: _
-                            )
-                        )
-                    }
-                )
-                'Possible Range': (
-                    `root value`: | `state` (
-                        `options`: {
-                            'range': (
-                                `constraints`: _
-                                `description`: _
-                                `value`: | `component` (
-                                    `type`: | `internal` 'Range'
-                                    `results`: _
-                                )
-                            )
-                            'end of document': (
-                                `constraints`: _
-                                `description`: _
-                                `value`: | `group` {
-                                    'end': (
-                                        `description`: _
-                                        `value`: | `component` (
-                                            `type`: | `internal` 'Location'
-                                            `results`: _
-                                        )
-                                    )
-                                }
-                            )
-                        }
-                        `results`: _
-                    )
-                )
-                'Location': (
-                    `root value`: | `group` {
-                        'relative': (
-                            `description`: _
-                            `value`: | `component` (
-                                `type`: | `internal` 'Relative Location'
-                                `results`: _
-                            )
-                        )
-                        'absolute': (
-                            `description`: _
-                            `value`: | `simple` | `global` 'Natural'
-                        )
-                    }
-                )
-                'Relative Location': (
-                    `root value`: | `group` {
-                        'line': (
-                            `description`: _
-                            `value`: | `simple` | `global` 'Natural'
-                        )
-                        'column': (
-                            `description`: _
-                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -1193,12 +1192,12 @@
                                 `description`: _
                                 `value`: | `state` (
                                     `options`: {
-                                        'error': (
+                                        'value': (
                                             `constraints`: _
                                             `description`: _
                                             `value`: | `state` (
                                                 `options`: {
-                                                    'invalid value type': (
+                                                    'invalid type': (
                                                         `constraints`: _
                                                         `description`: _
                                                         `value`: | `group` {
@@ -1207,37 +1206,12 @@
                                                                 `value`: | `list` (
                                                                     `value`: | `state` (
                                                                         `options`: {
-                                                                            'text': (
-                                                                                `constraints`: _
-                                                                                `description`: _
-                                                                                `value`: | `nothing` ~
-                                                                            )
-                                                                            'verbose group': (
-                                                                                `constraints`: _
-                                                                                `description`: _
-                                                                                `value`: | `nothing` ~
-                                                                            )
-                                                                            'concise group': (
-                                                                                `constraints`: _
-                                                                                `description`: _
-                                                                                `value`: | `nothing` ~
-                                                                            )
                                                                             'dictionary': (
                                                                                 `constraints`: _
                                                                                 `description`: _
                                                                                 `value`: | `nothing` ~
                                                                             )
-                                                                            'not set': (
-                                                                                `constraints`: _
-                                                                                `description`: _
-                                                                                `value`: | `nothing` ~
-                                                                            )
-                                                                            'nothing': (
-                                                                                `constraints`: _
-                                                                                `description`: _
-                                                                                `value`: | `nothing` ~
-                                                                            )
-                                                                            'set': (
+                                                                            'group': (
                                                                                 `constraints`: _
                                                                                 `description`: _
                                                                                 `value`: | `nothing` ~
@@ -1247,7 +1221,22 @@
                                                                                 `description`: _
                                                                                 `value`: | `nothing` ~
                                                                             )
+                                                                            'nothing': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'optional': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
                                                                             'state': (
+                                                                                `constraints`: _
+                                                                                `description`: _
+                                                                                `value`: | `nothing` ~
+                                                                            )
+                                                                            'text': (
                                                                                 `constraints`: _
                                                                                 `description`: _
                                                                                 `value`: | `nothing` ~
@@ -1260,7 +1249,21 @@
                                                             )
                                                         }
                                                     )
-                                                    'duplicate property': (
+                                                    'missing': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                }
+                                                `results`: _
+                                            )
+                                        )
+                                        'dictionary': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `state` (
+                                                `options`: {
+                                                    'duplicate entry': (
                                                         `constraints`: _
                                                         `description`: _
                                                         `value`: | `group` {
@@ -1270,7 +1273,16 @@
                                                             )
                                                         }
                                                     )
-                                                    'duplicate entry': (
+                                                }
+                                                `results`: _
+                                            )
+                                        )
+                                        'group': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `state` (
+                                                `options`: {
+                                                    'duplicate property': (
                                                         `constraints`: _
                                                         `description`: _
                                                         `value`: | `group` {
@@ -1289,11 +1301,6 @@
                                                                 `value`: | `text` | `global` 'text'
                                                             )
                                                         }
-                                                    )
-                                                    'missing value': (
-                                                        `constraints`: _
-                                                        `description`: _
-                                                        `value`: | `nothing` ~
                                                     )
                                                     'missing property value': (
                                                         `constraints`: _
@@ -1315,93 +1322,109 @@
                                                             )
                                                         }
                                                     )
-                                                    'state': (
+                                                }
+                                                `results`: _
+                                            )
+                                        )
+                                        'state': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `state` (
+                                                `options`: {
+                                                    'more than 2 items in list': (
                                                         `constraints`: _
                                                         `description`: _
-                                                        `value`: | `state` (
-                                                            `options`: {
-                                                                'more than 2 items': (
-                                                                    `constraints`: _
-                                                                    `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'missing option name': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'option name is not a text': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'missing value': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
+                                                    )
+                                                    'unknown option': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `group` {
+                                                            'found': (
+                                                                `description`: _
+                                                                `value`: | `text` | `global` 'text'
+                                                            )
+                                                            'expected': (
+                                                                `description`: _
+                                                                `value`: | `dictionary` (
                                                                     `value`: | `nothing` ~
                                                                 )
-                                                                'missing option name': (
-                                                                    `constraints`: _
-                                                                    `description`: _
-                                                                    `value`: | `nothing` ~
-                                                                )
-                                                                'option name is not a text': (
-                                                                    `constraints`: _
-                                                                    `description`: _
-                                                                    `value`: | `nothing` ~
-                                                                )
-                                                                'missing value': (
-                                                                    `constraints`: _
-                                                                    `description`: _
-                                                                    `value`: | `nothing` ~
-                                                                )
-                                                                'unknown option': (
-                                                                    `constraints`: _
-                                                                    `description`: _
-                                                                    `value`: | `group` {
-                                                                        'found': (
-                                                                            `description`: _
-                                                                            `value`: | `text` | `global` 'text'
-                                                                        )
-                                                                        'expected': (
-                                                                            `description`: _
-                                                                            `value`: | `dictionary` (
-                                                                                `value`: | `nothing` ~
-                                                                            )
-                                                                        )
-                                                                    }
-                                                                )
-                                                                'missing option': (
-                                                                    `constraints`: _
-                                                                    `description`: _
-                                                                    `value`: | `nothing` ~
-                                                                )
-                                                            }
-                                                            `results`: _
-                                                        )
+                                                            )
+                                                        }
+                                                    )
+                                                    'missing option': (
+                                                        `constraints`: _
+                                                        `description`: _
+                                                        `value`: | `nothing` ~
                                                     )
                                                 }
                                                 `results`: _
                                             )
                                         )
-                                        'warning': (
+                                    }
+                                    `results`: _
+                                )
+                            )
+                        }
+                        `results`: _
+                    )
+                )
+                'Warnings': (
+                    `root value`: | `list` (
+                        `value`: | `group` {
+                            'range': (
+                                `description`: _
+                                `value`: | `component` (
+                                    `type`: | `external` (
+                                        `import`: 'location'
+                                        `module`: 'Range'
+                                    )
+                                    `results`: _
+                                )
+                            )
+                            'type': (
+                                `description`: _
+                                `value`: | `state` (
+                                    `options`: {
+                                        'expected apostrophed text': (
                                             `constraints`: _
                                             `description`: _
-                                            `value`: | `state` (
-                                                `options`: {
-                                                    'expected apostrophed text': (
-                                                        `constraints`: _
-                                                        `description`: _
-                                                        `value`: | `nothing` ~
-                                                    )
-                                                    'expected quoted text': (
-                                                        `constraints`: _
-                                                        `description`: _
-                                                        `value`: | `nothing` ~
-                                                    )
-                                                    'expected backticked text': (
-                                                        `constraints`: _
-                                                        `description`: _
-                                                        `value`: | `nothing` ~
-                                                    )
-                                                    'expected undelimited text': (
-                                                        `constraints`: _
-                                                        `description`: _
-                                                        `value`: | `nothing` ~
-                                                    )
-                                                    'expected a group': (
-                                                        `constraints`: _
-                                                        `description`: _
-                                                        `value`: | `nothing` ~
-                                                    )
-                                                }
-                                                `results`: _
-                                            )
+                                            `value`: | `nothing` ~
+                                        )
+                                        'expected quoted text': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
+                                        )
+                                        'expected backticked text': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
+                                        )
+                                        'expected undelimited text': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
+                                        )
+                                        'expected a group': (
+                                            `constraints`: _
+                                            `description`: _
+                                            `value`: | `nothing` ~
                                         )
                                     }
                                     `results`: _

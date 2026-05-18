@@ -318,7 +318,7 @@ export const Value: Value = ($, $p) => {
                                                             const instance_lookup = _p.dictionary.from.list(
                                                                 _p.list.from.list(
                                                                     $.properties
-                                                                ).filter(($) => _p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
+                                                                ).map_optionally(($) => _p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
                                                                     switch ($[0]) {
                                                                         case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
                                                                         case 'yes': return _p.ss($, ($) => _p.optional.literal.set($))

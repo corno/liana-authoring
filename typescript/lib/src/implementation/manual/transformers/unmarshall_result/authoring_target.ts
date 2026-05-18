@@ -164,7 +164,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                         'properties': _p.decide.state(unmarsalled_group.derived.style, ($): d_out.ID_Value_Pairs => {
                                             switch ($[0]) {
                                                 //convert concise to verbose
-                                                case 'concise': return _p.ss($, ($): d_out.ID_Value_Pairs => _p.list.from.list($.properties).filter(($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
+                                                case 'concise': return _p.ss($, ($): d_out.ID_Value_Pairs => _p.list.from.list($.properties).map_optionally(($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
                                                     return _p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
                                                         switch ($[0]) {
                                                             case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
