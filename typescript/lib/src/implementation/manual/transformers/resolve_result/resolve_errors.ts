@@ -75,6 +75,7 @@ export const Value: Value = ($) => {
                                     switch ($[0]) {
                                         case 'to be implemented': return _p.ss($, ($) => _p.list.literal<d_out.Error>([
                                             {
+                                                'severity': ['hint', null],
                                                 'range': range,
                                                 'type': ['to be implemented', null]
                                             }

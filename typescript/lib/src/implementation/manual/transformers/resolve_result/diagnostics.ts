@@ -19,7 +19,7 @@ export type Document = _pi.Transformer<
 export const Document: Document = ($) => _p.list.nested_literal_old([
     t_to_resolve_result_to_errors.Document($).__l_map(($) => {
         return ({
-            'severity': ['error', null],
+            'severity': $.severity,
             'range': _p.optional.literal.set(['range', $.range]),
             'related information': _p.optional.literal.not_set(),
             'message': t_fp_to_text.Phrase(

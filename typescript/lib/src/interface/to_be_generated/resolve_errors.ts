@@ -6,6 +6,10 @@ export type Error = {
     'range': d_location.Range
     'type':
     | ['to be implemented', null]
+    'severity':
+    | ['error', null]
+    | ['warning', null]
+    | ['hint', null]
 }
 
 export type Errors = _pi.List<Error>
