@@ -31,59 +31,59 @@ export const Document = (
     )
 })
 
-export const Get_Entry = (
-    $: d_function.Lookup,
-    $p: {
-        'id': string
-    }
-) => _p.decide.state($, ($) => {
-    switch ($[0]) {
-        case 'acyclic siblings': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
-        case 'cyclic siblings': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
-        case 'parameter': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
-        default: return _p.au($[0])
-    }
-})
+// export const Get_Entry = (
+//     $: d_function.Lookup,
+//     $p: {
+//         'id': string
+//     }
+// ) => _p.decide.state($, ($) => {
+//     switch ($[0]) {
+//         case 'acyclic siblings': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+//         case 'cyclic siblings': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+//         case 'parameter': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+//         default: return _p.au($[0])
+//     }
+// })
 
-export const Resolver_Lookup_Selection = (
-    $: null,
-    $p: {
-        definition: d_in_definition.Resolver_Lookup_Selection
-        'acyclic siblings': _pi.Optional_Value<d_function.Acyclic_Siblings>
-        'cyclic siblings': _pi.Optional_Value<d_function.Cyclic_Siblings>
-        'lookup parameters': _pi.Optional_Value<d_function.Lookup_Parameters>
-    }
-): d_function.Lookup => {
-    return _p_implement_me("!!!!!!!")
-    // return _p.decide.state($p.definition.type, ($): d_function.Lookup => {
-    //     switch ($[0]) {
-    //         case 'acyclic': return _p.ss($, ($) => _p.decide.state($, ($) => {
-    //             switch ($[0]) {
-    //                 case 'siblings': return _p.ss($, ($) => $p['acyclic siblings'].__decide(
-    //                     ($) => ['acyclic siblings', $],
-    //                     () => _p_unreachable_code_path("acyclic siblings should have been provided for this definition")
-    //                 ))
-    //                 case 'resolved dictionary': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
-    //                 default: return _p.au($[0])
-    //             }
-    //         }))
-    //         case 'cyclic': return _p.ss($, ($) => _p.decide.state($, ($) => {
-    //             switch ($[0]) {
-    //                 case 'siblings': return _p.ss($, ($) => $p['cyclic siblings'].__decide(
-    //                     ($) => ['cyclic siblings', $],
-    //                     () => _p_unreachable_code_path("cyclic siblings should have been provided for this definition")
-    //                 ))
-    //                 default: return _p.au($[0])
-    //             }
-    //         }))
-    //         case 'parameter': return _p.ss($, ($) => $p['module parameters'].__decide(
-    //             ($) => ['parameter', $p['module parameters']],
-    //             () => _p_unreachable_code_path("module parameters should have been provided for this definition")
-    //         ))
-    //         default: return _p.au($[0])
-    //     }
-    // })
-}
+// export const Resolver_Lookup_Selection = (
+//     $: null,
+//     $p: {
+//         definition: d_in_definition.Resolver_Lookup_Selection
+//         'acyclic siblings': _pi.Optional_Value<d_function.Acyclic_Siblings>
+//         'cyclic siblings': _pi.Optional_Value<d_function.Cyclic_Siblings>
+//         'lookup parameters': _pi.Optional_Value<d_function.Lookup_Parameters>
+//     }
+// ): d_function.Lookup => {
+//     return _p_implement_me("!!!!!!!")
+//     // return _p.decide.state($p.definition.type, ($): d_function.Lookup => {
+//     //     switch ($[0]) {
+//     //         case 'acyclic': return _p.ss($, ($) => _p.decide.state($, ($) => {
+//     //             switch ($[0]) {
+//     //                 case 'siblings': return _p.ss($, ($) => $p['acyclic siblings'].__decide(
+//     //                     ($) => ['acyclic siblings', $],
+//     //                     () => _p_unreachable_code_path("acyclic siblings should have been provided for this definition")
+//     //                 ))
+//     //                 case 'resolved dictionary': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+//     //                 default: return _p.au($[0])
+//     //             }
+//     //         }))
+//     //         case 'cyclic': return _p.ss($, ($) => _p.decide.state($, ($) => {
+//     //             switch ($[0]) {
+//     //                 case 'siblings': return _p.ss($, ($) => $p['cyclic siblings'].__decide(
+//     //                     ($) => ['cyclic siblings', $],
+//     //                     () => _p_unreachable_code_path("cyclic siblings should have been provided for this definition")
+//     //                 ))
+//     //                 default: return _p.au($[0])
+//     //             }
+//     //         }))
+//     //         case 'parameter': return _p.ss($, ($) => $p['module parameters'].__decide(
+//     //             ($) => ['parameter', $p['module parameters']],
+//     //             () => _p_unreachable_code_path("module parameters should have been provided for this definition")
+//     //         ))
+//     //         default: return _p.au($[0])
+//     //     }
+//     // })
+// }
 
 
 export const Value = (
@@ -118,7 +118,7 @@ export const Value = (
                                                 {
                                                     'definition': _p.decide.state(def.location, ($) => {
                                                         switch ($[0]) {
-                                                            case 'external': return _p.ss($, ($) => _p_implement_me("!!!!!!!"))
+                                                            case 'external': return _p.ss($, ($) => _p_implement_me("external component"))
                                                             case 'internal': return _p.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
                                                                 $['l id'],
                                                                 {
@@ -129,8 +129,8 @@ export const Value = (
                                                         }
                                                     }),
                                                     'resolver': $p.resolver,
-                                                    'module parameters': _p_implement_me("!!!!!!!"),
-                                                    'lookup parameters': _p_implement_me("!!!!!!!"),
+                                                    'module parameters': _p.optional.literal.not_set(), //FIXME 
+                                                    'lookup parameters': _p.optional.literal.not_set(), //FIXME
                                                     // 'module parameters': _p.optional.from.optional(def.arguments).map(
                                                     //     ($) => ({
                                                     //         'lookups': _p.optional.from.optional($.lookups).map(
@@ -372,21 +372,21 @@ export const Value = (
                                                     default: return _p_unreachable_code_path("unmarshalled value should match the definition")
                                                 }
                                             })
-                                            const lookup = Resolver_Lookup_Selection(
-                                                null,
-                                                {
-                                                    'definition': $.lookup,
-                                                    'acyclic siblings': $p['acyclic siblings'],
-                                                    'cyclic siblings': $p['cyclic siblings'],
-                                                    'lookup parameters': $p['lookup parameters'],
-                                                }
-                                            )
-                                            Get_Entry(
-                                                lookup,
-                                                {
-                                                    'id': unmarshalled.intermediate.instance.token.value
-                                                }
-                                            )
+                                            // const lookup = Resolver_Lookup_Selection(
+                                            //     null,
+                                            //     {
+                                            //         'definition': $.lookup,
+                                            //         'acyclic siblings': $p['acyclic siblings'],
+                                            //         'cyclic siblings': $p['cyclic siblings'],
+                                            //         'lookup parameters': $p['lookup parameters'],
+                                            //     }
+                                            // )
+                                            // Get_Entry(
+                                            //     lookup,
+                                            //     {
+                                            //         'id': unmarshalled.intermediate.instance.token.value
+                                            //     }
+                                            // )
                                             return ['selected', {
                                                 'unmarshalled': unmarshalled,
                                                 'resolve status': ['to be implemented', null]

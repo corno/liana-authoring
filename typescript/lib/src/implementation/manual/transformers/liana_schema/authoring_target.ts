@@ -1,5 +1,4 @@
 import * as _p from 'pareto-core/dist/assign'
-import _p_implement_me from 'pareto-core-dev/dist/implement_me'
 
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
@@ -165,97 +164,97 @@ export const Value_data = (
     }
 })
 
-export const Resolver_Value = (
-    $: d_in.Resolver_Value,
-): d_out.Value => ({
-    'data': ['concrete', {
-        'type': _p.decide.state($, ($): d_out.Value.data.concrete.type_ => {
-            switch ($[0]) {
-                case 'simple': return _p.ss($, ($) => ['text', {
-                    'delimiter': ['none', null],
-                    'value': "0",
-                    'trivia': {
-                        'comments': _p.list.literal([])
-                    }
-                }])
-                case 'nothing': return _p.ss($, ($) => ['nothing', {
-                    '~': {
-                        'comments': _p.list.literal([])
-                    }
-                }])
-                case 'text': return _p.ss($, ($) => ['text', {
-                    'delimiter': ['quote', null],
-                    'value': "",
-                    'trivia': {
-                        'comments': _p.list.literal([])
-                    }
-                }])
-                case 'list': return _p.ss($, ($) => ['list', {
-                    '[': {
-                        'comments': _p.list.literal([])
-                    },
-                    'items': _p.list.literal([]),
-                    ']': {
-                        'comments': _p.list.literal([])
-                    },
-                }])
-                case 'reference': return _p.ss($, ($) => ['text', {
-                    'delimiter': ['apostrophe', null],
-                    'value': "...",
-                    'trivia': {
-                        'comments': _p.list.literal([])
-                    }
-                }])
-                case 'component': return _p.ss($, ($) => _p.decide.state($.location, ($) => {
-                    switch ($[0]) {
-                        case 'external': return _p.ss($, ($) => _p_implement_me("xx"))
-                        case 'internal': return _p.ss($, ($) => _p_implement_me("xx"))
-                        default: return _p.au($[0])
-                    }
-                }))
-                case 'dictionary': return _p.ss($, ($) => ['dictionary', {
-                    '{': {
-                        'comments': _p.list.literal([])
-                    },
-                    'entries': _p.list.literal([]),
-                    '}': {
-                        'comments': _p.list.literal([])
-                    },
-                }])
-                case 'group': return _p.ss($, ($): d_out.Value.data.concrete.type_ => ['group', ['verbose', {
-                    '(': {
-                        'comments': _p.list.literal([])
-                    },
-                    'properties': _p.list.from.dictionary(
-                        $
-                    ).convert(
-                        ($, id): d_out.ID_Value_Pairs.L => ({
-                            'id': id,
-                            'value': _p.optional.literal.set(Resolver_Value($.resolver))
-                        })
-                    ),
-                    ')': {
-                        'comments': _p.list.literal([])
-                    },
-                }]])
-                case 'optional': return _p.ss($, ($) => ['optional', ['not set', {
-                    '_': {
-                        'comments': _p.list.literal([])
-                    }
-                }]])
-                case 'state': return _p.ss($, ($) => ['state', {
-                    '|': {
-                        'comments': _p.list.literal([])
-                    },
-                    'status': ['missing', {
-                        '#': {
-                            'comments': _p.list.literal([])
-                        }
-                    }]
-                }])
-                default: return _p.au($[0])
-            }
-        })
-    }]
+// export const Resolver_Value = (
+//     $: d_in.Resolver_Value,
+// ): d_out.Value => ({
+//     'data': ['concrete', {
+//         'type': _p.decide.state($, ($): d_out.Value.data.concrete.type_ => {
+//             switch ($[0]) {
+//                 case 'simple': return _p.ss($, ($) => ['text', {
+//                     'delimiter': ['none', null],
+//                     'value': "0",
+//                     'trivia': {
+//                         'comments': _p.list.literal([])
+//                     }
+//                 }])
+//                 case 'nothing': return _p.ss($, ($) => ['nothing', {
+//                     '~': {
+//                         'comments': _p.list.literal([])
+//                     }
+//                 }])
+//                 case 'text': return _p.ss($, ($) => ['text', {
+//                     'delimiter': ['quote', null],
+//                     'value': "",
+//                     'trivia': {
+//                         'comments': _p.list.literal([])
+//                     }
+//                 }])
+//                 case 'list': return _p.ss($, ($) => ['list', {
+//                     '[': {
+//                         'comments': _p.list.literal([])
+//                     },
+//                     'items': _p.list.literal([]),
+//                     ']': {
+//                         'comments': _p.list.literal([])
+//                     },
+//                 }])
+//                 case 'reference': return _p.ss($, ($) => ['text', {
+//                     'delimiter': ['apostrophe', null],
+//                     'value': "...",
+//                     'trivia': {
+//                         'comments': _p.list.literal([])
+//                     }
+//                 }])
+//                 case 'component': return _p.ss($, ($) => _p.decide.state($.location, ($) => {
+//                     switch ($[0]) {
+//                         case 'external': return _p.ss($, ($) => _p_implement_me("xx"))
+//                         case 'internal': return _p.ss($, ($) => _p_implement_me("xx"))
+//                         default: return _p.au($[0])
+//                     }
+//                 }))
+//                 case 'dictionary': return _p.ss($, ($) => ['dictionary', {
+//                     '{': {
+//                         'comments': _p.list.literal([])
+//                     },
+//                     'entries': _p.list.literal([]),
+//                     '}': {
+//                         'comments': _p.list.literal([])
+//                     },
+//                 }])
+//                 case 'group': return _p.ss($, ($): d_out.Value.data.concrete.type_ => ['group', ['verbose', {
+//                     '(': {
+//                         'comments': _p.list.literal([])
+//                     },
+//                     'properties': _p.list.from.dictionary(
+//                         $
+//                     ).convert(
+//                         ($, id): d_out.ID_Value_Pairs.L => ({
+//                             'id': id,
+//                             'value': _p.optional.literal.set(Resolver_Value($.resolver))
+//                         })
+//                     ),
+//                     ')': {
+//                         'comments': _p.list.literal([])
+//                     },
+//                 }]])
+//                 case 'optional': return _p.ss($, ($) => ['optional', ['not set', {
+//                     '_': {
+//                         'comments': _p.list.literal([])
+//                     }
+//                 }]])
+//                 case 'state': return _p.ss($, ($) => ['state', {
+//                     '|': {
+//                         'comments': _p.list.literal([])
+//                     },
+//                     'status': ['missing', {
+//                         '#': {
+//                             'comments': _p.list.literal([])
+//                         }
+//                     }]
+//                 }])
+//                 default: return _p.au($[0])
+//             }
+//         })
+//     }]
 
-})
+// })
