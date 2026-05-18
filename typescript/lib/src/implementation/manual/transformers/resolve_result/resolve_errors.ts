@@ -74,11 +74,11 @@ export const Value: Value = ($) => {
                                 case 'selected': return _p.ss($, ($) => _p.decide.state($['resolve status'], ($): d_out.Errors => {
                                     switch ($[0]) {
                                         case 'to be implemented': return _p.ss($, ($) => _p.list.literal<d_out.Error>([
-                                            {
-                                                'severity': ['hint', null],
-                                                'range': range,
-                                                'type': ['to be implemented', null]
-                                            }
+                                            // {
+                                            //     'severity': ['hint', null],
+                                            //     'range': range,
+                                            //     'type': ['to be implemented', null]
+                                            // }
                                         ]))
                                         default: return _p.au($[0])
                                     }
