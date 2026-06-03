@@ -75,7 +75,7 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
             switch ($[0]) {
                 case 'verbose': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
                     switch ($[0]) {
-                        case 'yes': return _p.ss($, ($) => $['property value'].__decide(
+                        case 'yes': return _p.ss($, ($) => $['value'].__decide(
                             ($) => Value($, $p),
                             () => _p.optional.literal.not_set()
                         ))

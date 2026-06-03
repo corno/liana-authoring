@@ -26,8 +26,8 @@ export type Value = _pi.Transformer_With_Parameter<
     d_function.Parameters
 >
 
-export type Property_Value = _pi.Transformer_With_Parameter<
-    d_in.Property_Value,
+export type Stylable_Value = _pi.Transformer_With_Parameter<
+    d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
@@ -48,7 +48,7 @@ export const Document: Document = ($, $p): d_out.Document => {
     }
 }
 
-export const Property_Value: Property_Value = ($, $p): d_out.Value => {
+export const Stylable_Value: Stylable_Value = ($, $p): d_out.Value => {
     const value = $
     return _p.decide.state($p.impact, ($) => {
         switch ($[0]) {
@@ -84,7 +84,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                 'id': $.intermediate['id value pair'].id.token.value,
                                 'value': _p.decide.state($.value, ($) => {
                                     switch ($[0]) {
-                                        case 'set': return _p.ss($, ($) => _p.optional.literal.set(Value($, $p)))
+                                        case 'set': return _p.ss($, ($) => _p.optional.literal.set(Stylable_Value($, $p)))
                                         case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
                                         default: return _p.au($[0])
                                     }
@@ -110,7 +110,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                     return _p.decide.state($['definition found'], ($) => {
                                                         switch ($[0]) {
                                                             case 'no': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.value))
-                                                            case 'yes': return _p.ss($, ($) => Property_Value($['property value'], $p))
+                                                            case 'yes': return _p.ss($, ($) => Stylable_Value($['value'], $p))
                                                             default: return _p.au($[0])
                                                         }
                                                     })
@@ -120,8 +120,8 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                     const item = $
                                                     return _p.decide.state($['definition found'], ($) => {
                                                         switch ($[0]) {
-                                                            case 'yes': return _p.ss($, ($): d_out.Items.L => $['property value'].__decide(
-                                                                ($) => Property_Value($, $p),
+                                                            case 'yes': return _p.ss($, ($): d_out.Items.L => $['value'].__decide(
+                                                                ($) => Stylable_Value($, $p),
                                                                 () => temp_value(['concrete', {
                                                                     'type': ['nothing', {
                                                                         '~': {
@@ -172,7 +172,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                         case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
                                                         case 'yes': return _p.ss($, ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => _p.optional.literal.set({
                                                             'id': $.id,
-                                                            'value': _p.optional.literal.set(Property_Value($['property value'], $p))
+                                                            'value': _p.optional.literal.set(Stylable_Value($['value'], $p))
                                                         }))
                                                         default: return _p.au($[0])
                                                     }
@@ -184,7 +184,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                         'id': $.intermediate['id value pair'].id.token.value,
                                                         'value': _p.decide.state($['definition found'], ($): d_out.ID_Value_Pairs.L.value => {
                                                             switch ($[0]) {
-                                                                case 'yes': return _p.ss($, ($) => _p.optional.from.optional($['property value']).map(($) => Property_Value($, $p)))
+                                                                case 'yes': return _p.ss($, ($) => _p.optional.from.optional($['value']).map(($) => Stylable_Value($, $p)))
                                                                 case 'no': return _p.ss($, ($) => item.intermediate['id value pair'].assignment.__decide(
                                                                     ($): d_out.ID_Value_Pairs.L.value => $.value.__decide(
                                                                         ($) => _p.optional.literal.set(t_parse_tree_to_authoring_target.Value($)),
@@ -224,10 +224,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                     case 'list': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['list', {
                             '[': Structural_Token($.instance['[']),
-                            'items': $.derived.items.__l_map(($) => {
-                                const item = $
-                                return Value(item, $p)
-                            }),
+                            'items': $.derived.items.__l_map(($) => Stylable_Value($, $p)),
                             ']': Structural_Token($.instance[']']),
                         }]
                     }]))

@@ -67,7 +67,7 @@ export const Value: Value = ($) => {
                                         return _p.decide.state($['definition found'], ($) => {
                                             switch ($[0]) {
                                                 case 'no': return _p.ss($, ($) => _p.list.literal([]))
-                                                case 'yes': return _p.ss($, ($) => Value($['property value']))
+                                                case 'yes': return _p.ss($, ($) => Value($['value']))
                                                 default: return _p.au($[0])
                                             }
                                         })
@@ -85,7 +85,7 @@ export const Value: Value = ($) => {
                                         ])
                                         : _p.decide.state($['definition found'], ($) => {
                                             switch ($[0]) {
-                                                case 'yes': return _p.ss($, ($) => $['property value'].__decide(
+                                                case 'yes': return _p.ss($, ($) => $['value'].__decide(
                                                     ($) => Value($),
                                                     (): d_out.Warnings => _p.list.literal([])
                                                 ))

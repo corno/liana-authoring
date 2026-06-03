@@ -143,7 +143,7 @@ export const Value: Value = ($, $p) => {
                                         () => _p.decide.state($['definition found'], ($): d_out.Possibly_Found => {
 
                                             switch ($[0]) {
-                                                case 'yes': return _p.ss($, ($) => $['property value'].__decide(
+                                                case 'yes': return _p.ss($, ($) => $['value'].__decide(
                                                     ($): d_out.Possibly_Found => _p.optional.literal.set(Value_possibly_found($, $p).__decide(
                                                         ($) => $,
                                                         (): d_out.Found => ['property', {'style': ['verbose', prop]}]
@@ -176,7 +176,7 @@ export const Value: Value = ($, $p) => {
                                         ),
                                         () => _p.optional.literal.set(_p.decide.state($['definition found'], ($): d_out.Found => {
                                             switch ($[0]) {
-                                                case 'yes': return _p.ss($, ($) => Value($['property value'], $p))
+                                                case 'yes': return _p.ss($, ($) => Value($['value'], $p))
                                                 case 'no': return _p.ss($, ($) => ['property', {'style': ['unknown concise', prop]}])
                                                 default: return _p.au($[0])
                                             }

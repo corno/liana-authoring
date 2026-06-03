@@ -129,7 +129,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                     'detail': "property",
                                     'value': _p.decide.state($['definition found'], ($) => {
                                         switch ($[0]) {
-                                            case 'yes': return _p.ss($, ($) => $['property value'].__decide(
+                                            case 'yes': return _p.ss($, ($) => $['value'].__decide(
                                                 ($): d_out.Value => Value($),
                                                 (): d_out.Value => ({
                                                     'type': ['primitive', {
@@ -164,11 +164,11 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                                             'selection range': t_parse_tree_to_location.Value($.item.value),
                                         }))
                                         case 'yes': return _p.ss($, ($): d_out.Symbol => ({
-                                            'value': Value($['property value']),
+                                            'value': Value($['value']),
                                             'detail': "property",
                                             'name': $.id,
-                                            'range': t_parse_tree_to_location.Value($['property value'].instance),
-                                            'selection range': t_parse_tree_to_location.Value($['property value'].instance),
+                                            'range': t_parse_tree_to_location.Value($['value'].instance),
+                                            'selection range': t_parse_tree_to_location.Value($['value'].instance),
                                         }))
                                         default: return _p.au($[0])
                                     }

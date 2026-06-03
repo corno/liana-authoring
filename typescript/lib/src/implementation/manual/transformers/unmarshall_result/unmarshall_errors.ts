@@ -194,7 +194,7 @@ export const Value: Value = ($) => {
                                                                 }]]
                                                             }
                                                         ]))
-                                                        case 'yes': return _p.ss($, ($) => Value($['property value']))
+                                                        case 'yes': return _p.ss($, ($) => Value($['value']))
                                                         default: return _p.au($[0])
                                                     }
                                                 })
@@ -212,7 +212,7 @@ export const Value: Value = ($) => {
                                                 return _p.list.nested_literal_old([
                                                     _p.decide.state($['definition found'], ($) => {
                                                         switch ($[0]) {
-                                                            case 'yes': return _p.ss($, ($) => $['property value'].__decide(
+                                                            case 'yes': return _p.ss($, ($) => $['value'].__decide(
                                                                 ($) => Value($),
                                                                 (): d_out.Errors => _p.list.literal([
                                                                     //the property is missing, it is reported at another place (where the concise and verbose properties are merged)
