@@ -48,7 +48,7 @@ const Value: Value = (value, $p) => {
     return _p.optional.literal.set({
         'range': t_parse_tree_to_full_range.Value(value.instance),
         'text': t_authoring_target_to_text.Value(
-            t_unmarshall_result_to_authoring_target.Value(value, $p.conversion),
+            t_unmarshall_result_to_authoring_target.Any_Value(value, $p.conversion),
             {
                 'indentation': $p.indent,
                 'newline': "\n",

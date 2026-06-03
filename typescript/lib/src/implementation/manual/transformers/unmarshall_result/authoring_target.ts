@@ -20,13 +20,19 @@ export type Document = _pi.Transformer_With_Parameter<
     d_function.Parameters
 >
 
-export type Value = _pi.Transformer_With_Parameter<
+export type Any_Value = _pi.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
 
-export type Stylable_Value = _pi.Transformer_With_Parameter<
+export type Non_Entity = _pi.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Value,
+    d_function.Parameters
+>
+
+export type Entity = _pi.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
@@ -44,22 +50,47 @@ const temp_value = ($: d_out.Value.data): d_out.Value => ({
 export const Document: Document = ($, $p): d_out.Document => {
     return {
         'header': _p.optional.from.optional($['header']).map(($) => t_parse_tree_to_authoring_target.Value($)),
-        'content': Value($['content'], $p)
+        'content': Any_Value($['content'], $p)
     }
 }
 
-export const Stylable_Value: Stylable_Value = ($, $p): d_out.Value => {
+export const Non_Entity: Non_Entity = ($, $p): d_out.Value => {
     const value = $
     return _p.decide.state($p.impact, ($) => {
         switch ($[0]) {
-            case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
-            case 'deep': return _p.ss($, ($) => Value(value, $p))
+            case 'shallow with entities': return _p.ss($, ($) => Any_Value( //found a property, so we switch to 'without entities'
+                value,
+                {
+                    'impact': ['shallow without entities', null],
+                    'style': $p.style,
+                }
+            ))
+            case 'shallow without entities': return _p.ss($, ($) => Any_Value(value, $p))
+            case 'deep': return _p.ss($, ($) => Any_Value(value, $p))
             default: return _p.au($[0])
         }
     })
 }
 
-export const Value: Value = ($, $p): d_out.Value => {
+export const Entity: Entity = ($, $p): d_out.Value => {
+    const value = $
+    return _p.decide.state($p.impact, ($) => {
+        switch ($[0]) {
+            case 'shallow with entities': return _p.ss($, ($) => Any_Value(
+                value,
+                {
+                    'impact': ['shallow without entities', null],
+                    'style': $p.style,
+                }
+            ))
+            case 'shallow without entities': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
+            case 'deep': return _p.ss($, ($) => Any_Value(value, $p))
+            default: return _p.au($[0])
+        }
+    })
+}
+
+export const Any_Value: Any_Value = ($, $p): d_out.Value => {
     const instance = $['instance']
     return _p.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
@@ -76,7 +107,7 @@ export const Value: Value = ($, $p): d_out.Value => {
             }))
             case 'success': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
                 switch ($[0]) {
-                    case 'component': return _p.ss($, ($): d_out.Value => Value($.value, $p))
+                    case 'component': return _p.ss($, ($): d_out.Value => Any_Value($.value, $p))
                     case 'dictionary': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['dictionary', {
                             '{': Structural_Token($.intermediate.instance['{']),
@@ -84,7 +115,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                 'id': $.intermediate['id value pair'].id.token.value,
                                 'value': _p.decide.state($.value, ($) => {
                                     switch ($[0]) {
-                                        case 'set': return _p.ss($, ($) => _p.optional.literal.set(Stylable_Value($, $p)))
+                                        case 'set': return _p.ss($, ($) => _p.optional.literal.set(Entity($, $p)))
                                         case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
                                         default: return _p.au($[0])
                                     }
@@ -110,7 +141,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                     return _p.decide.state($['definition found'], ($) => {
                                                         switch ($[0]) {
                                                             case 'no': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.value))
-                                                            case 'yes': return _p.ss($, ($) => Stylable_Value($['value'], $p))
+                                                            case 'yes': return _p.ss($, ($) => Non_Entity($['value'], $p))
                                                             default: return _p.au($[0])
                                                         }
                                                     })
@@ -121,7 +152,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                     return _p.decide.state($['definition found'], ($) => {
                                                         switch ($[0]) {
                                                             case 'yes': return _p.ss($, ($): d_out.Items.L => $['value'].__decide(
-                                                                ($) => Stylable_Value($, $p),
+                                                                ($) => Non_Entity($, $p),
                                                                 () => temp_value(['concrete', {
                                                                     'type': ['nothing', {
                                                                         '~': {
@@ -172,7 +203,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                         case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
                                                         case 'yes': return _p.ss($, ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => _p.optional.literal.set({
                                                             'id': $.id,
-                                                            'value': _p.optional.literal.set(Stylable_Value($['value'], $p))
+                                                            'value': _p.optional.literal.set(Non_Entity($['value'], $p))
                                                         }))
                                                         default: return _p.au($[0])
                                                     }
@@ -184,7 +215,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                                         'id': $.intermediate['id value pair'].id.token.value,
                                                         'value': _p.decide.state($['definition found'], ($): d_out.ID_Value_Pairs.L.value => {
                                                             switch ($[0]) {
-                                                                case 'yes': return _p.ss($, ($) => _p.optional.from.optional($['value']).map(($) => Stylable_Value($, $p)))
+                                                                case 'yes': return _p.ss($, ($) => _p.optional.from.optional($['value']).map(($) => Non_Entity($, $p)))
                                                                 case 'no': return _p.ss($, ($) => item.intermediate['id value pair'].assignment.__decide(
                                                                     ($): d_out.ID_Value_Pairs.L.value => $.value.__decide(
                                                                         ($) => _p.optional.literal.set(t_parse_tree_to_authoring_target.Value($)),
@@ -224,7 +255,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                     case 'list': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['list', {
                             '[': Structural_Token($.instance['[']),
-                            'items': $.derived.items.__l_map(($) => Stylable_Value($, $p)),
+                            'items': $.derived.items.__l_map(($) => Entity($, $p)),
                             ']': Structural_Token($.instance[']']),
                         }]
                     }]))
@@ -251,7 +282,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                     '*': {
                                         'comments': _p.list.literal([])
                                     },
-                                    'value': Value($['child value'], $p)
+                                    'value': Non_Entity($['child value'], $p)
                                 }])
                                 case 'null literal': return _p.ss($, ($) => ['not set', {
                                     '_': {
@@ -264,7 +295,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                             '*': {
                                                 'comments': _p.list.literal([])
                                             },
-                                            'value': Value($['child value'], $p)
+                                            'value': Non_Entity($['child value'], $p)
                                         }])
                                         case 'not set': return _p.ss($, ($) => ['not set', {
                                             '_': {
@@ -307,7 +338,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                                     },
                                     'status': ['set', {
                                         'option': $.intermediate['option token'].token.value,
-                                        'value': Value($.value, $p)
+                                        'value': Non_Entity($.value, $p)
                                     }]
                                 }]
                             }]))
