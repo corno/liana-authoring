@@ -38,10 +38,7 @@ const temp_value = ($: d_out.Value.data): d_out.Value => ({
 export const Document: Document = ($, $p): d_out.Document => {
     return {
         'header': _p.optional.from.optional($['header']).map(($) => t_parse_tree_to_authoring_target.Value($)),
-        'content': Value($['content'], {
-            'style': $p.style,
-            'impact': ['deep', null]
-        })
+        'content': Value($['content'], $p)
     }
 }
 
