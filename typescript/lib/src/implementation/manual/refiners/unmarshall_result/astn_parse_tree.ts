@@ -165,7 +165,7 @@ export const Value: Value = ($, $p) => {
                                                     ($): d_out.Concise_Property_Definition_Found => ['yes', {
                                                         'definition': $.definition,
                                                         'id': $.id,
-                                                        'value': Value(
+                                                        'property value': Value(
                                                             instance.value,
                                                             {
                                                                 'definition': $.definition.value,
@@ -200,7 +200,7 @@ export const Value: Value = ($, $p) => {
                                                         const prop_def = $
                                                         return ['yes', {
                                                             'definition': $,
-                                                            'value': id_value_pair.assignment.__decide(
+                                                            'property value': id_value_pair.assignment.__decide(
                                                                 ($) => _p.optional.from.optional($.value).map(
                                                                     ($) => Value(
                                                                         $,
@@ -288,7 +288,7 @@ export const Value: Value = ($, $p) => {
                                                                     ($): d_out.Property['result'] => _p.decide.list($).has_single_item(
                                                                         ($): d_out.Property['result'] => _p.decide.state($['definition found'], ($) => {
                                                                             switch ($[0]) {
-                                                                                case 'yes': return _p.ss($, ($): d_out.Property['result'] => $.value.__decide(
+                                                                                case 'yes': return _p.ss($, ($): d_out.Property['result'] => $['property value'].__decide(
                                                                                     ($): d_out.Property['result'] => ['success', $],
                                                                                     (): d_out.Property['result'] => ['error', ['missing', {
                                                                                         'start token range': start_token_range
@@ -332,7 +332,7 @@ export const Value: Value = ($, $p) => {
                                                                 'definition': $,
                                                                 'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
                                                                     ($): d_out.Property['result'] => _p.decide.list($).has_single_item(
-                                                                        ($): d_out.Property['result'] => ['success', $.value],
+                                                                        ($): d_out.Property['result'] => ['success', $['property value']],
                                                                         () => _p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
                                                                         (): d_out.Property['result'] => ['error', ['missing', {
                                                                             'start token range': start_token_range

@@ -162,7 +162,7 @@ export type Concise_Property_Definition_Found =
 export type Concise_Property_Definition_Found__yes = {
     'definition': d_schema.Group.D
     'id': string,
-    'value': Value
+    'property value': Property_Value
 }
 
 export type Verbose_Property = {
@@ -177,9 +177,11 @@ export type Verbose_Property = {
 export type Verbose_Property_Definition_Found =
     | ['yes', {
         'definition': d_schema.Group.D
-        'value': _pi.Optional_Value<Value>
+        'property value': _pi.Optional_Value<Property_Value>
     }]
     | ['no', null]
+
+export type Property_Value = Value
 
 export type Group_Verbose = {
     'properties': Verbose_Properties
