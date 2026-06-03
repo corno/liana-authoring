@@ -63,27 +63,16 @@ export const Value: Value = ($, $p): d_out.Value => {
                     case 'dictionary': return _p.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['dictionary', {
                             '{': Structural_Token($.intermediate.instance['{']),
-                            'entries': $.intermediate['entries as list'].__l_map(($): d_out.ID_Value_Pairs.L => {
-                                return {
-                                    'id': $.intermediate['id value pair'].id.token.value,
-                                    'value': _p.decide.state($.value, ($) => {
-                                        switch ($[0]) {
-                                            case 'set': return _p.ss($, ($) => {
-                                                const value = $
-                                                return _p.optional.literal.set(_p.decide.state($p.impact, ($) => {
-                                                    switch ($[0]) {
-                                                        case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
-                                                        case 'deep': return _p.ss($, ($) => Value(value, $p))
-                                                        default: return _p.au($[0])
-                                                    }
-                                                }))
-                                            })
-                                            case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
-                                            default: return _p.au($[0])
-                                        }
-                                    }),
-                                }
-                            }),
+                            'entries': $.intermediate['entries as list'].__l_map(($): d_out.ID_Value_Pairs.L => ({
+                                'id': $.intermediate['id value pair'].id.token.value,
+                                'value': _p.decide.state($.value, ($) => {
+                                    switch ($[0]) {
+                                        case 'set': return _p.ss($, ($) => _p.optional.literal.set(Value($, $p)))
+                                        case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
+                                        default: return _p.au($[0])
+                                    }
+                                }),
+                            })),
                             '}': Structural_Token($.intermediate.instance['}']),
                         }]
                     }]))
@@ -161,18 +150,16 @@ export const Value: Value = ($, $p): d_out.Value => {
                                         'properties': _p.decide.state(unmarsalled_group.derived.style, ($): d_out.ID_Value_Pairs => {
                                             switch ($[0]) {
                                                 //convert concise to verbose
-                                                case 'concise': return _p.ss($, ($): d_out.ID_Value_Pairs => _p.list.from.list($.properties).map_optionally(($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
-                                                    return _p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
-                                                        switch ($[0]) {
-                                                            case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
-                                                            case 'yes': return _p.ss($, ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => _p.optional.literal.set({
-                                                                'id': $.id,
-                                                                'value': _p.optional.literal.set(Value($.value, $p))
-                                                            }))
-                                                            default: return _p.au($[0])
-                                                        }
-                                                    })
-                                                }))
+                                                case 'concise': return _p.ss($, ($): d_out.ID_Value_Pairs => _p.list.from.list($.properties).map_optionally(($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => (_p.decide.state($['definition found'], ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
+                                                    switch ($[0]) {
+                                                        case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
+                                                        case 'yes': return _p.ss($, ($): _pi.Optional_Value<d_out.ID_Value_Pairs.L> => _p.optional.literal.set({
+                                                            'id': $.id,
+                                                            'value': _p.optional.literal.set(Value($.value, $p))
+                                                        }))
+                                                        default: return _p.au($[0])
+                                                    }
+                                                }))))
                                                 //convert verbose to verbose
                                                 case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.ID_Value_Pairs.L => {
                                                     const item = $
@@ -222,13 +209,7 @@ export const Value: Value = ($, $p): d_out.Value => {
                             '[': Structural_Token($.instance['[']),
                             'items': $.derived.items.__l_map(($) => {
                                 const item = $
-                                return _p.decide.state($p.impact, ($): d_out.Value => {
-                                    switch ($[0]) {
-                                        case 'shallow': return _p.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.instance))
-                                        case 'deep': return _p.ss($, ($) => Value(item, $p))
-                                        default: return _p.au($[0])
-                                    }
-                                })
+                                return Value(item, $p)
                             }),
                             ']': Structural_Token($.instance[']']),
                         }]
