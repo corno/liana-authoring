@@ -32,70 +32,6 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
         }))
         case 'success': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
             switch ($[0]) {
-                case 'nothing': return _p.ss($, ($) => ({
-                    'type': ['primitive', {
-                        'kind': ['null', null],
-                    }],
-                    'deprecated': false,
-                }))
-                case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
-                    switch ($[0]) {
-                        case 'set': return _p.ss($, ($) => Value($['child value']))
-                        case 'not set': return _p.ss($, ($) => ({
-                            'type': ['primitive', {
-                                'kind': ['null', null],
-                            }],
-                            'deprecated': false,
-                        }))
-                        default: return _p.au($[0])
-                    }
-                }))
-                case 'simple': return _p.ss($, ($) => _p.decide.state($.definition, ($) => {
-                    switch ($[0]) {
-                        case 'global': return _p.ss($, ($) => _p.decide.state($['l entry'].type, ($) => {
-                            switch ($[0]) {
-                                case 'number': return _p.ss($, ($) => ({
-                                    'type': ['primitive', {
-                                        'kind': ['number', null],
-                                    }],
-                                    'deprecated': false,
-                                }))
-                                case 'boolean': return _p.ss($, ($) => ({
-                                    'type': ['primitive', {
-                                        'kind': ['boolean', null],
-                                    }],
-                                    'deprecated': false,
-                                }))
-                                case 'date': return _p.ss($, ($) => ({
-                                    'type': ['primitive', {
-                                        'kind': ['string', null],
-                                    }],
-                                    'deprecated': false,
-                                }))
-                                default: return _p.au($[0])
-                            }
-                        }))
-                        default: return _p.au($[0])
-                    }
-                }))
-                case 'text': return _p.ss($, ($) => ({
-                    'type': ['primitive', {
-                        'kind': ['string', null],
-                    }],
-                    'deprecated': false,
-                }))
-                case 'state': return _p.ss($, ($) => _p.decide.state($.derived['option status'], ($): d_out.Value => {
-                    switch ($[0]) {
-                        case 'set': return _p.ss($, ($) => Value($.value))
-                        case 'missing data': return _p.ss($, ($) => ({
-                            'type': ['primitive', {
-                                'kind': ['null', null],
-                            }],
-                            'deprecated': true,
-                        }))
-                        default: return _p.au($[0])
-                    }
-                }))
                 case 'component': return _p.ss($, ($) => Value($.value))
                 case 'dictionary': return _p.ss($, ($): d_out.Value => ({
                     'type': ['composite', {
@@ -197,7 +133,76 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                     }],
                     'deprecated': false,
                 }))
+                case 'nothing': return _p.ss($, ($) => ({
+                    'type': ['primitive', {
+                        'kind': ['null', null],
+                    }],
+                    'deprecated': false,
+                }))
+                case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
+                    switch ($[0]) {
+                        case 'set': return _p.ss($, ($) => Value($['child value']))
+                        case 'not set': return _p.ss($, ($) => ({
+                            'type': ['primitive', {
+                                'kind': ['null', null],
+                            }],
+                            'deprecated': false,
+                        }))
+                        default: return _p.au($[0])
+                    }
+                }))
                 case 'reference': return _p.ss($, ($) => ({
+                    'type': ['primitive', {
+                        'kind': ['string', null],
+                    }],
+                    'deprecated': false,
+                }))
+                case 'simple': return _p.ss($, ($) => _p.decide.state($.definition, ($) => {
+                    switch ($[0]) {
+                        case 'global': return _p.ss($, ($) => _p.decide.state($['l entry'].type, ($) => {
+                            switch ($[0]) {
+                                case 'number': return _p.ss($, ($) => ({
+                                    'type': ['primitive', {
+                                        'kind': ['number', null],
+                                    }],
+                                    'deprecated': false,
+                                }))
+                                case 'boolean': return _p.ss($, ($) => ({
+                                    'type': ['primitive', {
+                                        'kind': ['boolean', null],
+                                    }],
+                                    'deprecated': false,
+                                }))
+                                case 'date': return _p.ss($, ($) => ({
+                                    'type': ['primitive', {
+                                        'kind': ['string', null],
+                                    }],
+                                    'deprecated': false,
+                                }))
+                                default: return _p.au($[0])
+                            }
+                        }))
+                        default: return _p.au($[0])
+                    }
+                }))
+                case 'state': return _p.ss($, ($) => _p.decide.state($.derived['option status'], ($): d_out.Value => {
+                    switch ($[0]) {
+                        case 'set': return _p.ss($, ($) => ({
+                            'type': ['primitive', {
+                                'kind': ['enum member', null],
+                            }],
+                            'deprecated': false,
+                        }))
+                        case 'missing data': return _p.ss($, ($) => ({
+                            'type': ['primitive', {
+                                'kind': ['null', null],
+                            }],
+                            'deprecated': true,
+                        }))
+                        default: return _p.au($[0])
+                    }
+                }))
+                case 'text': return _p.ss($, ($) => ({
                     'type': ['primitive', {
                         'kind': ['string', null],
                     }],

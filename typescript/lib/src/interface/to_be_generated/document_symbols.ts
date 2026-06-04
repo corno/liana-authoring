@@ -18,7 +18,7 @@ export type Value_Type =
     | ['composite', Composite]
     | ['primitive', {
         'kind':
-        | ['enum', null]
+        | ['enum member', null]
         | ['null', null]
         | ['boolean', null]
         | ['number', null]
