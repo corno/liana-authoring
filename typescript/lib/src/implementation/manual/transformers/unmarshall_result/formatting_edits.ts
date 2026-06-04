@@ -79,10 +79,7 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
                 case 'verbose': return _p.ss($, ($) => _p.decide.state($['definition found'], ($) => {
                     switch ($[0]) {
                         case 'yes': return _p.ss($, ($) => $['value'].__decide(
-                            ($) => Value($, {
-                                'indent': $p.indent,
-                                'conversion': t_unmarshall_result_to_authoring_target.temp_dont_restyle_entities($p.conversion)
-                            }),
+                            ($) => Value($, $p),
                             () => _p.optional.literal.not_set()
                         ))
                         case 'no': return _p.ss($, ($) => _p.optional.literal.not_set())
@@ -92,24 +89,16 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
                 case 'unknown concise': return _p.ss($, ($) => {
                     return _p.optional.literal.not_set()
                 })
-
                 default: return _p.au($[0])
             }
         }))
-        case 'state': return _p.ss($, ($): d_out.Optional_Formatting_Edit => {
-            const definition = $.definition
-
-            return _p.decide.state($.derived['option status'], ($) => {
-                switch ($[0]) {
-                    case 'set': return _p.ss($, ($) => Value($.value, {
-                        'indent': $p.indent,
-                        'conversion': t_unmarshall_result_to_authoring_target.temp_dont_restyle_entities($p.conversion)
-                    }))
-                    case 'missing data': return _p.ss($, ($) => _p.optional.literal.not_set())
-                    default: return _p.au($[0])
-                }
-            })
-        })
+        case 'state': return _p.ss($, ($): d_out.Optional_Formatting_Edit => _p.decide.state($.derived['option status'], ($) => {
+            switch ($[0]) {
+                case 'set': return _p.ss($, ($) => Value($.value, $p))
+                case 'missing data': return _p.ss($, ($) => _p.optional.literal.not_set())
+                default: return _p.au($[0])
+            }
+        }))
         default: return _p.au($[0])
     }
 }

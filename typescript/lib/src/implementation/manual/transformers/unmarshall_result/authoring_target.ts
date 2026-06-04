@@ -54,22 +54,23 @@ export const Document: Document = ($, $p): d_out.Document => {
     }
 }
 
-export const temp_dont_restyle_entities = ($: d_function.Parameters): d_function.Parameters => {
-    const x = $
-    return {
-        'style': $['style'],
-        'impact': _p.decide.state($['impact'], ($) => {
-            switch ($[0]) {
-                case 'shallow with entities': return _p.ss($, ($) => ['shallow without entities', null])
-                case 'shallow without entities': return _p.ss($, ($) => x['impact'])
-                case 'deep': return _p.ss($, ($) => x['impact'])
-                default: return _p.au($[0])
-            }
-        }),
-    }
-}
+
 
 export const Non_Entity: Non_Entity = ($, $p): d_out.Value => {
+    const temp_dont_restyle_entities = ($: d_function.Parameters): d_function.Parameters => {
+        const x = $
+        return {
+            'style': $['style'],
+            'impact': _p.decide.state($['impact'], ($) => {
+                switch ($[0]) {
+                    case 'shallow with entities': return _p.ss($, ($) => ['shallow without entities', null])
+                    case 'shallow without entities': return _p.ss($, ($) => x['impact'])
+                    case 'deep': return _p.ss($, ($) => x['impact'])
+                    default: return _p.au($[0])
+                }
+            }),
+        }
+    }
     return Any_Value($, temp_dont_restyle_entities($p))
 }
 
