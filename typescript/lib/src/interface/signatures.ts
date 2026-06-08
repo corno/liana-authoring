@@ -8,13 +8,13 @@ export namespace queries {
     export type get_schema = _pi.Query_Function<
         resources.queries.get_schema,
         {
-            'read file': resources_pareto.queries.fs_unrestricted_read_file
+            'read file': resources_pareto.filesystem_unrestricted.queries.read_file
         }>
 
     export type get_schema_path = _pi.Query_Function<
         resources.queries.get_schema_path,
         {
-            'stat': resources_pareto.queries.fs_unrestricted_stat_possible_node
+            'stat': resources_pareto.filesystem_unrestricted.queries.stat_possible_node
         }>
 
 
@@ -28,8 +28,8 @@ export namespace queries {
     export type load_unmarshalled_file = _pi.Query_Function<
         resources.queries.load_unmarshalled_file,
         {
-            'read file': resources_pareto.queries.fs_unrestricted_read_file
-            'stat': resources_pareto.queries.fs_unrestricted_stat_possible_node
+            'read file': resources_pareto.filesystem_unrestricted.queries.read_file
+            'stat': resources_pareto.filesystem_unrestricted.queries.stat_possible_node
 
         }>
 
@@ -38,9 +38,9 @@ export namespace queries {
 export namespace commands {
 
     export type seal = _pi.Command_Procedure<
-        resources_pareto.commands.main,
+        resources_pareto.resources.commands.main,
         {
-            'log error': resources_pareto.commands.stream_log_error
+            'log error': resources_pareto.stream.commands.log_error
         },
         null
     >

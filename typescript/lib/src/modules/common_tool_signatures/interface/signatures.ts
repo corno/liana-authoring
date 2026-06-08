@@ -9,25 +9,25 @@ export namespace queries {
 export namespace commands {
 
     export type transform_file = _pi.Command_Procedure<
-        resources_pareto.commands.main,
+        resources_pareto.resources.commands.main,
         {
-            'write file': resources_pareto.commands.fs_unrestricted_write_file,
-            'log error': resources_pareto.commands.stream_log_error,
+            'write file': resources_pareto.filesystem_unrestricted.commands.write_file,
+            'log error': resources_pareto.stream.commands.log_error,
         },
         {
-            'read file': resources_pareto.queries.fs_unrestricted_read_file
-            'stat': resources_pareto.queries.fs_unrestricted_stat_possible_node
+            'read file': resources_pareto.filesystem_unrestricted.queries.read_file
+            'stat': resources_pareto.filesystem_unrestricted.queries.stat_possible_node
         }
     >
 
     export type stream_in_to_stream_out = _pi.Command_Procedure<
-        resources_pareto.commands.main,
+        resources_pareto.resources.commands.main,
         {
-            'log error': resources_pareto.commands.stream_log_error
-            'write to stdout': resources_pareto.commands.stream_write_to_stdout
+            'log error': resources_pareto.stream.commands.log_error
+            'write to stdout': resources_pareto.stream.commands.write_to_stdout
         },
         {
-            'get instream data': resources_pareto.queries.stream_get_instream_data,
+            'get instream data': resources_pareto.stream.queries.get_instream_data,
         }
     >
 
