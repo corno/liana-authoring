@@ -7,12 +7,12 @@ import { $$ as procedure } from "lib/dist/implementation/manual/commands/seal"
 _pn.run_main_command(
     ($r) => procedure(
         {
-            'write file': $r['filesystem unrestricted'].commands['write file'](null),
-            'log error': $r.stream.commands['log error'](null),
+            'write file': $r['filesystem unrestricted'].commands['write file'],
+            'log error': $r.stream.commands['log error'],
         },
         {
-            'read file': $r['filesystem unrestricted'].queries['read file'](null),
-            'stat': $r['filesystem unrestricted'].queries['stat possible node'](null)
+            'read file': $r['filesystem unrestricted'].queries['read file'],
+            'stat': $r['filesystem unrestricted'].queries['stat possible node']
         },
     ),
 )
