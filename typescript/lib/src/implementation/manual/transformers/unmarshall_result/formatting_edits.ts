@@ -66,10 +66,7 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
         })
         case 'entry': return _p.ss($, ($) => _p.decide.state($.value, ($) => {
             switch ($[0]) {
-                case 'set': return _p.ss($, ($) => Value($, {
-                    'indent': $p.indent,
-                    'conversion': t_unmarshall_result_to_authoring_target.temp_dont_restyle_entities($p.conversion)
-                }))
+                case 'set': return _p.ss($, ($) => Value($, $p))
                 case 'not set': return _p.ss($, ($) => _p.optional.literal.not_set())
                 default: return _p.au($[0])
             }

@@ -1,4 +1,4 @@
-import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/path/data"
+import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/fs_unrestricted_path/data"
 import * as d_unmarshall_result from "./unmarshall_result"
 import * as d_resolve_result from "./resolve_result"
 import * as d_deserialize_parse_tree from "astn-core/dist/interface/generated/liana/schemas/deserialize_parse_tree/data"

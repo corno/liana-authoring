@@ -17,7 +17,7 @@ import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual
 
 import * as v_external_location from "../../astn_location/refiners/astn_parse_tree"
 
-import * as v_external_path from "../../path/refiners/astn_parse_tree"
+import * as v_external_path_unrestricted from "../../path_unrestricted/refiners/astn_parse_tree"
 
 export const Diagnostics: t_signatures.Diagnostics = ($, abort) => _p.list.from.list(
     v_unmarshalled_from_parse_tree.List(
@@ -300,7 +300,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($, abort) => _p_change_conte
                                                                                 'subdocument context': _p.optional.literal.not_set(),
                                                                             },
                                                                         ),
-                                                                        ($) => v_external_path.Node_Path(
+                                                                        ($) => v_external_path_unrestricted.Node_Path(
                                                                             $,
                                                                             ($) => abort(
                                                                                 $,
@@ -534,7 +534,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                             'subdocument context': _p.optional.literal.not_set(),
                         },
                     ),
-                    ($) => v_external_path.Node_Path(
+                    ($) => v_external_path_unrestricted.Node_Path(
                         $,
                         ($) => abort(
                             $,

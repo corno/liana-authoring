@@ -5,7 +5,7 @@ import * as i_imports_hover_info from "../hover_info/data"
 
 import * as i_imports_location from "../location/data"
 
-import * as i_imports_path from "../path/data"
+import * as i_imports_path_unrestricted from "../path_unrestricted/data"
 
 export namespace Result_ {
     
@@ -31,7 +31,7 @@ export namespace Parameters_ {
     
     export namespace source {
         
-        export type file_path = i_imports_path.Node_Path
+        export type file_path = i_imports_path_unrestricted.Node_Path
         
         export type tab_size = number
         

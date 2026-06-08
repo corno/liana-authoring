@@ -13,7 +13,7 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../astn_location/transformers/astn_sealed_target"
 
-import * as v_external_path from "../../path/transformers/astn_sealed_target"
+import * as v_external_path_unrestricted from "../../path_unrestricted/transformers/astn_sealed_target"
 
 export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', _p.list.from.list(
     $,
@@ -103,7 +103,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                     {
                                         "file path": _p_change_context(
                                             $['file path'],
-                                            ($) => v_external_path.Node_Path(
+                                            ($) => v_external_path_unrestricted.Node_Path(
                                                 $,
                                             ),
                                         ),
@@ -192,7 +192,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
         ),
         "file path": _p_change_context(
             $['file path'],
-            ($) => v_external_path.Node_Path(
+            ($) => v_external_path_unrestricted.Node_Path(
                 $,
             ),
         ),

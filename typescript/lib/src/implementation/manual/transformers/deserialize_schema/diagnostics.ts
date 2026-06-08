@@ -6,7 +6,7 @@ import * as d_in from "liana-core/dist/interface/to_be_generated/deserialize_res
 
 //data types
 import * as d_loc from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/path/data"
+import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/fs_unrestricted_path/data"
 
 //dependencies
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"

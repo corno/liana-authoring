@@ -85,27 +85,10 @@ export type Up_Steps_ = (
     context: Up_Steps_.I,
 ) => Up_Steps_.O
 
-export namespace Non_Normalized_Path_ {
-    
-    export type I = i_in.Non_Normalized_Path
-    
-    export type O = i_out.Paragraph
-    
-    export namespace P {
-        
-    }
-    
-}
-
-export type Non_Normalized_Path_ = (
-    context: Non_Normalized_Path_.I,
-) => Non_Normalized_Path_.O
-
 export { 
     Node_Path_ as Node_Path, 
     Context_Path_ as Context_Path, 
     Context_Subpath_ as Context_Subpath, 
     Start_ as Start, 
     Up_Steps_ as Up_Steps, 
-    Non_Normalized_Path_ as Non_Normalized_Path, 
 }

@@ -15,7 +15,7 @@ import * as v_external_hover_info from "../../hover_info/transformers/astn_seale
 
 import * as v_external_location from "../../location/transformers/astn_sealed_target"
 
-import * as v_external_path from "../../path/transformers/astn_sealed_target"
+import * as v_external_path_unrestricted from "../../path_unrestricted/transformers/astn_sealed_target"
 
 export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.dictionary.literal(
     {
@@ -50,7 +50,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
                 {
                     "file path": _p_change_context(
                         $['file path'],
-                        ($) => v_external_path.Node_Path(
+                        ($) => v_external_path_unrestricted.Node_Path(
                             $,
                         ),
                     ),

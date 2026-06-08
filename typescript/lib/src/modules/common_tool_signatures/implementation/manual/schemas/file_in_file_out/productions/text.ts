@@ -7,7 +7,7 @@ import _list_from_text from 'pareto-core/dist/_p_list_from_text'
 import * as d_file_in_file_out from "../../../../../interface/to_be_generated/file_in_file_out"
 
 //dependencies
-import * as r_node_path_to_text from "pareto-resources/dist/implementation/manual/refiners/path/text"
+import * as r_node_path_to_text from "pareto-resources/dist/implementation/manual/refiners/path_unrestricted/text"
 
 export const Path: _pi.Production<
     d_file_in_file_out.Path,

@@ -15,7 +15,7 @@ import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/
 
 import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-import * as v_external_path from "../../path/refiners/astn_parse_tree"
+import * as v_external_path_unrestricted from "../../path_unrestricted/refiners/astn_parse_tree"
 
 export const Result: t_signatures.Result = ($, abort) => v_unmarshalled_from_parse_tree.Text(
     $,
@@ -117,7 +117,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                                 'subdocument context': _p.optional.literal.not_set(),
                                             },
                                         ),
-                                        ($) => v_external_path.Node_Path(
+                                        ($) => v_external_path_unrestricted.Node_Path(
                                             $,
                                             ($) => abort(
                                                 $,

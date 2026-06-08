@@ -1,7 +1,7 @@
 
 import * as _p from 'pareto-core/dist/assign'
 
-import * as t_signatures from "../../../../../../interface/generated/liana/schemas/path/signatures/transformers/fountain_pen"
+import * as t_signatures from "../../../../../../interface/generated/liana/schemas/path_unrestricted/signatures/transformers/fountain_pen"
 
 import * as v_serialize from "astn-core/dist/implementation/manual/transformers/sealed_target/fountain_pen"
 
@@ -33,12 +33,6 @@ export const Start: t_signatures.Start = ($) => v_serialize.Document(
 
 export const Up_Steps: t_signatures.Up_Steps = ($) => v_serialize.Document(
     v_marshall.Up_Steps(
-        $,
-    ),
-)
-
-export const Non_Normalized_Path: t_signatures.Non_Normalized_Path = ($) => v_serialize.Document(
-    v_marshall.Non_Normalized_Path(
         $,
     ),
 )

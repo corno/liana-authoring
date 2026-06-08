@@ -9,7 +9,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/diag
 
 import * as v_location from "../../astn_location/transformers/boilerplate_for_migrate"
 
-import * as v_path from "../../path/transformers/boilerplate_for_migrate"
+import * as v_path_unrestricted from "../../path_unrestricted/transformers/boilerplate_for_migrate"
 
 export const Diagnostics: t_signatures.Diagnostics = ($) => _p.list.from.list(
     $,
@@ -82,7 +82,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
                         ($) => ({
                             'file path': _p_change_context(
                                 $['file path'],
-                                ($) => v_path.Node_Path(
+                                ($) => v_path_unrestricted.Node_Path(
                                     $,
                                 ),
                             ),
@@ -149,7 +149,7 @@ export const Parameters: t_signatures.Parameters = ($) => ({
     ),
     'file path': _p_change_context(
         $['file path'],
-        ($) => v_path.Node_Path(
+        ($) => v_path_unrestricted.Node_Path(
             $,
         ),
     ),

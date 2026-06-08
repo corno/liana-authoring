@@ -1,5 +1,5 @@
-import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/path/data"
-import * as d_read_file from "pareto-resources/dist/interface/generated/liana/schemas/read_file/data"
+import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/fs_unrestricted_path/data"
+import * as d_read_file from "pareto-resources/dist/interface/generated/liana/schemas/fs_unrestricted_read_file/data"
 import * as d_deserialize from "./deserialize"
 
 export type Result = d_deserialize.Result
