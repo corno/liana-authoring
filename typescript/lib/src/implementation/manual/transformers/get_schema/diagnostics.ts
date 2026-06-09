@@ -10,12 +10,10 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
 
 export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
-	// const schema_path = $['schema path']
 	return _p.decide.state($.type, ($) => {
 		switch ($[0]) {
 			case 'read file': return _p.ss($, ($): d_out.Diagnostics.L => ({
 				'message': "Failed to read schema file",
-				// 'message': `Failed to read schema file at path ${$.schema path}: ${$[1].error.message}`,
 				'severity': ['error', null],
 				'related information': _p.optional.literal.not_set(),
 				'range': _p.optional.literal.not_set(),
@@ -23,7 +21,6 @@ export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics
 		}))
 			case 'deserialize': return _p.ss($, ($): d_out.Diagnostics.L => ({
 				'message': "failed to deserialize schema: " + t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" }),
-				// 'message': `Failed to read schema file at path ${$.schema path}: ${$[1].error.message}`,
 				'severity': ['error', null],
 				'related information': _p.optional.literal.set(_p.list.literal([
 					{

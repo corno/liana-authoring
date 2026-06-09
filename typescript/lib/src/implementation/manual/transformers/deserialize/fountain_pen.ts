@@ -18,7 +18,7 @@ export namespace signatures {
 export const Error: signatures.Error = ($) => _p.decide.state($, ($) => {
     switch ($[0]) {
         case 'deserialize parse tree': return _p.ss($, ($) => t_deserialize_to_fp.Error($))
-        case 'schema': return _p.ss($, ($) => t_get_schema_to_fp.Error($))
+        case 'schema': return _p.ss($, ($) => t_get_schema_to_fp.Error($.error))
         case 'schema path': return _p.ss($, ($) => t_get_schema_path_to_fp.Error($))
         default: return _p.au($[0])
     }

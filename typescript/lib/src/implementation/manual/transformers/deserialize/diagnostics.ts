@@ -12,7 +12,7 @@ import * as t_deserialize_to_location from "astn-core/dist/implementation/manual
 import * as t_deserialize_to_fp from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/fountain_pen"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
-export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
+export const Error: _pi.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
 	return _p.decide.state($, ($) => {
 		switch ($[0]) {
 			case 'schema path': return _p.ss($, ($) => ({
@@ -22,7 +22,7 @@ export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics
 				'related information': _p.optional.literal.not_set(),
 				'type': ['deserialize', null]
 			}))
-			case 'schema': return _p.ss($, ($) => t_get_schema.Error($, $p))
+			case 'schema': return _p.ss($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
 			case 'deserialize parse tree': return _p.ss($, ($) => ({
 				'severity': ['error', null],
 				'message': t_fp_to_text.Phrase(

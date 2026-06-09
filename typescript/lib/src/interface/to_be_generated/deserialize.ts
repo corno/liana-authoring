@@ -11,7 +11,10 @@ export type Result =
 
 export type Error =
     | ['schema path', d_schema_path.Error]
-    | ['schema', d_load_schema.Error]
+    | ['schema', {
+        'schema path': d_path.Node_Path,
+        'error': d_load_schema.Error
+    }]
     | ['deserialize parse tree', d_deserialize_parse_tree.Error]
 
 export type Parameters = {

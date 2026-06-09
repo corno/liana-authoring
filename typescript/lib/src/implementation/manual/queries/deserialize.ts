@@ -24,7 +24,10 @@ export const $$: signatures.queries.deserialize = _p.query_function(
                 'schema path': $v,
                 'tab size': $p['tab size'],
             },
-            ($): d.Error => ['schema', $]
+            ($): d.Error => ['schema', {
+                'error': $,
+                'schema path': $v,
+            }]
         )
     ).refine(
         ($v, abort) => _p.decide.state($v, ($) => {
