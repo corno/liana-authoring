@@ -1,6 +1,7 @@
 import * as _pi from 'pareto-core/dist/interface'
 
 import * as resources_pareto from "pareto-resources/dist/interface/resources"
+import * as resources_pareto_stream from "pareto-stream/dist/interface/resources"
 
 export namespace queries {
 
@@ -12,7 +13,7 @@ export namespace commands {
         resources_pareto.resources.commands.main,
         {
             'write file': resources_pareto.filesystem_unrestricted.commands.write_file,
-            'log error': resources_pareto.stream.commands.log_error,
+            'log error': resources_pareto_stream.commands.log_error,
         },
         {
             'read file': resources_pareto.filesystem_unrestricted.queries.read_file
@@ -24,11 +25,11 @@ export namespace commands {
     export type stream_in_to_stream_out = _pi.Command_Procedure<
         resources_pareto.resources.commands.main,
         {
-            'log error': resources_pareto.stream.commands.log_error
-            'write to stdout': resources_pareto.stream.commands.write_to_stdout
+            'log error': resources_pareto_stream.commands.log_error
+            'write to stdout': resources_pareto_stream.commands.write_to_stdout
         },
         {
-            'get instream data': resources_pareto.stream.queries.get_instream_data,
+            'get instream data': resources_pareto_stream.queries.get_instream_data,
         },
         null
     >
