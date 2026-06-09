@@ -31,10 +31,13 @@ export const $$: signatures.commands.transform_file = _p.command_procedure(($p, 
                 (abort) => r_file_in_file_out_from_main.Parameters($p, ($) => abort(['file in file out', ['command line arguments', $]])),
                 ($r) => [
                     _p.query(
-                        q_load_file({
-                            'read file': $qr['read file'],
-                            'stat': $qr['stat'],
-                        })(
+                        q_load_file(
+                            {
+                                'read file': $qr['read file'],
+                                'stat': $qr['stat'],
+                            },
+                            null
+                        )(
                             {
                                 'file path': $r.in,
                                 'tab size': 4,
@@ -50,7 +53,7 @@ export const $$: signatures.commands.transform_file = _p.command_procedure(($p, 
                             _p.decide.state($, ($) => {
                                 switch ($[0]) {
                                     case 'unconstrained': return _p.ss($, ($) => $.content)
-                                    case 'constrained':return _p.ss($, ($) => $.content.unmarshalled)
+                                    case 'constrained': return _p.ss($, ($) => $.content.unmarshalled)
                                     default: return _p.au($[0])
                                 }
                             }),

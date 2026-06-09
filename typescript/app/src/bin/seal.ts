@@ -14,5 +14,6 @@ _pn.run_main_command(
             'read file': $r['filesystem unrestricted'].queries['read file'],
             'stat': $r['filesystem unrestricted'].queries['stat possible node']
         },
+        null,
     ),
 )

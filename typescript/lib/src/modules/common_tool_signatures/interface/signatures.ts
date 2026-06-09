@@ -17,7 +17,8 @@ export namespace commands {
         {
             'read file': resources_pareto.filesystem_unrestricted.queries.read_file
             'stat': resources_pareto.filesystem_unrestricted.queries.stat_possible_node
-        }
+        },
+        null
     >
 
     export type stream_in_to_stream_out = _pi.Command_Procedure<
@@ -28,7 +29,8 @@ export namespace commands {
         },
         {
             'get instream data': resources_pareto.stream.queries.get_instream_data,
-        }
+        },
+        null
     >
 
 }

@@ -4,6 +4,7 @@ import * as _p from 'pareto-core/dist/assign'
 //data types
 import * as d_in from "../../../../interface/to_be_generated/deserialize"
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
+import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/fs_unrestricted_path/data"
 
 //depencencies
 import * as t_get_schema from "../get_schema/diagnostics"
@@ -11,7 +12,7 @@ import * as t_deserialize_to_location from "astn-core/dist/implementation/manual
 import * as t_deserialize_to_fp from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/fountain_pen"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
-export const Error: _pi.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
+export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
 	return _p.decide.state($, ($) => {
 		switch ($[0]) {
 			case 'schema path': return _p.ss($, ($) => ({
@@ -21,7 +22,7 @@ export const Error: _pi.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
 				'related information': _p.optional.literal.not_set(),
 				'type': ['deserialize', null]
 			}))
-			case 'schema': return _p.ss($, ($) => t_get_schema.Error($))
+			case 'schema': return _p.ss($, ($) => t_get_schema.Error($, $p))
 			case 'deserialize parse tree': return _p.ss($, ($) => ({
 				'severity': ['error', null],
 				'message': t_fp_to_text.Phrase(

@@ -26,13 +26,20 @@ export const $$: signatures.queries.load_unmarshalled_file = _p.query_function(
             const instance = $
             return q_deserialize(
                 {
-                    'get schema': q_get_schema({
-                        'read file': $qr['read file']
-                    }),
-                    'get schema path': q_get_schema_path({
-                        'stat': $qr['stat'],
-                    })
-                }
+                    'get schema': q_get_schema(
+                        {
+                            'read file': $qr['read file']
+                        },
+                        null,
+                    ),
+                    'get schema path': q_get_schema_path(
+                        {
+                            'stat': $qr['stat'],
+                        },
+                        null,
+                    )
+                },
+                null,
             )(
                 {
                     'content': _p_text_from_list(
