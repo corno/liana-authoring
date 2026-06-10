@@ -38,7 +38,7 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                         'kind': ['object', null],
                         'children': $.intermediate['entries as list'].__l_map(($): d_out.Symbol => ({
                             'name': $.intermediate['id value pair'].id.token.value,
-                            'detail': "dictionary entry",
+                            'detail': "entry",
                             'value': _p.decide.state($.value, ($) => {
                                 switch ($[0]) {
                                     case 'set': return _p.ss($, ($) => Value($))
@@ -188,8 +188,17 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                 case 'state': return _p.ss($, ($) => _p.decide.state($.derived['option status'], ($): d_out.Value => {
                     switch ($[0]) {
                         case 'set': return _p.ss($, ($) => ({
-                            'type': ['primitive', {
+                            'type': ['composite', {
                                 'kind': ['enum member', null],
+                                'children': _p.list.literal([
+                                    {
+                                        'name': "set",
+                                        'detail': "set",
+                                        'value': Value($.value),
+                                        'range': t_parse_tree_to_location.Value($.value.instance),
+                                        'selection range': $.intermediate['option token'].range,
+                                    }
+                                ]),
                             }],
                             'deprecated': false,
                         }))
