@@ -11,27 +11,18 @@ export type Symbol = {
 }
 
 export type Value = {
-    'type': Value_Type
+    'kind': Kind
+    'children': Symbols
 }
 
-export type Value_Type =
-    | ['composite', Composite]
-    | ['primitive', {
-        'kind':
-        | ['null', null]
-        | ['boolean', null]
-        | ['number', null]
-        | ['string', null]
-    }
-    ]
-
-export type Composite = {
-    'children': Symbols
-    'kind':
+export type Kind =
     | ['enum member', null]
     | ['object', null]
     | ['struct', null]
     | ['array', null]
-}
+    | ['null', null]
+    | ['boolean', null]
+    | ['number', null]
+    | ['string', null]
 
 export type Symbols = _pi.List<Symbol>
