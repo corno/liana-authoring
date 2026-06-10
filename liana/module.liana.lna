@@ -9,6 +9,7 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -163,9 +164,11 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'multi line text': (
                         `type`: | `multi line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -266,12 +269,15 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'multi line text': (
                         `type`: | `multi line` ~
+                        `link`: | `no` ~
                     )
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -354,9 +360,11 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -404,7 +412,7 @@
             }
             `complexity`: | `unconstrained` ~
         )
-        'path': | `schema` (
+        'fs unrestricted path': | `schema` (
             `schema imports`: {}
             `resolver imports`: {}
             `globals`: (
@@ -412,6 +420,7 @@
                 `text types`: {
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -496,49 +505,6 @@
                 'Up Steps': (
                     `root value`: | `simple` | `global` 'Natural'
                 )
-                'Non Normalized Path': (
-                    `root value`: | `group` {
-                        'leading slash': (
-                            `description`: _
-                            `value`: | `simple` | `global` 'boolean'
-                        )
-                        'segments': (
-                            `description`: _
-                            `value`: | `list` (
-                                `value`: | `state` (
-                                    `options`: {
-                                        'parent': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'child': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `text` | `global` 'text'
-                                        )
-                                        'current': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                        'nothing': (
-                                            `constraints`: _
-                                            `description`: _
-                                            `value`: | `nothing` ~
-                                        )
-                                    }
-                                    `results`: _
-                                )
-                                `results`: _
-                            )
-                        )
-                        'trailing slash': (
-                            `description`: _
-                            `value`: | `simple` | `global` 'boolean'
-                        )
-                    }
-                )
             }
             `complexity`: | `unconstrained` ~
         )
@@ -548,8 +514,8 @@
                     `schema set child`: 'astn location'
                     `schema`: ~
                 )
-                'path': (
-                    `schema set child`: 'path'
+                'path unrestricted': (
+                    `schema set child`: 'fs unrestricted path'
                     `schema`: ~
                 )
             }
@@ -559,12 +525,15 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'multi line text': (
                         `type`: | `multi line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -643,7 +612,7 @@
                                                 `description`: _
                                                 `value`: | `component` (
                                                     `type`: | `external` (
-                                                        `import`: 'path'
+                                                        `import`: 'path unrestricted'
                                                         `module`: 'Node Path'
                                                     )
                                                     `results`: _
@@ -715,7 +684,7 @@
                             `description`: _
                             `value`: | `component` (
                                 `type`: | `external` (
-                                    `import`: 'path'
+                                    `import`: 'path unrestricted'
                                     `module`: 'Node Path'
                                 )
                                 `results`: _
@@ -747,9 +716,11 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -826,8 +797,8 @@
                     `schema set child`: 'location'
                     `schema`: ~
                 )
-                'path': (
-                    `schema set child`: 'path'
+                'path unrestricted': (
+                    `schema set child`: 'fs unrestricted path'
                     `schema`: ~
                 )
             }
@@ -837,12 +808,15 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'multi line text': (
                         `type`: | `multi line` ~
+                        `link`: | `no` ~
                     )
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -884,7 +858,7 @@
                                     `description`: _
                                     `value`: | `component` (
                                         `type`: | `external` (
-                                            `import`: 'path'
+                                            `import`: 'path unrestricted'
                                             `module`: 'Node Path'
                                         )
                                         `results`: _
@@ -923,6 +897,7 @@
                 `text types`: {
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {}
@@ -947,8 +922,8 @@
                     `schema set child`: 'location'
                     `schema`: ~
                 )
-                'path': (
-                    `schema set child`: 'path'
+                'path unrestricted': (
+                    `schema set child`: 'fs unrestricted path'
                     `schema`: ~
                 )
             }
@@ -958,9 +933,11 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'multi line text': (
                         `type`: | `multi line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -1007,7 +984,7 @@
                                     `description`: _
                                     `value`: | `component` (
                                         `type`: | `external` (
-                                            `import`: 'path'
+                                            `import`: 'path unrestricted'
                                             `module`: 'Node Path'
                                         )
                                         `results`: _
@@ -1036,8 +1013,8 @@
         )
         'seal': | `schema` (
             `schema imports`: {
-                'path': (
-                    `schema set child`: 'path'
+                'path unrestricted': (
+                    `schema set child`: 'fs unrestricted path'
                     `schema`: ~
                 )
             }
@@ -1047,12 +1024,15 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                     'multi line text': (
                         `type`: | `multi line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -1083,7 +1063,7 @@
                                     `description`: _
                                     `value`: | `component` (
                                         `type`: | `external` (
-                                            `import`: 'path'
+                                            `import`: 'path unrestricted'
                                             `module`: 'Node Path'
                                         )
                                         `results`: _
@@ -1126,6 +1106,7 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
@@ -1170,6 +1151,7 @@
                 `text types`: {
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {}

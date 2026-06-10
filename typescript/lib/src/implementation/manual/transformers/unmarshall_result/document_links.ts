@@ -5,6 +5,7 @@ import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_out from "../../../../interface/to_be_generated/document_links"
+import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 //dependencies
@@ -97,13 +98,29 @@ export const Value: Value = ($) => _p.decide.state($['unmarshall result'], ($): 
                         default: return _p.au($[0])
                     }
                 }))
-                case 'text': return _p.ss($, ($) => _p.list.literal([
-                    {
-                        'range': $.instance.range,
-                        'target': "Link to be implemented",
-                        'tooltip': _p.optional.literal.not_set()
-                    }
-                ]))
+                case 'text': return _p.ss($, ($) => {
+                    const instance = $.instance
+                    const type: d_schema.Text_Type = _p.decide.state($.definition, ($) => {
+                        switch ($[0]) {
+                            case 'global': return _p.ss($, ($) => $['l entry'])
+                            case 'local': return _p.ss($, ($) => $)
+                            default: return _p.au($[0])
+                        }
+                    })
+                    return _p.decide.state(type.link, ($) => {
+                        switch ($[0]) {
+                            case 'no': return _p.ss($, ($) => _p.list.literal([]))
+                            case 'yes':return _p.ss($, ($) => _p.list.literal([
+                                {
+                                    'range': instance.range,
+                                    'target': $['path prefix'] + instance.token.value + $['path suffix'],
+                                    'tooltip': _p.optional.literal.not_set()
+                                }
+                            ]))
+                            default: return _p.au($[0])
+                        }
+                    })
+                })
                 default: return _p.au($[0])
             }
         }))
