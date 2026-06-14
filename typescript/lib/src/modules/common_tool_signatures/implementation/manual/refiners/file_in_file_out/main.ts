@@ -8,7 +8,7 @@ import * as d_file_in_file_out from "../../../../interface/to_be_generated/file_
 import * as d_main from "pareto-resources/dist/interface/to_be_generated/temp_main"
 
 //dependencies
-import * as p_file_in_file_out from "../../schemas/file_in_file_out/productions/text"
+import * as p_file_in_file_out from "../../productions/file_in_file_out/text"
 
 export const Parameters: pi.Refiner<
     d_file_in_file_out.Parameters,

@@ -9,7 +9,7 @@ import * as d_file_to_file from "../../../modules/common_tool_signatures/interfa
 //dependencies
 import { $$ as q_load_file } from "../queries/load_unmarshalled_file"
 import * as r_file_in_file_out_from_main from "../../../modules/common_tool_signatures/implementation/manual/refiners/file_in_file_out/main"
-import * as t_transform_file_to_fp from "../../../modules/common_tool_signatures/implementation/manual/schemas/transform_file/transformers/fountain_pen"
+import * as t_transform_file_to_fp from "../../../modules/common_tool_signatures/implementation/manual/transformers/transform_file/fountain_pen"
 import * as t_load_file_to_fp from "../transformers/load_file/fountain_pen"
 import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result"
 import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manual/transformers/sealed_target/fountain_pen"
