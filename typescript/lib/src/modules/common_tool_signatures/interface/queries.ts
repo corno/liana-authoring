@@ -1,4 +1,3 @@
-import * as pci from 'pareto-core/dist/command_interface'
 import * as pqi from 'pareto-core/dist/query_interface'
 
 import * as d_process_file_data from "./to_be_generated/process_file_data"

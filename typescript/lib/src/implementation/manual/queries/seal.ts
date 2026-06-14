@@ -3,7 +3,7 @@ import * as pt from 'pareto-core/dist/assign'
 import * as pqi from 'pareto-core/dist/query_interface'
 import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
-import * as signatures from "../../../interface/signatures"
+import * as signatures from "../../../interface/queries"
 
 //data  types
 import * as d_file_to_file from "../../../modules/common_tool_signatures/interface/to_be_generated/file_to_file"

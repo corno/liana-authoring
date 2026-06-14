@@ -2,13 +2,12 @@ import * as pt from 'pareto-core/dist/query'
 import * as _pa from 'pareto-core/dist/assign'
 import p_variables from 'pareto-core/dist/_p_variables'
 
-import * as signatures from "../../../interface/signatures"
+import * as signatures from "../../../interface/queries"
 
 //data types
 import * as d from "../../../interface/to_be_generated/get_schema_path"
 
 //depencencies
-import * as t_path_to_text from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/text"
 import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/unrestricted_path"
 
 

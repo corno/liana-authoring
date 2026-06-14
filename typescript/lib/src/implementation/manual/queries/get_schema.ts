@@ -2,7 +2,7 @@ import * as pt from 'pareto-core/dist/query'
 import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 import p_variables from 'pareto-core/dist/_p_variables'
 
-import * as signatures from "../../../interface/signatures"
+import * as signatures from "../../../interface/queries"
 
 //data types
 import * as d from "../../../interface/to_be_generated/get_schema"

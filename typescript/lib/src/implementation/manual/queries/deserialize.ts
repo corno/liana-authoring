@@ -1,10 +1,8 @@
 import * as pq from 'pareto-core/dist/query'
 import * as pa from 'pareto-core/dist/assign'
-import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
-import p_variables from 'pareto-core/dist/_p_variables'
 import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
-import * as signatures from "../../../interface/signatures"
+import * as signatures from "../../../interface/queries"
 
 //data types
 import * as d from "../../../interface/to_be_generated/deserialize"

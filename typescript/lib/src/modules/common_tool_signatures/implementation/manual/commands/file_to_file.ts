@@ -2,7 +2,7 @@ import * as pt from 'pareto-core/dist/command'
 import * as pi from 'pareto-core/dist/interface'
 import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
-import * as signatures from "../../../interface/signatures"
+import * as signatures from "../../../interface/commands"
 
 //data types
 import * as d_main from "pareto-resources/dist/interface/to_be_generated/temp_main"
@@ -20,7 +20,7 @@ import * as t_fp_to_loc from "pareto-fountain-pen/dist/implementation/manual/tra
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
-export const $$: signatures.commands.file_to_file = pt.command_procedure(
+export const $$: signatures.procedures.file_to_file = pt.command_procedure(
     ($d, $s, $q, $c) => [
 
         pt.handle_error<d_main.Error, d_file_to_file.Error>(

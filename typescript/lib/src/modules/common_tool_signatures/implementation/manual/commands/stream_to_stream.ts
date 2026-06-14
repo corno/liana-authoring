@@ -1,7 +1,7 @@
 import * as pt from 'pareto-core/dist/command'
 import * as _pa from 'pareto-core/dist/assign'
 
-import * as signatures from "../../../interface/signatures"
+import * as signatures from "../../../interface/commands"
 
 //data types
 import * as d_main from "pareto-resources/dist/interface/to_be_generated/temp_main"
@@ -16,7 +16,7 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
-export const $$: signatures.commands.stream_to_stream = pt.command_procedure(
+export const $$: signatures.procedures.stream_to_stream = pt.command_procedure(
     ($d, $s, $q, $c) => [
 
         pt.handle_error<d_main.Error, d_stream_to_stream.Error>(
