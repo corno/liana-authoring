@@ -1,5 +1,5 @@
-import * as _pi from 'pareto-core/dist/interface'
-import * as _p from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
 
 import * as d_in from "../../../../interface/to_be_generated/get_schema"
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
@@ -9,20 +9,20 @@ import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/ma
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
 
-export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
-	return _p.decide.state($.type, ($) => {
+export const Error: pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
+	return pt.decide.state($.type, ($) => {
 		switch ($[0]) {
-			case 'read file': return _p.ss($, ($): d_out.Diagnostics.L => ({
+			case 'read file': return pt.ss($, ($): d_out.Diagnostics.L => ({
 				'message': "Failed to read schema file",
 				'severity': ['error', null],
-				'related information': _p.optional.literal.not_set(),
-				'range': _p.optional.literal.not_set(),
+				'related information': pt.optional.literal.not_set(),
+				'range': pt.optional.literal.not_set(),
 				'type': ['schema', null]
 		}))
-			case 'deserialize': return _p.ss($, ($): d_out.Diagnostics.L => ({
+			case 'deserialize': return pt.ss($, ($): d_out.Diagnostics.L => ({
 				'message': "failed to deserialize schema: " + t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" }),
 				'severity': ['error', null],
-				'related information': _p.optional.literal.set(_p.list.literal([
+				'related information': pt.optional.literal.set(pt.list.literal([
 					{
 						'location': {
 							'file path': $p['schema path'],
@@ -31,11 +31,11 @@ export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics
 						'message': t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" })
 					}
 				])),
-				'range': _p.optional.literal.not_set(),
+				'range': pt.optional.literal.not_set(),
 				'type': ['schema', null]
 
 			}))
-			default: return _p.au($[0])
+			default: return pt.au($[0])
 		}
 	})
 }

@@ -1,6 +1,6 @@
-import * as _p from 'pareto-core/dist/query'
-import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
-import _p_variables from 'pareto-core/dist/_p_variables'
+import * as pt from 'pareto-core/dist/query'
+import * as _pa from 'pareto-core/dist/assign'
+import p_variables from 'pareto-core/dist/_p_variables'
 
 import * as signatures from "../../../interface/signatures"
 
@@ -12,25 +12,25 @@ import * as t_path_to_text from "pareto-resources/dist/implementation/manual/tra
 import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/unrestricted_path"
 
 
-export const $$: signatures.queries.get_schema_path = _p.query_function(
-    ($p, $qr) => _p_variables(() => {
+export const $$: signatures.queries.get_schema_path = pt.query_function(
+    ($d, $s, $q) => p_variables(() => {
         const schema_path = t_path_to_path.create_node_path(
             t_path_to_path.extend_context_path_with_single_step(
-                $p['context path'],
+                $d['context path'],
                 { 'addition': ".liana" }
             ),
             { 'node': "schema.slna" }
         )
-        return $qr['stat'](
+        return $q['stat'](
             schema_path,
             ($): d.Error => ['stat error', $]
         ).refine(
-            ($, abort) => _p.decide.state($, ($) => {
+            ($, abort) => _pa.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'does not exist': return _p.ss($, ($) => abort(['not found', null]))
-                    case 'file': return _p.ss($, ($) => schema_path)
-                    case 'directory': return _p.ss($, ($) => abort(['not found', null]))
-                    default: return _p.au($[0])
+                    case 'does not exist': return _pa.ss($, ($) => abort(['not found', null]))
+                    case 'file': return _pa.ss($, ($) => schema_path)
+                    case 'directory': return _pa.ss($, ($) => abort(['not found', null]))
+                    default: return _pa.au($[0])
                 }
             })
         )

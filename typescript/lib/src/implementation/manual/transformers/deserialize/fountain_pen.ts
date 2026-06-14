@@ -1,5 +1,5 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/deserialize"
@@ -12,14 +12,14 @@ import * as t_get_schema_to_fp from "../get_schema/fountain_pen"
 import * as t_get_schema_path_to_fp from "../get_schema_path/fountain_pen"
 
 export namespace signatures {
-    export type Error = _pi.Transformer<d_in.Error, d_out.Phrase>
+    export type Error = pi.Transformer<d_in.Error, d_out.Phrase>
 }
 
-export const Error: signatures.Error = ($) => _p.decide.state($, ($) => {
+export const Error: signatures.Error = ($) => pt.decide.state($, ($) => {
     switch ($[0]) {
-        case 'deserialize parse tree': return _p.ss($, ($) => t_deserialize_to_fp.Error($))
-        case 'schema': return _p.ss($, ($) => t_get_schema_to_fp.Error($.error))
-        case 'schema path': return _p.ss($, ($) => t_get_schema_path_to_fp.Error($))
-        default: return _p.au($[0])
+        case 'deserialize parse tree': return pt.ss($, ($) => t_deserialize_to_fp.Error($))
+        case 'schema': return pt.ss($, ($) => t_get_schema_to_fp.Error($.error))
+        case 'schema path': return pt.ss($, ($) => t_get_schema_path_to_fp.Error($))
+        default: return pt.au($[0])
     }
 })

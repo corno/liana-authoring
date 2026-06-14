@@ -1,4 +1,4 @@
-import * as _pi from 'pareto-core/dist/interface'
+import * as pi from 'pareto-core/dist/interface'
 
 import * as d_unmarshall_result from "./unmarshall_result"
 
@@ -38,7 +38,7 @@ export type Component = {
 
 export type Dictionary = {
     'unmarshalled': d_unmarshall_result.Dictionary
-    'entries': _pi.Dictionary<Entry>
+    'entries': pi.Dictionary<Entry>
 }
 
 export type Entry = {
@@ -53,7 +53,7 @@ export type Entry = {
 
 export type Group = {
     'unmarshalled': d_unmarshall_result.Group
-    'properties': _pi.Dictionary<Property>
+    'properties': pi.Dictionary<Property>
 }
 
 export type Property = {
@@ -69,7 +69,7 @@ export type Property_Unmarshalled = {
 
 export type List = {
     'unmarshalled': d_unmarshall_result.List
-    'items': _pi.List<Value>
+    'items': pi.List<Value>
 }
 
 export type Optional = {
@@ -91,5 +91,5 @@ export type Reference =
 
 export type State = {
     'unmarshalled': d_unmarshall_result.State
-    'option': _pi.Optional_Value<Value>
+    'option': pi.Optional_Value<Value>
 }

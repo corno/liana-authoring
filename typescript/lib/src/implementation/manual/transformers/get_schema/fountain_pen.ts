@@ -1,5 +1,5 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/get_schema"
@@ -11,13 +11,13 @@ import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/ma
 import * as t_read_file_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
 
 export namespace signatures {
-    export type Error = _pi.Transformer<d_in.Error, d_out.Phrase>
+    export type Error = pi.Transformer<d_in.Error, d_out.Phrase>
 }
 
-export const Error: signatures.Error = ($) => _p.decide.state($.type, ($) => {
+export const Error: signatures.Error = ($) => pt.decide.state($.type, ($) => {
     switch ($[0]) {
-        case 'deserialize': return _p.ss($, ($) => t_deserialize_resolved_to_fp.Error($))
-        case 'read file': return _p.ss($, ($) => t_read_file_to_fountain_pen.Error($))
-        default: return _p.au($[0])
+        case 'deserialize': return pt.ss($, ($) => t_deserialize_resolved_to_fp.Error($))
+        case 'read file': return pt.ss($, ($) => t_read_file_to_fountain_pen.Error($))
+        default: return pt.au($[0])
     }
 })

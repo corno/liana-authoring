@@ -1,6 +1,6 @@
-import * as _pi from 'pareto-core/dist/interface'
-import * as _p from 'pareto-core/dist/assign'
-import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
+import * as pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
+import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -10,12 +10,12 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 //dependencies
 import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
-export type Document = _pi.Transformer<
+export type Document = pi.Transformer<
     d_in.Document,
     d_out.Value
 >
 
-export type Value = _pi.Transformer<
+export type Value = pi.Transformer<
     d_in.Value,
     d_out.Value
 >
@@ -26,91 +26,91 @@ export const Value: Value = ($) => {
 
     const instance = $.instance
 
-    return _p.decide.state($['unmarshall result'], ($): d_out.Value => {
+    return pt.decide.state($['unmarshall result'], ($): d_out.Value => {
         switch ($[0]) {
-            case 'error': return _p.ss($, ($) => ({
+            case 'error': return pt.ss($, ($) => ({
                 'kind': ['null', null],
-                'children': _p.list.literal([]),
+                'children': pt.list.literal([]),
                 'deprecated': false,
             }))
-            case 'success': return _p.ss($, ($) => _p.decide.state($, ($): d_out.Value => {
+            case 'success': return pt.ss($, ($) => pt.decide.state($, ($): d_out.Value => {
                 switch ($[0]) {
-                    case 'component': return _p.ss($, ($) => Value($.value))
-                    case 'dictionary': return _p.ss($, ($): d_out.Value => ({
+                    case 'component': return pt.ss($, ($) => Value($.value))
+                    case 'dictionary': return pt.ss($, ($): d_out.Value => ({
                         'kind': ['object', null],
                         'children': $.intermediate['entries as list'].__l_map(($): d_out.Symbol => ({
                             'name': $.intermediate['id value pair'].id.token.value,
                             'detail': "entry",
-                            'value': _p.decide.state($.value, ($) => {
+                            'value': pt.decide.state($.value, ($) => {
                                 switch ($[0]) {
-                                    case 'set': return _p.ss($, ($) => Value($))
-                                    case 'not set': return _p.ss($, ($) => ({
+                                    case 'set': return pt.ss($, ($) => Value($))
+                                    case 'not set': return pt.ss($, ($) => ({
                                         'kind': ['null', null],
-                                        'children': _p.list.literal([]),
+                                        'children': pt.list.literal([]),
                                     }))
-                                    default: return _p.au($[0])
+                                    default: return pt.au($[0])
                                 }
                             }),
                             'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                             'selection range': $.intermediate['id value pair'].id.range,
                         })),
                     }))
-                    case 'group': return _p.ss($, ($) => ({
+                    case 'group': return pt.ss($, ($) => ({
                         'kind': ['struct', null],
-                        'children': _p.decide.state($.derived.style, ($) => {
+                        'children': pt.decide.state($.derived.style, ($) => {
                             switch ($[0]) {
-                                case 'verbose': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => ({
+                                case 'verbose': return pt.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => ({
                                     'name': $.id,
                                     'detail': "property",
-                                    'value': _p.decide.state($['definition found'], ($) => {
+                                    'value': pt.decide.state($['definition found'], ($) => {
                                         switch ($[0]) {
-                                            case 'yes': return _p.ss($, ($) => $['value'].__decide(
+                                            case 'yes': return pt.ss($, ($) => $['value'].__decide(
                                                 ($): d_out.Value => Value($),
                                                 (): d_out.Value => ({
                                                     'kind': ['null', null],
-                                                    'children': _p.list.literal([]),
+                                                    'children': pt.list.literal([]),
                                                 })
                                             ))
-                                            case 'no': return _p.ss($, ($) => ({
+                                            case 'no': return pt.ss($, ($) => ({
                                                 'kind': ['null', null],
-                                                'children': _p.list.literal([]),
+                                                'children': pt.list.literal([]),
                                             }))
-                                            default: return _p.au($[0])
+                                            default: return pt.au($[0])
                                         }
                                     }),
                                     'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                                     'selection range': $.intermediate['id value pair'].id.range,
                                 })))
-                                case 'concise': return _p.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => _p.decide.state($['definition found'], ($) => {
+                                case 'concise': return pt.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => pt.decide.state($['definition found'], ($) => {
                                     switch ($[0]) {
-                                        case 'no': return _p.ss($, ($): d_out.Symbol => ({
+                                        case 'no': return pt.ss($, ($): d_out.Symbol => ({
                                             'value': {
 
                                                 'kind': ['null', null],
-                                                'children': _p.list.literal([]),
+                                                'children': pt.list.literal([]),
                                             },
                                             'detail': "property",
                                             'name': "-unknown-",
                                             'range': t_parse_tree_to_location.Value($.item.value),
                                             'selection range': t_parse_tree_to_location.Value($.item.value),
                                         }))
-                                        case 'yes': return _p.ss($, ($): d_out.Symbol => ({
+                                        case 'yes': return pt.ss($, ($): d_out.Symbol => ({
                                             'value': Value($['value']),
                                             'detail': "property",
                                             'name': $.id,
                                             'range': t_parse_tree_to_location.Value($['value'].instance),
                                             'selection range': t_parse_tree_to_location.Value($['value'].instance),
                                         }))
-                                        default: return _p.au($[0])
+                                        default: return pt.au($[0])
                                     }
                                 })))
-                                default: return _p.au($[0])
+                                default: return pt.au($[0])
                             }
                         }),
                     }))
-                    case 'list': return _p.ss($, ($) => ({
+                    case 'list': return pt.ss($, ($) => ({
                         'kind': ['array', null],
-                        'children': _p.list.from.list($.derived.items).map_with_state(
+                        'children': pt.list.from.list($.derived.items).map_with_state(
                             0,
                             ($, state): d_out.Symbol => ({
                                 'name': `[${state}]`,
@@ -123,51 +123,51 @@ export const Value: Value = ($) => {
                             ($, state) => $
                         ),
                     }))
-                    case 'nothing': return _p.ss($, ($) => ({
+                    case 'nothing': return pt.ss($, ($) => ({
                         'kind': ['null', null],
-                        'children': _p.list.literal([]),
+                        'children': pt.list.literal([]),
                     }))
-                    case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
+                    case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
-                            case 'set': return _p.ss($, ($) => Value($['child value']))
-                            case 'not set': return _p.ss($, ($) => ({
+                            case 'set': return pt.ss($, ($) => Value($['child value']))
+                            case 'not set': return pt.ss($, ($) => ({
                                 'kind': ['null', null],
-                                'children': _p.list.literal([]),
+                                'children': pt.list.literal([]),
                             }))
-                            default: return _p.au($[0])
+                            default: return pt.au($[0])
                         }
                     }))
-                    case 'reference': return _p.ss($, ($) => ({
+                    case 'reference': return pt.ss($, ($) => ({
                         'kind': ['string', null],
-                        'children': _p.list.literal([]),
+                        'children': pt.list.literal([]),
                     }))
-                    case 'simple': return _p.ss($, ($) => _p.decide.state($.definition, ($) => {
+                    case 'simple': return pt.ss($, ($) => pt.decide.state($.definition, ($) => {
                         switch ($[0]) {
-                            case 'global': return _p.ss($, ($) => _p.decide.state($['l entry'].type, ($) => {
+                            case 'global': return pt.ss($, ($) => pt.decide.state($['l entry'].type, ($) => {
                                 switch ($[0]) {
-                                    case 'number': return _p.ss($, ($) => ({
+                                    case 'number': return pt.ss($, ($) => ({
                                         'kind': ['number', null],
-                                        'children': _p.list.literal([]),
+                                        'children': pt.list.literal([]),
                                     }))
-                                    case 'boolean': return _p.ss($, ($) => ({
+                                    case 'boolean': return pt.ss($, ($) => ({
                                         'kind': ['boolean', null],
-                                        'children': _p.list.literal([]),
+                                        'children': pt.list.literal([]),
                                     }))
-                                    case 'date': return _p.ss($, ($) => ({
+                                    case 'date': return pt.ss($, ($) => ({
                                         'kind': ['string', null],
-                                        'children': _p.list.literal([]),
+                                        'children': pt.list.literal([]),
                                     }))
-                                    default: return _p.au($[0])
+                                    default: return pt.au($[0])
                                 }
                             }))
-                            default: return _p.au($[0])
+                            default: return pt.au($[0])
                         }
                     }))
-                    case 'state': return _p.ss($, ($) => _p.decide.state($.derived['option status'], ($): d_out.Value => {
+                    case 'state': return pt.ss($, ($) => pt.decide.state($.derived['option status'], ($): d_out.Value => {
                         switch ($[0]) {
-                            case 'set': return _p.ss($, ($) => ({
+                            case 'set': return pt.ss($, ($) => ({
                                 'kind': ['enum member', null],
-                                'children': _p.list.literal([
+                                'children': pt.list.literal([
                                     {
                                         'name': "set",
                                         'detail': "set",
@@ -178,23 +178,23 @@ export const Value: Value = ($) => {
                                 ]),
                                 'deprecated': false,
                             }))
-                            case 'missing data': return _p.ss($, ($) => ({
+                            case 'missing data': return pt.ss($, ($) => ({
                                 'kind': ['null', null],
-                                'children': _p.list.literal([]),
+                                'children': pt.list.literal([]),
                                 'deprecated': true,
                             }))
-                            default: return _p.au($[0])
+                            default: return pt.au($[0])
                         }
                     }))
-                    case 'text': return _p.ss($, ($) => ({
+                    case 'text': return pt.ss($, ($) => ({
                         'kind': ['string', null],
-                        'children': _p.list.literal([]),
+                        'children': pt.list.literal([]),
                         'deprecated': false,
                     }))
-                    default: return _p.au($[0])
+                    default: return pt.au($[0])
                 }
             }))
-            default: return _p.au($[0])
+            default: return pt.au($[0])
         }
     })
 }

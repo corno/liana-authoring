@@ -1,15 +1,15 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
 
-import _list_from_text from 'pareto-core/dist/_p_list_from_text'
+import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
 //data types
-import * as d_file_in_file_out from "../../../../../interface/to_be_generated/file_in_file_out"
+import * as d_file_in_file_out from "../../../../../interface/to_be_generated/file_to_file"
 
 //dependencies
 import * as r_node_path_to_text from "pareto-resources/dist/implementation/manual/refiners/path_unrestricted/text"
 
-export const Path: _pi.Production<
+export const Path: pi.Production<
     d_file_in_file_out.Path,
     d_file_in_file_out.Path_Error,
     string,

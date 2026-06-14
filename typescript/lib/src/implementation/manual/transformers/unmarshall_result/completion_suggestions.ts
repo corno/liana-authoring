@@ -1,6 +1,6 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
-import _p_cc from 'pareto-core/dist/_p_change_context'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
+import p_change_context from 'pareto-core/dist/_p_change_context'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -26,14 +26,14 @@ export type Parameters = {
     | ['concise', null]
 }
 
-export type Document = _pi.Transformer_With_Parameter<
+export type Document = pi.Transformer_With_Parameter<
     d_in.Document,
     d_out.Completion_Suggestions,
     Parameters
 
 >
 
-export type Found = _pi.Transformer_With_Parameter<
+export type Found = pi.Transformer_With_Parameter<
     d_outx.Found,
     d_out.Completion_Suggestions,
     Parameters
@@ -44,7 +44,7 @@ type Minimal_Completion_Suggestion = {
     'insert value': d_ast_target.Value,
 }
 
-type Minimal_Completion_Suggestions = _pi.List<Minimal_Completion_Suggestion>
+type Minimal_Completion_Suggestions = pi.List<Minimal_Completion_Suggestion>
 
 
 const d_schema_Value = (
@@ -55,20 +55,20 @@ const d_schema_Value = (
         | ['concise', null]
     }
 ): Minimal_Completion_Suggestions => {
-    return _p.decide.state($, ($): Minimal_Completion_Suggestions => {
+    return pt.decide.state($, ($): Minimal_Completion_Suggestions => {
         switch ($[0]) {
-            case 'component': return _p.ss($, ($) => d_schema_Value(
-                _p.decide.state($.type, ($): d_schema.Value => {
+            case 'component': return pt.ss($, ($) => d_schema_Value(
+                pt.decide.state($.type, ($): d_schema.Value => {
                     switch ($[0]) {
-                        case 'external': return _p.ss($, ($) => $.module['l entry']['root value'])
-                        case 'internal': return _p.ss($, ($) => $['l entry'].get_circular_dependent()['root value'])
-                        case 'internal acyclic': return _p.ss($, ($) => $['l entry']['root value'])
-                        default: return _p.au($[0])
+                        case 'external': return pt.ss($, ($) => $.module['l entry']['root value'])
+                        case 'internal': return pt.ss($, ($) => $['l entry'].get_circular_dependent()['root value'])
+                        case 'internal acyclic': return pt.ss($, ($) => $['l entry']['root value'])
+                        default: return pt.au($[0])
                     }
                 }),
                 $p,
             ))
-            case 'reference': return _p.ss($, ($) => _p.list.literal<Minimal_Completion_Suggestion>([
+            case 'reference': return pt.ss($, ($) => pt.list.literal<Minimal_Completion_Suggestion>([
                 {
                     'label': "",
                     'insert value': {
@@ -77,70 +77,70 @@ const d_schema_Value = (
                                 'delimiter': ['apostrophe', null],
                                 'value': "...",
                                 'trivia': {
-                                    'comments': _p.list.literal([])
+                                    'comments': pt.list.literal([])
                                 }
                             }]
                         }]
                     },
                 }
             ]))
-            case 'group': return _p.ss($, ($) => {
+            case 'group': return pt.ss($, ($) => {
                 const group = $
-                return _p.list.literal<Minimal_Completion_Suggestion>([
-                    _p.decide.state($p.style, ($): Minimal_Completion_Suggestion => {
+                return pt.list.literal<Minimal_Completion_Suggestion>([
+                    pt.decide.state($p.style, ($): Minimal_Completion_Suggestion => {
                         switch ($[0]) {
-                            case 'verbose': return _p.ss($, ($) => ({
+                            case 'verbose': return pt.ss($, ($) => ({
                                 'label': "",
                                 'insert value': {
                                     'data': ['concrete', {
                                         'type': ['group', ['verbose', {
                                             '(': {
-                                                'comments': _p.list.literal([])
+                                                'comments': pt.list.literal([])
                                             },
-                                            'properties': _p.list.from.dictionary(
+                                            'properties': pt.list.from.dictionary(
                                                 group
                                             ).convert(
                                                 ($, id) => ({
                                                     'id': id,
-                                                    'value': _p.optional.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
+                                                    'value': pt.optional.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
                                                 })
                                             ),
                                             ')': {
-                                                'comments': _p.list.literal([])
+                                                'comments': pt.list.literal([])
                                             },
                                         }]]
                                     }]
                                 },
 
                             }))
-                            case 'concise': return _p.ss($, ($) => ({
+                            case 'concise': return pt.ss($, ($) => ({
                                 'label': "",
                                 'insert value': {
                                     'data': ['concrete', {
                                         'type': ['group', ['concise', {
                                             '<': {
-                                                'comments': _p.list.literal([])
+                                                'comments': pt.list.literal([])
                                             },
-                                            'properties': _p.list.from.dictionary(
+                                            'properties': pt.list.from.dictionary(
                                                 group
                                             ).convert(
                                                 ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
                                             ),
                                             '>': {
-                                                'comments': _p.list.literal([])
+                                                'comments': pt.list.literal([])
                                             },
                                         }]]
                                     }]
                                 },
 
                             }))
-                            default: return _p.au($[0])
+                            default: return pt.au($[0])
                         }
                     }),
 
                 ])
             })
-            default: return _p.list.literal([
+            default: return pt.list.literal([
                 {
                     'label': "",
                     'insert value': t_liana_schema_to_authoring_target.Value(
@@ -158,22 +158,22 @@ const d_schema_Value = (
 
 export const Found: Found = ($, $p) => {
     switch ($[0]) {
-        case 'value': return _p.ss($, ($): d_out.Completion_Suggestions => {
+        case 'value': return pt.ss($, ($): d_out.Completion_Suggestions => {
             const instance = $.instance
             const definition = $.definition
 
-            return _p.decide.state($.instance.type, ($) => {
+            return pt.decide.state($.instance.type, ($) => {
                 switch ($[0]) {
-                    case 'concrete': return _p.ss($, ($) => _p.decide.state(definition, ($) => {
+                    case 'concrete': return pt.ss($, ($) => pt.decide.state(definition, ($) => {
                         switch ($[0]) {
-                            case 'reference': return _p.ss($, ($) => _p.optional.literal.not_set()) //FIXME
-                            default: return _p.optional.literal.not_set()
+                            case 'reference': return pt.ss($, ($) => pt.optional.literal.not_set()) //FIXME
+                            default: return pt.optional.literal.not_set()
                         }
                     }))
-                    case 'include': return _p.ss($, ($) => _p.optional.literal.not_set())
-                    case 'missing': return _p.ss($, ($) => _p.optional.literal.set({
+                    case 'include': return pt.ss($, ($) => pt.optional.literal.not_set())
+                    case 'missing': return pt.ss($, ($) => pt.optional.literal.set({
                         'type': ['missing value', null],
-                        'suggestions': _p.list.from.list(
+                        'suggestions': pt.list.from.list(
                             d_schema_Value(
                                 definition,
                                 $p,
@@ -194,24 +194,24 @@ export const Found: Found = ($, $p) => {
                         )
 
                     }))
-                    default: return _p.au($[0])
+                    default: return pt.au($[0])
                 }
             })
 
         })
-        case 'entry': return _p.ss($, ($) => _p.optional.literal.not_set())
-        case 'property': return _p.ss($, ($) => _p.optional.literal.not_set())
-        case 'state': return _p.ss($, ($): d_out.Completion_Suggestions => {
+        case 'entry': return pt.ss($, ($) => pt.optional.literal.not_set())
+        case 'property': return pt.ss($, ($) => pt.optional.literal.not_set())
+        case 'state': return pt.ss($, ($): d_out.Completion_Suggestions => {
             const definition = $.definition
-            return _p.decide.state($.intermediate.instance, ($): d_out.Completion_Suggestions => {
+            return pt.decide.state($.intermediate.instance, ($): d_out.Completion_Suggestions => {
                 switch ($[0]) {
-                    case 'state': return _p.ss($, ($) => _p.decide.state($.xxx.status, ($): d_out.Completion_Suggestions => {
+                    case 'state': return pt.ss($, ($) => pt.decide.state($.xxx.status, ($): d_out.Completion_Suggestions => {
                         switch ($[0]) {
-                            case 'missing': return _p.ss($, ($) => {
+                            case 'missing': return pt.ss($, ($) => {
                                 const missing_data_marker = $['#']
-                                return _p.optional.literal.set({
+                                return pt.optional.literal.set({
                                     'type': ['missing option', null],
-                                    'suggestions': _p.list.from.dictionary(
+                                    'suggestions': pt.list.from.dictionary(
                                         definition.options
                                     ).flatten(($, id) => {
                                         const desc = $.description
@@ -219,7 +219,7 @@ export const Found: Found = ($, $p) => {
                                             $.value,
                                             $p,
                                         ).__l_map(
-                                            ($): d_out.Completion_Suggestions.O.suggestions.L => _p_cc(
+                                            ($): d_out.Completion_Suggestions.O.suggestions.L => p_change_context(
                                                 $,
                                                 ($) => ({
                                                     'label': id + $.label,
@@ -232,7 +232,7 @@ export const Found: Found = ($, $p) => {
                                                             'data': ['concrete', {
                                                                 'type': ['state', {
                                                                     '|': {
-                                                                        'comments': _p.list.literal([])
+                                                                        'comments': pt.list.literal([])
                                                                     },
                                                                     'status': ['set', {
                                                                         'option': id,
@@ -247,7 +247,7 @@ export const Found: Found = ($, $p) => {
                                                             'write delimiters': false, //skip the pipe
                                                         }
                                                     ),
-                                                    'additional text edits': _p.list.literal<d_out_text_edits.Text_Edits.L>([
+                                                    'additional text edits': pt.list.literal<d_out_text_edits.Text_Edits.L>([
                                                         ['delete', {
                                                             'range': missing_data_marker.range
                                                         }]
@@ -259,16 +259,16 @@ export const Found: Found = ($, $p) => {
                                     })
                                 })
                             })
-                            case 'set': return _p.ss($, ($) => _p.optional.literal.not_set()) //check if this is in the actual option name, if so, give suggestions
-                            default: return _p.au($[0])
+                            case 'set': return pt.ss($, ($) => pt.optional.literal.not_set()) //check if this is in the actual option name, if so, give suggestions
+                            default: return pt.au($[0])
                         }
                     }))
-                    case 'list': return _p.ss($, ($) => _p.optional.literal.not_set())
-                    default: return _p.au($[0])
+                    case 'list': return pt.ss($, ($) => pt.optional.literal.not_set())
+                    default: return pt.au($[0])
                 }
             })
         })
-        default: return _p.au($[0])
+        default: return pt.au($[0])
     }
 }
 

@@ -1,5 +1,5 @@
-import * as _pi from 'pareto-core/dist/interface'
-import * as _p from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -34,7 +34,7 @@ export const range_overlaps_position = (
     )
 
 
-export type Document = _pi.Transformer_With_Parameter<
+export type Document = pi.Transformer_With_Parameter<
     d_in.Document,
     d_out.Found,
     {
@@ -42,7 +42,7 @@ export type Document = _pi.Transformer_With_Parameter<
     }
 >
 
-// export type Items = _pi.Transformer_With_Parameter<
+// export type Items = pi.Transformer_With_Parameter<
 //     d_in.Items,
 //     Found,
 //     {
@@ -50,7 +50,7 @@ export type Document = _pi.Transformer_With_Parameter<
 //     }
 // >
 
-export type Value = _pi.Transformer_With_Parameter<
+export type Value = pi.Transformer_With_Parameter<
     d_in.Value,
     d_out.Found,
     {
@@ -58,9 +58,9 @@ export type Value = _pi.Transformer_With_Parameter<
     }
 >
 
-export type Value_possibly_found = _pi.Transformer_With_Parameter<
+export type Value_possibly_found = pi.Transformer_With_Parameter<
     d_in.Value,
-    _pi.Optional_Value<d_out.Found>,
+    pi.Optional_Value<d_out.Found>,
     {
         'position': d_location.Position
     }
@@ -75,8 +75,8 @@ export const Value_possibly_found: Value_possibly_found = ($, $p) => {
             'position': $p.position,
         }
     )
-        ? _p.optional.literal.set(Value($, $p))
-        : _p.optional.literal.not_set()
+        ? pt.optional.literal.set(Value($, $p))
+        : pt.optional.literal.not_set()
 }
 
 export const Value: Value = ($, $p) => {
@@ -90,25 +90,25 @@ export const Value: Value = ($, $p) => {
     ): d_out.Found => ['value', $]
 
 
-    return _p.decide.state($['unmarshall result'], ($) => {
+    return pt.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'error': return _p.ss($, ($) => this_value())
-            case 'success': return _p.ss($, ($) => _p.decide.state($, ($) => {
+            case 'error': return pt.ss($, ($) => this_value())
+            case 'success': return pt.ss($, ($) => pt.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'simple': return _p.ss($, ($) => this_value())
-                    case 'component': return _p.ss($, ($) => Value($.value, $p))
-                    case 'dictionary': return _p.ss($, ($) => _p.decide.list($.intermediate['entries as list']).has_match(
+                    case 'simple': return pt.ss($, ($) => this_value())
+                    case 'component': return pt.ss($, ($) => Value($.value, $p))
+                    case 'dictionary': return pt.ss($, ($) => pt.decide.list($.intermediate['entries as list']).has_match(
                         ($): d_out.Possibly_Found => {
                             const entry = $
-                            return _p.decide.boolean<d_out.Possibly_Found>(
+                            return pt.decide.boolean<d_out.Possibly_Found>(
                                 range_overlaps_position(
                                     {
                                         'start': $.intermediate['id value pair'].id.range.start,
-                                        'end': _p.decide.state($.value, ($) => {
+                                        'end': pt.decide.state($.value, ($) => {
                                             switch ($[0]) {
-                                                case 'set': return _p.ss($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
-                                                case 'not set':return _p.ss($, ($) => entry.intermediate['id value pair'].id.range.end)
-                                                default: return _p.au($[0])
+                                                case 'set': return pt.ss($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
+                                                case 'not set':return pt.ss($, ($) => entry.intermediate['id value pair'].id.range.end)
+                                                default: return pt.au($[0])
                                             }
                                         }),
                                     },
@@ -116,113 +116,113 @@ export const Value: Value = ($, $p) => {
                                         'position': $p.position,
                                     }
                                 ),
-                                (): d_out.Possibly_Found => _p.decide.state($.value, ($): d_out.Possibly_Found => {
+                                (): d_out.Possibly_Found => pt.decide.state($.value, ($): d_out.Possibly_Found => {
                                     switch ($[0]) {
-                                        case 'set': return _p.ss($, ($) =>  Value_possibly_found($, $p))
-                                        case 'not set':return _p.ss($, ($) => _p.optional.literal.set(['entry', entry]))
-                                        default: return _p.au($[0])
+                                        case 'set': return pt.ss($, ($) =>  Value_possibly_found($, $p))
+                                        case 'not set':return pt.ss($, ($) => pt.optional.literal.set(['entry', entry]))
+                                        default: return pt.au($[0])
                                     }
                                 }),
-                                () => _p.optional.literal.not_set()
+                                () => pt.optional.literal.not_set()
                             )
                         },
                         () => this_value()
                     ))
-                    case 'group': return _p.ss($, ($) => _p.decide.state($.derived.style, ($) => {
+                    case 'group': return pt.ss($, ($) => pt.decide.state($.derived.style, ($) => {
                         switch ($[0]) {
-                            case 'verbose': return _p.ss($, ($) => _p.decide.list($.properties).has_match(
+                            case 'verbose': return pt.ss($, ($) => pt.decide.list($.properties).has_match(
                                 ($): d_out.Possibly_Found => {
                                     const prop = $
-                                    return _p.decide.boolean(
+                                    return pt.decide.boolean(
                                         range_overlaps_position(
                                             t_parse_tree_to_full_value_range.ID_Value_Pair(prop.intermediate['id value pair']),
                                             {
                                                 'position': $p.position,
                                             }
                                         ),
-                                        () => _p.decide.state($['definition found'], ($): d_out.Possibly_Found => {
+                                        () => pt.decide.state($['definition found'], ($): d_out.Possibly_Found => {
 
                                             switch ($[0]) {
-                                                case 'yes': return _p.ss($, ($) => $['value'].__decide(
-                                                    ($): d_out.Possibly_Found => _p.optional.literal.set(Value_possibly_found($, $p).__decide(
+                                                case 'yes': return pt.ss($, ($) => $['value'].__decide(
+                                                    ($): d_out.Possibly_Found => pt.optional.literal.set(Value_possibly_found($, $p).__decide(
                                                         ($) => $,
                                                         (): d_out.Found => ['property', {'style': ['verbose', prop]}]
                                                     )),
                                                     () => {
-                                                        return _p.optional.literal.set(['property', {'style': ['verbose', prop]}])
+                                                        return pt.optional.literal.set(['property', {'style': ['verbose', prop]}])
                                                     }
                                                 ))
-                                                case 'no': return _p.ss($, ($) => {
+                                                case 'no': return pt.ss($, ($) => {
 
-                                                    return _p.optional.literal.set(['property', {'style': ['verbose', prop]}])
+                                                    return pt.optional.literal.set(['property', {'style': ['verbose', prop]}])
                                                 })
-                                                default: return _p.au($[0])
+                                                default: return pt.au($[0])
                                             }
                                         }),
-                                        () => _p.optional.literal.not_set(),
+                                        () => pt.optional.literal.not_set(),
                                     )
                                 },
                                 () => this_value()
                             ))
-                            case 'concise': return _p.ss($, ($) => _p.decide.list($.properties).has_match(
+                            case 'concise': return pt.ss($, ($) => pt.decide.list($.properties).has_match(
                                 ($) => {
                                     const prop = $
-                                    return _p.decide.boolean(
+                                    return pt.decide.boolean(
                                         range_overlaps_position(
                                             t_parse_tree_to_full_value_range.Value(prop.item.value),
                                             {
                                                 'position': $p.position,
                                             }
                                         ),
-                                        () => _p.optional.literal.set(_p.decide.state($['definition found'], ($): d_out.Found => {
+                                        () => pt.optional.literal.set(pt.decide.state($['definition found'], ($): d_out.Found => {
                                             switch ($[0]) {
-                                                case 'yes': return _p.ss($, ($) => Value($['value'], $p))
-                                                case 'no': return _p.ss($, ($) => ['property', {'style': ['unknown concise', prop]}])
-                                                default: return _p.au($[0])
+                                                case 'yes': return pt.ss($, ($) => Value($['value'], $p))
+                                                case 'no': return pt.ss($, ($) => ['property', {'style': ['unknown concise', prop]}])
+                                                default: return pt.au($[0])
                                             }
                                         })),
-                                        () => _p.optional.literal.not_set(),
+                                        () => pt.optional.literal.not_set(),
                                     )
                                 },
                                 () => this_value()
                             ))
-                            default: return _p.au($[0])
+                            default: return pt.au($[0])
                         }
                     }))
-                    case 'list': return _p.ss($, ($) => _p.decide.list($.derived.items).has_match(
+                    case 'list': return pt.ss($, ($) => pt.decide.list($.derived.items).has_match(
                         ($) => Value_possibly_found($, $p),
                         () => this_value()
                     ))
-                    case 'nothing': return _p.ss($, ($) => this_value())
-                    case 'optional': return _p.ss($, ($) => _p.decide.state($.derived.status, ($) => {
+                    case 'nothing': return pt.ss($, ($) => this_value())
+                    case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
-                            case 'set': return _p.ss($, ($) => Value_possibly_found($['child value'], $p).__decide(
+                            case 'set': return pt.ss($, ($) => Value_possibly_found($['child value'], $p).__decide(
                                 ($): d_out.Found => $,
                                 (): d_out.Found => this_value()
                             ))
-                            case 'not set': return _p.ss($, ($) => this_value())
-                            default: return _p.au($[0])
+                            case 'not set': return pt.ss($, ($) => this_value())
+                            default: return pt.au($[0])
                         }
                     }))
-                    case 'reference': return _p.ss($, ($) => this_value())
-                    case 'state': return _p.ss($, ($): d_out.Found => {
+                    case 'reference': return pt.ss($, ($) => this_value())
+                    case 'state': return pt.ss($, ($): d_out.Found => {
                         const valid_state = $
-                        return _p.decide.state($.derived['option status'], ($) => {
+                        return pt.decide.state($.derived['option status'], ($) => {
                             switch ($[0]) {
-                                case 'set': return _p.ss($, ($): d_out.Found => Value_possibly_found($.value, $p).__decide(
+                                case 'set': return pt.ss($, ($): d_out.Found => Value_possibly_found($.value, $p).__decide(
                                     ($): d_out.Found => $,
                                     (): d_out.Found => ['state', valid_state]
                                 ))
-                                case 'missing data': return _p.ss($, ($) => ['state', valid_state])
-                                default: return _p.au($[0])
+                                case 'missing data': return pt.ss($, ($) => ['state', valid_state])
+                                default: return pt.au($[0])
                             }
                         })
                     })
-                    case 'text': return _p.ss($, ($) => this_value())
-                    default: return _p.au($[0])
+                    case 'text': return pt.ss($, ($) => this_value())
+                    default: return pt.au($[0])
                 }
             }))
-            default: return _p.au($[0])
+            default: return pt.au($[0])
         }
     })
 }

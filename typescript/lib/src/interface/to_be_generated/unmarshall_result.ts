@@ -1,4 +1,4 @@
-import * as _pi from 'pareto-core/dist/interface'
+import * as pi from 'pareto-core/dist/interface'
 
 //data types
 import * as d_astn_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
@@ -7,11 +7,11 @@ import * as d_location from "astn-core/dist/interface/generated/liana/schemas/lo
 
 export type Range_Stack = {
     'range': d_location.Range
-    'parent': _pi.Optional_Value<Range_Stack>
+    'parent': pi.Optional_Value<Range_Stack>
 }
 
 export type Document = {
-    'header': _pi.Optional_Value<d_astn_parse_tree.Value>
+    'header': pi.Optional_Value<d_astn_parse_tree.Value>
     'content': Value
 }
 
@@ -19,7 +19,7 @@ export type Document = {
 //     'node': Node
 // }
 
-export type Property_Path = _pi.List<
+export type Property_Path = pi.List<
     | ['group', string]
     | ['optional', null]
     | ['state', string]
@@ -28,7 +28,7 @@ export type Property_Path = _pi.List<
 export type Value = {
     'definition': d_schema.Value
     'instance': d_astn_parse_tree.Value
-    'optional parent range stack': _pi.Optional_Value<Range_Stack>
+    'optional parent range stack': pi.Optional_Value<Range_Stack>
     'property path': Property_Path
     'unmarshall result': Value_Unmarshall_Result //the type is determined by the definition
 }
@@ -79,10 +79,10 @@ export type Dictionary = {
     'definition': d_schema.Value.dictionary
     'intermediate': {
         'instance': d_astn_parse_tree.Value.type_.concrete.dictionary
-        'entries as list': _pi.List<Entry>
+        'entries as list': pi.List<Entry>
     }
     'derived': {
-        'entries': _pi.Dictionary<{
+        'entries': pi.Dictionary<{
             'result': Entry_Unmarshall_Result
         }>
     }
@@ -94,7 +94,7 @@ export type Entry_Unmarshall_Result =
 
 export type Entry_Unmarshall_Error =
     | ['duplicate', {
-        'instances': _pi.List<Entry>
+        'instances': pi.List<Entry>
     }]
 
 export type Group = {
@@ -116,7 +116,7 @@ export type Group = {
     }
     'derived': {
         'style': Group_Type
-        'properties': _pi.Dictionary<Property>
+        'properties': pi.Dictionary<Property>
     }
 }
 
@@ -139,13 +139,13 @@ export type Group_Type =
     | ['verbose', Group_Verbose]
     | ['concise', Group_Concise]
 
-export type Verbose_Properties = _pi.List<Verbose_Property>
+export type Verbose_Properties = pi.List<Verbose_Property>
 
 export type Group_Concise = {
     'properties': Concise_Properties
 }
 
-export type Concise_Properties = _pi.List<Concise_Property>
+export type Concise_Properties = pi.List<Concise_Property>
 
 export type Concise_Property = {
     'item': d_astn_parse_tree.Items.L
@@ -177,7 +177,7 @@ export type Verbose_Property = {
 export type Verbose_Property_Definition_Found =
     | ['yes', {
         'definition': d_schema.Group.D
-        'value': _pi.Optional_Value<Value>
+        'value': pi.Optional_Value<Value>
     }]
     | ['no', null]
 
@@ -189,7 +189,7 @@ export type List = {
     'definition': d_schema.Value.list
     'instance': d_astn_parse_tree.Value.type_.concrete.list
     'derived': {
-        'items': _pi.List<Value>
+        'items': pi.List<Value>
     }
 }
 

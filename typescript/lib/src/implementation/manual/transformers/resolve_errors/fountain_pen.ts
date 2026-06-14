@@ -1,5 +1,5 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/resolve_errors"
@@ -12,11 +12,11 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Error = (
     $: d_in.Error,
-): d_out.Phrase => _p.decide.state($.type, ($) => {
+): d_out.Phrase => pt.decide.state($.type, ($) => {
     switch ($[0]) {
-        case 'to be implemented': return _p.ss($, ($) => sh.ph.composed([
+        case 'to be implemented': return pt.ss($, ($) => sh.ph.composed([
             sh.ph.literal("this error type is not yet implemented, please report it to the developers")
         ]))
-        default: return _p.au($[0])
+        default: return pt.au($[0])
     }
 })

@@ -1,5 +1,5 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
 
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
 import * as d_in from "liana-core/dist/interface/to_be_generated/deserialize_resolved"
@@ -45,7 +45,7 @@ export const Error = ($: d_in.Error, $p: { 'schema path': d_path.Node_Path }): T
             'character': 0,
         }
     }),
-    'related information': _p.optional.literal.set(_p.list.literal<d_out.Diagnostic.related_information.O.L>([
+    'related information': pt.optional.literal.set(pt.list.literal<d_out.Diagnostic.related_information.O.L>([
         {
             'message': "The schema is not valid",
             'location': {
