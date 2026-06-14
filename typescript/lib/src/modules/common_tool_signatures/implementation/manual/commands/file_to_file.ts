@@ -1,36 +1,30 @@
-import * as pt from 'pareto-core/dist/command'
-import * as pi from 'pareto-core/dist/interface'
-import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
+import * as p_ from 'pareto-core/dist/command'
 
 import * as signatures from "../../../interface/commands"
 
 //data types
 import * as d_main from "pareto-resources/dist/interface/to_be_generated/temp_main"
 import * as d_file_to_file from "../../../interface/to_be_generated/file_to_file"
-import * as d_fp from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
-import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
 import * as r_file_in_file_out_from_main from "../refiners/file_in_file_out/main"
-import * as t_path_to_text from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/text"
 import * as t_transform_file_to_fp from "../transformers/transform_file/fountain_pen"
-import * as t_fp_to_loc from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/list_of_characters"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
-export const $$: signatures.procedures.file_to_file = pt.command_procedure(
+export const $$: signatures.procedures.file_to_file = p_.command_procedure(
     ($d, $s, $q, $c) => [
 
-        pt.handle_error<d_main.Error, d_file_to_file.Error>(
+        p_.handle_error<d_main.Error, d_file_to_file.Error>(
             [
 
-                pt.refine_without_error_transformation(
+                p_.refine_without_error_transformation(
                     (abort) => r_file_in_file_out_from_main.Parameters($d, ($) => abort(['file in file out', ['command line arguments', $]])),
                     ($r) => [
 
-                        pt.query(
+                        p_.query(
                             $q['read file'](
                                 $r.in,
                                 ($): d_file_to_file.Error => {
@@ -40,7 +34,7 @@ export const $$: signatures.procedures.file_to_file = pt.command_procedure(
                             ($, abort) => $,
                             ($v) => [
 
-                                pt.query(
+                                p_.query(
                                     $q['process data'](
                                         {
                                             'path': $r.in,
