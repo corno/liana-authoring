@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/unmarshall"
 
@@ -23,7 +23,7 @@ export namespace Range_ {
 
 export type Range_ = (
     context: Range_.I,
-    abort: _pi.Abort<Range_.E>,
+    abort: p_i.Abort<Range_.E>,
 ) => Range_.O
 
 export namespace Possible_Range_ {
@@ -42,7 +42,7 @@ export namespace Possible_Range_ {
 
 export type Possible_Range_ = (
     context: Possible_Range_.I,
-    abort: _pi.Abort<Possible_Range_.E>,
+    abort: p_i.Abort<Possible_Range_.E>,
 ) => Possible_Range_.O
 
 export namespace Location_ {
@@ -61,7 +61,7 @@ export namespace Location_ {
 
 export type Location_ = (
     context: Location_.I,
-    abort: _pi.Abort<Location_.E>,
+    abort: p_i.Abort<Location_.E>,
 ) => Location_.O
 
 export namespace Relative_Location_ {
@@ -80,7 +80,7 @@ export namespace Relative_Location_ {
 
 export type Relative_Location_ = (
     context: Relative_Location_.I,
-    abort: _pi.Abort<Relative_Location_.E>,
+    abort: p_i.Abort<Relative_Location_.E>,
 ) => Relative_Location_.O
 
 export { 

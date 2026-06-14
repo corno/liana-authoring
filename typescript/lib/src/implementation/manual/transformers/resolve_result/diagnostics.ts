@@ -1,5 +1,6 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/assign'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/resolve_result"
@@ -11,7 +12,7 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 import * as t_resolve_errors_to_fp from "../resolve_errors/fountain_pen"
 
 
-export type Document = pi.Transformer<
+export type Document = p_ti.Transformer<
     d_in.Document,
     d_out.Diagnostics
 >

@@ -1,5 +1,6 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as i_imports_location from "../location/data"
 
@@ -50,7 +51,7 @@ export namespace Completion_Suggestions_ {
             
         }
         
-        export type suggestions = _pi.List<suggestions.L>
+        export type suggestions = p_di.List<suggestions.L>
         
     }
     
@@ -61,7 +62,7 @@ export namespace Completion_Suggestions_ {
     
 }
 
-export type Completion_Suggestions_ = _pi.Optional_Value<Completion_Suggestions_.O>
+export type Completion_Suggestions_ = p_di.Optional_Value<Completion_Suggestions_.O>
 
 export { 
     Completion_Suggestions_ as Completion_Suggestions, 

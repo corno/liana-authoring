@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/unmarshall"
 
@@ -23,7 +23,7 @@ export namespace Node_Path_ {
 
 export type Node_Path_ = (
     context: Node_Path_.I,
-    abort: _pi.Abort<Node_Path_.E>,
+    abort: p_i.Abort<Node_Path_.E>,
 ) => Node_Path_.O
 
 export namespace Context_Path_ {
@@ -42,7 +42,7 @@ export namespace Context_Path_ {
 
 export type Context_Path_ = (
     context: Context_Path_.I,
-    abort: _pi.Abort<Context_Path_.E>,
+    abort: p_i.Abort<Context_Path_.E>,
 ) => Context_Path_.O
 
 export namespace Context_Subpath_ {
@@ -61,7 +61,7 @@ export namespace Context_Subpath_ {
 
 export type Context_Subpath_ = (
     context: Context_Subpath_.I,
-    abort: _pi.Abort<Context_Subpath_.E>,
+    abort: p_i.Abort<Context_Subpath_.E>,
 ) => Context_Subpath_.O
 
 export namespace Start_ {
@@ -80,7 +80,7 @@ export namespace Start_ {
 
 export type Start_ = (
     context: Start_.I,
-    abort: _pi.Abort<Start_.E>,
+    abort: p_i.Abort<Start_.E>,
 ) => Start_.O
 
 export namespace Up_Steps_ {
@@ -99,7 +99,7 @@ export namespace Up_Steps_ {
 
 export type Up_Steps_ = (
     context: Up_Steps_.I,
-    abort: _pi.Abort<Up_Steps_.E>,
+    abort: p_i.Abort<Up_Steps_.E>,
 ) => Up_Steps_.O
 
 export { 

@@ -1,6 +1,7 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
+import * as p_di from 'pareto-core/dist/data/interface'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
+import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -9,12 +10,12 @@ import * as d_out from "../../../../interface/generated/liana/schemas/unmarshall
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-export type Document = pi.Transformer<
+export type Document = p_ti.Transformer<
     d_in.Document,
     d_out.Errors
 >
 
-export type Value = pi.Transformer<
+export type Value = p_ti.Transformer<
     d_in.Value,
     d_out.Errors
 >

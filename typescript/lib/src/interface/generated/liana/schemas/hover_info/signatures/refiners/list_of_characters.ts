@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/deserialize"
 
@@ -25,7 +25,7 @@ export namespace Hover_Texts_ {
 
 export type Hover_Texts_ = (
     context: Hover_Texts_.I,
-    abort: _pi.Abort<Hover_Texts_.E>,
+    abort: p_i.Abort<Hover_Texts_.E>,
     parameters: {
         readonly 'tab size': Hover_Texts_.P.tab_size
     },

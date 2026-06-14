@@ -1,4 +1,4 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as d_out from "./unmarshall_result"
 import * as d_astn_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
@@ -13,4 +13,4 @@ export type Found =
         | ['unknown concise', d_out.Concise_Property]
     }]
 
-export type Possibly_Found = pi.Optional_Value<Found>
+export type Possibly_Found = p_di.Optional_Value<Found>

@@ -1,4 +1,4 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
 import * as pt from 'pareto-core/dist/assign'
 
 //data types
@@ -14,7 +14,7 @@ import * as r_unmarshall_result_from_list_of_characters from "../unmarshall_resu
 import * as r_sealed_target_from_unmarshall_result from "./unmarshall_result"
 
 
-export type Document = pi.Refiner_With_Parameter<
+export type Document = p_ri.Refiner_With_Parameter<
     d_out.Document,
     d_function_seal.Error,
     d_in.List_of_Characters,

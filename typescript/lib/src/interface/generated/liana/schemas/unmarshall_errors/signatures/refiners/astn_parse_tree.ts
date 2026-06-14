@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/unmarshall"
 
@@ -23,7 +23,7 @@ export namespace Errors_ {
 
 export type Errors_ = (
     context: Errors_.I,
-    abort: _pi.Abort<Errors_.E>,
+    abort: p_i.Abort<Errors_.E>,
 ) => Errors_.O
 
 export namespace Warnings_ {
@@ -42,7 +42,7 @@ export namespace Warnings_ {
 
 export type Warnings_ = (
     context: Warnings_.I,
-    abort: _pi.Abort<Warnings_.E>,
+    abort: p_i.Abort<Warnings_.E>,
 ) => Warnings_.O
 
 export { 

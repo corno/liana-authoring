@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/unmarshall"
 
@@ -23,7 +23,7 @@ export namespace Completion_Suggestions_ {
 
 export type Completion_Suggestions_ = (
     context: Completion_Suggestions_.I,
-    abort: _pi.Abort<Completion_Suggestions_.E>,
+    abort: p_i.Abort<Completion_Suggestions_.E>,
 ) => Completion_Suggestions_.O
 
 export { 

@@ -1,6 +1,7 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_change_context from 'pareto-core/dist/_p_change_context'
+import * as p_di from 'pareto-core/dist/data/interface'
+import p_change_context from 'pareto-core/dist/specials/change_context'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -14,31 +15,31 @@ import * as t_parse_tree_to_authoring_target from "astn/dist/implementation/manu
 //FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 
 
-export type Document = pi.Transformer_With_Parameter<
+export type Document = p_ti.Transformer_With_Parameter<
     d_in.Document,
     d_out.Document,
     d_function.Parameters
 >
 
-export type Any_Value = pi.Transformer_With_Parameter<
+export type Any_Value = p_ti.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
 
-export type Non_Entity = pi.Transformer_With_Parameter<
+export type Non_Entity = p_ti.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
 
-export type Entity = pi.Transformer_With_Parameter<
+export type Entity = p_ti.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
 
-export type Structural_Token = pi.Transformer<
+export type Structural_Token = p_ti.Transformer<
     d_in_parse_tree.Structural_Token,
     d_out.Token_Trivia
 >
@@ -200,10 +201,10 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                         'properties': pt.decide.state(unmarsalled_group.derived.style, ($): d_out.ID_Value_Pairs => {
                                             switch ($[0]) {
                                                 //convert concise to verbose
-                                                case 'concise': return pt.ss($, ($): d_out.ID_Value_Pairs => pt.list.from.list($.properties).map_optionally(($): pi.Optional_Value<d_out.ID_Value_Pairs.L> => (pt.decide.state($['definition found'], ($): pi.Optional_Value<d_out.ID_Value_Pairs.L> => {
+                                                case 'concise': return pt.ss($, ($): d_out.ID_Value_Pairs => pt.list.from.list($.properties).map_optionally(($): p_di.Optional_Value<d_out.ID_Value_Pairs.L> => (pt.decide.state($['definition found'], ($): p_di.Optional_Value<d_out.ID_Value_Pairs.L> => {
                                                     switch ($[0]) {
                                                         case 'no': return pt.ss($, ($) => pt.optional.literal.not_set())
-                                                        case 'yes': return pt.ss($, ($): pi.Optional_Value<d_out.ID_Value_Pairs.L> => pt.optional.literal.set({
+                                                        case 'yes': return pt.ss($, ($): p_di.Optional_Value<d_out.ID_Value_Pairs.L> => pt.optional.literal.set({
                                                             'id': $.id,
                                                             'value': pt.optional.literal.set(Non_Entity($['value'], $p))
                                                         }))

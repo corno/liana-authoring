@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -9,11 +9,11 @@ import * as d_function from "../../../../interface/to_be_generated/sealed_target
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
-import p_variables from 'pareto-core/dist/_p_variables'
+import p_variables from 'pareto-core/dist/specials/variables'
 
 //signatures
-// export type Document = pi.Refiner<d_out.Document, d_function.Error, d_in.Document>
-export type Value = pi.Refiner<d_out.Value, d_function.Error, d_in.Value>
+// export type Document = p_ri.Refiner<d_out.Document, d_function.Error, d_in.Document>
+export type Value = p_ri.Refiner<d_out.Value, d_function.Error, d_in.Value>
 
 export const Found = ($: d_in_astn_parse_tree.Value): d_function.Found => {
     return pt.decide.state($.type, ($) => {

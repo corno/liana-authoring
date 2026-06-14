@@ -1,5 +1,6 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as i_imports_location from "../astn_location/data"
 
@@ -11,7 +12,7 @@ export namespace Diagnostics_ {
     
 }
 
-export type Diagnostics_ = _pi.List<Diagnostics_.L>
+export type Diagnostics_ = p_di.List<Diagnostics_.L>
 
 export namespace Diagnostic_ {
     
@@ -39,7 +40,7 @@ export namespace Diagnostic_ {
         
     }
     
-    export type range = _pi.Optional_Value<range.O>
+    export type range = p_di.Optional_Value<range.O>
     
     export type message = string
     
@@ -73,11 +74,11 @@ export namespace Diagnostic_ {
             
         }
         
-        export type O = _pi.List<O.L>
+        export type O = p_di.List<O.L>
         
     }
     
-    export type related_information = _pi.Optional_Value<related_information.O>
+    export type related_information = p_di.Optional_Value<related_information.O>
     
     export namespace type_ {
         

@@ -1,6 +1,7 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/assign'
-import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
+import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -14,7 +15,7 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export type Document = pi.Transformer_With_Parameter<
+export type Document = p_ti.Transformer_With_Parameter<
     d_in.Document,
     d_out.Hover_Texts,
     {

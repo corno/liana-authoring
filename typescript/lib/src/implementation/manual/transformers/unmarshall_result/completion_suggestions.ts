@@ -1,6 +1,7 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_change_context from 'pareto-core/dist/_p_change_context'
+import * as p_di from 'pareto-core/dist/data/interface'
+import p_change_context from 'pareto-core/dist/specials/change_context'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -26,14 +27,14 @@ export type Parameters = {
     | ['concise', null]
 }
 
-export type Document = pi.Transformer_With_Parameter<
+export type Document = p_ti.Transformer_With_Parameter<
     d_in.Document,
     d_out.Completion_Suggestions,
     Parameters
 
 >
 
-export type Found = pi.Transformer_With_Parameter<
+export type Found = p_ti.Transformer_With_Parameter<
     d_outx.Found,
     d_out.Completion_Suggestions,
     Parameters
@@ -44,7 +45,7 @@ type Minimal_Completion_Suggestion = {
     'insert value': d_ast_target.Value,
 }
 
-type Minimal_Completion_Suggestions = pi.List<Minimal_Completion_Suggestion>
+type Minimal_Completion_Suggestions = p_di.List<Minimal_Completion_Suggestion>
 
 
 const d_schema_Value = (

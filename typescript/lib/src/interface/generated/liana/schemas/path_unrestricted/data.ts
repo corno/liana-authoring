@@ -1,5 +1,6 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 export namespace Node_Path_ {
     
@@ -33,7 +34,7 @@ export namespace Context_Subpath_ {
     
 }
 
-export type Context_Subpath_ = _pi.List<Context_Subpath_.L>
+export type Context_Subpath_ = p_di.List<Context_Subpath_.L>
 
 export namespace Start_ {
     

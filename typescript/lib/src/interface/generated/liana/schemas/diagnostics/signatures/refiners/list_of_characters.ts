@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/deserialize"
 
@@ -25,7 +25,7 @@ export namespace Diagnostics_ {
 
 export type Diagnostics_ = (
     context: Diagnostics_.I,
-    abort: _pi.Abort<Diagnostics_.E>,
+    abort: p_i.Abort<Diagnostics_.E>,
     parameters: {
         readonly 'tab size': Diagnostics_.P.tab_size
     },
@@ -49,7 +49,7 @@ export namespace Diagnostic_ {
 
 export type Diagnostic_ = (
     context: Diagnostic_.I,
-    abort: _pi.Abort<Diagnostic_.E>,
+    abort: p_i.Abort<Diagnostic_.E>,
     parameters: {
         readonly 'tab size': Diagnostic_.P.tab_size
     },
@@ -73,7 +73,7 @@ export namespace Result_ {
 
 export type Result_ = (
     context: Result_.I,
-    abort: _pi.Abort<Result_.E>,
+    abort: p_i.Abort<Result_.E>,
     parameters: {
         readonly 'tab size': Result_.P.tab_size
     },
@@ -97,7 +97,7 @@ export namespace Parameters_ {
 
 export type Parameters_ = (
     context: Parameters_.I,
-    abort: _pi.Abort<Parameters_.E>,
+    abort: p_i.Abort<Parameters_.E>,
     parameters: {
         readonly 'tab size': Parameters_.P.tab_size
     },

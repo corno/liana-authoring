@@ -1,16 +1,14 @@
-import * as p from 'pareto-core/dist/query'
-import * as pt from 'pareto-core/dist/assign'
-import * as pqi from 'pareto-core/dist/query_interface'
-import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
+import * as p_ from 'pareto-core/dist/query/implementation'
+import * as p_t from 'pareto-core/dist/assign'
+import * as p_qi from 'pareto-core/dist/query/interface'
+import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 import * as signatures from "../../../interface/queries"
 
 //data  types
-import * as d_file_to_file from "../../../modules/common_tool_signatures/interface/to_be_generated/file_to_file"
 import * as d_get_unmarshalled_file from "../../../interface/to_be_generated/get_unmarshalled_file"
-import * as d_process_file_data from "../../../modules/common_tool_signatures/interface/to_be_generated/process_file_data"
+import * as d_process_file_data from "pareto-common/dist/interface/to_be_generated/process_file_data"
 import * as d_sealed from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
-import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file"
@@ -24,19 +22,11 @@ import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manua
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const $$: signatures.query_functions.seal = p.query_function(
-    ($d, $s, $q): pqi.Query_Result<d_process_file_data.Result, d_process_file_data.Error> => {
+export const $$: signatures.query_functions.seal = p_.query_function(
+    ($d, $s, $q): p_qi.Query_Result<d_process_file_data.Result, d_process_file_data.Error> => {
 
-        // const y: Query<d_process_file_data.Result, d_process_file_data.Error, null> = q_load_unmarshalled_file(
-        //     asdf,
-        //     asdfsaf,
-        // )(
-        //     asdfasf,
 
-        //     asdfasfasf
-        // )()
-
-        const foo: pqi.Query_Result<d_get_unmarshalled_file.Result, d_process_file_data.Error> = q_get_unmarshalled_file(
+        const foo: p_qi.Query_Result<d_get_unmarshalled_file.Result, d_process_file_data.Error> = q_get_unmarshalled_file(
             null,
             {
                 'read file': $q['read file'],
@@ -57,13 +47,13 @@ export const $$: signatures.query_functions.seal = p.query_function(
         )
 
 
-        const foo2: pqi.Query_Result<d_sealed.Value_, d_process_file_data.Error> = foo.refine(
+        const foo2: p_qi.Query_Result<d_sealed.Value_, d_process_file_data.Error> = foo.refine(
             ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
-                pt.decide.state($, ($) => {
+                p_t.decide.state($, ($) => {
                     switch ($[0]) {
-                        case 'unconstrained': return pt.ss($, ($) => $.content)
-                        case 'constrained': return pt.ss($, ($) => $.content.unmarshalled)
-                        default: return pt.au($[0])
+                        case 'unconstrained': return p_t.ss($, ($) => $.content)
+                        case 'constrained': return p_t.ss($, ($) => $.content.unmarshalled)
+                        default: return p_t.au($[0])
                     }
                 }),
                 ($) => abort(sh.ph.composed([
@@ -75,7 +65,7 @@ export const $$: signatures.query_functions.seal = p.query_function(
             ),
         )
 
-        const foo3: pqi.Query_Result<d_process_file_data.Result, d_process_file_data.Error> = foo2.transform(
+        const foo3: p_qi.Query_Result<d_process_file_data.Result, d_process_file_data.Error> = foo2.transform(
             ($) => ({
                 'data': p_list_from_text(
                     t_fp_to_text.Paragraph(

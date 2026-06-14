@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -7,8 +7,8 @@ import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/sc
 import * as d_function from "../../../../interface/to_be_generated/resolve_result_from_unmarshall_result"
 import * as d_out from "../../../../interface/to_be_generated/resolve_result"
 
-import p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
-import p_variables from 'pareto-core/dist/_p_variables'
+import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
+import p_variables from 'pareto-core/dist/specials/variables'
 
 export const Document = (
     $: d_in.Document,
@@ -49,9 +49,9 @@ export const Document = (
 //     $: null,
 //     $p: {
 //         definition: d_in_definition.Resolver_Lookup_Selection
-//         'acyclic siblings': pi.Optional_Value<d_function.Acyclic_Siblings>
-//         'cyclic siblings': pi.Optional_Value<d_function.Cyclic_Siblings>
-//         'lookup parameters': pi.Optional_Value<d_function.Lookup_Parameters>
+//         'acyclic siblings': p_di.Optional_Value<d_function.Acyclic_Siblings>
+//         'cyclic siblings': p_di.Optional_Value<d_function.Cyclic_Siblings>
+//         'lookup parameters': p_di.Optional_Value<d_function.Lookup_Parameters>
 //     }
 // ): d_function.Lookup => {
 //     return p_implement_me("!!!!!!!")
@@ -91,10 +91,10 @@ export const Value = (
     $p: {
         'definition': d_in_definition.Resolver_Value,
         'resolver': d_in_definition.Resolver
-        // 'module parameters': pi.Optional_Value<d_function.Module_Parameters>
-        // 'lookup parameters': pi.Optional_Value<d_function.Lookup_Parameters>
-        // 'acyclic siblings': pi.Optional_Value<d_function.Acyclic_Siblings>
-        // 'cyclic siblings': pi.Optional_Value<d_function.Cyclic_Siblings>
+        // 'module parameters': p_di.Optional_Value<d_function.Module_Parameters>
+        // 'lookup parameters': p_di.Optional_Value<d_function.Lookup_Parameters>
+        // 'acyclic siblings': p_di.Optional_Value<d_function.Acyclic_Siblings>
+        // 'cyclic siblings': p_di.Optional_Value<d_function.Cyclic_Siblings>
     }
 ): d_out.Value => {
     return {

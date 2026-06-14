@@ -1,11 +1,11 @@
-import * as pi from 'pareto-core/dist/interface'
-import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
+import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_function from "../../../interface/to_be_generated/seal"
 
-type Signature = pi.Refiner_With_Parameter<d_out.Text, d_function.Error, d_in.Text, d_function.Parameters>
+type Signature = p_ri.Refiner_With_Parameter<d_out.Text, d_function.Error, d_in.Text, d_function.Parameters>
 
 //dependencies
 import * as r_sealed_target_from_loc from "../refiners/astn_sealed_target/list_of_characters"

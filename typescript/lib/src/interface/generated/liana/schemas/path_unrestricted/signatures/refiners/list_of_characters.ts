@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/deserialize"
 
@@ -25,7 +25,7 @@ export namespace Node_Path_ {
 
 export type Node_Path_ = (
     context: Node_Path_.I,
-    abort: _pi.Abort<Node_Path_.E>,
+    abort: p_i.Abort<Node_Path_.E>,
     parameters: {
         readonly 'tab size': Node_Path_.P.tab_size
     },
@@ -49,7 +49,7 @@ export namespace Context_Path_ {
 
 export type Context_Path_ = (
     context: Context_Path_.I,
-    abort: _pi.Abort<Context_Path_.E>,
+    abort: p_i.Abort<Context_Path_.E>,
     parameters: {
         readonly 'tab size': Context_Path_.P.tab_size
     },
@@ -73,7 +73,7 @@ export namespace Context_Subpath_ {
 
 export type Context_Subpath_ = (
     context: Context_Subpath_.I,
-    abort: _pi.Abort<Context_Subpath_.E>,
+    abort: p_i.Abort<Context_Subpath_.E>,
     parameters: {
         readonly 'tab size': Context_Subpath_.P.tab_size
     },
@@ -97,7 +97,7 @@ export namespace Start_ {
 
 export type Start_ = (
     context: Start_.I,
-    abort: _pi.Abort<Start_.E>,
+    abort: p_i.Abort<Start_.E>,
     parameters: {
         readonly 'tab size': Start_.P.tab_size
     },
@@ -121,7 +121,7 @@ export namespace Up_Steps_ {
 
 export type Up_Steps_ = (
     context: Up_Steps_.I,
-    abort: _pi.Abort<Up_Steps_.E>,
+    abort: p_i.Abort<Up_Steps_.E>,
     parameters: {
         readonly 'tab size': Up_Steps_.P.tab_size
     },

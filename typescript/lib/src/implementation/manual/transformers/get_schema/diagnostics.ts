@@ -1,4 +1,4 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 import * as pt from 'pareto-core/dist/assign'
 
 import * as d_in from "../../../../interface/to_be_generated/get_schema"
@@ -9,7 +9,7 @@ import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/ma
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
 
-export const Error: pi.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
+export const Error: p_ti.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
 	return pt.decide.state($.type, ($) => {
 		switch ($[0]) {
 			case 'read file': return pt.ss($, ($): d_out.Diagnostics.L => ({

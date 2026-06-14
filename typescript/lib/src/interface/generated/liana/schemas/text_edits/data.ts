@@ -1,5 +1,6 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as i_imports_location from "../astn_location/data"
 
@@ -52,7 +53,7 @@ export namespace Text_Edits_ {
     
 }
 
-export type Text_Edits_ = _pi.List<Text_Edits_.L>
+export type Text_Edits_ = p_di.List<Text_Edits_.L>
 
 export { 
     Text_Edits_ as Text_Edits, 

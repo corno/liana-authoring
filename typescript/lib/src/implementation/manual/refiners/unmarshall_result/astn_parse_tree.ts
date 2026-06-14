@@ -1,7 +1,9 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
+
+import * as p_di from 'pareto-core/dist/data/interface'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
-import p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
+import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
 import p_create_refinement_context from 'pareto-core/dist/__internals/async/create_refinement_context'
 
 //data types
@@ -14,19 +16,19 @@ import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/sc
 import * as t_parse_tree_to_full_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 import * as t_parse_tree_to_start_token_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-export type Document = pi.Refiner_Without_Error_With_Parameter<
+export type Document = p_ri.Refiner_Without_Error_With_Parameter<
     d_out.Document,
     d_in.Document,
     d_function.Parameters
 >
 
-export type Value = pi.Refiner_Without_Error_With_Parameter<
+export type Value = p_ri.Refiner_Without_Error_With_Parameter<
     d_out.Value,
     d_in.Value,
     {
         'definition': d_in_definition.Value
         'property path': d_out.Property_Path
-        'parent range stack': pi.Optional_Value<d_out.Range_Stack>
+        'parent range stack': p_di.Optional_Value<d_out.Range_Stack>
     }
 >
 
@@ -318,7 +320,7 @@ export const Value: Value = ($, $p) => {
                                                             const instance_lookup = pt.dictionary.from.list(
                                                                 pt.list.from.list(
                                                                     $.properties
-                                                                ).map_optionally(($) => pt.decide.state($['definition found'], ($): pi.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
+                                                                ).map_optionally(($) => pt.decide.state($['definition found'], ($): p_di.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
                                                                     switch ($[0]) {
                                                                         case 'no': return pt.ss($, ($) => pt.optional.literal.not_set())
                                                                         case 'yes': return pt.ss($, ($) => pt.optional.literal.set($))

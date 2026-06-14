@@ -1,6 +1,7 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/assign'
-import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
+import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -11,12 +12,12 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 //dependencies
 import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
-export type Document = pi.Transformer<
+export type Document = p_ti.Transformer<
     d_in.Document,
     d_out.Links
 >
 
-export type Value = pi.Transformer<
+export type Value = p_ti.Transformer<
     d_in.Value,
     d_out.Links
 >

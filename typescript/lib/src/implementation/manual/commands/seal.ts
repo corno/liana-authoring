@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/dist/command'
+import * as p_ from 'pareto-core/dist/command/implementation'
 
 import * as signatures from "../../../interface/commands"
 
@@ -6,16 +6,13 @@ import * as signatures from "../../../interface/commands"
 import * as d_main from "pareto-resources/dist/interface/to_be_generated/temp_main"
 
 //dependencies
-import * as c_file_to_file from "../../../modules/common_tool_signatures/implementation/manual/commands/file_to_file"
+import * as c_file_to_file from "pareto-common/dist/implementation/manual/commands/file_to_file"
 import * as q_seal from "../queries/seal"
 
-export const $$: signatures.commands.seal = p_.command_procedure(
+export const $$: signatures.procedures.seal = p_.command_procedure(
     ($d, $s, $q, $c) => [
         c_file_to_file.$$(
-            {
-                'indentation': "    ",
-                'newline': "\n"
-            },
+            null,
             {
                 'read file': $q['read file'],
                 'process data': q_seal.$$(

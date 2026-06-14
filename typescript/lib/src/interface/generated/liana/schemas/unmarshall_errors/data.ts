@@ -1,5 +1,7 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
+
 
 import * as i_imports_location from "../astn_location/data"
 
@@ -46,7 +48,7 @@ export namespace Errors_ {
                         
                     }
                     
-                    export type expected = _pi.List<expected.L>
+                    export type expected = p_di.List<expected.L>
                     
                 }
                 
@@ -119,7 +121,7 @@ export namespace Errors_ {
                         
                     }
                     
-                    export type name = _pi.Optional_Value<name.O>
+                    export type name = p_di.Optional_Value<name.O>
                     
                 }
                 
@@ -155,7 +157,7 @@ export namespace Errors_ {
                         
                     }
                     
-                    export type expected = _pi.Dictionary<expected.D>
+                    export type expected = p_di.Dictionary<expected.D>
                     
                 }
                 
@@ -193,7 +195,7 @@ export namespace Errors_ {
     
 }
 
-export type Errors_ = _pi.List<Errors_.L>
+export type Errors_ = p_di.List<Errors_.L>
 
 export namespace Warnings_ {
     
@@ -231,7 +233,7 @@ export namespace Warnings_ {
     
 }
 
-export type Warnings_ = _pi.List<Warnings_.L>
+export type Warnings_ = p_di.List<Warnings_.L>
 
 export { 
     Errors_ as Errors, 

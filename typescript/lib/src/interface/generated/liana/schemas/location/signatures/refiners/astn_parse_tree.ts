@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/interface'
 
 import * as i_generic from "liana-core/dist/interface/to_be_generated/unmarshall"
 
@@ -23,7 +23,7 @@ export namespace Position_ {
 
 export type Position_ = (
     context: Position_.I,
-    abort: _pi.Abort<Position_.E>,
+    abort: p_i.Abort<Position_.E>,
 ) => Position_.O
 
 export namespace Range_FE_ {
@@ -42,7 +42,7 @@ export namespace Range_FE_ {
 
 export type Range_FE_ = (
     context: Range_FE_.I,
-    abort: _pi.Abort<Range_FE_.E>,
+    abort: p_i.Abort<Range_FE_.E>,
 ) => Range_FE_.O
 
 export { 

@@ -1,6 +1,6 @@
-import * as pq from 'pareto-core/dist/query'
+import * as pq from 'pareto-core/dist/query/implementation'
 import * as pa from 'pareto-core/dist/assign'
-import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
+import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 import * as signatures from "../../../interface/queries"
 
