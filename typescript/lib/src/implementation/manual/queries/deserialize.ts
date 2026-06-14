@@ -11,7 +11,7 @@ import * as d from "../../../interface/to_be_generated/deserialize"
 import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters"
 import * as r_resolve_result_from_unmarshall_result from "../refiners/resolve_result/unmarshall_result"
 
-export const $$: signatures.queries.deserialize = pq.query_function(
+export const $$: signatures.query_functions.deserialize = pq.query_function(
     ($d, $s, $q) => $q['get schema path'](
         {
             'context path': $d['file path'].context,

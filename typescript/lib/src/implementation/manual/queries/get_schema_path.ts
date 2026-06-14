@@ -11,7 +11,7 @@ import * as d from "../../../interface/to_be_generated/get_schema_path"
 import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/unrestricted_path"
 
 
-export const $$: signatures.queries.get_schema_path = pt.query_function(
+export const $$: signatures.query_functions.get_schema_path = pt.query_function(
     ($d, $s, $q) => p_variables(() => {
         const schema_path = t_path_to_path.create_node_path(
             t_path_to_path.extend_context_path_with_single_step(

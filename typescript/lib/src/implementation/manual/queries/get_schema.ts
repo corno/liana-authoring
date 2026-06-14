@@ -10,7 +10,7 @@ import * as d from "../../../interface/to_be_generated/get_schema"
 //depencencies
 import * as r_temp_module_specifier_from_loc from "pareto-liana/dist/implementation/manual/refiners/temp_module_specifier/list_of_characters"
 
-export const $$: signatures.queries.get_schema = pt.query_function(
+export const $$: signatures.query_functions.get_schema = pt.query_function(
     ($d, $s, $q) => p_variables(() => {
 
         return $q['read file'](

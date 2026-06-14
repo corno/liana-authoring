@@ -24,7 +24,7 @@ import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manua
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const $$: signatures.queries.seal = p.query_function(
+export const $$: signatures.query_functions.seal = p.query_function(
     ($d, $s, $q): pqi.Query_Result<d_process_file_data.Result, d_process_file_data.Error> => {
 
         // const y: Query<d_process_file_data.Result, d_process_file_data.Error, null> = q_load_unmarshalled_file(

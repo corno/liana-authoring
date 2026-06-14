@@ -1,5 +1,5 @@
-import * as pt from 'pareto-core/dist/assign'
 import * as pi from 'pareto-core/dist/interface'
+import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
@@ -10,7 +10,6 @@ type Signature = pi.Refiner_With_Parameter<d_out.Text, d_function.Error, d_in.Te
 //dependencies
 import * as r_sealed_target_from_loc from "../refiners/astn_sealed_target/list_of_characters"
 import * as t_sealed_target_to_text from "astn-core/dist/implementation/manual/transformers/sealed_target/text"
-import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
 
 export const $$: Signature = ($, abort, $p) => t_sealed_target_to_text.Document(
