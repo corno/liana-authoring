@@ -1,6 +1,7 @@
 import * as p_ from 'pareto-core/dist/implementation/query'
 import * as p_temp from 'pareto-core/dist/implementation/refiner'
 import p_variables from 'pareto-core/dist/implementation/specials/variables'
+import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
 
 import * as signatures from "../../../interface/queries"
 
@@ -20,10 +21,10 @@ export const $$: signatures.query_functions.get_schema_path = p_.query_function(
             ),
             { 'node': "schema.slna" }
         )
-        return $q['stat'](
+        return p_super_query_result($q['stat'](
             schema_path,
             ($): d.Error => ['stat error', $]
-        ).refine(
+        )).refine(
             ($, abort) => p_temp.decide.state($, ($) => {
                 switch ($[0]) {
                     case 'does not exist': return p_temp.ss($, ($) => abort(['not found', null]))

@@ -1,6 +1,7 @@
 import * as p_ from 'pareto-core/dist/implementation/query'
 import * as p_temp from 'pareto-core/dist/implementation/transformer'
 import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
+import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
 
 import * as signatures from "../../../interface/queries"
 
@@ -46,7 +47,7 @@ export const $$: signatures.query_functions.seal = p_.query_function(
         )
 
 
-        const foo2: p_.Query_Result<d_sealed.Value_, d_process_file_data.Error> = foo.refine(
+        const foo2: p_.Super_Query_Result<d_sealed.Value_, d_process_file_data.Error> = p_super_query_result(foo).refine(
             ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
                 p_temp.decide.state($, ($) => {
                     switch ($[0]) {

@@ -1,6 +1,7 @@
 import * as p_ from 'pareto-core/dist/implementation/query'
 import * as p_r from 'pareto-core/dist/implementation/refiner'
 import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
+import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
 
 import * as signatures from "../../../interface/queries"
 
@@ -12,12 +13,12 @@ import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/lis
 import * as r_resolve_result_from_unmarshall_result from "../refiners/resolve_result/unmarshall_result"
 
 export const $$: signatures.query_functions.deserialize = p_.query_function(
-    ($d, $s, $q) => $q['get schema path'](
+    ($d, $s, $q) =>  p_super_query_result( $q['get schema path'](
         {
             'context path': $d['file path'].context,
         },
         ($): d.Error => ['schema path', $]
-    ).query(
+    )).query(
         ($v) => $q['get schema'](
             {
                 'schema path': $v,
