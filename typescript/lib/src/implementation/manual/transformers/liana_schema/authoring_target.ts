@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/assign'
+import * as pt from 'pareto-core/dist/transformer/implementation'
 
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"

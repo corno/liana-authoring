@@ -1,5 +1,5 @@
 import * as p_ti from 'pareto-core/dist/transformer/interface'
-import * as pt from 'pareto-core/dist/assign'
+import * as pt from 'pareto-core/dist/transformer/implementation'
 
 import * as d_in from "../../../../interface/to_be_generated/get_schema"
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
