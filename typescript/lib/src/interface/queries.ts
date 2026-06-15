@@ -6,10 +6,10 @@ import * as queries_common from "pareto-common/dist/interface/queries"
 
 //data types
 import * as d_serialize_prose from "pareto-fountain-pen/dist/interface/to_be_generated/prose_serialize"
-import * as d_get_unmarshalled_file from "./to_be_generated/get_unmarshalled_file"
-import * as d_deserialize from "./to_be_generated/deserialize"
-import * as d_get_schema_path from "./to_be_generated/get_schema_path"
-import * as d_get_schema from "./to_be_generated/get_schema"
+import * as d_get_unmarshalled_file from "./data/get_unmarshalled_file"
+import * as d_deserialize from "./data/deserialize"
+import * as d_get_schema_path from "./data/get_schema_path"
+import * as d_get_schema from "./data/get_schema"
 
 
 export namespace queries {

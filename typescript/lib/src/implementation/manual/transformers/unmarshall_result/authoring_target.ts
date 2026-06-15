@@ -2,10 +2,10 @@ import * as pt from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
+import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_in_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
-import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_to_authoring_target"
+import * as d_function from "../../../../interface/data/unmarshall_result_to_authoring_target"
 
 //dependencies
 import * as t_parse_tree_to_authoring_target from "astn/dist/implementation/manual/transformers/parse_tree/authoring_target"

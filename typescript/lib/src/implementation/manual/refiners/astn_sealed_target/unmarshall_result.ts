@@ -2,10 +2,10 @@ import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_i from 'pareto-core/dist/interface/refiner'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
+import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
 import * as d_in_astn_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-import * as d_function from "../../../../interface/to_be_generated/sealed_target_from_unmarshall_result"
+import * as d_function from "../../../../interface/data/sealed_target_from_unmarshall_result"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"

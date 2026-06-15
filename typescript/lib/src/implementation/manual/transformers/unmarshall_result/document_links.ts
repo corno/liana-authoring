@@ -2,8 +2,8 @@ import * as pt from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
-import * as d_out from "../../../../interface/to_be_generated/document_links"
+import * as d_in from "../../../../interface/data/unmarshall_result"
+import * as d_out from "../../../../interface/data/document_links"
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 

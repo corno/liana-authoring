@@ -2,11 +2,11 @@ import * as pt from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
-import * as d_out from "../../../../interface/to_be_generated/formatting_edits"
+import * as d_in from "../../../../interface/data/unmarshall_result"
+import * as d_out from "../../../../interface/data/formatting_edits"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_outx from "../../../../interface/to_be_generated/found"
-import * as d_function_parameters from "../../../../interface/to_be_generated/unmarshall_result_to_authoring_target"
+import * as d_outx from "../../../../interface/data/found"
+import * as d_function_parameters from "../../../../interface/data/unmarshall_result_to_authoring_target"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found"

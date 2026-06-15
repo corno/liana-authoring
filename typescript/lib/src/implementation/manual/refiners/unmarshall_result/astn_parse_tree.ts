@@ -8,8 +8,8 @@ import p_create_refinement_context from 'pareto-core/dist/implementation/__inter
 
 //data types
 import * as d_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "../../../../interface/to_be_generated/unmarshall_result"
-import * as d_function from "../../../../interface/to_be_generated/unmarshall_result_from_astn_parse_tree"
+import * as d_out from "../../../../interface/data/unmarshall_result"
+import * as d_function from "../../../../interface/data/unmarshall_result_from_astn_parse_tree"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 
 //dependencies

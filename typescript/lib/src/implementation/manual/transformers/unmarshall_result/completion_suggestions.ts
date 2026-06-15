@@ -4,14 +4,14 @@ import p_change_context from 'pareto-core/dist/implementation/specials/change_co
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
+import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data"
 
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_ast_target from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out_text_edits from "../../../../interface/generated/liana/schemas/text_edits/data"
-import * as d_outx from "../../../../interface/to_be_generated/found"
+import * as d_outx from "../../../../interface/data/found"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found"

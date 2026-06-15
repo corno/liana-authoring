@@ -5,7 +5,7 @@ import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from
 import * as signatures from "../../../interface/queries"
 
 //data  types
-import * as d_get_unmarshalled_file from "../../../interface/to_be_generated/get_unmarshalled_file"
+import * as d_get_unmarshalled_file from "../../../interface/data/get_unmarshalled_file"
 import * as d_process_file_data from "pareto-common/dist/interface/to_be_generated/process_file_data"
 import * as d_sealed from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
 

@@ -5,7 +5,7 @@ import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from
 import * as signatures from "../../../interface/queries"
 
 //data types
-import * as d from "../../../interface/to_be_generated/deserialize"
+import * as d from "../../../interface/data/deserialize"
 
 //depencencies
 import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters"

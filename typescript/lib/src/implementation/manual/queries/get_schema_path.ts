@@ -5,7 +5,7 @@ import p_variables from 'pareto-core/dist/implementation/specials/variables'
 import * as signatures from "../../../interface/queries"
 
 //data types
-import * as d from "../../../interface/to_be_generated/get_schema_path"
+import * as d from "../../../interface/data/get_schema_path"
 
 //depencencies
 import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/unrestricted_path"

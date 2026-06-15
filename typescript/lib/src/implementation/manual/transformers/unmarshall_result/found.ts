@@ -3,10 +3,10 @@ import * as pt from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
+import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_astn_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
-import * as d_out from "../../../../interface/to_be_generated/found"
+import * as d_out from "../../../../interface/data/found"
 
 // import { $$ as op_expect_1_element } from "pareto-standard-operations/dist/implementation/operations/impure/list/expect_exactly_one_element"
 
