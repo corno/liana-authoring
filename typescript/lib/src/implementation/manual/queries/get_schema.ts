@@ -1,5 +1,5 @@
-import * as p_ from 'pareto-core/dist/query/implementation'
-import p_variables from 'pareto-core/dist/specials/variables'
+import * as p_ from 'pareto-core/dist/implementation/query'
+import p_variables from 'pareto-core/dist/implementation/specials/variables'
 
 import * as signatures from "../../../interface/queries"
 

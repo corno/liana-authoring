@@ -1,12 +1,11 @@
-import * as pt from 'pareto-core/dist/assign'
-import * as p_ri from 'pareto-core/dist/refiner/interface'
+import * as p_i from 'pareto-core/dist/interface/refiner'
 
 import * as d_function from "../../../interface/generated/liana/schemas/convert_to_json/data"
 import * as d_function_deserialize_parse_tree from "astn-core/dist/interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 
-type Signature = p_ri.Refiner_With_Parameter<d_out.Text, d_function_deserialize_parse_tree.Error, d_in.Text, d_function.Parameters>
+type Signature = p_i.Refiner_With_Parameter<d_out.Text, d_function_deserialize_parse_tree.Error, d_in.Text, d_function.Parameters>
 
 //dependencies
 import * as t_ast_2_json from "astn/dist/implementation/manual/transformers/parse_tree/json_target"

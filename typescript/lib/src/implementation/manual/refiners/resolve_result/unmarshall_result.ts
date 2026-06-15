@@ -1,12 +1,13 @@
-import * as pt from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/refiner'
+import * as p_temp from 'pareto-core/dist/assign'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_out from "../../../../interface/to_be_generated/resolve_result"
 
-import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
-import p_variables from 'pareto-core/dist/specials/variables'
+import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
+import p_variables from 'pareto-core/dist/implementation/specials/variables'
 
 export const Document = (
     $: d_in.Document,
@@ -98,32 +99,32 @@ export const Value = (
     return {
         'definition': $p.definition,
         'unmarshalled': $,
-        'unmarshall result': pt.decide.state($['unmarshall result'], ($): d_out.Value_Unmarshall_Result => {
+        'unmarshall result': p_.decide.state($['unmarshall result'], ($): d_out.Value_Unmarshall_Result => {
             switch ($[0]) {
-                case 'error': return pt.ss($, ($) => ['error', $])
-                case 'success': return pt.ss($, ($) => {
+                case 'error': return p_.ss($, ($) => ['error', $])
+                case 'success': return p_.ss($, ($) => {
                     const unmarshalled_value = $
-                    return ['success', pt.decide.state($p.definition, ($): d_out.Resolved_Value_Type => {
+                    return ['success', p_.decide.state($p.definition, ($): d_out.Resolved_Value_Type => {
                         switch ($[0]) {
-                            case 'component': return pt.ss($, ($) => {
+                            case 'component': return p_.ss($, ($) => {
                                 const def = $
-                                return ['component', pt.decide.state(unmarshalled_value, ($) => {
+                                return ['component', p_.decide.state(unmarshalled_value, ($) => {
                                     switch ($[0]) {
-                                        case 'component': return pt.ss($, ($) => ({
+                                        case 'component': return p_.ss($, ($) => ({
                                             'unmarshalled': $,
                                             'value': Value(
                                                 $.value,
                                                 {
-                                                    'definition': pt.decide.state(def.location, ($) => {
+                                                    'definition': p_.decide.state(def.location, ($) => {
                                                         switch ($[0]) {
-                                                            case 'external': return pt.ss($, ($) => p_implement_me("external component"))
-                                                            case 'internal': return pt.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
+                                                            case 'external': return p_.ss($, ($) => p_implement_me("external component"))
+                                                            case 'internal': return p_.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
                                                                 $['l id'],
                                                                 {
                                                                     'no_such_entry': () => p_unreachable_code_path("for every signature, there must be a resolver implemented")
                                                                 }
                                                             )['root value resolver'])
-                                                            default: return pt.au($[0])
+                                                            default: return p_.au($[0])
                                                         }
                                                     }),
                                                     'resolver': $p.resolver,
@@ -190,20 +191,20 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'dictionary': return pt.ss($, ($) => {
+                            case 'dictionary': return p_.ss($, ($) => {
                                 const def = $
-                                return ['dictionary', pt.decide.state(unmarshalled_value, ($): d_out.Dictionary => {
+                                return ['dictionary', p_.decide.state(unmarshalled_value, ($): d_out.Dictionary => {
                                     switch ($[0]) {
-                                        case 'dictionary': return pt.ss($, ($): d_out.Dictionary => ({
+                                        case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
                                             'unmarshalled': $,
-                                            'entries': pt.dictionary.from.dictionary(
+                                            'entries': p_temp.dictionary.from.dictionary(
                                                 $.derived.entries,
                                             ).resolve_dynamic(($, id, $al, $cl): d_out.Entry => ({
-                                                'unmarshall result': pt.decide.state($.result, ($): d_out.Entry['unmarshall result'] => {
+                                                'unmarshall result': p_.decide.state($.result, ($): d_out.Entry['unmarshall result'] => {
                                                     switch ($[0]) {
-                                                        case 'success': return pt.ss($, ($) => pt.decide.state($.value, ($) => {
+                                                        case 'success': return p_.ss($, ($) => p_.decide.state($.value, ($) => {
                                                             switch ($[0]) {
-                                                                case 'set': return pt.ss($, ($) => ['success', {
+                                                                case 'set': return p_.ss($, ($) => ['success', {
                                                                     'value': ['set', Value(
                                                                         $,
                                                                         {
@@ -216,14 +217,14 @@ export const Value = (
                                                                         }
                                                                     )]
                                                                 }])
-                                                                case 'not set': return pt.ss($, ($) => ['success', {
+                                                                case 'not set': return p_.ss($, ($) => ['success', {
                                                                     'value': ['not set', null]
                                                                 }])
-                                                                default: return pt.au($[0])
+                                                                default: return p_.au($[0])
                                                             }
                                                         }))
-                                                        case 'error': return pt.ss($, ($) => ['error', null])
-                                                        default: return pt.au($[0])
+                                                        case 'error': return p_.ss($, ($) => ['error', null])
+                                                        default: return p_.au($[0])
                                                     }
                                                 })
                                             }))
@@ -232,15 +233,15 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'group': return pt.ss($, ($) => {
+                            case 'group': return p_.ss($, ($) => {
                                 const def = $
-                                return ['group', pt.decide.state(unmarshalled_value, ($): d_out.Group => {
+                                return ['group', p_.decide.state(unmarshalled_value, ($): d_out.Group => {
                                     switch ($[0]) {
-                                        case 'group': return pt.ss($, ($): d_out.Group => ({
+                                        case 'group': return p_.ss($, ($): d_out.Group => ({
                                             'unmarshalled': $,
                                             'properties': p_variables(() => {
-                                                return pt.dictionary.from.dictionary(
-                                                    pt.dictionary.from.dictionary(
+                                                return p_temp.dictionary.from.dictionary(
+                                                    p_temp.dictionary.from.dictionary(
                                                         def
                                                     ).join(
                                                         $.derived.properties,
@@ -254,9 +255,9 @@ export const Value = (
                                                 ).resolve_dynamic(($, id, $al, $cl) => {
                                                     const resolver = $.definition
                                                     return $.unmarshalled.__decide(
-                                                        ($) => pt.decide.state($.result, ($): d_out.Property => {
+                                                        ($) => p_.decide.state($.result, ($): d_out.Property => {
                                                             switch ($[0]) {
-                                                                case 'success': return pt.ss($, ($): d_out.Property => ({
+                                                                case 'success': return p_.ss($, ($): d_out.Property => ({
                                                                     'unmarshall result': ['success', {
                                                                         'definition': resolver,
                                                                         'resolved': Value(
@@ -272,10 +273,10 @@ export const Value = (
                                                                         )
                                                                     }]
                                                                 }))
-                                                                case 'error': return pt.ss($, ($): d_out.Property => ({
+                                                                case 'error': return p_.ss($, ($): d_out.Property => ({
                                                                     'unmarshall result': ['error', $]
                                                                 }))
-                                                                default: return pt.au($[0])
+                                                                default: return p_.au($[0])
                                                             }
                                                         }),
                                                         () => p_unreachable_code_path("both dictionaries are driven by the definitions in the schema")
@@ -288,11 +289,11 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'list': return pt.ss($, ($) => {
+                            case 'list': return p_.ss($, ($) => {
                                 const def = $
-                                return ['list', pt.decide.state(unmarshalled_value, ($): d_out.List => {
+                                return ['list', p_.decide.state(unmarshalled_value, ($): d_out.List => {
                                     switch ($[0]) {
-                                        case 'list': return pt.ss($, ($): d_out.List => ({
+                                        case 'list': return p_.ss($, ($): d_out.List => ({
                                             'unmarshalled': $,
                                             'items': $.derived.items.__l_map(($) => Value(
                                                 $,
@@ -310,27 +311,27 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'nothing': return pt.ss($, ($) => ['nothing', pt.decide.state(unmarshalled_value, ($) => {
+                            case 'nothing': return p_.ss($, ($) => ['nothing', p_.decide.state(unmarshalled_value, ($) => {
                                 switch ($[0]) {
-                                    case 'nothing': return pt.ss($, ($) => $)
+                                    case 'nothing': return p_.ss($, ($) => $)
                                     default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                 }
                             })])
-                            case 'simple': return pt.ss($, ($) => ['simple', pt.decide.state(unmarshalled_value, ($) => {
+                            case 'simple': return p_.ss($, ($) => ['simple', p_.decide.state(unmarshalled_value, ($) => {
                                 switch ($[0]) {
-                                    case 'simple': return pt.ss($, ($) => $)
+                                    case 'simple': return p_.ss($, ($) => $)
                                     default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                 }
                             })])
-                            case 'optional': return pt.ss($, ($) => {
+                            case 'optional': return p_.ss($, ($) => {
                                 const def = $
-                                return ['optional', pt.decide.state(unmarshalled_value, ($): d_out.Optional => {
+                                return ['optional', p_.decide.state(unmarshalled_value, ($): d_out.Optional => {
                                     switch ($[0]) {
-                                        case 'optional': return pt.ss($, ($): d_out.Optional => ({
+                                        case 'optional': return p_.ss($, ($): d_out.Optional => ({
                                             'unmarshalled': $,
-                                            'status': pt.decide.state($.derived.status, ($) => {
+                                            'status': p_.decide.state($.derived.status, ($) => {
                                                 switch ($[0]) {
-                                                    case 'set': return pt.ss($, ($) => ['set', {
+                                                    case 'set': return p_.ss($, ($) => ['set', {
                                                         'child value': Value(
                                                             $['child value'],
                                                             {
@@ -343,8 +344,8 @@ export const Value = (
                                                             }
                                                         )
                                                     }])
-                                                    case 'not set': return pt.ss($, ($) => ['not set', null])
-                                                    default: return pt.au($[0])
+                                                    case 'not set': return p_.ss($, ($) => ['not set', null])
+                                                    default: return p_.au($[0])
                                                 }
 
                                             }),
@@ -353,17 +354,17 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'reference': return pt.ss($, ($) => {
+                            case 'reference': return p_.ss($, ($) => {
                                 const def = $
-                                return ['reference', pt.decide.state(def.type, ($): d_out.Reference => {
+                                return ['reference', p_.decide.state(def.type, ($): d_out.Reference => {
                                     switch ($[0]) {
-                                        case 'derived': return pt.ss($, ($) => ['derived', null])
-                                        case 'selected': return pt.ss($, ($) => {
-                                            const unmarshalled = pt.decide.state(unmarshalled_value, ($) => {
+                                        case 'derived': return p_.ss($, ($) => ['derived', null])
+                                        case 'selected': return p_.ss($, ($) => {
+                                            const unmarshalled = p_.decide.state(unmarshalled_value, ($) => {
                                                 switch ($[0]) {
-                                                    case 'reference': return pt.ss($, ($) => pt.decide.state($.type, ($) => {
+                                                    case 'reference': return p_.ss($, ($) => p_.decide.state($.type, ($) => {
                                                         switch ($[0]) {
-                                                            case 'selected': return pt.ss($, ($) => $)
+                                                            case 'selected': return p_.ss($, ($) => $)
                                                             default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                                         }
                                                     }))
@@ -390,19 +391,19 @@ export const Value = (
                                                 'resolve status': ['to be implemented', null]
                                             }]
                                         })
-                                        default: return pt.au($[0])
+                                        default: return p_.au($[0])
                                     }
                                 })]
                             })
-                            case 'state': return pt.ss($, ($) => {
+                            case 'state': return p_.ss($, ($) => {
                                 const def = $
-                                return ['state', pt.decide.state(unmarshalled_value, ($) => {
+                                return ['state', p_.decide.state(unmarshalled_value, ($) => {
                                     switch ($[0]) {
-                                        case 'state': return pt.ss($, ($) => ({
+                                        case 'state': return p_.ss($, ($) => ({
                                             'unmarshalled': $,
-                                            'option': pt.decide.state($.derived['option status'], ($) => {
+                                            'option': p_.decide.state($.derived['option status'], ($) => {
                                                 switch ($[0]) {
-                                                    case 'set': return pt.ss($, ($) => pt.literal.set(Value(
+                                                    case 'set': return p_.ss($, ($) => p_.literal.set(Value(
                                                         $.value,
                                                         {
                                                             'definition': def.options.__get_entry_deprecated(
@@ -418,8 +419,8 @@ export const Value = (
                                                             // 'cyclic siblings': $p['cyclic siblings'],
                                                         }
                                                     )))
-                                                    case 'missing data': return pt.ss($, ($) => pt.literal.not_set())
-                                                    default: return pt.au($[0])
+                                                    case 'missing data': return p_.ss($, ($) => p_.literal.not_set())
+                                                    default: return p_.au($[0])
                                                 }
                                             })
                                         }))
@@ -427,17 +428,17 @@ export const Value = (
                                     }
                                 })]
                             })
-                            case 'text': return pt.ss($, ($) => ['text', pt.decide.state(unmarshalled_value, ($) => {
+                            case 'text': return p_.ss($, ($) => ['text', p_.decide.state(unmarshalled_value, ($) => {
                                 switch ($[0]) {
-                                    case 'text': return pt.ss($, ($) => $)
+                                    case 'text': return p_.ss($, ($) => $)
                                     default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                 }
                             })])
-                            default: return pt.au($[0])
+                            default: return p_.au($[0])
                         }
                     })]
                 })
-                default: return pt.au($[0])
+                default: return p_.au($[0])
             }
         })
     }

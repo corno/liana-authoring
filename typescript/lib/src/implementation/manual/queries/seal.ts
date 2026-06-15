@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/dist/query/implementation'
-import * as p_t from 'pareto-core/dist/assign'
-import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
+import * as p_ from 'pareto-core/dist/implementation/query'
+import * as p_temp from 'pareto-core/dist/implementation/transformer'
+import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
 
 import * as signatures from "../../../interface/queries"
 
@@ -48,11 +48,11 @@ export const $$: signatures.query_functions.seal = p_.query_function(
 
         const foo2: p_.Query_Result<d_sealed.Value_, d_process_file_data.Error> = foo.refine(
             ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
-                p_t.decide.state($, ($) => {
+                p_temp.decide.state($, ($) => {
                     switch ($[0]) {
-                        case 'unconstrained': return p_t.ss($, ($) => $.content)
-                        case 'constrained': return p_t.ss($, ($) => $.content.unmarshalled)
-                        default: return p_t.au($[0])
+                        case 'unconstrained': return p_temp.ss($, ($) => $.content)
+                        case 'constrained': return p_temp.ss($, ($) => $.content.unmarshalled)
+                        default: return p_temp.au($[0])
                     }
                 }),
                 ($) => abort(sh.ph.composed([

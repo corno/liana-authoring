@@ -1,5 +1,5 @@
 
-import * as p_i from 'pareto-core/dist/__internals/Abort'
+import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
 
 import * as i_imports_path_unrestricted from "../path_unrestricted/data"
 

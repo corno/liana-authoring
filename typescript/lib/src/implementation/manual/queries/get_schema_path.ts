@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/dist/query/implementation'
-import * as p_t from 'pareto-core/dist/assign'
-import p_variables from 'pareto-core/dist/specials/variables'
+import * as p_ from 'pareto-core/dist/implementation/query'
+import * as p_temp from 'pareto-core/dist/implementation/refiner'
+import p_variables from 'pareto-core/dist/implementation/specials/variables'
 
 import * as signatures from "../../../interface/queries"
 
@@ -24,12 +24,12 @@ export const $$: signatures.query_functions.get_schema_path = p_.query_function(
             schema_path,
             ($): d.Error => ['stat error', $]
         ).refine(
-            ($, abort) => p_t.decide.state($, ($) => {
+            ($, abort) => p_temp.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'does not exist': return p_t.ss($, ($) => abort(['not found', null]))
-                    case 'file': return p_t.ss($, ($) => schema_path)
-                    case 'directory': return p_t.ss($, ($) => abort(['not found', null]))
-                    default: return p_t.au($[0])
+                    case 'does not exist': return p_temp.ss($, ($) => abort(['not found', null]))
+                    case 'file': return p_temp.ss($, ($) => schema_path)
+                    case 'directory': return p_temp.ss($, ($) => abort(['not found', null]))
+                    default: return p_temp.au($[0])
                 }
             })
         )

@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/transformer/implementation'
+import * as pt from 'pareto-core/dist/implementation/transformer'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/unmarshall_errors/data"

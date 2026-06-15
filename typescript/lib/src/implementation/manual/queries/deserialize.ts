@@ -1,6 +1,6 @@
-import * as pq from 'pareto-core/dist/query/implementation'
-import * as pa from 'pareto-core/dist/assign'
-import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
+import * as p_ from 'pareto-core/dist/implementation/query'
+import * as p_r from 'pareto-core/dist/implementation/refiner'
+import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
 
 import * as signatures from "../../../interface/queries"
 
@@ -11,7 +11,7 @@ import * as d from "../../../interface/to_be_generated/deserialize"
 import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters"
 import * as r_resolve_result_from_unmarshall_result from "../refiners/resolve_result/unmarshall_result"
 
-export const $$: signatures.query_functions.deserialize = pq.query_function(
+export const $$: signatures.query_functions.deserialize = p_.query_function(
     ($d, $s, $q) => $q['get schema path'](
         {
             'context path': $d['file path'].context,
@@ -29,9 +29,9 @@ export const $$: signatures.query_functions.deserialize = pq.query_function(
             }]
         )
     ).refine(
-        ($v, abort) => pa.decide.state($v, ($) => {
+        ($v, abort) => p_r.decide.state($v, ($) => {
             switch ($[0]) {
-                case 'constrained': return pa.ss($, ($): d.Result => ['constrained', r_resolve_result_from_unmarshall_result.Document(
+                case 'constrained': return p_r.ss($, ($): d.Result => ['constrained', r_resolve_result_from_unmarshall_result.Document(
                     r_unmarshall_result_from_loc.Document(
                         p_list_from_text(
                             $d.content,
@@ -48,7 +48,7 @@ export const $$: signatures.query_functions.deserialize = pq.query_function(
                         'resolvers': $.resolver
                     }
                 )])
-                case 'unconstrained': return pa.ss($, ($) => ['unconstrained', r_unmarshall_result_from_loc.Document(
+                case 'unconstrained': return p_r.ss($, ($) => ['unconstrained', r_unmarshall_result_from_loc.Document(
                     p_list_from_text(
                         $d.content,
                         ($) => $
@@ -59,7 +59,7 @@ export const $$: signatures.query_functions.deserialize = pq.query_function(
                         'tab size': $d['tab size'],
                     }
                 )])
-                default: return pa.au($[0])
+                default: return p_r.au($[0])
             }
         })
     )

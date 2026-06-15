@@ -1,6 +1,6 @@
 
-import * as p_i from 'pareto-core/dist/__internals/Abort'
-import * as p_di from 'pareto-core/dist/data/interface'
+import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_di from 'pareto-core/dist/interface/data'
 
 import * as i_imports_location from "../location/data"
 
