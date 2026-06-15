@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -27,148 +27,148 @@ export const Document: Document = ($) => {
 
 export const Value: Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
-    return pt.decide.state($['unmarshall result'], ($) => {
+    return p_.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'error': return pt.ss($, ($) => pt.literal.list([
+            case 'error': return p_.ss($, ($) => p_.literal.list([
             ]))
-            case 'success': return pt.ss($, ($) => pt.decide.state($, ($): d_out.Warnings => {
+            case 'success': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Warnings => {
                 switch ($[0]) {
-                    case 'dictionary': return pt.ss($, ($) => pt.list.from.list(
+                    case 'dictionary': return p_.ss($, ($) => p_.list.from.list(
                         $.intermediate['entries as list'],
                     ).flatten(
                         ($) => $.intermediate['id value pair'].id.token.type[0] !== 'apostrophed'
-                            ? pt.literal.list([
+                            ? p_.literal.list([
                                 {
                                     'range': $.intermediate['id value pair'].id.range,
                                     'type': ['expected apostrophed text', null]
                                 }
                             ])
-                            : pt.decide.state($.value, ($) => {
+                            : p_.decide.state($.value, ($) => {
                                 switch ($[0]) {
-                                    case 'set': return pt.ss($, ($) => Value($))
-                                    case 'not set': return pt.ss($, ($) => pt.literal.list<d_out.Warnings.L>([]))
-                                    default: return pt.au($[0])
+                                    case 'set': return p_.ss($, ($) => Value($))
+                                    case 'not set': return p_.ss($, ($) => p_.literal.list<d_out.Warnings.L>([]))
+                                    default: return p_.au($[0])
                                 }
                             })
                     ))
-                    case 'group': return pt.ss($, ($) => $.intermediate.instance[0] !== 'group'
-                        ? pt.literal.list([
+                    case 'group': return p_.ss($, ($) => $.intermediate.instance[0] !== 'group'
+                        ? p_.literal.list([
                             {
                                 'range': start_token_range,
                                 'type': ['expected a group', null]
                             }
                         ])
-                        : pt.decide.state($.derived.style, ($) => {
+                        : p_.decide.state($.derived.style, ($) => {
                             switch ($[0]) {
-                                case 'concise': return pt.ss($, ($) => pt.list.from.list(
+                                case 'concise': return p_.ss($, ($) => p_.list.from.list(
                                     $.properties
                                 ).flatten(
                                     ($) => {
-                                        return pt.decide.state($['definition found'], ($) => {
+                                        return p_.decide.state($['definition found'], ($) => {
                                             switch ($[0]) {
-                                                case 'no': return pt.ss($, ($) => pt.literal.list([]))
-                                                case 'yes': return pt.ss($, ($) => Value($['value']))
-                                                default: return pt.au($[0])
+                                                case 'no': return p_.ss($, ($) => p_.literal.list([]))
+                                                case 'yes': return p_.ss($, ($) => Value($['value']))
+                                                default: return p_.au($[0])
                                             }
                                         })
                                     }
                                 ))
-                                case 'verbose': return pt.ss($, ($) => pt.list.from.list(
+                                case 'verbose': return p_.ss($, ($) => p_.list.from.list(
                                     $.properties,
                                 ).flatten<d_out.Warnings.L>(
                                     ($) => $.intermediate['id value pair'].id.token.type[0] !== 'backticked'
-                                        ? pt.literal.list([
+                                        ? p_.literal.list([
                                             {
                                                 'range': $.intermediate['id value pair'].id.range,
                                                 'type': ['expected backticked text', null]
                                             }
                                         ])
-                                        : pt.decide.state($['definition found'], ($) => {
+                                        : p_.decide.state($['definition found'], ($) => {
                                             switch ($[0]) {
-                                                case 'yes': return pt.ss($, ($) => $['value'].__decide(
+                                                case 'yes': return p_.ss($, ($) => $['value'].__decide(
                                                     ($) => Value($),
-                                                    (): d_out.Warnings => pt.literal.list([])
+                                                    (): d_out.Warnings => p_.literal.list([])
                                                 ))
-                                                case 'no': return pt.ss($, ($) => pt.literal.list([
+                                                case 'no': return p_.ss($, ($) => p_.literal.list([
                                                 ]))
-                                                default: return pt.au($[0])
+                                                default: return p_.au($[0])
                                             }
                                         })
                                 ))
-                                default: return pt.au($[0])
+                                default: return p_.au($[0])
                             }
                         }))
-                    case 'simple': return pt.ss($, ($) => pt.decide.state($.instance.token.type, ($): boolean => {
+                    case 'simple': return p_.ss($, ($) => p_.decide.state($.instance.token.type, ($): boolean => {
                         switch ($[0]) {
                             case 'quoted': return false
                             case 'apostrophed': return true
                             case 'undelimited': return false
                             case 'backticked': return true
-                            default: return pt.au($[0])
+                            default: return p_.au($[0])
                         }
                     })
-                        ? pt.literal.list<d_out.Warnings.L>([{
+                        ? p_.literal.list<d_out.Warnings.L>([{
                             'range': $.instance.range,
                             'type': ['expected undelimited text', null]
                         }])
-                        : pt.literal.list([])
+                        : p_.literal.list([])
                     )
-                    case 'list': return pt.ss($, ($) => pt.list.from.list(
+                    case 'list': return p_.ss($, ($) => p_.list.from.list(
                         $.derived.items
                     ).flatten(
                         ($) => Value($)
                     ))
-                    case 'nothing': return pt.ss($, ($) => pt.literal.list([]))
-                    case 'reference': return pt.ss($, ($) => pt.decide.state($.type, ($): d_out.Warnings => {
+                    case 'nothing': return p_.ss($, ($) => p_.literal.list([]))
+                    case 'reference': return p_.ss($, ($) => p_.decide.state($.type, ($): d_out.Warnings => {
                         switch ($[0]) {
-                            case 'derived': return pt.ss($, ($) => pt.literal.list([
+                            case 'derived': return p_.ss($, ($) => p_.literal.list([
                             ]))
-                            case 'selected': return pt.ss($, ($) => $.intermediate.instance.token.type[0] !== 'apostrophed'
-                                ? pt.literal.list([{
+                            case 'selected': return p_.ss($, ($) => $.intermediate.instance.token.type[0] !== 'apostrophed'
+                                ? p_.literal.list([{
                                     'range': $.intermediate.instance.range,
                                     'type': ['expected apostrophed text', null]
                                 }])
-                                : pt.literal.list([]))
-                            default: return pt.au($[0])
+                                : p_.literal.list([]))
+                            default: return p_.au($[0])
                         }
                     }))
-                    case 'component': return pt.ss($, ($) => Value($.value))
-                    case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
+                    case 'component': return p_.ss($, ($) => Value($.value))
+                    case 'optional': return p_.ss($, ($) => p_.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
-                            case 'set': return pt.ss($, ($) => Value($['child value']))
-                            case 'not set': return pt.ss($, ($) => pt.literal.list([]))
-                            default: return pt.au($[0])
+                            case 'set': return p_.ss($, ($) => Value($['child value']))
+                            case 'not set': return p_.ss($, ($) => p_.literal.list([]))
+                            default: return p_.au($[0])
                         }
                     }))
-                    case 'state': return pt.ss($, ($): d_out.Warnings => {
-                        return pt.decide.state($.derived['option status'], ($): d_out.Warnings => {
+                    case 'state': return p_.ss($, ($): d_out.Warnings => {
+                        return p_.decide.state($.derived['option status'], ($): d_out.Warnings => {
                             switch ($[0]) {
-                                case 'missing data': return pt.ss($, ($) => pt.literal.list([]))
-                                case 'set': return pt.ss($, ($) => $.intermediate['option token'].token.type[0] !== 'backticked'
-                                    ? pt.literal.list([
+                                case 'missing data': return p_.ss($, ($) => p_.literal.list([]))
+                                case 'set': return p_.ss($, ($) => $.intermediate['option token'].token.type[0] !== 'backticked'
+                                    ? p_.literal.list([
                                         {
                                             'range': $.intermediate['option token'].range,
                                             'type': ['expected apostrophed text', null]
                                         }
                                     ])
                                     : Value($.value))
-                                default: return pt.au($[0])
+                                default: return p_.au($[0])
                             }
                         })
                     })
-                    case 'text': return pt.ss($, ($) => $.instance.token.type[0] !== 'quoted'
-                        ? pt.literal.list([
+                    case 'text': return p_.ss($, ($) => $.instance.token.type[0] !== 'quoted'
+                        ? p_.literal.list([
                             {
                                 'range': $.instance.range,
                                 'type': ['expected quoted text', null]
                             }
 
                         ])
-                        : pt.literal.list([]))
-                    default: return pt.au($[0])
+                        : p_.literal.list([]))
+                    default: return p_.au($[0])
                 }
             }))
-            default: return pt.au($[0])
+            default: return p_.au($[0])
         }
     })
 }

@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -16,12 +16,12 @@ export type Document = p_i.Transformer<
     d_out.Diagnostics
 >
 
-export const Document: Document = ($) => pt.literal.nested_list([
+export const Document: Document = ($) => p_.literal.nested_list([
     t_to_resolve_result_to_errors.Document($).__l_map(($) => {
         return ({
             'severity': $.severity,
-            'range': pt.literal.set(['range', $.range]),
-            'related information': pt.literal.not_set(),
+            'range': p_.literal.set(['range', $.range]),
+            'related information': p_.literal.not_set(),
             'message': t_fp_to_text.Phrase(
                 t_resolve_errors_to_fp.Error($),
                 {

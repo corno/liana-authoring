@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -44,7 +44,7 @@ export type Value = p_i.Transformer_With_Parameter<
 
 
 const Value: Value = (value, $p) => {
-    return pt.literal.set({
+    return p_.literal.set({
         'range': t_parse_tree_to_full_range.Value(value.instance),
         'text': t_authoring_target_to_text.Value(
             t_unmarshall_result_to_authoring_target.Any_Value(value, $p.conversion),
@@ -60,47 +60,47 @@ const Value: Value = (value, $p) => {
 export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
 
     switch ($[0]) {
-        case 'value': return pt.ss($, ($): d_out.Optional_Formatting_Edit => {
+        case 'value': return p_.ss($, ($): d_out.Optional_Formatting_Edit => {
             return Value($, $p)
         })
-        case 'entry': return pt.ss($, ($) => pt.decide.state($.value, ($) => {
+        case 'entry': return p_.ss($, ($) => p_.decide.state($.value, ($) => {
             switch ($[0]) {
-                case 'set': return pt.ss($, ($) => Value($, $p))
-                case 'not set': return pt.ss($, ($) => pt.literal.not_set())
-                default: return pt.au($[0])
+                case 'set': return p_.ss($, ($) => Value($, $p))
+                case 'not set': return p_.ss($, ($) => p_.literal.not_set())
+                default: return p_.au($[0])
             }
         }))
-        case 'property': return pt.ss($, ($) => pt.decide.state($.style, ($) => {
+        case 'property': return p_.ss($, ($) => p_.decide.state($.style, ($) => {
             switch ($[0]) {
-                case 'verbose': return pt.ss($, ($) => pt.decide.state($['definition found'], ($) => {
+                case 'verbose': return p_.ss($, ($) => p_.decide.state($['definition found'], ($) => {
                     switch ($[0]) {
-                        case 'yes': return pt.ss($, ($) => $['value'].__decide(
+                        case 'yes': return p_.ss($, ($) => $['value'].__decide(
                             ($) => Value($, $p),
-                            () => pt.literal.not_set()
+                            () => p_.literal.not_set()
                         ))
-                        case 'no': return pt.ss($, ($) => pt.literal.not_set())
-                        default: return pt.au($[0])
+                        case 'no': return p_.ss($, ($) => p_.literal.not_set())
+                        default: return p_.au($[0])
                     }
                 }))
-                case 'unknown concise': return pt.ss($, ($) => {
-                    return pt.literal.not_set()
+                case 'unknown concise': return p_.ss($, ($) => {
+                    return p_.literal.not_set()
                 })
-                default: return pt.au($[0])
+                default: return p_.au($[0])
             }
         }))
-        case 'state': return pt.ss($, ($): d_out.Optional_Formatting_Edit => pt.decide.state($.derived['option status'], ($) => {
+        case 'state': return p_.ss($, ($): d_out.Optional_Formatting_Edit => p_.decide.state($.derived['option status'], ($) => {
             switch ($[0]) {
-                case 'set': return pt.ss($, ($) => Value($.value, $p))
-                case 'missing data': return pt.ss($, ($) => pt.literal.not_set())
-                default: return pt.au($[0])
+                case 'set': return p_.ss($, ($) => Value($.value, $p))
+                case 'missing data': return p_.ss($, ($) => p_.literal.not_set())
+                default: return p_.au($[0])
             }
         }))
-        default: return pt.au($[0])
+        default: return p_.au($[0])
     }
 }
 
 export const Document: Document = ($, $p) => {
-    return pt.decide.state(
+    return p_.decide.state(
         t_to_unmarshall_result_value_at_position.Document($, $p),
         ($) => Found($, $p)
     )

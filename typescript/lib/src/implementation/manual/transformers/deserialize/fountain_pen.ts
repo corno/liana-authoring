@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -15,11 +15,11 @@ export namespace signatures {
     export type Error = p_i.Transformer<d_in.Error, d_out.Phrase>
 }
 
-export const Error: signatures.Error = ($) => pt.decide.state($, ($) => {
+export const Error: signatures.Error = ($) => p_.decide.state($, ($) => {
     switch ($[0]) {
-        case 'deserialize parse tree': return pt.ss($, ($) => t_deserialize_to_fp.Error($))
-        case 'schema': return pt.ss($, ($) => t_get_schema_to_fp.Error($.error))
-        case 'schema path': return pt.ss($, ($) => t_get_schema_path_to_fp.Error($))
-        default: return pt.au($[0])
+        case 'deserialize parse tree': return p_.ss($, ($) => t_deserialize_to_fp.Error($))
+        case 'schema': return p_.ss($, ($) => t_get_schema_to_fp.Error($.error))
+        case 'schema path': return p_.ss($, ($) => t_get_schema_path_to_fp.Error($))
+        default: return p_.au($[0])
     }
 })

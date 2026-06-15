@@ -1,5 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -18,10 +17,10 @@ export namespace signatures {
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const Error: signatures.Error = ($) => pt.decide.state($, ($) => {
+export const Error: signatures.Error = ($) => p_.decide.state($, ($) => {
     switch ($[0]) {
-        case 'not found': return pt.ss($, ($) => sh.ph.literal("schema not found"))
-        case 'stat error': return pt.ss($, ($) => t_stat_to_fountain_pen.Error($))
-        default: return pt.au($[0])
+        case 'not found': return p_.ss($, ($) => sh.ph.literal("schema not found"))
+        case 'stat error': return p_.ss($, ($) => t_stat_to_fountain_pen.Error($))
+        default: return p_.au($[0])
     }
 })

@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/unmarshall_errors/data"
@@ -12,13 +12,13 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Warning = (
     $: d_in.Warnings.L,
-): d_out.Phrase => pt.decide.state($.type, ($) => {
+): d_out.Phrase => p_.decide.state($.type, ($) => {
     switch ($[0]) {
-        case 'expected apostrophed text': return pt.ss($, ($) => sh.ph.literal("Expected a text with apostrophes (')"))
-        case 'expected backticked text': return pt.ss($, ($) => sh.ph.literal("Expected a text with backticks (`)"))
-        case 'expected quoted text': return pt.ss($, ($) => sh.ph.literal("Expected a text with quotes (\")"))
-        case 'expected undelimited text': return pt.ss($, ($) => sh.ph.literal("Expected a text without delimiters"))
-        case 'expected a group': return pt.ss($, ($) => sh.ph.literal("Expected a group"))
-        default: return pt.au($[0])
+        case 'expected apostrophed text': return p_.ss($, ($) => sh.ph.literal("Expected a text with apostrophes (')"))
+        case 'expected backticked text': return p_.ss($, ($) => sh.ph.literal("Expected a text with backticks (`)"))
+        case 'expected quoted text': return p_.ss($, ($) => sh.ph.literal("Expected a text with quotes (\")"))
+        case 'expected undelimited text': return p_.ss($, ($) => sh.ph.literal("Expected a text without delimiters"))
+        case 'expected a group': return p_.ss($, ($) => sh.ph.literal("Expected a group"))
+        default: return p_.au($[0])
     }
 })

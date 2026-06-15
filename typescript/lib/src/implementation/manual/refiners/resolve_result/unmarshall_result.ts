@@ -21,11 +21,11 @@ export const Document = (
         $.content,
         {
             'definition': $p.definition['root value resolver'],
-            // 'module parameters': pt.literal.not_set(),
-            // 'lookup parameters': pt.literal.not_set(),
+            // 'module parameters': p_.literal.not_set(),
+            // 'lookup parameters': p_.literal.not_set(),
             'resolver': $p.resolvers,
-            // 'acyclic siblings': pt.literal.not_set(),
-            // 'cyclic siblings': pt.literal.not_set(),
+            // 'acyclic siblings': p_.literal.not_set(),
+            // 'cyclic siblings': p_.literal.not_set(),
         }
     )
 })
@@ -35,12 +35,12 @@ export const Document = (
 //     $p: {
 //         'id': string
 //     }
-// ) => pt.decide.state($, ($) => {
+// ) => p_.decide.state($, ($) => {
 //     switch ($[0]) {
-//         case 'acyclic siblings': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-//         case 'cyclic siblings': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-//         case 'parameter': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-//         default: return pt.au($[0])
+//         case 'acyclic siblings': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+//         case 'cyclic siblings': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+//         case 'parameter': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+//         default: return p_.au($[0])
 //     }
 // })
 
@@ -54,32 +54,32 @@ export const Document = (
 //     }
 // ): d_function.Lookup => {
 //     return p_implement_me("!!!!!!!")
-//     // return pt.decide.state($p.definition.type, ($): d_function.Lookup => {
+//     // return p_.decide.state($p.definition.type, ($): d_function.Lookup => {
 //     //     switch ($[0]) {
-//     //         case 'acyclic': return pt.ss($, ($) => pt.decide.state($, ($) => {
+//     //         case 'acyclic': return p_.ss($, ($) => p_.decide.state($, ($) => {
 //     //             switch ($[0]) {
-//     //                 case 'siblings': return pt.ss($, ($) => $p['acyclic siblings'].__decide(
+//     //                 case 'siblings': return p_.ss($, ($) => $p['acyclic siblings'].__decide(
 //     //                     ($) => ['acyclic siblings', $],
 //     //                     () => p_unreachable_code_path("acyclic siblings should have been provided for this definition")
 //     //                 ))
-//     //                 case 'resolved dictionary': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-//     //                 default: return pt.au($[0])
+//     //                 case 'resolved dictionary': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+//     //                 default: return p_.au($[0])
 //     //             }
 //     //         }))
-//     //         case 'cyclic': return pt.ss($, ($) => pt.decide.state($, ($) => {
+//     //         case 'cyclic': return p_.ss($, ($) => p_.decide.state($, ($) => {
 //     //             switch ($[0]) {
-//     //                 case 'siblings': return pt.ss($, ($) => $p['cyclic siblings'].__decide(
+//     //                 case 'siblings': return p_.ss($, ($) => $p['cyclic siblings'].__decide(
 //     //                     ($) => ['cyclic siblings', $],
 //     //                     () => p_unreachable_code_path("cyclic siblings should have been provided for this definition")
 //     //                 ))
-//     //                 default: return pt.au($[0])
+//     //                 default: return p_.au($[0])
 //     //             }
 //     //         }))
-//     //         case 'parameter': return pt.ss($, ($) => $p['module parameters'].__decide(
+//     //         case 'parameter': return p_.ss($, ($) => $p['module parameters'].__decide(
 //     //             ($) => ['parameter', $p['module parameters']],
 //     //             () => p_unreachable_code_path("module parameters should have been provided for this definition")
 //     //         ))
-//     //         default: return pt.au($[0])
+//     //         default: return p_.au($[0])
 //     //     }
 //     // })
 // }
@@ -128,17 +128,17 @@ export const Value = (
                                                         }
                                                     }),
                                                     'resolver': $p.resolver,
-                                                    // 'module parameters': pt.literal.not_set(), //FIXME 
-                                                    // 'lookup parameters': pt.literal.not_set(), //FIXME
-                                                    // 'module parameters': pt.optional.from.optional(def.arguments).map(
+                                                    // 'module parameters': p_.literal.not_set(), //FIXME 
+                                                    // 'lookup parameters': p_.literal.not_set(), //FIXME
+                                                    // 'module parameters': p_.optional.from.optional(def.arguments).map(
                                                     //     ($) => ({
-                                                    //         'lookups': pt.optional.from.optional($.lookups).map(
-                                                    //             ($) => $.__d_map(($) => pt.decide.state($, ($) => {
+                                                    //         'lookups': p_.optional.from.optional($.lookups).map(
+                                                    //             ($) => $.__d_map(($) => p_.decide.state($, ($) => {
                                                     //                 switch ($[0]) {
-                                                    //                     case 'stack': return pt.ss($, ($) => pt.decide.state($, ($) => {
+                                                    //                     case 'stack': return p_.ss($, ($) => p_.decide.state($, ($) => {
                                                     //                         switch ($[0]) {
-                                                    //                             case 'empty': return pt.ss($, ($) => null)
-                                                    //                             case 'push': return pt.ss($, ($) => {
+                                                    //                             case 'empty': return p_.ss($, ($) => null)
+                                                    //                             case 'push': return p_.ss($, ($) => {
                                                     //                                 Resolver_Lookup_Selection(
                                                     //                                     null,
                                                     //                                     {
@@ -159,31 +159,31 @@ export const Value = (
                                                     //                                 )
                                                     //                                 return null
                                                     //                             })
-                                                    //                             default: return pt.au($[0])
+                                                    //                             default: return p_.au($[0])
                                                     //                         }
                                                     //                     }))
-                                                    //                     case 'acyclic': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'cyclic': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'selection': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     default: return pt.au($[0])
+                                                    //                     case 'acyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                    //                     case 'cyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                    //                     case 'selection': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                    //                     default: return p_.au($[0])
                                                     //                 }
                                                     //             }))
 
                                                     //         ),
-                                                    //         'modules': pt.optional.from.optional($.modules).map(
-                                                    //             ($) => $.__d_map(($) => pt.decide.state($, ($) => {
+                                                    //         'modules': p_.optional.from.optional($.modules).map(
+                                                    //             ($) => $.__d_map(($) => p_.decide.state($, ($) => {
                                                     //                 switch ($[0]) {
-                                                    //                     case 'optional': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'required': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'parameter': return pt.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     default: return pt.au($[0])
+                                                    //                     case 'optional': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                    //                     case 'required': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                    //                     case 'parameter': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                    //                     default: return p_.au($[0])
                                                     //                 }
                                                     //             }))
                                                     //         )
                                                     //     })
                                                     // ),
-                                                    // 'acyclic siblings': pt.literal.not_set(),
-                                                    // 'cyclic siblings': pt.literal.not_set(),
+                                                    // 'acyclic siblings': p_.literal.not_set(),
+                                                    // 'cyclic siblings': p_.literal.not_set(),
                                                 }
                                             )
                                         }))
@@ -212,8 +212,8 @@ export const Value = (
                                                                             'resolver': $p.resolver,
                                                                             // 'module parameters': $p['module parameters'],
                                                                             // 'lookup parameters': $p['lookup parameters'],
-                                                                            // 'acyclic siblings': pt.literal.set($al),
-                                                                            // 'cyclic siblings': pt.literal.set($cl),
+                                                                            // 'acyclic siblings': p_.literal.set($al),
+                                                                            // 'cyclic siblings': p_.literal.set($cl),
                                                                         }
                                                                     )]
                                                                 }])

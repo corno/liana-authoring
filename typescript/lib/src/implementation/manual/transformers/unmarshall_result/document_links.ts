@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -22,107 +22,107 @@ export type Value = p_i.Transformer<
 
 export const Document: Document = ($) => Value($.content)
 
-export const Value: Value = ($) => pt.decide.state($['unmarshall result'], ($): d_out.Links => {
+export const Value: Value = ($) => p_.decide.state($['unmarshall result'], ($): d_out.Links => {
     switch ($[0]) {
-        case 'error': return pt.ss($, ($) => pt.literal.list([]))
-        case 'success': return pt.ss($, ($) => pt.decide.state($, ($): d_out.Links => {
+        case 'error': return p_.ss($, ($) => p_.literal.list([]))
+        case 'success': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Links => {
             switch ($[0]) {
-                case 'component': return pt.ss($, ($) => Value($.value))
-                case 'dictionary': return pt.ss($, ($): d_out.Links => pt.list.from.dictionary($.derived.entries).flatten(
-                    ($, id) => pt.decide.state($.result, ($) => {
+                case 'component': return p_.ss($, ($) => Value($.value))
+                case 'dictionary': return p_.ss($, ($): d_out.Links => p_.list.from.dictionary($.derived.entries).flatten(
+                    ($, id) => p_.decide.state($.result, ($) => {
                         switch ($[0]) {
-                            case 'success': return pt.ss($, ($) => pt.decide.state($.value, ($) => {
+                            case 'success': return p_.ss($, ($) => p_.decide.state($.value, ($) => {
                                 switch ($[0]) {
-                                    case 'set': return pt.ss($, ($) => Value($))
-                                    case 'not set': return pt.ss($, ($) => pt.literal.list([]))
-                                    default: return pt.au($[0])
+                                    case 'set': return p_.ss($, ($) => Value($))
+                                    case 'not set': return p_.ss($, ($) => p_.literal.list([]))
+                                    default: return p_.au($[0])
                                 }
                             }))
-                            case 'error': return pt.ss($, ($) => pt.literal.list([]))
-                            default: return pt.au($[0])
+                            case 'error': return p_.ss($, ($) => p_.literal.list([]))
+                            default: return p_.au($[0])
                         }
                     })
                 ))
-                case 'group': return pt.ss($, ($) => pt.decide.state($.derived.style, ($): d_out.Links => {
+                case 'group': return p_.ss($, ($) => p_.decide.state($.derived.style, ($): d_out.Links => {
                     switch ($[0]) {
-                        case 'verbose': return pt.ss($, ($) => pt.list.from.list($.properties).flatten(($): d_out.Links => pt.decide.state($['definition found'], ($): d_out.Links => {
+                        case 'verbose': return p_.ss($, ($) => p_.list.from.list($.properties).flatten(($): d_out.Links => p_.decide.state($['definition found'], ($): d_out.Links => {
                             switch ($[0]) {
-                                case 'yes': return pt.ss($, ($) => $['value'].__decide(
+                                case 'yes': return p_.ss($, ($) => $['value'].__decide(
                                     ($): d_out.Links => Value($),
-                                    (): d_out.Links => pt.literal.list([])
+                                    (): d_out.Links => p_.literal.list([])
                                 ))
-                                case 'no': return pt.ss($, ($) => pt.literal.list([]))
-                                default: return pt.au($[0])
+                                case 'no': return p_.ss($, ($) => p_.literal.list([]))
+                                default: return p_.au($[0])
                             }
                         })))
-                        case 'concise': return pt.ss($, ($) => pt.list.from.list($.properties).flatten(($): d_out.Links => pt.decide.state($['definition found'], ($): d_out.Links => {
+                        case 'concise': return p_.ss($, ($) => p_.list.from.list($.properties).flatten(($): d_out.Links => p_.decide.state($['definition found'], ($): d_out.Links => {
                             switch ($[0]) {
-                                case 'no': return pt.ss($, ($): d_out.Links => pt.literal.list([]))
-                                case 'yes': return pt.ss($, ($): d_out.Links => Value($['value']))
-                                default: return pt.au($[0])
+                                case 'no': return p_.ss($, ($): d_out.Links => p_.literal.list([]))
+                                case 'yes': return p_.ss($, ($): d_out.Links => Value($['value']))
+                                default: return p_.au($[0])
                             }
                         })))
-                        default: return pt.au($[0])
+                        default: return p_.au($[0])
                     }
                 }))
-                case 'list': return pt.ss($, ($): d_out.Links => pt.list.from.list($.derived.items).flatten(
+                case 'list': return p_.ss($, ($): d_out.Links => p_.list.from.list($.derived.items).flatten(
                     ($) => Value($)
                 ))
-                case 'nothing': return pt.ss($, ($) => pt.literal.list([]))
-                case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
+                case 'nothing': return p_.ss($, ($) => p_.literal.list([]))
+                case 'optional': return p_.ss($, ($) => p_.decide.state($.derived.status, ($) => {
                     switch ($[0]) {
-                        case 'set': return pt.ss($, ($) => Value($['child value']))
-                        case 'not set': return pt.ss($, ($) => pt.literal.list([]))
-                        default: return pt.au($[0])
+                        case 'set': return p_.ss($, ($) => Value($['child value']))
+                        case 'not set': return p_.ss($, ($) => p_.literal.list([]))
+                        default: return p_.au($[0])
                     }
                 }))
-                case 'reference': return pt.ss($, ($) => pt.literal.list([]))
-                case 'simple': return pt.ss($, ($) => pt.decide.state($.definition, ($) => {
+                case 'reference': return p_.ss($, ($) => p_.literal.list([]))
+                case 'simple': return p_.ss($, ($) => p_.decide.state($.definition, ($) => {
                     switch ($[0]) {
-                        case 'global': return pt.ss($, ($) => pt.decide.state($['l entry'].type, ($): d_out.Links => {
+                        case 'global': return p_.ss($, ($) => p_.decide.state($['l entry'].type, ($): d_out.Links => {
                             switch ($[0]) {
-                                case 'number': return pt.ss($, ($) => pt.literal.list([]))
-                                case 'boolean': return pt.ss($, ($) => pt.literal.list([]))
-                                case 'date': return pt.ss($, ($) => pt.literal.list([]))
-                                default: return pt.au($[0])
+                                case 'number': return p_.ss($, ($) => p_.literal.list([]))
+                                case 'boolean': return p_.ss($, ($) => p_.literal.list([]))
+                                case 'date': return p_.ss($, ($) => p_.literal.list([]))
+                                default: return p_.au($[0])
                             }
                         }))
-                        default: return pt.au($[0])
+                        default: return p_.au($[0])
                     }
                 }))
-                case 'state': return pt.ss($, ($) => pt.decide.state($.derived['option status'], ($): d_out.Links => {
+                case 'state': return p_.ss($, ($) => p_.decide.state($.derived['option status'], ($): d_out.Links => {
                     switch ($[0]) {
-                        case 'set': return pt.ss($, ($) => Value($.value))
-                        case 'missing data': return pt.ss($, ($) => pt.literal.list([]))
-                        default: return pt.au($[0])
+                        case 'set': return p_.ss($, ($) => Value($.value))
+                        case 'missing data': return p_.ss($, ($) => p_.literal.list([]))
+                        default: return p_.au($[0])
                     }
                 }))
-                case 'text': return pt.ss($, ($) => {
+                case 'text': return p_.ss($, ($) => {
                     const instance = $.instance
-                    const type: d_schema.Text_Type = pt.decide.state($.definition, ($) => {
+                    const type: d_schema.Text_Type = p_.decide.state($.definition, ($) => {
                         switch ($[0]) {
-                            case 'global': return pt.ss($, ($) => $['l entry'])
-                            case 'local': return pt.ss($, ($) => $)
-                            default: return pt.au($[0])
+                            case 'global': return p_.ss($, ($) => $['l entry'])
+                            case 'local': return p_.ss($, ($) => $)
+                            default: return p_.au($[0])
                         }
                     })
-                    return pt.decide.state(type.link, ($) => {
+                    return p_.decide.state(type.link, ($) => {
                         switch ($[0]) {
-                            case 'no': return pt.ss($, ($) => pt.literal.list([]))
-                            case 'yes':return pt.ss($, ($) => pt.literal.list([
+                            case 'no': return p_.ss($, ($) => p_.literal.list([]))
+                            case 'yes':return p_.ss($, ($) => p_.literal.list([
                                 {
                                     'range': instance.range,
                                     'target': $['path prefix'] + instance.token.value + $['path suffix'],
-                                    'tooltip': pt.literal.not_set()
+                                    'tooltip': p_.literal.not_set()
                                 }
                             ]))
-                            default: return pt.au($[0])
+                            default: return p_.au($[0])
                         }
                     })
                 })
-                default: return pt.au($[0])
+                default: return p_.au($[0])
             }
         }))
-        default: return pt.au($[0])
+        default: return p_.au($[0])
     }
 })

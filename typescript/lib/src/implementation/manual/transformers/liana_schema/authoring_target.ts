@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
@@ -21,91 +21,91 @@ export const Value_data = (
         | ['concise', null]
         | ['verbose', null]
     }
-): d_out.Value.data => pt.decide.state($, ($): d_out.Value.data => {
+): d_out.Value.data => p_.decide.state($, ($): d_out.Value.data => {
     switch ($[0]) {
-        case 'simple': return pt.ss($, ($) => ['concrete', {
+        case 'simple': return p_.ss($, ($) => ['concrete', {
             'type': ['text', {
                 'delimiter': ['none', null],
-                'value': pt.decide.state($, ($) => {
+                'value': p_.decide.state($, ($) => {
                     switch ($[0]) {
-                        case 'global': return pt.ss($, ($) => pt.decide.state($['l entry'].type, ($) => {
+                        case 'global': return p_.ss($, ($) => p_.decide.state($['l entry'].type, ($) => {
                             switch ($[0]) {
-                                case 'number': return pt.ss($, ($) => "0")
-                                case 'boolean': return pt.ss($, ($) => "false")
-                                case 'date': return pt.ss($, ($) => "yyyy-mm-dd")
-                                default: return pt.au($[0])
+                                case 'number': return p_.ss($, ($) => "0")
+                                case 'boolean': return p_.ss($, ($) => "false")
+                                case 'date': return p_.ss($, ($) => "yyyy-mm-dd")
+                                default: return p_.au($[0])
                             }
                         }))
-                        default: return pt.au($[0])
+                        default: return p_.au($[0])
                     }
                 }),
                 'trivia': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 }
             }]
         }])
-        case 'nothing': return pt.ss($, ($) => ['concrete', {
+        case 'nothing': return p_.ss($, ($) => ['concrete', {
             'type': ['nothing', {
                 '~': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 }
             }]
         }])
-        case 'text': return pt.ss($, ($) => ['concrete', {
+        case 'text': return p_.ss($, ($) => ['concrete', {
             'type': ['text', {
                 'delimiter': ['quote', null],
                 'value': "",
                 'trivia': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 }
             }]
         }])
-        case 'list': return pt.ss($, ($) => ['concrete', {
+        case 'list': return p_.ss($, ($) => ['concrete', {
             'type': ['list', {
                 '[': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 },
-                'items': pt.literal.list([]),
+                'items': p_.literal.list([]),
                 ']': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 },
             }]
         }])
-        case 'reference': return pt.ss($, ($) => ['missing', {
+        case 'reference': return p_.ss($, ($) => ['missing', {
             '#': {
-                'comments': pt.literal.list([])
+                'comments': p_.literal.list([])
             }
         }])
-        case 'component': return pt.ss($, ($) => pt.decide.state($.type, ($) => {
+        case 'component': return p_.ss($, ($) => p_.decide.state($.type, ($) => {
             switch ($[0]) {
-                case 'external': return pt.ss($, ($) => Value_data($.module['l entry']['root value'], $p))
-                case 'internal': return pt.ss($, ($) => Value_data($['l entry'].get_circular_dependent()['root value'], $p))
-                case 'internal acyclic': return pt.ss($, ($) => Value_data($['l entry']['root value'], $p))
-                default: return pt.au($[0])
+                case 'external': return p_.ss($, ($) => Value_data($.module['l entry']['root value'], $p))
+                case 'internal': return p_.ss($, ($) => Value_data($['l entry'].get_circular_dependent()['root value'], $p))
+                case 'internal acyclic': return p_.ss($, ($) => Value_data($['l entry']['root value'], $p))
+                default: return p_.au($[0])
             }
         })
         )
-        case 'dictionary': return pt.ss($, ($) => ['concrete', {
+        case 'dictionary': return p_.ss($, ($) => ['concrete', {
             'type': ['dictionary', {
                 '{': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 },
-                'entries': pt.literal.list([]),
+                'entries': p_.literal.list([]),
                 '}': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 },
             }]
         }])
-        case 'group': return pt.ss($, ($): d_out.Value.data => {
+        case 'group': return p_.ss($, ($): d_out.Value.data => {
             const xx = $
             return ['concrete', {
-                'type': ['group', pt.decide.state($p.style, ($): d_out.Value.data.concrete.type_.group => {
+                'type': ['group', p_.decide.state($p.style, ($): d_out.Value.data.concrete.type_.group => {
                     switch ($[0]) {
-                        case 'concise': return pt.ss($, ($) => ['concise', {
+                        case 'concise': return p_.ss($, ($) => ['concise', {
                             '<': {
-                                'comments': pt.literal.list([])
+                                'comments': p_.literal.list([])
                             },
-                            'properties': pt.list.from.dictionary(
+                            'properties': p_.list.from.dictionary(
                                 xx
                             ).convert(
                                 ($, id): d_out.Items.L => Value(
@@ -114,53 +114,53 @@ export const Value_data = (
                                 )
                             ),
                             '>': {
-                                'comments': pt.literal.list([])
+                                'comments': p_.literal.list([])
                             },
                         }])
-                        case 'verbose': return pt.ss($, ($) => ['verbose', {
+                        case 'verbose': return p_.ss($, ($) => ['verbose', {
                             '(': {
-                                'comments': pt.literal.list([])
+                                'comments': p_.literal.list([])
                             },
-                            'properties': pt.list.from.dictionary(
+                            'properties': p_.list.from.dictionary(
                                 xx
                             ).convert(
                                 ($, id): d_out.ID_Value_Pairs.L => ({
                                     'id': id,
-                                    'value': pt.literal.set(Value(
+                                    'value': p_.literal.set(Value(
                                         $.value,
                                         $p
                                     ))
                                 })
                             ),
                             ')': {
-                                'comments': pt.literal.list([])
+                                'comments': p_.literal.list([])
                             },
                         }])
-                        default: return pt.au($[0])
+                        default: return p_.au($[0])
                     }
                 })]
             }]
         })
-        case 'optional': return pt.ss($, ($) => ['concrete', {
+        case 'optional': return p_.ss($, ($) => ['concrete', {
             'type': ['optional', ['not set', {
                 '_': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 }
             }]]
         }])
-        case 'state': return pt.ss($, ($) => ['concrete', {
+        case 'state': return p_.ss($, ($) => ['concrete', {
             'type': ['state', {
                 '|': {
-                    'comments': pt.literal.list([])
+                    'comments': p_.literal.list([])
                 },
                 'status': ['missing', {
                     '#': {
-                        'comments': pt.literal.list([])
+                        'comments': p_.literal.list([])
                     }
                 }]
             }]
         }])
-        default: return pt.au($[0])
+        default: return p_.au($[0])
     }
 })
 
@@ -168,91 +168,91 @@ export const Value_data = (
 //     $: d_in.Resolver_Value,
 // ): d_out.Value => ({
 //     'data': ['concrete', {
-//         'type': pt.decide.state($, ($): d_out.Value.data.concrete.type_ => {
+//         'type': p_.decide.state($, ($): d_out.Value.data.concrete.type_ => {
 //             switch ($[0]) {
-//                 case 'simple': return pt.ss($, ($) => ['text', {
+//                 case 'simple': return p_.ss($, ($) => ['text', {
 //                     'delimiter': ['none', null],
 //                     'value': "0",
 //                     'trivia': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     }
 //                 }])
-//                 case 'nothing': return pt.ss($, ($) => ['nothing', {
+//                 case 'nothing': return p_.ss($, ($) => ['nothing', {
 //                     '~': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     }
 //                 }])
-//                 case 'text': return pt.ss($, ($) => ['text', {
+//                 case 'text': return p_.ss($, ($) => ['text', {
 //                     'delimiter': ['quote', null],
 //                     'value': "",
 //                     'trivia': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     }
 //                 }])
-//                 case 'list': return pt.ss($, ($) => ['list', {
+//                 case 'list': return p_.ss($, ($) => ['list', {
 //                     '[': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     },
-//                     'items': pt.literal.list([]),
+//                     'items': p_.literal.list([]),
 //                     ']': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     },
 //                 }])
-//                 case 'reference': return pt.ss($, ($) => ['text', {
+//                 case 'reference': return p_.ss($, ($) => ['text', {
 //                     'delimiter': ['apostrophe', null],
 //                     'value': "...",
 //                     'trivia': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     }
 //                 }])
-//                 case 'component': return pt.ss($, ($) => pt.decide.state($.location, ($) => {
+//                 case 'component': return p_.ss($, ($) => p_.decide.state($.location, ($) => {
 //                     switch ($[0]) {
-//                         case 'external': return pt.ss($, ($) => p_implement_me("xx"))
-//                         case 'internal': return pt.ss($, ($) => p_implement_me("xx"))
-//                         default: return pt.au($[0])
+//                         case 'external': return p_.ss($, ($) => p_implement_me("xx"))
+//                         case 'internal': return p_.ss($, ($) => p_implement_me("xx"))
+//                         default: return p_.au($[0])
 //                     }
 //                 }))
-//                 case 'dictionary': return pt.ss($, ($) => ['dictionary', {
+//                 case 'dictionary': return p_.ss($, ($) => ['dictionary', {
 //                     '{': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     },
-//                     'entries': pt.literal.list([]),
+//                     'entries': p_.literal.list([]),
 //                     '}': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     },
 //                 }])
-//                 case 'group': return pt.ss($, ($): d_out.Value.data.concrete.type_ => ['group', ['verbose', {
+//                 case 'group': return p_.ss($, ($): d_out.Value.data.concrete.type_ => ['group', ['verbose', {
 //                     '(': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     },
-//                     'properties': pt.list.from.dictionary(
+//                     'properties': p_.list.from.dictionary(
 //                         $
 //                     ).convert(
 //                         ($, id): d_out.ID_Value_Pairs.L => ({
 //                             'id': id,
-//                             'value': pt.literal.set(Resolver_Value($.resolver))
+//                             'value': p_.literal.set(Resolver_Value($.resolver))
 //                         })
 //                     ),
 //                     ')': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     },
 //                 }]])
-//                 case 'optional': return pt.ss($, ($) => ['optional', ['not set', {
+//                 case 'optional': return p_.ss($, ($) => ['optional', ['not set', {
 //                     '_': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     }
 //                 }]])
-//                 case 'state': return pt.ss($, ($) => ['state', {
+//                 case 'state': return p_.ss($, ($) => ['state', {
 //                     '|': {
-//                         'comments': pt.literal.list([])
+//                         'comments': p_.literal.list([])
 //                     },
 //                     'status': ['missing', {
 //                         '#': {
-//                             'comments': pt.literal.list([])
+//                             'comments': p_.literal.list([])
 //                         }
 //                     }]
 //                 }])
-//                 default: return pt.au($[0])
+//                 default: return p_.au($[0])
 //             }
 //         })
 //     }]

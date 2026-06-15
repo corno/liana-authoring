@@ -1,10 +1,9 @@
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
-import * as pt from 'pareto-core/dist/implementation/transformer'
 
 //data types
 import * as d_in from "../../../../interface/data/deserialize"
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
-import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas/fs_unrestricted_path/data"
 
 //depencencies
 import * as t_get_schema from "../get_schema/diagnostics"
@@ -13,17 +12,17 @@ import * as t_deserialize_to_fp from "astn-core/dist/implementation/manual/trans
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
 export const Error: p_i.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
-	return pt.decide.state($, ($) => {
+	return p_.decide.state($, ($) => {
 		switch ($[0]) {
-			case 'schema path': return pt.ss($, ($) => ({
+			case 'schema path': return p_.ss($, ($) => ({
 				'severity': ['error', null],
 				'message': `no schema found`,
-				'range': pt.literal.not_set(),
-				'related information': pt.literal.not_set(),
+				'range': p_.literal.not_set(),
+				'related information': p_.literal.not_set(),
 				'type': ['deserialize', null]
 			}))
-			case 'schema': return pt.ss($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
-			case 'deserialize parse tree': return pt.ss($, ($) => ({
+			case 'schema': return p_.ss($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
+			case 'deserialize parse tree': return p_.ss($, ($) => ({
 				'severity': ['error', null],
 				'message': t_fp_to_text.Phrase(
 					t_deserialize_to_fp.Error($),
@@ -32,11 +31,11 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
 						'newline': "\n",
 					}
 				),
-				'range': pt.literal.set(t_deserialize_to_location.Error($)),
-				'related information': pt.literal.not_set(),
+				'range': p_.literal.set(t_deserialize_to_location.Error($)),
+				'related information': p_.literal.not_set(),
 				'type': ['deserialize', null]
 			}))
-			default: return pt.au($[0])
+			default: return p_.au($[0])
 		}
 	})
 }
