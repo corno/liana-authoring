@@ -1,7 +1,7 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
 import * as p_di from 'pareto-core/dist/data/interface'
 import p_change_context from 'pareto-core/dist/specials/change_context'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -26,14 +26,14 @@ export type Parameters = {
     | ['concise', null]
 }
 
-export type Document = p_ti.Transformer_With_Parameter<
+export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
     d_out.Completion_Suggestions,
     Parameters
 
 >
 
-export type Found = p_ti.Transformer_With_Parameter<
+export type Found = p_i.Transformer_With_Parameter<
     d_outx.Found,
     d_out.Completion_Suggestions,
     Parameters

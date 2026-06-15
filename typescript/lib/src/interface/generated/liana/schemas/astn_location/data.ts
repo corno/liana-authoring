@@ -1,5 +1,5 @@
 
-import * as p_i from 'pareto-core/dist/interface'
+import * as p_i from 'pareto-core/dist/__internals/Abort'
 
 export namespace Range_ {
     

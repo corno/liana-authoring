@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -8,12 +8,12 @@ import * as d_out from "../../../../interface/generated/liana/schemas/unmarshall
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-export type Document = p_ti.Transformer<
+export type Document = p_i.Transformer<
     d_in.Document,
     d_out.Warnings
 >
 
-export type Value = p_ti.Transformer<
+export type Value = p_i.Transformer<
     d_in.Value,
     d_out.Warnings
 >

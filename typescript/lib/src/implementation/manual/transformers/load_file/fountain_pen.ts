@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/get_unmarshalled_file"
@@ -7,7 +7,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as d_function_loc from "astn-core/dist/interface/to_be_generated/location_to_fountain_pen"
 
 export namespace signatures {
-    export type Error = p_ti.Transformer<d_in.Error, d_out.Phrase>
+    export type Error = p_i.Transformer<d_in.Error, d_out.Phrase>
 }
 
 //dependencies

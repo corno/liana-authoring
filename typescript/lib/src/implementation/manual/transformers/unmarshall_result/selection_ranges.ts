@@ -1,6 +1,6 @@
 import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -14,7 +14,7 @@ import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export type Document = p_ti.Transformer_With_Parameter<
+export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
     p_di.List<d_out.Range_Stack>,
     {

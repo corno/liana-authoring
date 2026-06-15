@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -14,7 +14,7 @@ import * as t_authoring_target_to_text from "astn/dist/implementation/manual/tra
 import * as t_parse_tree_to_full_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target"
 
-export type Document = p_ti.Transformer_With_Parameter<
+export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
     d_out.Optional_Formatting_Edit,
     {
@@ -24,7 +24,7 @@ export type Document = p_ti.Transformer_With_Parameter<
     }
 >
 
-export type Found = p_ti.Transformer_With_Parameter<
+export type Found = p_i.Transformer_With_Parameter<
     d_outx.Found,
     d_out.Optional_Formatting_Edit,
     {
@@ -33,7 +33,7 @@ export type Found = p_ti.Transformer_With_Parameter<
     }
 >
 
-export type Value = p_ti.Transformer_With_Parameter<
+export type Value = p_i.Transformer_With_Parameter<
     d_in.Value,
     d_out.Optional_Formatting_Edit,
     {

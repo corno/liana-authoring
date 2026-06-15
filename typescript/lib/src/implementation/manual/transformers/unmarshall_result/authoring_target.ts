@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -13,31 +13,31 @@ import * as t_parse_tree_to_authoring_target from "astn/dist/implementation/manu
 //FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 
 
-export type Document = p_ti.Transformer_With_Parameter<
+export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
     d_out.Document,
     d_function.Parameters
 >
 
-export type Any_Value = p_ti.Transformer_With_Parameter<
+export type Any_Value = p_i.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
 
-export type Non_Entity = p_ti.Transformer_With_Parameter<
+export type Non_Entity = p_i.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
 
-export type Entity = p_ti.Transformer_With_Parameter<
+export type Entity = p_i.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
 
-export type Structural_Token = p_ti.Transformer<
+export type Structural_Token = p_i.Transformer<
     d_in_parse_tree.Structural_Token,
     d_out.Token_Trivia
 >

@@ -1,6 +1,6 @@
 import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -35,7 +35,7 @@ export const range_overlaps_position = (
     )
 
 
-export type Document = p_ti.Transformer_With_Parameter<
+export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
     d_out.Found,
     {
@@ -43,7 +43,7 @@ export type Document = p_ti.Transformer_With_Parameter<
     }
 >
 
-// export type Items = p_ti.Transformer_With_Parameter<
+// export type Items = p_i.Transformer_With_Parameter<
 //     d_in.Items,
 //     Found,
 //     {
@@ -51,7 +51,7 @@ export type Document = p_ti.Transformer_With_Parameter<
 //     }
 // >
 
-export type Value = p_ti.Transformer_With_Parameter<
+export type Value = p_i.Transformer_With_Parameter<
     d_in.Value,
     d_out.Found,
     {
@@ -59,7 +59,7 @@ export type Value = p_ti.Transformer_With_Parameter<
     }
 >
 
-export type Value_possibly_found = p_ti.Transformer_With_Parameter<
+export type Value_possibly_found = p_i.Transformer_With_Parameter<
     d_in.Value,
     p_di.Optional_Value<d_out.Found>,
     {

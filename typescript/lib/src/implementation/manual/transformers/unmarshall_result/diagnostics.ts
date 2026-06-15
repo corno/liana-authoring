@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
@@ -13,7 +13,7 @@ import * as t_unmarshall_errors_to_fp from "../unmarshall_errors/fountain_pen"
 import * as t_unmarshall_warnings_to_fp from "../unmarshall_warnings/fountain_pen"
 
 
-export type Document = p_ti.Transformer<
+export type Document = p_i.Transformer<
     d_in.Document,
     d_out.Diagnostics
 >

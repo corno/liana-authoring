@@ -1,6 +1,5 @@
 import * as p_ from 'pareto-core/dist/query/implementation'
 import * as p_t from 'pareto-core/dist/assign'
-import * as p_qi from 'pareto-core/dist/query/interface'
 import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 import * as signatures from "../../../interface/queries"
@@ -23,10 +22,10 @@ import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manua
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const $$: signatures.query_functions.seal = p_.query_function(
-    ($d, $s, $q): p_qi.Query_Result<d_process_file_data.Result, d_process_file_data.Error> => {
+    ($d, $s, $q): p_.Query_Result<d_process_file_data.Result, d_process_file_data.Error> => {
 
 
-        const foo: p_qi.Query_Result<d_get_unmarshalled_file.Result, d_process_file_data.Error> = q_get_unmarshalled_file(
+        const foo: p_.Query_Result<d_get_unmarshalled_file.Result, d_process_file_data.Error> = q_get_unmarshalled_file(
             null,
             {
                 'read file': $q['read file'],
@@ -47,7 +46,7 @@ export const $$: signatures.query_functions.seal = p_.query_function(
         )
 
 
-        const foo2: p_qi.Query_Result<d_sealed.Value_, d_process_file_data.Error> = foo.refine(
+        const foo2: p_.Query_Result<d_sealed.Value_, d_process_file_data.Error> = foo.refine(
             ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
                 p_t.decide.state($, ($) => {
                     switch ($[0]) {
@@ -65,7 +64,7 @@ export const $$: signatures.query_functions.seal = p_.query_function(
             ),
         )
 
-        const foo3: p_qi.Query_Result<d_process_file_data.Result, d_process_file_data.Error> = foo2.transform(
+        const foo3: p_.Query_Result<d_process_file_data.Result, d_process_file_data.Error> = foo2.transform(
             ($) => ({
                 'data': p_list_from_text(
                     t_fp_to_text.Paragraph(
