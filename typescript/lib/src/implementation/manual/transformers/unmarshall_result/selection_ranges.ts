@@ -1,6 +1,5 @@
 import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
@@ -42,17 +41,17 @@ export const Document: Document = ($, $p) => {
                 })
                 case 'entry': return pt.ss($, ($) => ({
                     'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
-                    'parent': pt.optional.literal.set($['parent range stack'])
+                    'parent': pt.literal.set($['parent range stack'])
                 }))
                 case 'property': return pt.ss($, ($) => pt.decide.state($.style, ($) => {
                     switch ($[0]) {
                         case 'verbose': return pt.ss($, ($) => ({
                             'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
-                            'parent': pt.optional.literal.set($['parent range stack'])
+                            'parent': pt.literal.set($['parent range stack'])
                         }))
                         case 'unknown concise': return pt.ss($, ($) => ({
                             'range': t_parse_tree_to_location.Value($.item.value),
-                            'parent': pt.optional.literal.set($['parent range stack'])
+                            'parent': pt.literal.set($['parent range stack'])
                         }))
 
                         default: return pt.au($[0])
@@ -66,7 +65,7 @@ export const Document: Document = ($, $p) => {
                             default: return pt.au($[0])
                         }
                     }),
-                    'parent': pt.optional.literal.set($['parent range stack'])
+                    'parent': pt.literal.set($['parent range stack'])
                 }))
                 default: return pt.au($[0])
             }

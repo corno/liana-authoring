@@ -15,14 +15,14 @@ export const Error: p_ti.Transformer_With_Parameter<d_in.Error, d_out.Diagnostic
 			case 'read file': return pt.ss($, ($): d_out.Diagnostics.L => ({
 				'message': "Failed to read schema file",
 				'severity': ['error', null],
-				'related information': pt.optional.literal.not_set(),
-				'range': pt.optional.literal.not_set(),
+				'related information': pt.literal.not_set(),
+				'range': pt.literal.not_set(),
 				'type': ['schema', null]
 		}))
 			case 'deserialize': return pt.ss($, ($): d_out.Diagnostics.L => ({
 				'message': "failed to deserialize schema: " + t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" }),
 				'severity': ['error', null],
-				'related information': pt.optional.literal.set(pt.list.literal([
+				'related information': pt.literal.set(pt.literal.list([
 					{
 						'location': {
 							'file path': $p['schema path'],
@@ -31,7 +31,7 @@ export const Error: p_ti.Transformer_With_Parameter<d_in.Error, d_out.Diagnostic
 						'message': t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" })
 					}
 				])),
-				'range': pt.optional.literal.not_set(),
+				'range': pt.literal.not_set(),
 				'type': ['schema', null]
 
 			}))

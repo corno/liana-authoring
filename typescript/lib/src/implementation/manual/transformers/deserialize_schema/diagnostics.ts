@@ -1,5 +1,4 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
 import * as d_in from "liana-core/dist/interface/to_be_generated/deserialize_resolved"
@@ -45,7 +44,7 @@ export const Error = ($: d_in.Error, $p: { 'schema path': d_path.Node_Path }): T
             'character': 0,
         }
     }),
-    'related information': pt.optional.literal.set(pt.list.literal<d_out.Diagnostic.related_information.O.L>([
+    'related information': pt.literal.set(pt.literal.list<d_out.Diagnostic.related_information.O.L>([
         {
             'message': "The schema is not valid",
             'location': {

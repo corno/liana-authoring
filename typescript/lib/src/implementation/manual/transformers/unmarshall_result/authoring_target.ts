@@ -1,6 +1,4 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_di from 'pareto-core/dist/data/interface'
-import p_change_context from 'pareto-core/dist/specials/change_context'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
@@ -102,7 +100,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                     case 'incorrect': return pt.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
                     case 'missing': return pt.ss($, ($): d_out.Value => temp_value(['missing', {
                         '#': {
-                            'comments': pt.list.literal([])
+                            'comments': pt.literal.list([])
                         }
                     }]))
                     default: return pt.au($[0])
@@ -118,8 +116,8 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                 'id': $.intermediate['id value pair'].id.token.value,
                                 'value': pt.decide.state($.value, ($) => {
                                     switch ($[0]) {
-                                        case 'set': return pt.ss($, ($) => pt.optional.literal.set(Entity($, $p)))
-                                        case 'not set': return pt.ss($, ($) => pt.optional.literal.not_set())
+                                        case 'set': return pt.ss($, ($) => pt.literal.set(Entity($, $p)))
+                                        case 'not set': return pt.ss($, ($) => pt.literal.not_set())
                                         default: return pt.au($[0])
                                     }
                                 }),
@@ -134,7 +132,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                 switch ($[0]) {
                                     case 'concise': return pt.ss($, ($) => ['concise', {
                                         '<': {
-                                            'comments': pt.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
+                                            'comments': pt.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                         'properties': pt.decide.state(unmarsalled_group.derived.style, ($): d_out.Items => {
                                             switch ($[0]) {
@@ -159,7 +157,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                 () => temp_value(['concrete', {
                                                                     'type': ['nothing', {
                                                                         '~': {
-                                                                            'comments': pt.list.literal([])
+                                                                            'comments': pt.literal.list([])
                                                                         }
                                                                     }]
                                                                 }])
@@ -170,7 +168,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                     () => temp_value(['concrete', {
                                                                         'type': ['nothing', {
                                                                             '~': {
-                                                                                'comments': pt.list.literal([])
+                                                                                'comments': pt.literal.list([])
                                                                             }
                                                                         }]
                                                                     }])
@@ -178,7 +176,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                 (): d_out.Items.L => temp_value(['concrete', {
                                                                     'type': ['nothing', {
                                                                         '~': {
-                                                                            'comments': pt.list.literal([])
+                                                                            'comments': pt.literal.list([])
                                                                         }
                                                                     }]
                                                                 }])
@@ -191,22 +189,22 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                             }
                                         }),
                                         '>': {
-                                            'comments': pt.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
+                                            'comments': pt.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                     }])
                                     case 'verbose': return pt.ss($, ($) => ['verbose', {
                                         '(': {
-                                            'comments': pt.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
+                                            'comments': pt.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                         'properties': pt.decide.state(unmarsalled_group.derived.style, ($): d_out.ID_Value_Pairs => {
                                             switch ($[0]) {
                                                 //convert concise to verbose
-                                                case 'concise': return pt.ss($, ($): d_out.ID_Value_Pairs => pt.list.from.list($.properties).map_optionally(($): p_di.Optional_Value<d_out.ID_Value_Pairs.L> => (pt.decide.state($['definition found'], ($): p_di.Optional_Value<d_out.ID_Value_Pairs.L> => {
+                                                case 'concise': return pt.ss($, ($): d_out.ID_Value_Pairs => pt.list.from.list($.properties).map_optionally(($) => (pt.decide.state($['definition found'], ($) => {
                                                     switch ($[0]) {
-                                                        case 'no': return pt.ss($, ($) => pt.optional.literal.not_set())
-                                                        case 'yes': return pt.ss($, ($): p_di.Optional_Value<d_out.ID_Value_Pairs.L> => pt.optional.literal.set({
+                                                        case 'no': return pt.ss($, ($) => pt.literal.not_set())
+                                                        case 'yes': return pt.ss($, ($) => pt.literal.set({
                                                             'id': $.id,
-                                                            'value': pt.optional.literal.set(Non_Entity($['value'], $p))
+                                                            'value': pt.literal.set(Non_Entity($['value'], $p))
                                                         }))
                                                         default: return pt.au($[0])
                                                     }
@@ -221,19 +219,19 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                 case 'yes': return pt.ss($, ($) => pt.optional.from.optional($['value']).map(($) => Non_Entity($, $p)))
                                                                 case 'no': return pt.ss($, ($) => item.intermediate['id value pair'].assignment.__decide(
                                                                     ($): d_out.ID_Value_Pairs.L.value => $.value.__decide(
-                                                                        ($) => pt.optional.literal.set(t_parse_tree_to_authoring_target.Value($)),
-                                                                        () => pt.optional.literal.set(temp_value(['concrete', {
+                                                                        ($) => pt.literal.set(t_parse_tree_to_authoring_target.Value($)),
+                                                                        () => pt.literal.set(temp_value(['concrete', {
                                                                             'type': ['nothing', {
                                                                                 '~': {
-                                                                                    'comments': pt.list.literal([])
+                                                                                    'comments': pt.literal.list([])
                                                                                 }
                                                                             }]
                                                                         }]))
                                                                     ),
-                                                                    (): d_out.ID_Value_Pairs.L.value => pt.optional.literal.set(temp_value(['concrete', {
+                                                                    (): d_out.ID_Value_Pairs.L.value => pt.literal.set(temp_value(['concrete', {
                                                                         'type': ['nothing', {
                                                                             '~': {
-                                                                                'comments': pt.list.literal([])
+                                                                                'comments': pt.literal.list([])
                                                                             }
                                                                         }]
                                                                     }]))
@@ -247,7 +245,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                             }
                                         }),
                                         ')': {
-                                            'comments': pt.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
+                                            'comments': pt.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
                                     }])
                                     default: return pt.au($[0])
@@ -265,7 +263,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                     case 'nothing': return pt.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['nothing', {
                             '~': {
-                                'comments': pt.list.literal([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
+                                'comments': pt.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                             }
                         }]
                     }]))
@@ -283,26 +281,26 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                             switch ($[0]) {
                                 case 'list': return pt.ss($, ($) => ['set', {
                                     '*': {
-                                        'comments': pt.list.literal([])
+                                        'comments': pt.literal.list([])
                                     },
                                     'value': Non_Entity($['child value'], $p)
                                 }])
                                 case 'null literal': return pt.ss($, ($) => ['not set', {
                                     '_': {
-                                        'comments': pt.list.literal([])
+                                        'comments': pt.literal.list([])
                                     }
                                 }])
                                 case 'optional': return pt.ss($, ($) => pt.decide.state($, ($) => {
                                     switch ($[0]) {
                                         case 'set': return pt.ss($, ($) => ['set', {
                                             '*': {
-                                                'comments': pt.list.literal([])
+                                                'comments': pt.literal.list([])
                                             },
                                             'value': Non_Entity($['child value'], $p)
                                         }])
                                         case 'not set': return pt.ss($, ($) => ['not set', {
                                             '_': {
-                                                'comments': pt.list.literal([])
+                                                'comments': pt.literal.list([])
                                             }
                                         }])
 
@@ -318,14 +316,14 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                             switch ($[0]) {
                                 case 'derived': return pt.ss($, ($) => ['nothing', {
                                     '~': {
-                                        'comments': pt.list.literal([])
+                                        'comments': pt.literal.list([])
                                     }
                                 }])
                                 case 'selected': return pt.ss($, ($) => ['text', {
                                     'value': $.intermediate.instance.token.value,
                                     'delimiter': ['apostrophe', null],
                                     'trivia': {
-                                        'comments': pt.list.literal([])
+                                        'comments': pt.literal.list([])
                                     }
                                 }])
                                 default: return pt.au($[0])
@@ -337,7 +335,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                             case 'set': return pt.ss($, ($): d_out.Value => temp_value(['concrete', {
                                 'type': ['state', {
                                     '|': {
-                                        'comments': pt.list.literal([])
+                                        'comments': pt.literal.list([])
                                     },
                                     'status': ['set', {
                                         'option': $.intermediate['option token'].token.value,
@@ -348,11 +346,11 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                             case 'missing data': return pt.ss($, ($) => temp_value(['concrete', {
                                 'type': ['state', {
                                     '|': {
-                                        'comments': pt.list.literal([])
+                                        'comments': pt.literal.list([])
                                     },
                                     'status': ['missing', {
                                         '#': {
-                                            'comments': pt.list.literal([])
+                                            'comments': pt.literal.list([])
                                         },
                                     }]
                                 }]
@@ -365,7 +363,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                             'value': $.instance.token.value,
                             'delimiter': ['quote', null],
                             'trivia': {
-                                'comments': pt.list.literal([])
+                                'comments': pt.literal.list([])
                             }
                         }]
                     }]))

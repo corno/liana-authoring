@@ -76,8 +76,8 @@ export const Value_possibly_found: Value_possibly_found = ($, $p) => {
             'position': $p.position,
         }
     )
-        ? pt.optional.literal.set(Value($, $p))
-        : pt.optional.literal.not_set()
+        ? pt.literal.set(Value($, $p))
+        : pt.literal.not_set()
 }
 
 export const Value: Value = ($, $p) => {
@@ -120,11 +120,11 @@ export const Value: Value = ($, $p) => {
                                 (): d_out.Possibly_Found => pt.decide.state($.value, ($): d_out.Possibly_Found => {
                                     switch ($[0]) {
                                         case 'set': return pt.ss($, ($) =>  Value_possibly_found($, $p))
-                                        case 'not set':return pt.ss($, ($) => pt.optional.literal.set(['entry', entry]))
+                                        case 'not set':return pt.ss($, ($) => pt.literal.set(['entry', entry]))
                                         default: return pt.au($[0])
                                     }
                                 }),
-                                () => pt.optional.literal.not_set()
+                                () => pt.literal.not_set()
                             )
                         },
                         () => this_value()
@@ -145,22 +145,22 @@ export const Value: Value = ($, $p) => {
 
                                             switch ($[0]) {
                                                 case 'yes': return pt.ss($, ($) => $['value'].__decide(
-                                                    ($): d_out.Possibly_Found => pt.optional.literal.set(Value_possibly_found($, $p).__decide(
+                                                    ($): d_out.Possibly_Found => pt.literal.set(Value_possibly_found($, $p).__decide(
                                                         ($) => $,
                                                         (): d_out.Found => ['property', {'style': ['verbose', prop]}]
                                                     )),
                                                     () => {
-                                                        return pt.optional.literal.set(['property', {'style': ['verbose', prop]}])
+                                                        return pt.literal.set(['property', {'style': ['verbose', prop]}])
                                                     }
                                                 ))
                                                 case 'no': return pt.ss($, ($) => {
 
-                                                    return pt.optional.literal.set(['property', {'style': ['verbose', prop]}])
+                                                    return pt.literal.set(['property', {'style': ['verbose', prop]}])
                                                 })
                                                 default: return pt.au($[0])
                                             }
                                         }),
-                                        () => pt.optional.literal.not_set(),
+                                        () => pt.literal.not_set(),
                                     )
                                 },
                                 () => this_value()
@@ -175,14 +175,14 @@ export const Value: Value = ($, $p) => {
                                                 'position': $p.position,
                                             }
                                         ),
-                                        () => pt.optional.literal.set(pt.decide.state($['definition found'], ($): d_out.Found => {
+                                        () => pt.literal.set(pt.decide.state($['definition found'], ($): d_out.Found => {
                                             switch ($[0]) {
                                                 case 'yes': return pt.ss($, ($) => Value($['value'], $p))
                                                 case 'no': return pt.ss($, ($) => ['property', {'style': ['unknown concise', prop]}])
                                                 default: return pt.au($[0])
                                             }
                                         })),
-                                        () => pt.optional.literal.not_set(),
+                                        () => pt.literal.not_set(),
                                     )
                                 },
                                 () => this_value()

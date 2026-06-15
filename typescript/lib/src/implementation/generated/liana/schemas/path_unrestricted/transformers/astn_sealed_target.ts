@@ -11,7 +11,7 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Node_Path: t_signatures.Node_Path = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Node_Path: t_signatures.Node_Path = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "context": _p_change_context(
             $['context'],
@@ -29,7 +29,7 @@ export const Node_Path: t_signatures.Node_Path = ($) => ['group', ['verbose', _p
     },
 )]]
 
-export const Context_Path: t_signatures.Context_Path = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Context_Path: t_signatures.Context_Path = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "start": _p_change_context(
             $['start'],
@@ -72,7 +72,7 @@ export const Start: t_signatures.Start = ($) => ['state', _p.decide.state(
                     $,
                     ($) => ({
                         'option': 'relative',
-                        'value': ['group', ['verbose', _p.dictionary.literal(
+                        'value': ['group', ['verbose', _p.literal.dictionary(
                             {
                                 "up steps": _p_change_context(
                                     $['up steps'],

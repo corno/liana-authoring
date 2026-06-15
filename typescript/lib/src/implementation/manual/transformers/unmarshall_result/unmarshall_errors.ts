@@ -1,5 +1,4 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_di from 'pareto-core/dist/data/interface'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
 
@@ -36,28 +35,28 @@ export const Value: Value = ($) => {
                 switch ($[0]) {
                     case 'incorrect': return pt.ss($, ($) => pt.decide.state($, ($): d_out.Errors => {
                         switch ($[0]) {
-                            case 'wrong type': return pt.ss($, ($) => pt.list.literal([
+                            case 'wrong type': return pt.ss($, ($) => pt.literal.list([
                                 {
                                     'range': start_token_range,
                                     'type': ['value', ['invalid type', {
                                         'expected': pt.decide.state(def, ($): d_out.Errors.L.type_.value.invalid_type.expected => {
                                             switch ($[0]) {
-                                                case 'state': return pt.ss($, ($) => pt.list.literal([['state', null]]))
+                                                case 'state': return pt.ss($, ($) => pt.literal.list([['state', null]]))
                                                 case 'component': return pt.ss($, ($) => p_unreachable_code_path("a component cannot be incorrect by itself"))
-                                                case 'dictionary': return pt.ss($, ($) => pt.list.literal([['dictionary', null]]))
-                                                case 'group': return pt.ss($, ($) => pt.list.literal([['group', null]]))
-                                                case 'list': return pt.ss($, ($) => pt.list.literal([['list', null]]))
-                                                case 'nothing': return pt.ss($, ($) => pt.list.literal([['nothing', null]]))
-                                                case 'simple': return pt.ss($, ($) => pt.list.literal([['text', null]]))
-                                                case 'optional': return pt.ss($, ($) => pt.list.literal([['optional', null]]))
+                                                case 'dictionary': return pt.ss($, ($) => pt.literal.list([['dictionary', null]]))
+                                                case 'group': return pt.ss($, ($) => pt.literal.list([['group', null]]))
+                                                case 'list': return pt.ss($, ($) => pt.literal.list([['list', null]]))
+                                                case 'nothing': return pt.ss($, ($) => pt.literal.list([['nothing', null]]))
+                                                case 'simple': return pt.ss($, ($) => pt.literal.list([['text', null]]))
+                                                case 'optional': return pt.ss($, ($) => pt.literal.list([['optional', null]]))
                                                 case 'reference': return pt.ss($, ($) => pt.decide.state($.type, ($) => {
                                                     switch ($[0]) {
-                                                        case 'derived': return pt.ss($, ($) => pt.list.literal([['nothing', null]]))
-                                                        case 'selected': return pt.ss($, ($) => pt.list.literal([['text', null]]))
+                                                        case 'derived': return pt.ss($, ($) => pt.literal.list([['nothing', null]]))
+                                                        case 'selected': return pt.ss($, ($) => pt.literal.list([['text', null]]))
                                                         default: return pt.au($[0])
                                                     }
                                                 }))
-                                                case 'text': return pt.ss($, ($) => pt.list.literal([['text', null]]))
+                                                case 'text': return pt.ss($, ($) => pt.literal.list([['text', null]]))
                                                 default: return pt.au($[0])
                                             }
                                         })
@@ -68,25 +67,25 @@ export const Value: Value = ($) => {
                                 const start_token = $.list['[']
                                 return pt.decide.state($.type, ($): d_out.Errors => {
                                     switch ($[0]) {
-                                        case 'missing option item': return pt.ss($, ($): d_out.Errors => pt.list.literal([
+                                        case 'missing option item': return pt.ss($, ($): d_out.Errors => pt.literal.list([
                                             {
                                                 'range': start_token.range,
                                                 'type': ['state', ['missing option name', null]] //FIXME wrong error
                                             }
                                         ]))
-                                        case 'option item is not a text': return pt.ss($, ($) => pt.list.literal([
+                                        case 'option item is not a text': return pt.ss($, ($) => pt.literal.list([
                                             {
                                                 'range': start_token.range,
                                                 'type': ['state', ['option name is not a text', null]] //FIXME wrong error
                                             }
                                         ]))
-                                        case 'missing value item': return pt.ss($, ($) => pt.list.literal([
+                                        case 'missing value item': return pt.ss($, ($) => pt.literal.list([
                                             {
                                                 'range': start_token.range,
                                                 'type': ['state', ['missing value', null]] //FIXME wrong error
                                             }
                                         ]))
-                                        case 'too many items': return pt.ss($, ($) => pt.list.literal<d_out.Errors.L>([
+                                        case 'too many items': return pt.ss($, ($) => pt.literal.list<d_out.Errors.L>([
                                             {
                                                 'range': start_token.range,
                                                 'type': ['state', ['more than 2 items in list', null]] //FIXME wrong error
@@ -96,7 +95,7 @@ export const Value: Value = ($) => {
                                     }
                                 })
                             })
-                            case 'unknown option': return pt.ss($, ($) => pt.list.literal([
+                            case 'unknown option': return pt.ss($, ($) => pt.literal.list([
                                 {
                                     'range': $['option token'].range,
                                     'type': ['state', ['unknown option', {
@@ -108,7 +107,7 @@ export const Value: Value = ($) => {
                             default: return pt.au($[0])
                         }
                     }))
-                    case 'missing': return pt.ss($, ($): d_out.Errors => pt.list.literal([
+                    case 'missing': return pt.ss($, ($): d_out.Errors => pt.literal.list([
                         {
                             'range': start_token_range,
                             'type': ['value', ['missing', null]],
@@ -123,7 +122,7 @@ export const Value: Value = ($) => {
                 switch ($[0]) {
                     case 'dictionary': return pt.ss($, ($) => {
 
-                        return pt.list.nested_literal_old([
+                        return pt.literal.nested_list([
                             //duplicate id's
                             pt.list.from.dictionary(
                                 $.derived.entries
@@ -131,7 +130,7 @@ export const Value: Value = ($) => {
                                 ($, id): d_out.Errors => {
                                     return pt.decide.state($.result, ($): d_out.Errors => {
                                         switch ($[0]) {
-                                            case 'success': return pt.ss($, ($) => pt.list.literal([]))
+                                            case 'success': return pt.ss($, ($) => pt.literal.list([]))
                                             case 'error': return pt.ss($, ($) => pt.decide.state($, ($) => {
                                                 switch ($[0]) {
                                                     case 'duplicate': return pt.ss($, ($) => $.instances.__l_map(($): d_out.Errors.L => ({
@@ -154,11 +153,11 @@ export const Value: Value = ($) => {
                             ).flatten(
                                 ($) => {
                                     const intermediate = $.intermediate
-                                    return pt.list.nested_literal_old([
+                                    return pt.literal.nested_list([
                                         pt.decide.state($.value, ($) => {
                                             switch ($[0]) {
                                                 case 'set': return pt.ss($, ($) => Value($))
-                                                case 'not set': return pt.ss($, ($) => pt.list.literal<d_out.Errors.L>([
+                                                case 'not set': return pt.ss($, ($) => pt.literal.list<d_out.Errors.L>([
                                                 {
                                                     'range': intermediate['id value pair'].id.range,
                                                     'type': ['group', ['missing property value', { //missing property value
@@ -176,10 +175,10 @@ export const Value: Value = ($) => {
                     })
                     case 'group': return pt.ss($, ($) => {
 
-                        return pt.list.nested_literal_old([
+                        return pt.literal.nested_list([
                             pt.decide.state($.derived.style, ($) => {
                                 switch ($[0]) {
-                                    case 'concise': return pt.ss($, ($) => pt.list.nested_literal_old([
+                                    case 'concise': return pt.ss($, ($) => pt.literal.nested_list([
                                         pt.list.from.list(
                                             $.properties
                                         ).flatten(
@@ -187,11 +186,11 @@ export const Value: Value = ($) => {
                                                 const item = $.item
                                                 return pt.decide.state($['definition found'], ($): d_out.Errors => {
                                                     switch ($[0]) {
-                                                        case 'no': return pt.ss($, ($) => pt.list.literal([
+                                                        case 'no': return pt.ss($, ($) => pt.literal.list([
                                                             {
                                                                 'range': t_astn_parse_tree_to_location.Value(item.value),
                                                                 'type': ['group', ['superfluous property', {
-                                                                    'name': pt.optional.literal.not_set()
+                                                                    'name': pt.literal.not_set()
                                                                 }]]
                                                             }
                                                         ]))
@@ -202,7 +201,7 @@ export const Value: Value = ($) => {
                                             }
                                         ),
                                     ]))
-                                    case 'verbose': return pt.ss($, ($) => pt.list.nested_literal_old([
+                                    case 'verbose': return pt.ss($, ($) => pt.literal.nested_list([
                                         //diagnostics for each property
                                         pt.list.from.list(
                                             $.properties,
@@ -210,20 +209,20 @@ export const Value: Value = ($) => {
                                             ($) => {
                                                 const id_value_pair = $.intermediate['id value pair']
 
-                                                return pt.list.nested_literal_old([
+                                                return pt.literal.nested_list([
                                                     pt.decide.state($['definition found'], ($): d_out.Errors => {
                                                         switch ($[0]) {
                                                             case 'yes': return pt.ss($, ($) => $['value'].__decide(
                                                                 ($) => Value($),
-                                                                (): d_out.Errors => pt.list.literal([
+                                                                (): d_out.Errors => pt.literal.list([
                                                                     //the property is missing, it is reported at another place (where the concise and verbose properties are merged)
                                                                 ])
                                                             ))
-                                                            case 'no': return pt.ss($, ($) => pt.list.literal([
+                                                            case 'no': return pt.ss($, ($) => pt.literal.list([
                                                                 {
                                                                     'range': id_value_pair.id.range,
                                                                     'type': ['group', ['superfluous property', {
-                                                                        'name': pt.optional.literal.set(id_value_pair.id.token.value)
+                                                                        'name': pt.literal.set(id_value_pair.id.token.value)
                                                                     }]]
                                                                 }
                                                             ]))
@@ -247,10 +246,10 @@ export const Value: Value = ($) => {
                                     const id = $.id
                                     return pt.decide.state($.value.result, ($) => {
                                         switch ($[0]) {
-                                            case 'success': return pt.ss($, ($) => pt.list.literal([]))
+                                            case 'success': return pt.ss($, ($) => pt.literal.list([]))
                                             case 'error': return pt.ss($, ($): d_out.Errors => pt.decide.state($, ($): d_out.Errors => {
                                                 switch ($[0]) {
-                                                    case 'missing': return pt.ss($, ($): d_out.Errors => pt.list.literal<d_out.Errors.L>([
+                                                    case 'missing': return pt.ss($, ($): d_out.Errors => pt.literal.list<d_out.Errors.L>([
                                                         {
                                                             'range': $['start token range'],
                                                             'type': ['group', ['missing property', {
@@ -274,18 +273,18 @@ export const Value: Value = ($) => {
                             )
                         ])
                     })
-                    case 'simple': return pt.ss($, ($) => pt.list.literal([]))
+                    case 'simple': return pt.ss($, ($) => pt.literal.list([]))
                     case 'list': return pt.ss($, ($) => pt.list.from.list(
                         $.derived.items
                     ).flatten(
                         ($) => Value($)
                     ))
-                    case 'nothing': return pt.ss($, ($) => pt.list.literal([]))
+                    case 'nothing': return pt.ss($, ($) => pt.literal.list([]))
                     case 'reference': return pt.ss($, ($) => pt.decide.state($.type, ($): d_out.Errors => {
                         switch ($[0]) {
-                            case 'derived': return pt.ss($, ($) => pt.list.nested_literal_old([
+                            case 'derived': return pt.ss($, ($) => pt.literal.nested_list([
                             ]))
-                            case 'selected': return pt.ss($, ($) => pt.list.nested_literal_old([
+                            case 'selected': return pt.ss($, ($) => pt.literal.nested_list([
                             ]))
                             default: return pt.au($[0])
                         }
@@ -296,14 +295,14 @@ export const Value: Value = ($) => {
                     case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
                             case 'set': return pt.ss($, ($) => Value($['child value']))
-                            case 'not set': return pt.ss($, ($) => pt.list.literal([]))
+                            case 'not set': return pt.ss($, ($) => pt.literal.list([]))
                             default: return pt.au($[0])
                         }
                     }))
                     case 'state': return pt.ss($, ($): d_out.Errors => {
                         return pt.decide.state($.derived['option status'], ($): d_out.Errors => {
                             switch ($[0]) {
-                                case 'missing data': return pt.ss($, ($) => pt.list.literal([
+                                case 'missing data': return pt.ss($, ($) => pt.literal.list([
                                     {
                                         'range': $.intermediate.range,
                                         'type': ['state', ['missing option', null]]
@@ -314,7 +313,7 @@ export const Value: Value = ($) => {
                             }
                         })
                     })
-                    case 'text': return pt.ss($, ($) => pt.list.literal([]))
+                    case 'text': return pt.ss($, ($) => pt.literal.list([]))
                     default: return pt.au($[0])
                 }
             }))

@@ -24,12 +24,12 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "position": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -38,7 +38,7 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -50,7 +50,7 @@ export const Sort_Parameters: t_signatures.Sort_Parameters = ($, abort) => _p_ch
                         ),
                         {
                             'id': 'position',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => v_external_location.Position(

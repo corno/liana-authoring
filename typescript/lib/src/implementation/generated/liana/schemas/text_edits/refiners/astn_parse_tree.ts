@@ -24,7 +24,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
             $,
         ),
         {
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     )['items'],
 ).map(
@@ -51,13 +51,13 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             $,
                                         ),
                                         {
-                                            'expected properties': _p.dictionary.literal(
+                                            'expected properties': _p.literal.dictionary(
                                                 {
                                                     "range": null,
                                                     "text": null,
                                                 },
                                             ),
-                                            'subdocument context': _p.optional.literal.not_set(),
+                                            'subdocument context': _p.literal.not_set(),
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -66,7 +66,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
                                                 {
-                                                    'subdocument context': _p.optional.literal.not_set(),
+                                                    'subdocument context': _p.literal.not_set(),
                                                 },
                                             )
                                             return {
@@ -78,7 +78,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'range',
-                                                            'subdocument context': _p.optional.literal.not_set(),
+                                                            'subdocument context': _p.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_external_location.Range(
@@ -96,7 +96,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'text',
-                                                            'subdocument context': _p.optional.literal.not_set(),
+                                                            'subdocument context': _p.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -121,12 +121,12 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             $,
                                         ),
                                         {
-                                            'expected properties': _p.dictionary.literal(
+                                            'expected properties': _p.literal.dictionary(
                                                 {
                                                     "range": null,
                                                 },
                                             ),
-                                            'subdocument context': _p.optional.literal.not_set(),
+                                            'subdocument context': _p.literal.not_set(),
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -135,7 +135,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
                                                 {
-                                                    'subdocument context': _p.optional.literal.not_set(),
+                                                    'subdocument context': _p.literal.not_set(),
                                                 },
                                             )
                                             return {
@@ -147,7 +147,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'range',
-                                                            'subdocument context': _p.optional.literal.not_set(),
+                                                            'subdocument context': _p.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_external_location.Range(
@@ -172,13 +172,13 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             $,
                                         ),
                                         {
-                                            'expected properties': _p.dictionary.literal(
+                                            'expected properties': _p.literal.dictionary(
                                                 {
                                                     "location": null,
                                                     "text": null,
                                                 },
                                             ),
-                                            'subdocument context': _p.optional.literal.not_set(),
+                                            'subdocument context': _p.literal.not_set(),
                                         },
                                     ),
                                     ($) => _p_variables(
@@ -187,7 +187,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
                                                 {
-                                                    'subdocument context': _p.optional.literal.not_set(),
+                                                    'subdocument context': _p.literal.not_set(),
                                                 },
                                             )
                                             return {
@@ -199,7 +199,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'location',
-                                                            'subdocument context': _p.optional.literal.not_set(),
+                                                            'subdocument context': _p.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_external_location.Location(
@@ -217,7 +217,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                                         ),
                                                         {
                                                             'id': 'text',
-                                                            'subdocument context': _p.optional.literal.not_set(),
+                                                            'subdocument context': _p.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -239,7 +239,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($, abort) => _p.list.from.li
                                     'range': v_parse_tree_to_location.Value(
                                         $['value'],
                                         {
-                                            'subdocument context': _p.optional.literal.not_set(),
+                                            'subdocument context': _p.literal.not_set(),
                                         },
                                     ),
                                 }],

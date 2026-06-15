@@ -33,12 +33,12 @@ export const Error: t_signatures.Error = ($, abort) => _p_change_context(
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "message": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -47,7 +47,7 @@ export const Error: t_signatures.Error = ($, abort) => _p_change_context(
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -59,7 +59,7 @@ export const Error: t_signatures.Error = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'message',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -81,12 +81,12 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "options": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -95,7 +95,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -107,7 +107,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                         ),
                         {
                             'id': 'options',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => _p_change_context(
@@ -117,7 +117,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                 $,
                             ),
                             {
-                                'expected properties': _p.dictionary.literal(
+                                'expected properties': _p.literal.dictionary(
                                     {
                                         "insert spaces": null,
                                         "preserve delimiters": null,
@@ -126,7 +126,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                         "indent string": null,
                                     },
                                 ),
-                                'subdocument context': _p.optional.literal.not_set(),
+                                'subdocument context': _p.literal.not_set(),
                             },
                         ),
                         ($) => _p_variables(
@@ -135,7 +135,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                                     $['value'],
                                     {
-                                        'subdocument context': _p.optional.literal.not_set(),
+                                        'subdocument context': _p.literal.not_set(),
                                     },
                                 )
                                 return {
@@ -147,7 +147,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'insert spaces',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -157,7 +157,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -169,7 +169,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'preserve delimiters',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -179,7 +179,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -191,7 +191,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'preserve final newline state',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -201,7 +201,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -213,7 +213,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'preserve commas',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Boolean(
@@ -223,7 +223,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['true/false', null],
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -235,7 +235,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'indent string',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Text(

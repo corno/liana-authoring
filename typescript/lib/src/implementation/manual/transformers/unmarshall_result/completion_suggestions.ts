@@ -17,7 +17,6 @@ import * as d_outx from "../../../../interface/to_be_generated/found"
 import * as t_to_unmarshall_result_value_at_position from "./found"
 import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target"
 import * as t_authoring_target_to_text from "astn/dist/implementation/manual/transformers/authoring_target/text"
-import * as t_parse_tree_to_full_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
 export type Parameters = {
     'position': d_location.Position
@@ -69,7 +68,7 @@ const d_schema_Value = (
                 }),
                 $p,
             ))
-            case 'reference': return pt.ss($, ($) => pt.list.literal<Minimal_Completion_Suggestion>([
+            case 'reference': return pt.ss($, ($) => pt.literal.list<Minimal_Completion_Suggestion>([
                 {
                     'label': "",
                     'insert value': {
@@ -78,7 +77,7 @@ const d_schema_Value = (
                                 'delimiter': ['apostrophe', null],
                                 'value': "...",
                                 'trivia': {
-                                    'comments': pt.list.literal([])
+                                    'comments': pt.literal.list([])
                                 }
                             }]
                         }]
@@ -87,7 +86,7 @@ const d_schema_Value = (
             ]))
             case 'group': return pt.ss($, ($) => {
                 const group = $
-                return pt.list.literal<Minimal_Completion_Suggestion>([
+                return pt.literal.list<Minimal_Completion_Suggestion>([
                     pt.decide.state($p.style, ($): Minimal_Completion_Suggestion => {
                         switch ($[0]) {
                             case 'verbose': return pt.ss($, ($) => ({
@@ -96,18 +95,18 @@ const d_schema_Value = (
                                     'data': ['concrete', {
                                         'type': ['group', ['verbose', {
                                             '(': {
-                                                'comments': pt.list.literal([])
+                                                'comments': pt.literal.list([])
                                             },
                                             'properties': pt.list.from.dictionary(
                                                 group
                                             ).convert(
                                                 ($, id) => ({
                                                     'id': id,
-                                                    'value': pt.optional.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
+                                                    'value': pt.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
                                                 })
                                             ),
                                             ')': {
-                                                'comments': pt.list.literal([])
+                                                'comments': pt.literal.list([])
                                             },
                                         }]]
                                     }]
@@ -120,7 +119,7 @@ const d_schema_Value = (
                                     'data': ['concrete', {
                                         'type': ['group', ['concise', {
                                             '<': {
-                                                'comments': pt.list.literal([])
+                                                'comments': pt.literal.list([])
                                             },
                                             'properties': pt.list.from.dictionary(
                                                 group
@@ -128,7 +127,7 @@ const d_schema_Value = (
                                                 ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
                                             ),
                                             '>': {
-                                                'comments': pt.list.literal([])
+                                                'comments': pt.literal.list([])
                                             },
                                         }]]
                                     }]
@@ -141,7 +140,7 @@ const d_schema_Value = (
 
                 ])
             })
-            default: return pt.list.literal([
+            default: return pt.literal.list([
                 {
                     'label': "",
                     'insert value': t_liana_schema_to_authoring_target.Value(
@@ -167,12 +166,12 @@ export const Found: Found = ($, $p) => {
                 switch ($[0]) {
                     case 'concrete': return pt.ss($, ($) => pt.decide.state(definition, ($) => {
                         switch ($[0]) {
-                            case 'reference': return pt.ss($, ($) => pt.optional.literal.not_set()) //FIXME
-                            default: return pt.optional.literal.not_set()
+                            case 'reference': return pt.ss($, ($) => pt.literal.not_set()) //FIXME
+                            default: return pt.literal.not_set()
                         }
                     }))
-                    case 'include': return pt.ss($, ($) => pt.optional.literal.not_set())
-                    case 'missing': return pt.ss($, ($) => pt.optional.literal.set({
+                    case 'include': return pt.ss($, ($) => pt.literal.not_set())
+                    case 'missing': return pt.ss($, ($) => pt.literal.set({
                         'type': ['missing value', null],
                         'suggestions': pt.list.from.list(
                             d_schema_Value(
@@ -200,8 +199,8 @@ export const Found: Found = ($, $p) => {
             })
 
         })
-        case 'entry': return pt.ss($, ($) => pt.optional.literal.not_set())
-        case 'property': return pt.ss($, ($) => pt.optional.literal.not_set())
+        case 'entry': return pt.ss($, ($) => pt.literal.not_set())
+        case 'property': return pt.ss($, ($) => pt.literal.not_set())
         case 'state': return pt.ss($, ($): d_out.Completion_Suggestions => {
             const definition = $.definition
             return pt.decide.state($.intermediate.instance, ($): d_out.Completion_Suggestions => {
@@ -210,7 +209,7 @@ export const Found: Found = ($, $p) => {
                         switch ($[0]) {
                             case 'missing': return pt.ss($, ($) => {
                                 const missing_data_marker = $['#']
-                                return pt.optional.literal.set({
+                                return pt.literal.set({
                                     'type': ['missing option', null],
                                     'suggestions': pt.list.from.dictionary(
                                         definition.options
@@ -233,7 +232,7 @@ export const Found: Found = ($, $p) => {
                                                             'data': ['concrete', {
                                                                 'type': ['state', {
                                                                     '|': {
-                                                                        'comments': pt.list.literal([])
+                                                                        'comments': pt.literal.list([])
                                                                     },
                                                                     'status': ['set', {
                                                                         'option': id,
@@ -248,7 +247,7 @@ export const Found: Found = ($, $p) => {
                                                             'write delimiters': false, //skip the pipe
                                                         }
                                                     ),
-                                                    'additional text edits': pt.list.literal<d_out_text_edits.Text_Edits.L>([
+                                                    'additional text edits': pt.literal.list<d_out_text_edits.Text_Edits.L>([
                                                         ['delete', {
                                                             'range': missing_data_marker.range
                                                         }]
@@ -260,11 +259,11 @@ export const Found: Found = ($, $p) => {
                                     })
                                 })
                             })
-                            case 'set': return pt.ss($, ($) => pt.optional.literal.not_set()) //check if this is in the actual option name, if so, give suggestions
+                            case 'set': return pt.ss($, ($) => pt.literal.not_set()) //check if this is in the actual option name, if so, give suggestions
                             default: return pt.au($[0])
                         }
                     }))
-                    case 'list': return pt.ss($, ($) => pt.optional.literal.not_set())
+                    case 'list': return pt.ss($, ($) => pt.literal.not_set())
                     default: return pt.au($[0])
                 }
             })

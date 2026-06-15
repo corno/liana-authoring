@@ -18,7 +18,7 @@ export const Result: t_signatures.Result = ($) => ['text', {
     'value': $,
 }]
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "content": _p_change_context(
             $['content'],
@@ -29,7 +29,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
         ),
         "source": _p_change_context(
             $['source'],
-            ($) => ['group', ['verbose', _p.dictionary.literal(
+            ($) => ['group', ['verbose', _p.literal.dictionary(
                 {
                     "file path": _p_change_context(
                         $['file path'],
@@ -51,7 +51,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
         ),
         "target": _p_change_context(
             $['target'],
-            ($) => ['group', ['verbose', _p.dictionary.literal(
+            ($) => ['group', ['verbose', _p.literal.dictionary(
                 {
                     "indentation": _p_change_context(
                         $['indentation'],

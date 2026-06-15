@@ -13,7 +13,7 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../location/transformers/astn_sealed_target"
 
-export const Sort_Parameters: t_signatures.Sort_Parameters = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Sort_Parameters: t_signatures.Sort_Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "position": _p_change_context(
             $['position'],

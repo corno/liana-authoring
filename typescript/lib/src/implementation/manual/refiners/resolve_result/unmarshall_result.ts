@@ -1,10 +1,8 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as p_di from 'pareto-core/dist/data/interface'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 
 import * as d_in from "../../../../interface/to_be_generated/unmarshall_result"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
-import * as d_function from "../../../../interface/to_be_generated/resolve_result_from_unmarshall_result"
 import * as d_out from "../../../../interface/to_be_generated/resolve_result"
 
 import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
@@ -22,11 +20,11 @@ export const Document = (
         $.content,
         {
             'definition': $p.definition['root value resolver'],
-            // 'module parameters': pt.optional.literal.not_set(),
-            // 'lookup parameters': pt.optional.literal.not_set(),
+            // 'module parameters': pt.literal.not_set(),
+            // 'lookup parameters': pt.literal.not_set(),
             'resolver': $p.resolvers,
-            // 'acyclic siblings': pt.optional.literal.not_set(),
-            // 'cyclic siblings': pt.optional.literal.not_set(),
+            // 'acyclic siblings': pt.literal.not_set(),
+            // 'cyclic siblings': pt.literal.not_set(),
         }
     )
 })
@@ -129,8 +127,8 @@ export const Value = (
                                                         }
                                                     }),
                                                     'resolver': $p.resolver,
-                                                    // 'module parameters': pt.optional.literal.not_set(), //FIXME 
-                                                    // 'lookup parameters': pt.optional.literal.not_set(), //FIXME
+                                                    // 'module parameters': pt.literal.not_set(), //FIXME 
+                                                    // 'lookup parameters': pt.literal.not_set(), //FIXME
                                                     // 'module parameters': pt.optional.from.optional(def.arguments).map(
                                                     //     ($) => ({
                                                     //         'lookups': pt.optional.from.optional($.lookups).map(
@@ -183,8 +181,8 @@ export const Value = (
                                                     //         )
                                                     //     })
                                                     // ),
-                                                    // 'acyclic siblings': pt.optional.literal.not_set(),
-                                                    // 'cyclic siblings': pt.optional.literal.not_set(),
+                                                    // 'acyclic siblings': pt.literal.not_set(),
+                                                    // 'cyclic siblings': pt.literal.not_set(),
                                                 }
                                             )
                                         }))
@@ -213,8 +211,8 @@ export const Value = (
                                                                             'resolver': $p.resolver,
                                                                             // 'module parameters': $p['module parameters'],
                                                                             // 'lookup parameters': $p['lookup parameters'],
-                                                                            // 'acyclic siblings': pt.optional.literal.set($al),
-                                                                            // 'cyclic siblings': pt.optional.literal.set($cl),
+                                                                            // 'acyclic siblings': pt.literal.set($al),
+                                                                            // 'cyclic siblings': pt.literal.set($cl),
                                                                         }
                                                                     )]
                                                                 }])
@@ -404,7 +402,7 @@ export const Value = (
                                             'unmarshalled': $,
                                             'option': pt.decide.state($.derived['option status'], ($) => {
                                                 switch ($[0]) {
-                                                    case 'set': return pt.ss($, ($) => pt.optional.literal.set(Value(
+                                                    case 'set': return pt.ss($, ($) => pt.literal.set(Value(
                                                         $.value,
                                                         {
                                                             'definition': def.options.__get_entry_deprecated(
@@ -420,7 +418,7 @@ export const Value = (
                                                             // 'cyclic siblings': $p['cyclic siblings'],
                                                         }
                                                     )))
-                                                    case 'missing data': return pt.ss($, ($) => pt.optional.literal.not_set())
+                                                    case 'missing data': return pt.ss($, ($) => pt.literal.not_set())
                                                     default: return pt.au($[0])
                                                 }
                                             })

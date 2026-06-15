@@ -22,13 +22,13 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "context": null,
                     "node": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -37,7 +37,7 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -49,7 +49,7 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
                         ),
                         {
                             'id': 'context',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => Context_Path(
@@ -67,7 +67,7 @@ export const Node_Path: t_signatures.Node_Path = ($, abort) => _p_change_context
                         ),
                         {
                             'id': 'node',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -89,13 +89,13 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "start": null,
                     "subpath": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -104,7 +104,7 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -116,7 +116,7 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
                         ),
                         {
                             'id': 'start',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => Start(
@@ -134,7 +134,7 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => _p_change_c
                         ),
                         {
                             'id': 'subpath',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => Context_Subpath(
@@ -156,7 +156,7 @@ export const Context_Subpath: t_signatures.Context_Subpath = ($, abort) => _p.li
             $,
         ),
         {
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     )['items'],
 ).map(
@@ -202,12 +202,12 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                                     $,
                                 ),
                                 {
-                                    'expected properties': _p.dictionary.literal(
+                                    'expected properties': _p.literal.dictionary(
                                         {
                                             "up steps": null,
                                         },
                                     ),
-                                    'subdocument context': _p.optional.literal.not_set(),
+                                    'subdocument context': _p.literal.not_set(),
                                 },
                             ),
                             ($) => _p_variables(
@@ -216,7 +216,7 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                                     const var_verbose_group_range = v_parse_tree_to_location.Value(
                                         $['value'],
                                         {
-                                            'subdocument context': _p.optional.literal.not_set(),
+                                            'subdocument context': _p.literal.not_set(),
                                         },
                                     )
                                     return {
@@ -228,7 +228,7 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                                                 ),
                                                 {
                                                     'id': 'up steps',
-                                                    'subdocument context': _p.optional.literal.not_set(),
+                                                    'subdocument context': _p.literal.not_set(),
                                                 },
                                             ),
                                             ($) => Up_Steps(
@@ -250,7 +250,7 @@ export const Start: t_signatures.Start = ($, abort) => _p_change_context(
                             'range': v_parse_tree_to_location.Value(
                                 $['value'],
                                 {
-                                    'subdocument context': _p.optional.literal.not_set(),
+                                    'subdocument context': _p.literal.not_set(),
                                 },
                             ),
                         }],
@@ -267,6 +267,6 @@ export const Up_Steps: t_signatures.Up_Steps = ($, abort) => v_unmarshalled_from
     ),
     {
         'type': ['decimal', null],
-        'subdocument context': _p.optional.literal.not_set(),
+        'subdocument context': _p.literal.not_set(),
     },
 )

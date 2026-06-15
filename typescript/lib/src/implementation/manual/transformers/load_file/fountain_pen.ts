@@ -1,5 +1,4 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_di from 'pareto-core/dist/data/interface'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
@@ -14,10 +13,6 @@ export namespace signatures {
 //dependencies
 import * as t_read_file_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
 import * as t_deserialize_to_fp from "../deserialize/fountain_pen"
-
-//shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
-
 
 export const Error: signatures.Error = ($) => pt.decide.state($, ($) => {
     switch ($[0]) {

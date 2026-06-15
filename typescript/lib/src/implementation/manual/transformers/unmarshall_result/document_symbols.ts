@@ -1,6 +1,4 @@
-import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
@@ -31,7 +29,7 @@ export const Value: Value = ($) => {
         switch ($[0]) {
             case 'error': return pt.ss($, ($) => ({
                 'kind': ['null', null],
-                'children': pt.list.literal([]),
+                'children': pt.literal.list([]),
                 'deprecated': false,
             }))
             case 'success': return pt.ss($, ($) => pt.decide.state($, ($): d_out.Value => {
@@ -47,7 +45,7 @@ export const Value: Value = ($) => {
                                     case 'set': return pt.ss($, ($) => Value($))
                                     case 'not set': return pt.ss($, ($) => ({
                                         'kind': ['null', null],
-                                        'children': pt.list.literal([]),
+                                        'children': pt.literal.list([]),
                                     }))
                                     default: return pt.au($[0])
                                 }
@@ -69,12 +67,12 @@ export const Value: Value = ($) => {
                                                 ($): d_out.Value => Value($),
                                                 (): d_out.Value => ({
                                                     'kind': ['null', null],
-                                                    'children': pt.list.literal([]),
+                                                    'children': pt.literal.list([]),
                                                 })
                                             ))
                                             case 'no': return pt.ss($, ($) => ({
                                                 'kind': ['null', null],
-                                                'children': pt.list.literal([]),
+                                                'children': pt.literal.list([]),
                                             }))
                                             default: return pt.au($[0])
                                         }
@@ -88,7 +86,7 @@ export const Value: Value = ($) => {
                                             'value': {
 
                                                 'kind': ['null', null],
-                                                'children': pt.list.literal([]),
+                                                'children': pt.literal.list([]),
                                             },
                                             'detail': "property",
                                             'name': "-unknown-",
@@ -126,21 +124,21 @@ export const Value: Value = ($) => {
                     }))
                     case 'nothing': return pt.ss($, ($) => ({
                         'kind': ['null', null],
-                        'children': pt.list.literal([]),
+                        'children': pt.literal.list([]),
                     }))
                     case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
                             case 'set': return pt.ss($, ($) => Value($['child value']))
                             case 'not set': return pt.ss($, ($) => ({
                                 'kind': ['null', null],
-                                'children': pt.list.literal([]),
+                                'children': pt.literal.list([]),
                             }))
                             default: return pt.au($[0])
                         }
                     }))
                     case 'reference': return pt.ss($, ($) => ({
                         'kind': ['string', null],
-                        'children': pt.list.literal([]),
+                        'children': pt.literal.list([]),
                     }))
                     case 'simple': return pt.ss($, ($) => pt.decide.state($.definition, ($) => {
                         switch ($[0]) {
@@ -148,15 +146,15 @@ export const Value: Value = ($) => {
                                 switch ($[0]) {
                                     case 'number': return pt.ss($, ($) => ({
                                         'kind': ['number', null],
-                                        'children': pt.list.literal([]),
+                                        'children': pt.literal.list([]),
                                     }))
                                     case 'boolean': return pt.ss($, ($) => ({
                                         'kind': ['boolean', null],
-                                        'children': pt.list.literal([]),
+                                        'children': pt.literal.list([]),
                                     }))
                                     case 'date': return pt.ss($, ($) => ({
                                         'kind': ['string', null],
-                                        'children': pt.list.literal([]),
+                                        'children': pt.literal.list([]),
                                     }))
                                     default: return pt.au($[0])
                                 }
@@ -168,7 +166,7 @@ export const Value: Value = ($) => {
                         switch ($[0]) {
                             case 'set': return pt.ss($, ($) => ({
                                 'kind': ['enum member', null],
-                                'children': pt.list.literal([
+                                'children': pt.literal.list([
                                     {
                                         'name': "set",
                                         'detail': "set",
@@ -181,7 +179,7 @@ export const Value: Value = ($) => {
                             }))
                             case 'missing data': return pt.ss($, ($) => ({
                                 'kind': ['null', null],
-                                'children': pt.list.literal([]),
+                                'children': pt.literal.list([]),
                                 'deprecated': true,
                             }))
                             default: return pt.au($[0])
@@ -189,7 +187,7 @@ export const Value: Value = ($) => {
                     }))
                     case 'text': return pt.ss($, ($) => ({
                         'kind': ['string', null],
-                        'children': pt.list.literal([]),
+                        'children': pt.literal.list([]),
                         'deprecated': false,
                     }))
                     default: return pt.au($[0])

@@ -17,7 +17,7 @@ import * as v_external_location from "../../location/transformers/astn_sealed_ta
 
 import * as v_external_path_unrestricted from "../../path_unrestricted/transformers/astn_sealed_target"
 
-export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "completion suggestions": _p_change_context(
             $['completion suggestions'],
@@ -28,7 +28,7 @@ export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.dicti
     },
 )]]
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "content": _p_change_context(
             $['content'],
@@ -39,7 +39,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
         ),
         "source": _p_change_context(
             $['source'],
-            ($) => ['group', ['verbose', _p.dictionary.literal(
+            ($) => ['group', ['verbose', _p.literal.dictionary(
                 {
                     "file path": _p_change_context(
                         $['file path'],

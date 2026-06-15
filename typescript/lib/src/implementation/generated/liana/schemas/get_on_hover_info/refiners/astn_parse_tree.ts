@@ -28,12 +28,12 @@ export const Result: t_signatures.Result = ($, abort) => _p_change_context(
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "contents": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -42,7 +42,7 @@ export const Result: t_signatures.Result = ($, abort) => _p_change_context(
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -54,7 +54,7 @@ export const Result: t_signatures.Result = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'contents',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => _p_change_context(
@@ -64,12 +64,12 @@ export const Result: t_signatures.Result = ($, abort) => _p_change_context(
                                 $,
                             ),
                             {
-                                'expected properties': _p.dictionary.literal(
+                                'expected properties': _p.literal.dictionary(
                                     {
                                         "hover texts": null,
                                     },
                                 ),
-                                'subdocument context': _p.optional.literal.not_set(),
+                                'subdocument context': _p.literal.not_set(),
                             },
                         ),
                         ($) => _p_variables(
@@ -78,7 +78,7 @@ export const Result: t_signatures.Result = ($, abort) => _p_change_context(
                                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                                     $['value'],
                                     {
-                                        'subdocument context': _p.optional.literal.not_set(),
+                                        'subdocument context': _p.literal.not_set(),
                                     },
                                 )
                                 return {
@@ -90,7 +90,7 @@ export const Result: t_signatures.Result = ($, abort) => _p_change_context(
                                             ),
                                             {
                                                 'id': 'hover texts',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_external_hover_info.Hover_Texts(
@@ -117,14 +117,14 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "content": null,
                     "source": null,
                     "position": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -133,7 +133,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -145,7 +145,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                         ),
                         {
                             'id': 'content',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -163,7 +163,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                         ),
                         {
                             'id': 'source',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => _p_change_context(
@@ -173,13 +173,13 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                 $,
                             ),
                             {
-                                'expected properties': _p.dictionary.literal(
+                                'expected properties': _p.literal.dictionary(
                                     {
                                         "file path": null,
                                         "tab size": null,
                                     },
                                 ),
-                                'subdocument context': _p.optional.literal.not_set(),
+                                'subdocument context': _p.literal.not_set(),
                             },
                         ),
                         ($) => _p_variables(
@@ -188,7 +188,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                                     $['value'],
                                     {
-                                        'subdocument context': _p.optional.literal.not_set(),
+                                        'subdocument context': _p.literal.not_set(),
                                     },
                                 )
                                 return {
@@ -200,7 +200,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'file path',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_external_path_unrestricted.Node_Path(
@@ -218,7 +218,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'id': 'tab size',
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                         ($) => v_unmarshalled_from_parse_tree.Number(
@@ -228,7 +228,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                                             ),
                                             {
                                                 'type': ['decimal', null],
-                                                'subdocument context': _p.optional.literal.not_set(),
+                                                'subdocument context': _p.literal.not_set(),
                                             },
                                         ),
                                     ),
@@ -245,7 +245,7 @@ export const Parameters: t_signatures.Parameters = ($, abort) => _p_change_conte
                         ),
                         {
                             'id': 'position',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => v_external_location.Position(

@@ -1,5 +1,4 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_di from 'pareto-core/dist/data/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/resolve_errors"

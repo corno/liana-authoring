@@ -23,7 +23,7 @@ export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', _p.list.fro
     ),
 )]
 
-export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "severity": _p_change_context(
             $['severity'],
@@ -95,11 +95,11 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                 ($): t_out.Value.optional => ['set', ['list', _p.list.from.list(
                     $,
                 ).map(
-                    ($) => ['group', ['verbose', _p.dictionary.literal(
+                    ($) => ['group', ['verbose', _p.literal.dictionary(
                         {
                             "location": _p_change_context(
                                 $['location'],
-                                ($) => ['group', ['verbose', _p.dictionary.literal(
+                                ($) => ['group', ['verbose', _p.literal.dictionary(
                                     {
                                         "file path": _p_change_context(
                                             $['file path'],
@@ -170,7 +170,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
     },
 )]]
 
-export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "diagnostics": _p_change_context(
             $['diagnostics'],
@@ -181,7 +181,7 @@ export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.dicti
     },
 )]]
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "content": _p_change_context(
             $['content'],

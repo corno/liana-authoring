@@ -18,8 +18,8 @@ export const Error: p_ti.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
 			case 'schema path': return pt.ss($, ($) => ({
 				'severity': ['error', null],
 				'message': `no schema found`,
-				'range': pt.optional.literal.not_set(),
-				'related information': pt.optional.literal.not_set(),
+				'range': pt.literal.not_set(),
+				'related information': pt.literal.not_set(),
 				'type': ['deserialize', null]
 			}))
 			case 'schema': return pt.ss($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
@@ -32,8 +32,8 @@ export const Error: p_ti.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
 						'newline': "\n",
 					}
 				),
-				'range': pt.optional.literal.set(t_deserialize_to_location.Error($)),
-				'related information': pt.optional.literal.not_set(),
+				'range': pt.literal.set(t_deserialize_to_location.Error($)),
+				'related information': pt.literal.not_set(),
 				'type': ['deserialize', null]
 			}))
 			default: return pt.au($[0])

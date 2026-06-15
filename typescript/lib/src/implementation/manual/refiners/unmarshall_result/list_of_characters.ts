@@ -25,7 +25,7 @@ export const Document: Document = ($, abort, $p) => {
         ),
         {
             'definition': $p.module,
-            'property path': pt.list.literal([]),
+            'property path': pt.literal.list([]),
         }
     )
 }

@@ -11,11 +11,11 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "source": _p_change_context(
             $['source'],
-            ($) => ['group', ['verbose', _p.dictionary.literal(
+            ($) => ['group', ['verbose', _p.literal.dictionary(
                 {
                     "document resource identifier": _p_change_context(
                         $['document resource identifier'],
@@ -38,7 +38,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
         ),
         "target": _p_change_context(
             $['target'],
-            ($) => ['group', ['verbose', _p.dictionary.literal(
+            ($) => ['group', ['verbose', _p.literal.dictionary(
                 {
                     "indentation": _p_change_context(
                         $['indentation'],

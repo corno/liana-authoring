@@ -22,13 +22,13 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "line": null,
                     "character": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -37,7 +37,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -49,7 +49,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'line',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Number(
@@ -59,7 +59,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'type': ['decimal', null],
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                 ),
@@ -71,7 +71,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'character',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => v_unmarshalled_from_parse_tree.Number(
@@ -81,7 +81,7 @@ export const Position: t_signatures.Position = ($, abort) => _p_change_context(
                         ),
                         {
                             'type': ['decimal', null],
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                 ),
@@ -97,13 +97,13 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
             $,
         ),
         {
-            'expected properties': _p.dictionary.literal(
+            'expected properties': _p.literal.dictionary(
                 {
                     "start": null,
                     "end": null,
                 },
             ),
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     ),
     ($) => _p_variables(
@@ -112,7 +112,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
             const var_verbose_group_range = v_parse_tree_to_location.Value(
                 $['value'],
                 {
-                    'subdocument context': _p.optional.literal.not_set(),
+                    'subdocument context': _p.literal.not_set(),
                 },
             )
             return {
@@ -124,7 +124,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'start',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => Position(
@@ -142,7 +142,7 @@ export const Range_FE: t_signatures.Range_FE = ($, abort) => _p_change_context(
                         ),
                         {
                             'id': 'end',
-                            'subdocument context': _p.optional.literal.not_set(),
+                            'subdocument context': _p.literal.not_set(),
                         },
                     ),
                     ($) => Position(

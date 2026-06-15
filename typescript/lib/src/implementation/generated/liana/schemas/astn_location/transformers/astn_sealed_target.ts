@@ -11,7 +11,7 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Range: t_signatures.Range = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Range: t_signatures.Range = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "start": _p_change_context(
             $['start'],
@@ -47,7 +47,7 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', _p.d
                     $,
                     ($) => ({
                         'option': 'end of document',
-                        'value': ['group', ['verbose', _p.dictionary.literal(
+                        'value': ['group', ['verbose', _p.literal.dictionary(
                             {
                                 "end": _p_change_context(
                                     $['end'],
@@ -67,7 +67,7 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', _p.d
     },
 )]
 
-export const Location: t_signatures.Location = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Location: t_signatures.Location = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "relative": _p_change_context(
             $['relative'],
@@ -87,7 +87,7 @@ export const Location: t_signatures.Location = ($) => ['group', ['verbose', _p.d
     },
 )]]
 
-export const Relative_Location: t_signatures.Relative_Location = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Relative_Location: t_signatures.Relative_Location = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "line": _p_change_context(
             $['line'],

@@ -11,7 +11,7 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Position: t_signatures.Position = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Position: t_signatures.Position = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "line": _p_change_context(
             $['line'],
@@ -34,7 +34,7 @@ export const Position: t_signatures.Position = ($) => ['group', ['verbose', _p.d
     },
 )]]
 
-export const Range_FE: t_signatures.Range_FE = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Range_FE: t_signatures.Range_FE = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "start": _p_change_context(
             $['start'],

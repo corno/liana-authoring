@@ -16,7 +16,7 @@ import * as v_external_location from "../../astn_location/transformers/astn_seal
 export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
     $,
 ).map(
-    ($) => ['group', ['verbose', _p.dictionary.literal(
+    ($) => ['group', ['verbose', _p.literal.dictionary(
         {
             "range": _p_change_context(
                 $['range'],
@@ -44,7 +44,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'invalid type',
-                                                                'value': ['group', ['verbose', _p.dictionary.literal(
+                                                                'value': ['group', ['verbose', _p.literal.dictionary(
                                                                     {
                                                                         "expected": _p_change_context(
                                                                             $['expected'],
@@ -155,7 +155,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'duplicate entry',
-                                                                'value': ['group', ['verbose', _p.dictionary.literal(
+                                                                'value': ['group', ['verbose', _p.literal.dictionary(
                                                                     {
                                                                         "name": _p_change_context(
                                                                             $['name'],
@@ -191,7 +191,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'duplicate property',
-                                                                'value': ['group', ['verbose', _p.dictionary.literal(
+                                                                'value': ['group', ['verbose', _p.literal.dictionary(
                                                                     {
                                                                         "name": _p_change_context(
                                                                             $['name'],
@@ -209,7 +209,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing property',
-                                                                'value': ['group', ['verbose', _p.dictionary.literal(
+                                                                'value': ['group', ['verbose', _p.literal.dictionary(
                                                                     {
                                                                         "name": _p_change_context(
                                                                             $['name'],
@@ -227,7 +227,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing property value',
-                                                                'value': ['group', ['verbose', _p.dictionary.literal(
+                                                                'value': ['group', ['verbose', _p.literal.dictionary(
                                                                     {
                                                                         "name": _p_change_context(
                                                                             $['name'],
@@ -245,7 +245,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'superfluous property',
-                                                                'value': ['group', ['verbose', _p.dictionary.literal(
+                                                                'value': ['group', ['verbose', _p.literal.dictionary(
                                                                     {
                                                                         "name": _p_change_context(
                                                                             $['name'],
@@ -317,7 +317,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'unknown option',
-                                                                'value': ['group', ['verbose', _p.dictionary.literal(
+                                                                'value': ['group', ['verbose', _p.literal.dictionary(
                                                                     {
                                                                         "found": _p_change_context(
                                                                             $['found'],
@@ -370,7 +370,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
 export const Warnings: t_signatures.Warnings = ($) => ['list', _p.list.from.list(
     $,
 ).map(
-    ($) => ['group', ['verbose', _p.dictionary.literal(
+    ($) => ['group', ['verbose', _p.literal.dictionary(
         {
             "range": _p_change_context(
                 $['range'],

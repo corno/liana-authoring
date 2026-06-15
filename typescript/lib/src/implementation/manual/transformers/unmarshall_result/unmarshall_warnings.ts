@@ -1,5 +1,4 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_di from 'pareto-core/dist/data/interface'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
@@ -30,7 +29,7 @@ export const Value: Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     return pt.decide.state($['unmarshall result'], ($) => {
         switch ($[0]) {
-            case 'error': return pt.ss($, ($) => pt.list.literal([
+            case 'error': return pt.ss($, ($) => pt.literal.list([
             ]))
             case 'success': return pt.ss($, ($) => pt.decide.state($, ($): d_out.Warnings => {
                 switch ($[0]) {
@@ -38,7 +37,7 @@ export const Value: Value = ($) => {
                         $.intermediate['entries as list'],
                     ).flatten(
                         ($) => $.intermediate['id value pair'].id.token.type[0] !== 'apostrophed'
-                            ? pt.list.literal([
+                            ? pt.literal.list([
                                 {
                                     'range': $.intermediate['id value pair'].id.range,
                                     'type': ['expected apostrophed text', null]
@@ -47,13 +46,13 @@ export const Value: Value = ($) => {
                             : pt.decide.state($.value, ($) => {
                                 switch ($[0]) {
                                     case 'set': return pt.ss($, ($) => Value($))
-                                    case 'not set': return pt.ss($, ($) => pt.list.literal<d_out.Warnings.L>([]))
+                                    case 'not set': return pt.ss($, ($) => pt.literal.list<d_out.Warnings.L>([]))
                                     default: return pt.au($[0])
                                 }
                             })
                     ))
                     case 'group': return pt.ss($, ($) => $.intermediate.instance[0] !== 'group'
-                        ? pt.list.literal([
+                        ? pt.literal.list([
                             {
                                 'range': start_token_range,
                                 'type': ['expected a group', null]
@@ -67,7 +66,7 @@ export const Value: Value = ($) => {
                                     ($) => {
                                         return pt.decide.state($['definition found'], ($) => {
                                             switch ($[0]) {
-                                                case 'no': return pt.ss($, ($) => pt.list.literal([]))
+                                                case 'no': return pt.ss($, ($) => pt.literal.list([]))
                                                 case 'yes': return pt.ss($, ($) => Value($['value']))
                                                 default: return pt.au($[0])
                                             }
@@ -78,7 +77,7 @@ export const Value: Value = ($) => {
                                     $.properties,
                                 ).flatten<d_out.Warnings.L>(
                                     ($) => $.intermediate['id value pair'].id.token.type[0] !== 'backticked'
-                                        ? pt.list.literal([
+                                        ? pt.literal.list([
                                             {
                                                 'range': $.intermediate['id value pair'].id.range,
                                                 'type': ['expected backticked text', null]
@@ -88,9 +87,9 @@ export const Value: Value = ($) => {
                                             switch ($[0]) {
                                                 case 'yes': return pt.ss($, ($) => $['value'].__decide(
                                                     ($) => Value($),
-                                                    (): d_out.Warnings => pt.list.literal([])
+                                                    (): d_out.Warnings => pt.literal.list([])
                                                 ))
-                                                case 'no': return pt.ss($, ($) => pt.list.literal([
+                                                case 'no': return pt.ss($, ($) => pt.literal.list([
                                                 ]))
                                                 default: return pt.au($[0])
                                             }
@@ -108,28 +107,28 @@ export const Value: Value = ($) => {
                             default: return pt.au($[0])
                         }
                     })
-                        ? pt.list.literal<d_out.Warnings.L>([{
+                        ? pt.literal.list<d_out.Warnings.L>([{
                             'range': $.instance.range,
                             'type': ['expected undelimited text', null]
                         }])
-                        : pt.list.literal([])
+                        : pt.literal.list([])
                     )
                     case 'list': return pt.ss($, ($) => pt.list.from.list(
                         $.derived.items
                     ).flatten(
                         ($) => Value($)
                     ))
-                    case 'nothing': return pt.ss($, ($) => pt.list.literal([]))
+                    case 'nothing': return pt.ss($, ($) => pt.literal.list([]))
                     case 'reference': return pt.ss($, ($) => pt.decide.state($.type, ($): d_out.Warnings => {
                         switch ($[0]) {
-                            case 'derived': return pt.ss($, ($) => pt.list.literal([
+                            case 'derived': return pt.ss($, ($) => pt.literal.list([
                             ]))
                             case 'selected': return pt.ss($, ($) => $.intermediate.instance.token.type[0] !== 'apostrophed'
-                                ? pt.list.literal([{
+                                ? pt.literal.list([{
                                     'range': $.intermediate.instance.range,
                                     'type': ['expected apostrophed text', null]
                                 }])
-                                : pt.list.literal([]))
+                                : pt.literal.list([]))
                             default: return pt.au($[0])
                         }
                     }))
@@ -137,16 +136,16 @@ export const Value: Value = ($) => {
                     case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
                         switch ($[0]) {
                             case 'set': return pt.ss($, ($) => Value($['child value']))
-                            case 'not set': return pt.ss($, ($) => pt.list.literal([]))
+                            case 'not set': return pt.ss($, ($) => pt.literal.list([]))
                             default: return pt.au($[0])
                         }
                     }))
                     case 'state': return pt.ss($, ($): d_out.Warnings => {
                         return pt.decide.state($.derived['option status'], ($): d_out.Warnings => {
                             switch ($[0]) {
-                                case 'missing data': return pt.ss($, ($) => pt.list.literal([]))
+                                case 'missing data': return pt.ss($, ($) => pt.literal.list([]))
                                 case 'set': return pt.ss($, ($) => $.intermediate['option token'].token.type[0] !== 'backticked'
-                                    ? pt.list.literal([
+                                    ? pt.literal.list([
                                         {
                                             'range': $.intermediate['option token'].range,
                                             'type': ['expected apostrophed text', null]
@@ -158,14 +157,14 @@ export const Value: Value = ($) => {
                         })
                     })
                     case 'text': return pt.ss($, ($) => $.instance.token.type[0] !== 'quoted'
-                        ? pt.list.literal([
+                        ? pt.literal.list([
                             {
                                 'range': $.instance.range,
                                 'type': ['expected quoted text', null]
                             }
 
                         ])
-                        : pt.list.literal([]))
+                        : pt.literal.list([]))
                     default: return pt.au($[0])
                 }
             }))

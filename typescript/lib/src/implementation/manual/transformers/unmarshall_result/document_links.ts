@@ -1,6 +1,4 @@
-import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
@@ -26,7 +24,7 @@ export const Document: Document = ($) => Value($.content)
 
 export const Value: Value = ($) => pt.decide.state($['unmarshall result'], ($): d_out.Links => {
     switch ($[0]) {
-        case 'error': return pt.ss($, ($) => pt.list.literal([]))
+        case 'error': return pt.ss($, ($) => pt.literal.list([]))
         case 'success': return pt.ss($, ($) => pt.decide.state($, ($): d_out.Links => {
             switch ($[0]) {
                 case 'component': return pt.ss($, ($) => Value($.value))
@@ -36,11 +34,11 @@ export const Value: Value = ($) => pt.decide.state($['unmarshall result'], ($): 
                             case 'success': return pt.ss($, ($) => pt.decide.state($.value, ($) => {
                                 switch ($[0]) {
                                     case 'set': return pt.ss($, ($) => Value($))
-                                    case 'not set': return pt.ss($, ($) => pt.list.literal([]))
+                                    case 'not set': return pt.ss($, ($) => pt.literal.list([]))
                                     default: return pt.au($[0])
                                 }
                             }))
-                            case 'error': return pt.ss($, ($) => pt.list.literal([]))
+                            case 'error': return pt.ss($, ($) => pt.literal.list([]))
                             default: return pt.au($[0])
                         }
                     })
@@ -51,15 +49,15 @@ export const Value: Value = ($) => pt.decide.state($['unmarshall result'], ($): 
                             switch ($[0]) {
                                 case 'yes': return pt.ss($, ($) => $['value'].__decide(
                                     ($): d_out.Links => Value($),
-                                    (): d_out.Links => pt.list.literal([])
+                                    (): d_out.Links => pt.literal.list([])
                                 ))
-                                case 'no': return pt.ss($, ($) => pt.list.literal([]))
+                                case 'no': return pt.ss($, ($) => pt.literal.list([]))
                                 default: return pt.au($[0])
                             }
                         })))
                         case 'concise': return pt.ss($, ($) => pt.list.from.list($.properties).flatten(($): d_out.Links => pt.decide.state($['definition found'], ($): d_out.Links => {
                             switch ($[0]) {
-                                case 'no': return pt.ss($, ($): d_out.Links => pt.list.literal([]))
+                                case 'no': return pt.ss($, ($): d_out.Links => pt.literal.list([]))
                                 case 'yes': return pt.ss($, ($): d_out.Links => Value($['value']))
                                 default: return pt.au($[0])
                             }
@@ -70,22 +68,22 @@ export const Value: Value = ($) => pt.decide.state($['unmarshall result'], ($): 
                 case 'list': return pt.ss($, ($): d_out.Links => pt.list.from.list($.derived.items).flatten(
                     ($) => Value($)
                 ))
-                case 'nothing': return pt.ss($, ($) => pt.list.literal([]))
+                case 'nothing': return pt.ss($, ($) => pt.literal.list([]))
                 case 'optional': return pt.ss($, ($) => pt.decide.state($.derived.status, ($) => {
                     switch ($[0]) {
                         case 'set': return pt.ss($, ($) => Value($['child value']))
-                        case 'not set': return pt.ss($, ($) => pt.list.literal([]))
+                        case 'not set': return pt.ss($, ($) => pt.literal.list([]))
                         default: return pt.au($[0])
                     }
                 }))
-                case 'reference': return pt.ss($, ($) => pt.list.literal([]))
+                case 'reference': return pt.ss($, ($) => pt.literal.list([]))
                 case 'simple': return pt.ss($, ($) => pt.decide.state($.definition, ($) => {
                     switch ($[0]) {
                         case 'global': return pt.ss($, ($) => pt.decide.state($['l entry'].type, ($): d_out.Links => {
                             switch ($[0]) {
-                                case 'number': return pt.ss($, ($) => pt.list.literal([]))
-                                case 'boolean': return pt.ss($, ($) => pt.list.literal([]))
-                                case 'date': return pt.ss($, ($) => pt.list.literal([]))
+                                case 'number': return pt.ss($, ($) => pt.literal.list([]))
+                                case 'boolean': return pt.ss($, ($) => pt.literal.list([]))
+                                case 'date': return pt.ss($, ($) => pt.literal.list([]))
                                 default: return pt.au($[0])
                             }
                         }))
@@ -95,7 +93,7 @@ export const Value: Value = ($) => pt.decide.state($['unmarshall result'], ($): 
                 case 'state': return pt.ss($, ($) => pt.decide.state($.derived['option status'], ($): d_out.Links => {
                     switch ($[0]) {
                         case 'set': return pt.ss($, ($) => Value($.value))
-                        case 'missing data': return pt.ss($, ($) => pt.list.literal([]))
+                        case 'missing data': return pt.ss($, ($) => pt.literal.list([]))
                         default: return pt.au($[0])
                     }
                 }))
@@ -110,12 +108,12 @@ export const Value: Value = ($) => pt.decide.state($['unmarshall result'], ($): 
                     })
                     return pt.decide.state(type.link, ($) => {
                         switch ($[0]) {
-                            case 'no': return pt.ss($, ($) => pt.list.literal([]))
-                            case 'yes':return pt.ss($, ($) => pt.list.literal([
+                            case 'no': return pt.ss($, ($) => pt.literal.list([]))
+                            case 'yes':return pt.ss($, ($) => pt.literal.list([
                                 {
                                     'range': instance.range,
                                     'target': $['path prefix'] + instance.token.value + $['path suffix'],
-                                    'tooltip': pt.optional.literal.not_set()
+                                    'tooltip': pt.literal.not_set()
                                 }
                             ]))
                             default: return pt.au($[0])

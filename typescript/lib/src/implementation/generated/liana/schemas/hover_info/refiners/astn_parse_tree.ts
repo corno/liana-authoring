@@ -22,7 +22,7 @@ export const Hover_Texts: t_signatures.Hover_Texts = ($, abort) => _p.list.from.
             $,
         ),
         {
-            'subdocument context': _p.optional.literal.not_set(),
+            'subdocument context': _p.literal.not_set(),
         },
     )['items'],
 ).map(

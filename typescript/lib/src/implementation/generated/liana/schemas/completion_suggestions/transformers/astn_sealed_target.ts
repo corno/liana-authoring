@@ -17,7 +17,7 @@ import * as v_external_text_edits from "../../text_edits/transformers/astn_seale
 
 export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => ['optional', _p.decide.optional(
     $,
-    ($): t_out.Value.optional => ['set', ['group', ['verbose', _p.dictionary.literal(
+    ($): t_out.Value.optional => ['set', ['group', ['verbose', _p.literal.dictionary(
         {
             "type": _p_change_context(
                 $['type'],
@@ -78,7 +78,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                 ($) => ['list', _p.list.from.list(
                     $,
                 ).map(
-                    ($) => ['group', ['verbose', _p.dictionary.literal(
+                    ($) => ['group', ['verbose', _p.literal.dictionary(
                         {
                             "label": _p_change_context(
                                 $['label'],

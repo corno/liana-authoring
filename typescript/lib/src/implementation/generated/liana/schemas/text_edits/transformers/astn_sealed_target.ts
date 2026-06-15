@@ -25,7 +25,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                         $,
                         ($) => ({
                             'option': 'replace',
-                            'value': ['group', ['verbose', _p.dictionary.literal(
+                            'value': ['group', ['verbose', _p.literal.dictionary(
                                 {
                                     "range": _p_change_context(
                                         $['range'],
@@ -49,7 +49,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                         $,
                         ($) => ({
                             'option': 'delete',
-                            'value': ['group', ['verbose', _p.dictionary.literal(
+                            'value': ['group', ['verbose', _p.literal.dictionary(
                                 {
                                     "range": _p_change_context(
                                         $['range'],
@@ -66,7 +66,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', _p.list.from.
                         $,
                         ($) => ({
                             'option': 'insert',
-                            'value': ['group', ['verbose', _p.dictionary.literal(
+                            'value': ['group', ['verbose', _p.literal.dictionary(
                                 {
                                     "location": _p_change_context(
                                         $['location'],

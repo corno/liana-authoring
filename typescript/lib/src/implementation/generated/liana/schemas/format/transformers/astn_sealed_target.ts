@@ -19,7 +19,7 @@ export const Result: t_signatures.Result = ($) => v_external_text_edits.Text_Edi
     $,
 )
 
-export const Error: t_signatures.Error = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Error: t_signatures.Error = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "message": _p_change_context(
             $['message'],
@@ -31,11 +31,11 @@ export const Error: t_signatures.Error = ($) => ['group', ['verbose', _p.diction
     },
 )]]
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.dictionary.literal(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
     {
         "options": _p_change_context(
             $['options'],
-            ($) => ['group', ['verbose', _p.dictionary.literal(
+            ($) => ['group', ['verbose', _p.literal.dictionary(
                 {
                     "insert spaces": _p_change_context(
                         $['insert spaces'],

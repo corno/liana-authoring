@@ -1,6 +1,4 @@
-import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
 import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
@@ -51,7 +49,7 @@ export const Document: Document = ($, $p) => {
             switch ($[0]) {
                 case 'value': return pt.ss($, ($) => {
                     const def = $.definition
-                    return pt.list.nested_literal_old([
+                    return pt.literal.nested_list([
                         [
                             Property_Path($['property path']),
                             pt.decide.state($['unmarshall result'], ($): string => {
@@ -104,12 +102,12 @@ export const Document: Document = ($, $p) => {
                         ],
                     ])
                 })
-                case 'entry': return pt.ss($, ($) => pt.list.literal([
+                case 'entry': return pt.ss($, ($) => pt.literal.list([
                     Property_Path($['property path']),
                 ]))
                 case 'property': return pt.ss($, ($) => pt.decide.state($.style, ($) => {
                     switch ($[0]) {
-                        case 'verbose': return pt.ss($, ($) => pt.list.literal([
+                        case 'verbose': return pt.ss($, ($) => pt.literal.list([
                             $.id,
                             pt.decide.state($['definition found'], ($) => {
                                 switch ($[0]) {
@@ -122,7 +120,7 @@ export const Document: Document = ($, $p) => {
                                 }
                             }),
                         ]))
-                        case 'unknown concise': return pt.ss($, ($) => pt.list.literal([
+                        case 'unknown concise': return pt.ss($, ($) => pt.literal.list([
                             "unknown property",
                         ]))
 
@@ -134,14 +132,14 @@ export const Document: Document = ($, $p) => {
                     const prop_path = Property_Path($['property pathx'])
                     return pt.decide.state($.derived['option status'], ($) => {
                         switch ($[0]) {
-                            case 'set': return pt.ss($, ($) => pt.list.literal([
+                            case 'set': return pt.ss($, ($) => pt.literal.list([
                                 prop_path,
                                 $.definition.description.__decide(
                                     ($) => $,
                                     () => "no description"
                                 ),
                             ]))
-                            case 'missing data': return pt.ss($, ($) => pt.list.literal([
+                            case 'missing data': return pt.ss($, ($) => pt.literal.list([
                                 "property: " + prop_path,
                                 "use ctrl+d to get suggestions for options",
                             ]))
