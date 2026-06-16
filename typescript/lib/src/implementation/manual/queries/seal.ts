@@ -6,9 +6,7 @@ import p_super_query_result from 'pareto-core/dist/implementation/query/super_qu
 import * as signatures from "../../../interface/queries"
 
 //data  types
-import * as d_get_unmarshalled_file from "../../../interface/data/get_unmarshalled_file"
 import * as d_process_file_data from "pareto-common/dist/interface/to_be_generated/process_file_data"
-import * as d_sealed from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file"
@@ -23,9 +21,7 @@ import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manua
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const $$: signatures.query_functions.seal = p_.query_function(
-    ($d, $s, $q): p_.Query_Result<d_process_file_data.Result, d_process_file_data.Error> => {
-
-        const foo3: p_.Query_Result<d_process_file_data.Result, d_process_file_data.Error> = p_super_query_result(
+    ($d, $s, $q) => p_super_query_result(
             q_get_unmarshalled_file(
                 null,
                 {
@@ -74,9 +70,4 @@ export const $$: signatures.query_functions.seal = p_.query_function(
                 )
             })
         )
-
-        return foo3
-
-
-    }
 )
