@@ -3,7 +3,7 @@ import * as p_ci from 'pareto-core/dist/interface/command'
 import * as resources_pareto from "pareto-resources/dist/interface/resources"
 import * as resources_pareto_stream from "pareto-stream/dist/interface/commands"
 
-import * as d_serialize_prose from "pareto-fountain-pen/dist/interface/to_be_generated/prose_serialize"
+import * as d_serialize_prose from "pareto-fountain-pen/dist/interface/data/prose_serialize"
 
 export namespace procedures {
 

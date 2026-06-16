@@ -6,7 +6,7 @@ import p_super_query_result from 'pareto-core/dist/implementation/query/super_qu
 import * as interface_ from "../../../interface/queries"
 
 //data  types
-import * as d_process_file_data from "pareto-common/dist/interface/to_be_generated/process_file_data"
+import * as d_process_file_data from "pareto-common/dist/interface/data/process_file_data"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file"
