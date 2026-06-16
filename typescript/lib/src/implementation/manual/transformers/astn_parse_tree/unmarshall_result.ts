@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_temp from 'pareto-core/dist/assign'
-import * as p_i from 'pareto-core/dist/interface/refiner'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
@@ -16,15 +16,15 @@ import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/sc
 import * as t_parse_tree_to_full_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 import * as t_parse_tree_to_start_token_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 
-export type Document = p_i.Refiner_Without_Error_With_Parameter<
-    d_out.Document,
+export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
+    d_out.Document,
     d_function.Parameters
 >
 
-export type Value = p_i.Refiner_Without_Error_With_Parameter<
-    d_out.Value,
+export type Value = p_i.Transformer_With_Parameter<
     d_in.Value,
+    d_out.Value,
     {
         'definition': d_in_definition.Value
         'property path': d_out.Property_Path
