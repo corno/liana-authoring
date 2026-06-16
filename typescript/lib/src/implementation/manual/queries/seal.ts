@@ -3,7 +3,7 @@ import * as p_temp from 'pareto-core/dist/implementation/transformer'
 import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
 import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
 
-import * as signatures from "../../../interface/queries"
+import * as interface_ from "../../../interface/queries"
 
 //data  types
 import * as d_process_file_data from "pareto-common/dist/interface/to_be_generated/process_file_data"
@@ -20,7 +20,7 @@ import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manua
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const $$: signatures.query_functions.seal = p_.query_function(
+export const $$: interface_.query_functions.seal = p_.query_function(
     ($d, $s, $q) => p_super_query_result(
             q_get_unmarshalled_file(
                 null,

@@ -3,7 +3,7 @@ import p_text_from_list from 'pareto-core/dist/implementation/specials/text_from
 import p_variables from 'pareto-core/dist/implementation/specials/variables'
 import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
 
-import * as signatures from "../../../interface/queries"
+import * as interface_ from "../../../interface/queries"
 
 //data types
 import * as d from "../../../interface/data/get_unmarshalled_file"
@@ -13,7 +13,7 @@ import { $$ as q_deserialize } from "./deserialize"
 import { $$ as q_get_schema } from "./get_schema"
 import { $$ as q_get_schema_path } from "./get_schema_path"
 
-export const $$: signatures.query_functions.load_unmarshalled_file = p_.query_function(
+export const $$: interface_.query_functions.load_unmarshalled_file = p_.query_function(
     ($d, $s, $q) => p_super_query_result($q['read file'](
         $d['file path'],
         ($): d.Error => ['read file', $]

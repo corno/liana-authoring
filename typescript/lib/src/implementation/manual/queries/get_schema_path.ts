@@ -3,7 +3,7 @@ import * as p_temp from 'pareto-core/dist/implementation/refiner'
 import p_variables from 'pareto-core/dist/implementation/specials/variables'
 import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
 
-import * as signatures from "../../../interface/queries"
+import * as interface_ from "../../../interface/queries"
 
 //data types
 import * as d from "../../../interface/data/get_schema_path"
@@ -12,7 +12,7 @@ import * as d from "../../../interface/data/get_schema_path"
 import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/unrestricted_path"
 
 
-export const $$: signatures.query_functions.get_schema_path = p_.query_function(
+export const $$: interface_.query_functions.get_schema_path = p_.query_function(
     ($d, $s, $q) => p_variables(() => {
         const schema_path = t_path_to_path.create_node_path(
             t_path_to_path.extend_context_path_with_single_step(
