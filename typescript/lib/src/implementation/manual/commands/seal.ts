@@ -33,4 +33,5 @@ export const $$: interface_.procedures.seal = p_.command_procedure(
             },
             ($): d_main.Error => $
         ),
-    ])
+    ]
+)
