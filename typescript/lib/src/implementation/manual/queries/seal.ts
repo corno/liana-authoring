@@ -25,29 +25,27 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 export const $$: signatures.query_functions.seal = p_.query_function(
     ($d, $s, $q): p_.Query_Result<d_process_file_data.Result, d_process_file_data.Error> => {
 
-
-        const foo: p_.Query_Result<d_get_unmarshalled_file.Result, d_process_file_data.Error> = q_get_unmarshalled_file(
-            null,
-            {
-                'read file': $q['read file'],
-                'stat': $q['stat'],
-            },
-        )(
-            {
-                'file path': $d.path, //to determine the schema path
-                'tab size': $s['tab size'],
-            },
-            ($): d_process_file_data.Error => sh.ph.composed([
-                sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
-                sh.ph.literal("FIX location: "),
-                t_load_file_to_fp.Error(
-                    $,
-                )
-            ])
-        )
-
-
-        const foo2: p_.Super_Query_Result<d_sealed.Value_, d_process_file_data.Error> = p_super_query_result(foo).refine(
+        const foo3: p_.Query_Result<d_process_file_data.Result, d_process_file_data.Error> = p_super_query_result(
+            q_get_unmarshalled_file(
+                null,
+                {
+                    'read file': $q['read file'],
+                    'stat': $q['stat'],
+                },
+            )(
+                {
+                    'file path': $d.path, //to determine the schema path
+                    'tab size': $s['tab size'],
+                },
+                ($): d_process_file_data.Error => sh.ph.composed([
+                    sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
+                    sh.ph.literal("FIX location: "),
+                    t_load_file_to_fp.Error(
+                        $,
+                    )
+                ])
+            )
+        ).refine(
             ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
                 p_temp.decide.state($, ($) => {
                     switch ($[0]) {
@@ -63,9 +61,7 @@ export const $$: signatures.query_functions.seal = p_.query_function(
                     )
                 ]))
             ),
-        )
-
-        const foo3: p_.Query_Result<d_process_file_data.Result, d_process_file_data.Error> = foo2.transform(
+        ).transform(
             ($) => ({
                 'data': p_list_from_text(
                     t_fp_to_text.Paragraph(
