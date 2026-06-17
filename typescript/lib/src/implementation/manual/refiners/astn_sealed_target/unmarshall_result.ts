@@ -1,5 +1,6 @@
 import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_i from 'pareto-core/dist/interface/refiner'
+import * as p_ti from 'pareto-core/dist/interface/transformer'
 
 //data types
 import * as d_in from "../../../../interface/data/unmarshall_result"
@@ -15,7 +16,7 @@ import p_variables from 'pareto-core/dist/implementation/specials/variables'
 // export type Document = p_i.Refiner<d_out.Document, d_function.Error, d_in.Document>
 export type Value = p_i.Refiner<d_out.Value, d_function.Error, d_in.Value>
 
-export const Found = ($: d_in_astn_parse_tree.Value): d_function.Found => {
+export const Found: p_ti.Transformer<d_in_astn_parse_tree.Value, d_function.Found> = ($) => {
     return p_.decide.state($.type, ($) => {
         switch ($[0]) {
             case 'concrete': return p_.ss($, ($): d_function.Found => p_.decide.state($, ($) => {

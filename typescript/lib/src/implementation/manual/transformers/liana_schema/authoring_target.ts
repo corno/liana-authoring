@@ -1,27 +1,31 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 
 import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 
-export const Value = (
-    $: d_in.Value,
-    $p: {
+export const Value: p_i.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Value,
+     {
         'style':
         | ['concise', null]
         | ['verbose', null]
     }
-): d_out.Value => ({
+> = ($, $p) => ({
+
     'data': Value_data($, $p)
 })
 
-export const Value_data = (
-    $: d_in.Value,
-    $p: {
+export const Value_data: p_i.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Value.data,
+    {
         'style':
         | ['concise', null]
         | ['verbose', null]
     }
-): d_out.Value.data => p_.decide.state($, ($): d_out.Value.data => {
+> = ($, $p) => p_.decide.state($, ($): d_out.Value.data => {
     switch ($[0]) {
         case 'simple': return p_.ss($, ($) => ['concrete', {
             'type': ['text', {

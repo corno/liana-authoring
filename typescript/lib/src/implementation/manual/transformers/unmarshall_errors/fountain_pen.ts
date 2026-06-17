@@ -1,4 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/unmarshall_errors/data"
@@ -9,9 +10,10 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const Error = (
-    $: d_in.Errors.L,
-): d_out.Phrase => p_.decide.state($.type, ($) => {
+export const Error: p_i.Transformer<
+    d_in.Errors.L,
+    d_out.Phrase
+> = ($) => p_.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'dictionary': return p_.ss($, ($) => p_.decide.state($, ($) => {
             switch ($[0]) {

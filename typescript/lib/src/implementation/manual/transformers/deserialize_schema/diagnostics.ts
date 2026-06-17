@@ -1,4 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 
 import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
 import * as d_in from "liana-core/dist/interface/data/deserialize_resolved"
@@ -25,7 +26,13 @@ export type Temp_Error = {
     'related information': d_out.Diagnostic.related_information
 }
 
-export const Error = ($: d_in.Error, $p: { 'schema path': d_path.Node_Path }): Temp_Error => ({
+export const Error: p_i.Transformer_With_Parameter<
+    d_in.Error,
+    Temp_Error,
+    {
+        'schema path': d_path.Node_Path
+    }
+> = ($, $p) => ({
     'type': ['deserialize', null],
     'message': t_fp_to_text.Phrase(
         t_deserialize_resolved_to_fp.Error($),

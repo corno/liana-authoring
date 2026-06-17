@@ -10,7 +10,7 @@ import * as d from "../../../interface/data/deserialize"
 
 //depencencies
 import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters"
-import * as r_resolve_result_from_unmarshall_result from "../refiners/resolve_result/unmarshall_result"
+import * as r_resolve_result_from_unmarshall_result from "../transformers/unmarshall_result/resolve_result"
 
 export const $$: interface_.query_functions.deserialize = p_.query_function(
     ($d, $s, $q) =>  p_super_query_result( $q['get schema path'](

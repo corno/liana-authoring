@@ -1,21 +1,22 @@
-import * as p_ from 'pareto-core/dist/implementation/refiner'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as p_temp from 'pareto-core/dist/assign'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
+import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
+import p_variables from 'pareto-core/dist/implementation/specials/variables'
 
 import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_out from "../../../../interface/data/resolve_result"
 
-import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
-import p_variables from 'pareto-core/dist/implementation/specials/variables'
-
-export const Document = (
-    $: d_in.Document,
-    $p: {
+export const Document: p_i.Transformer_With_Parameter<
+    d_in.Document,
+    d_out.Document,
+    {
         'definition': d_in_definition.Resolver_Modules.D,
         'resolvers': d_in_definition.Resolver
     }
-): d_out.Document => ({
+> = ($, $p) => ({
     'unmarshalled': $,
     'content': Value(
         $.content,
@@ -85,9 +86,10 @@ export const Document = (
 // }
 
 
-export const Value = (
-    $: d_in.Value,
-    $p: {
+export const Value: p_i.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Value,
+    {
         'definition': d_in_definition.Resolver_Value,
         'resolver': d_in_definition.Resolver
         // 'module parameters': p_di.Optional_Value<d_function.Module_Parameters>
@@ -95,7 +97,7 @@ export const Value = (
         // 'acyclic siblings': p_di.Optional_Value<d_function.Acyclic_Siblings>
         // 'cyclic siblings': p_di.Optional_Value<d_function.Cyclic_Siblings>
     }
-): d_out.Value => {
+> = ($, $p) => {
     return {
         'definition': $p.definition,
         'unmarshalled': $,

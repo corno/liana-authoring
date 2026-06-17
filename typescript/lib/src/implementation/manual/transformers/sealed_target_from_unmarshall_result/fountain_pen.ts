@@ -11,9 +11,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
-export const Found = (
-    $: d_in.Found,
-): d_out.Phrase => p_.decide.state($, ($) => {
+export const Found: p_i.Transformer<d_in.Found, d_out.Phrase> = ($) => p_.decide.state($, ($) => {
     switch ($[0]) {
         case 'dictionary': return p_.ss($, ($) => sh.ph.literal("dictionary"))
         case 'group': return p_.ss($, ($) => sh.ph.literal("group"))
