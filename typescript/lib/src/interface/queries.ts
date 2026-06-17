@@ -1,4 +1,4 @@
-import * as p_qi from 'pareto-core/dist/interface/query'
+import * as p_ from 'pareto-core/dist/interface/query'
 
 //query interfaces
 import * as queries_pareto from "pareto-resources/dist/interface/resources"
@@ -14,16 +14,16 @@ import * as d_get_schema from "./data/get_schema"
 
 export namespace queries {
 
-    export type get_schema_path = p_qi.Query<d_get_schema_path.Result, d_get_schema_path.Error, d_get_schema_path.Parameters>
-    export type get_schema = p_qi.Query<d_get_schema.Result, d_get_schema.Error, d_get_schema.Parameters>
-    export type deserialize = p_qi.Query<d_deserialize.Result, d_deserialize.Error, d_deserialize.Parameters>
-    export type load_unmarshalled_file = p_qi.Query<d_get_unmarshalled_file.Result, d_get_unmarshalled_file.Error, d_get_unmarshalled_file.Parameters>
+    export type get_schema_path = p_.Query<d_get_schema_path.Result, d_get_schema_path.Error, d_get_schema_path.Parameters>
+    export type get_schema = p_.Query<d_get_schema.Result, d_get_schema.Error, d_get_schema.Parameters>
+    export type deserialize = p_.Query<d_deserialize.Result, d_deserialize.Error, d_deserialize.Parameters>
+    export type load_unmarshalled_file = p_.Query<d_get_unmarshalled_file.Result, d_get_unmarshalled_file.Error, d_get_unmarshalled_file.Parameters>
 
 }
 
 export namespace query_functions {
 
-    export type get_schema = p_qi.Query_Function<
+    export type get_schema = p_.Query_Function<
         queries.get_schema,
         null,
         {
@@ -31,7 +31,7 @@ export namespace query_functions {
         }
     >
 
-    export type get_schema_path = p_qi.Query_Function<
+    export type get_schema_path = p_.Query_Function<
         queries.get_schema_path,
         null,
         {
@@ -40,7 +40,7 @@ export namespace query_functions {
     >
 
 
-    export type deserialize = p_qi.Query_Function<
+    export type deserialize = p_.Query_Function<
         queries.deserialize,
         null,
         {
@@ -49,7 +49,7 @@ export namespace query_functions {
         }
     >
 
-    export type load_unmarshalled_file = p_qi.Query_Function<
+    export type load_unmarshalled_file = p_.Query_Function<
         queries.load_unmarshalled_file,
         null,
         {
@@ -59,7 +59,7 @@ export namespace query_functions {
         }
     >
 
-    export type seal = p_qi.Query_Function<
+    export type seal = p_.Query_Function<
         queries_common.queries.process_file_data,
         {
             'tab size': number,

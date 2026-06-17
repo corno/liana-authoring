@@ -1,4 +1,4 @@
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/dist/interface/data'
 
 import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
@@ -12,4 +12,4 @@ export type Error = {
     | ['hint', null]
 }
 
-export type Errors = p_di.List<Error>
+export type Errors = p_.List<Error>

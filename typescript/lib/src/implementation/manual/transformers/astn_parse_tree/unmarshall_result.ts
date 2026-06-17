@@ -1,5 +1,4 @@
-import * as p_ from 'pareto-core/dist/implementation/refiner'
-import * as p_temp from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
@@ -33,7 +32,7 @@ export type Value = p_i.Transformer_With_Parameter<
 >
 
 export const Document: Document = ($, $p) => ({
-    'header': p_temp.optional.from.optional($['header']).map(($) => $.value),
+    'header': p_.optional.from.optional($['header']).map(($) => $.value),
     'content': Value(
         $.content,
         {
@@ -123,7 +122,7 @@ export const Value: Value = ($, $p) => {
                                                         'entries as list': entries,
                                                     },
                                                     'derived': {
-                                                        'entries': p_temp.dictionary.from.list(entries).group(
+                                                        'entries': p_.dictionary.from.list(entries).group(
                                                             ($) => $.intermediate['id value pair'].id.token.value,
 
                                                         ).__d_map(($) => {
@@ -148,10 +147,10 @@ export const Value: Value = ($, $p) => {
                                     const group_def = $
                                     const Concise_Properties = (
                                         $: d_in.Items
-                                    ): d_out.Concise_Properties => p_temp.list.from.list(
+                                    ): d_out.Concise_Properties => p_.list.from.list(
                                         $
                                     ).join(
-                                        p_temp.list.from.dictionary(
+                                        p_.list.from.dictionary(
                                             group_def
                                         ).convert(
                                             ($, id) => ({
@@ -203,7 +202,7 @@ export const Value: Value = ($, $p) => {
                                                         return ['yes', {
                                                             'definition': $,
                                                             'value': id_value_pair.assignment.__decide(
-                                                                ($) => p_temp.optional.from.optional($.value).map(
+                                                                ($) => p_.optional.from.optional($.value).map(
                                                                     ($) => Value(
                                                                         $,
                                                                         {
@@ -281,7 +280,7 @@ export const Value: Value = ($, $p) => {
                                                 'properties': p_.decide.state(group_type, ($): d_out.Group['derived']['properties'] => {
                                                     switch ($[0]) {
                                                         case 'verbose': return p_.ss($, ($) => {
-                                                            const instance_lookup = p_temp.dictionary.from.list($.properties).group(
+                                                            const instance_lookup = p_.dictionary.from.list($.properties).group(
                                                                 ($) => $.intermediate['id value pair'].id.token.value
                                                             )
                                                             return group_def.__d_map(($, id) => ({
@@ -317,8 +316,8 @@ export const Value: Value = ($, $p) => {
                                                             }))
                                                         })
                                                         case 'concise': return p_.ss($, ($) => {
-                                                            const instance_lookup = p_temp.dictionary.from.list(
-                                                                p_temp.list.from.list(
+                                                            const instance_lookup = p_.dictionary.from.list(
+                                                                p_.list.from.list(
                                                                     $.properties
                                                                 ).map_optionally(($) => p_.decide.state($['definition found'], ($): p_di.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
                                                                     switch ($[0]) {

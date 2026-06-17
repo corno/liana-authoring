@@ -1,4 +1,4 @@
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/dist/interface/data'
 
 import * as d_resolve_result from "./resolve_result"
 
@@ -8,9 +8,9 @@ import * as d_resolve_result from "./resolve_result"
 //     'modules': Module_Parameters
 // }
 
-// export type Lookup_Parameters = p_di.Optional_Value<p_di.Dictionary<Lookup>>
+// export type Lookup_Parameters = p_.Optional_Value<p_.Dictionary<Lookup>>
 
-// export type Module_Parameters = p_di.Optional_Value<p_di.Dictionary<Module>>
+// export type Module_Parameters = p_.Optional_Value<p_.Dictionary<Module>>
 
 export type Lookup = 
 | ['acyclic siblings', Acyclic_Siblings]
@@ -19,6 +19,6 @@ export type Lookup =
 
 export type Module = null
 
-export type Acyclic_Siblings = p_di.dynamic_lookup.Acyclic<d_resolve_result.Entry>
+export type Acyclic_Siblings = p_.dynamic_lookup.Acyclic<d_resolve_result.Entry>
 
-export type Cyclic_Siblings = p_di.dynamic_lookup.Cyclic<d_resolve_result.Entry>
+export type Cyclic_Siblings = p_.dynamic_lookup.Cyclic<d_resolve_result.Entry>

@@ -1,4 +1,4 @@
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/dist/interface/data'
 
 import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
@@ -25,4 +25,4 @@ export type Kind =
     | ['number', null]
     | ['string', null]
 
-export type Symbols = p_di.List<Symbol>
+export type Symbols = p_.List<Symbol>
