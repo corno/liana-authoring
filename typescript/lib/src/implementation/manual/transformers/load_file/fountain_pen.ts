@@ -13,7 +13,7 @@ export namespace signatures {
 import * as t_read_file_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
 import * as t_deserialize_to_fp from "../deserialize/fountain_pen"
 
-export const Error: signatures.Error = ($) => p_.decide.state($, ($) => {
+export const Error: signatures.Error = ($) => p_.from.state($).decide(($) => {
     switch ($[0]) {
         case 'deserialize': return p_.ss($, ($) => t_deserialize_to_fp.Error($))
         case 'read file': return p_.ss($, ($) => t_read_file_to_fountain_pen.Error($))

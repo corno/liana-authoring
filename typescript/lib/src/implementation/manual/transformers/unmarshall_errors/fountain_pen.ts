@@ -13,9 +13,9 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 export const Error: p_i.Transformer<
     d_in.Errors.L,
     d_out.Phrase
-> = ($) => p_.decide.state($.type, ($) => {
+> = ($) => p_.from.state($.type).decide(($) => {
     switch ($[0]) {
-        case 'dictionary': return p_.ss($, ($) => p_.decide.state($, ($) => {
+        case 'dictionary': return p_.ss($, ($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'duplicate entry': return p_.ss($, ($) => sh.ph.composed([
                     sh.ph.literal("duplicate entry \""),
@@ -26,12 +26,12 @@ export const Error: p_i.Transformer<
                 default: return p_.au($[0])
             }
         }))
-        case 'value': return p_.ss($, ($) => p_.decide.state($, ($) => {
+        case 'value': return p_.ss($, ($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'invalid type': return p_.ss($, ($) => sh.ph.composed([
                     sh.ph.literal("invalid value type, expected "),
                     sh.ph.rich(
-                        $.expected.__l_map(($) => sh.ph.composed([
+                        $.expected.__l_map_deprecated(($) => sh.ph.composed([
                             sh.ph.literal("'"),
                             sh.ph.literal($[0]),
                             sh.ph.literal("'")
@@ -50,7 +50,7 @@ export const Error: p_i.Transformer<
                 default: return p_.au($[0])
             }
         }))
-        case 'group': return p_.ss($, ($) => p_.decide.state($, ($) => {
+        case 'group': return p_.ss($, ($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'duplicate property': return p_.ss($, ($) => sh.ph.composed([
                     sh.ph.literal("duplicate property \""),
@@ -82,7 +82,7 @@ export const Error: p_i.Transformer<
                 default: return p_.au($[0])
             }
         }))
-        case 'state': return p_.ss($, ($) => p_.decide.state($, ($) => {
+        case 'state': return p_.ss($, ($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'missing option name': return p_.ss($, ($) => sh.ph.literal("missing option name"))
                 case 'missing option': return p_.ss($, ($) => sh.ph.literal("missing option"))
@@ -94,9 +94,9 @@ export const Error: p_i.Transformer<
                     sh.ph.literal($.found),
                     sh.ph.literal("', expected one of "),
                     sh.ph.composed(
-                        p_.list.from.dictionary(
+                        p_.from.dictionary(
                             $.expected,
-                        ).convert(
+                        ).convert_to_list(
                             ($, id) => sh.ph.composed([
                                 sh.ph.literal("'"),
                                 sh.ph.literal(id),

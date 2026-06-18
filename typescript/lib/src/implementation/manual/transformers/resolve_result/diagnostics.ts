@@ -17,7 +17,7 @@ export type Document = p_i.Transformer<
 >
 
 export const Document: Document = ($) => p_.literal.nested_list([
-    t_to_resolve_result_to_errors.Document($).__l_map(($) => {
+    t_to_resolve_result_to_errors.Document($).__l_map_deprecated(($) => {
         return ({
             'severity': $.severity,
             'range': p_.literal.set(['range', $.range]),

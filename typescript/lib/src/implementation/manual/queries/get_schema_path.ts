@@ -25,7 +25,7 @@ export const $$: interface_.query_functions.get_schema_path = p_.query_function(
             schema_path,
             ($): d.Error => ['stat error', $]
         )).refine(
-            ($, abort) => p_temp.decide.state($, ($) => {
+            ($, abort) => p_temp.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'does not exist': return p_temp.ss($, ($) => abort(['not found', null]))
                     case 'file': return p_temp.ss($, ($) => schema_path)

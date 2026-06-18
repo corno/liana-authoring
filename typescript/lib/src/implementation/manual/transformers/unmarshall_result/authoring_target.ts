@@ -48,7 +48,7 @@ const temp_value = ($: d_out.Value.data): d_out.Value => ({
 
 export const Document: Document = ($, $p): d_out.Document => {
     return {
-        'header': p_.optional.from.optional($['header']).map(($) => t_parse_tree_to_authoring_target.Value($)),
+        'header': p_.from.optional($['header']).map(($) => t_parse_tree_to_authoring_target.Value($)),
         'content': Any_Value($['content'], $p)
     }
 }
@@ -60,7 +60,7 @@ export const Non_Entity: Non_Entity = ($, $p): d_out.Value => {
         const x = $
         return {
             'style': $['style'],
-            'impact': p_.decide.state($['impact'], ($) => {
+            'impact': p_.from.state($['impact']).decide(($) => {
                 switch ($[0]) {
                     case 'shallow with entities': return p_.ss($, ($) => ['shallow without entities', null])
                     case 'shallow without entities': return p_.ss($, ($) => x['impact'])
@@ -75,7 +75,7 @@ export const Non_Entity: Non_Entity = ($, $p): d_out.Value => {
 
 export const Entity: Entity = ($, $p): d_out.Value => {
     const value = $
-    return p_.decide.state($p.impact, ($) => {
+    return p_.from.state($p.impact).decide(($) => {
         switch ($[0]) {
             case 'shallow with entities': return p_.ss($, ($) => Any_Value(
                 value,
@@ -93,9 +93,9 @@ export const Entity: Entity = ($, $p): d_out.Value => {
 
 export const Any_Value: Any_Value = ($, $p): d_out.Value => {
     const instance = $['instance']
-    return p_.decide.state($['unmarshall result'], ($) => {
+    return p_.from.state($['unmarshall result']).decide(($) => {
         switch ($[0]) {
-            case 'error': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'error': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'incorrect': return p_.ss($, ($) => t_parse_tree_to_authoring_target.Value(instance))
                     case 'missing': return p_.ss($, ($): d_out.Value => temp_value(['missing', {
@@ -106,15 +106,15 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                     default: return p_.au($[0])
                 }
             }))
-            case 'success': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Value => {
+            case 'success': return p_.ss($, ($) => p_.from.state($).decide(($): d_out.Value => {
                 switch ($[0]) {
                     case 'component': return p_.ss($, ($): d_out.Value => Any_Value($.value, $p))
                     case 'dictionary': return p_.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['dictionary', {
                             '{': Structural_Token($.intermediate.instance['{']),
-                            'entries': $.intermediate['entries as list'].__l_map(($): d_out.ID_Value_Pairs.L => ({
+                            'entries': $.intermediate['entries as list'].__l_map_deprecated(($): d_out.ID_Value_Pairs.L => ({
                                 'id': $.intermediate['id value pair'].id.token.value,
-                                'value': p_.decide.state($.value, ($) => {
+                                'value': p_.from.state($.value).decide(($) => {
                                     switch ($[0]) {
                                         case 'set': return p_.ss($, ($) => p_.literal.set(Entity($, $p)))
                                         case 'not set': return p_.ss($, ($) => p_.literal.not_set())
@@ -128,18 +128,18 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                     case 'group': return p_.ss($, ($): d_out.Value => {
                         const unmarsalled_group = $
                         return temp_value(['concrete', {
-                            'type': ['group', p_.decide.state($p.style, ($): d_out.Value.data.concrete.type_.group => {
+                            'type': ['group', p_.from.state($p.style).decide(($): d_out.Value.data.concrete.type_.group => {
                                 switch ($[0]) {
                                     case 'concise': return p_.ss($, ($) => ['concise', {
                                         '<': {
                                             'comments': p_.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
-                                        'properties': p_.decide.state(unmarsalled_group.derived.style, ($): d_out.Items => {
+                                        'properties': p_.from.state(unmarsalled_group.derived.style).decide(($): d_out.Items => {
                                             switch ($[0]) {
                                                 //convert concise to concise
-                                                case 'concise': return p_.ss($, ($) => $.properties.__l_map(($) => {
+                                                case 'concise': return p_.ss($, ($) => $.properties.__l_map_deprecated(($) => {
                                                     const item = $.item
-                                                    return p_.decide.state($['definition found'], ($) => {
+                                                    return p_.from.state($['definition found']).decide(($) => {
                                                         switch ($[0]) {
                                                             case 'no': return p_.ss($, ($) => t_parse_tree_to_authoring_target.Value(item.value))
                                                             case 'yes': return p_.ss($, ($) => Non_Entity($['value'], $p))
@@ -148,9 +148,9 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                     })
                                                 }))
                                                 //convert verbose to concise
-                                                case 'verbose': return p_.ss($, ($) => $.properties.__l_map(($): d_out.Items.L => {
+                                                case 'verbose': return p_.ss($, ($) => $.properties.__l_map_deprecated(($): d_out.Items.L => {
                                                     const item = $
-                                                    return p_.decide.state($['definition found'], ($) => {
+                                                    return p_.from.state($['definition found']).decide(($) => {
                                                         switch ($[0]) {
                                                             case 'yes': return p_.ss($, ($): d_out.Items.L => $['value'].__decide(
                                                                 ($) => Non_Entity($, $p),
@@ -196,10 +196,10 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                         '(': {
                                             'comments': p_.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                         },
-                                        'properties': p_.decide.state(unmarsalled_group.derived.style, ($): d_out.ID_Value_Pairs => {
+                                        'properties': p_.from.state(unmarsalled_group.derived.style).decide(($): d_out.ID_Value_Pairs => {
                                             switch ($[0]) {
                                                 //convert concise to verbose
-                                                case 'concise': return p_.ss($, ($): d_out.ID_Value_Pairs => p_.list.from.list($.properties).map_optionally(($) => (p_.decide.state($['definition found'], ($) => {
+                                                case 'concise': return p_.ss($, ($): d_out.ID_Value_Pairs => p_.from.list($.properties).map_optionally(($) => (p_.from.state($['definition found']).decide(($) => {
                                                     switch ($[0]) {
                                                         case 'no': return p_.ss($, ($) => p_.literal.not_set())
                                                         case 'yes': return p_.ss($, ($) => p_.literal.set({
@@ -210,13 +210,13 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                     }
                                                 }))))
                                                 //convert verbose to verbose
-                                                case 'verbose': return p_.ss($, ($) => $.properties.__l_map(($): d_out.ID_Value_Pairs.L => {
+                                                case 'verbose': return p_.ss($, ($) => $.properties.__l_map_deprecated(($): d_out.ID_Value_Pairs.L => {
                                                     const item = $
                                                     return {
                                                         'id': $.intermediate['id value pair'].id.token.value,
-                                                        'value': p_.decide.state($['definition found'], ($): d_out.ID_Value_Pairs.L.value => {
+                                                        'value': p_.from.state($['definition found']).decide(($): d_out.ID_Value_Pairs.L.value => {
                                                             switch ($[0]) {
-                                                                case 'yes': return p_.ss($, ($) => p_.optional.from.optional($['value']).map(($) => Non_Entity($, $p)))
+                                                                case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).map(($) => Non_Entity($, $p)))
                                                                 case 'no': return p_.ss($, ($) => item.intermediate['id value pair'].assignment.__decide(
                                                                     ($): d_out.ID_Value_Pairs.L.value => $.value.__decide(
                                                                         ($) => p_.literal.set(t_parse_tree_to_authoring_target.Value($)),
@@ -256,7 +256,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                     case 'list': return p_.ss($, ($): d_out.Value => temp_value(['concrete', {
                         'type': ['list', {
                             '[': Structural_Token($.instance['[']),
-                            'items': $.derived.items.__l_map(($) => Entity($, $p)),
+                            'items': $.derived.items.__l_map_deprecated(($) => Entity($, $p)),
                             ']': Structural_Token($.instance[']']),
                         }]
                     }]))
@@ -277,7 +277,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                         }]
                     }]))
                     case 'optional': return p_.ss($, ($): d_out.Value => temp_value(['concrete', {
-                        'type': ['optional', p_.decide.state($.instance, ($): d_out.Value.data.concrete.type_.optional => {
+                        'type': ['optional', p_.from.state($.instance).decide(($): d_out.Value.data.concrete.type_.optional => {
                             switch ($[0]) {
                                 case 'list': return p_.ss($, ($) => ['set', {
                                     '*': {
@@ -290,7 +290,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                         'comments': p_.literal.list([])
                                     }
                                 }])
-                                case 'optional': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                                case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                     switch ($[0]) {
                                         case 'set': return p_.ss($, ($) => ['set', {
                                             '*': {
@@ -312,7 +312,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                         })]
                     }]))
                     case 'reference': return p_.ss($, ($): d_out.Value => temp_value(['concrete', {
-                        'type': p_.decide.state($.type, ($) => {
+                        'type': p_.from.state($.type).decide(($) => {
                             switch ($[0]) {
                                 case 'derived': return p_.ss($, ($) => ['nothing', {
                                     '~': {
@@ -330,7 +330,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                             }
                         })
                     }]))
-                    case 'state': return p_.ss($, ($) => p_.decide.state($.derived['option status'], ($): d_out.Value => {
+                    case 'state': return p_.ss($, ($) => p_.from.state($.derived['option status']).decide(($): d_out.Value => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($): d_out.Value => temp_value(['concrete', {
                                 'type': ['state', {

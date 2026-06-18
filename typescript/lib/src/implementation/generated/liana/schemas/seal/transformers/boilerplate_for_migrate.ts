@@ -1,7 +1,7 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/seal/signatures/transformers/boilerplate_for_migrate"
 
@@ -12,33 +12,33 @@ import * as v_path_unrestricted from "../../path_unrestricted/transformers/boile
 export const Result: t_signatures.Result = ($) => $
 
 export const Parameters: t_signatures.Parameters = ($) => ({
-    'content': _p_change_context(
+    'content': p_change_context(
         $['content'],
         ($) => $,
     ),
-    'source': _p_change_context(
+    'source': p_change_context(
         $['source'],
         ($) => ({
-            'file path': _p_change_context(
+            'file path': p_change_context(
                 $['file path'],
                 ($) => v_path_unrestricted.Node_Path(
                     $,
                 ),
             ),
-            'tab size': _p_change_context(
+            'tab size': p_change_context(
                 $['tab size'],
                 ($) => $,
             ),
         }),
     ),
-    'target': _p_change_context(
+    'target': p_change_context(
         $['target'],
         ($) => ({
-            'indentation': _p_change_context(
+            'indentation': p_change_context(
                 $['indentation'],
                 ($) => $,
             ),
-            'newline': _p_change_context(
+            'newline': p_change_context(
                 $['newline'],
                 ($) => $,
             ),

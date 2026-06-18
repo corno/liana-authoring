@@ -1,7 +1,7 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -17,9 +17,9 @@ import * as v_external_location from "../../location/transformers/astn_sealed_ta
 
 import * as v_external_path_unrestricted from "../../path_unrestricted/transformers/astn_sealed_target"
 
-export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Result: t_signatures.Result = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "completion suggestions": _p_change_context(
+        "completion suggestions": p_change_context(
             $['completion suggestions'],
             ($) => v_external_completion_suggestions.Completion_Suggestions(
                 $,
@@ -28,26 +28,26 @@ export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.liter
     },
 )]]
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "content": _p_change_context(
+        "content": p_change_context(
             $['content'],
             ($) => ['text', {
                 'delimiter': ['quote', null],
                 'value': $,
             }],
         ),
-        "source": _p_change_context(
+        "source": p_change_context(
             $['source'],
-            ($) => ['group', ['verbose', _p.literal.dictionary(
+            ($) => ['group', ['verbose', p_.literal.dictionary(
                 {
-                    "file path": _p_change_context(
+                    "file path": p_change_context(
                         $['file path'],
                         ($) => v_external_path_unrestricted.Node_Path(
                             $,
                         ),
                     ),
-                    "tab size": _p_change_context(
+                    "tab size": p_change_context(
                         $['tab size'],
                         ($) => ['text', {
                             'delimiter': ['none', null],
@@ -59,13 +59,13 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
                 },
             )]],
         ),
-        "position": _p_change_context(
+        "position": p_change_context(
             $['position'],
             ($) => v_external_location.Position(
                 $,
             ),
         ),
-        "indent": _p_change_context(
+        "indent": p_change_context(
             $['indent'],
             ($) => ['text', {
                 'delimiter': ['quote', null],

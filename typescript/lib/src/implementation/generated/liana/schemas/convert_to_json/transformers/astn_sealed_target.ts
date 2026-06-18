@@ -1,7 +1,7 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -11,20 +11,20 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "source": _p_change_context(
+        "source": p_change_context(
             $['source'],
-            ($) => ['group', ['verbose', _p.literal.dictionary(
+            ($) => ['group', ['verbose', p_.literal.dictionary(
                 {
-                    "document resource identifier": _p_change_context(
+                    "document resource identifier": p_change_context(
                         $['document resource identifier'],
                         ($) => ['text', {
                             'delimiter': ['quote', null],
                             'value': $,
                         }],
                     ),
-                    "tab size": _p_change_context(
+                    "tab size": p_change_context(
                         $['tab size'],
                         ($) => ['text', {
                             'delimiter': ['none', null],
@@ -36,18 +36,18 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
                 },
             )]],
         ),
-        "target": _p_change_context(
+        "target": p_change_context(
             $['target'],
-            ($) => ['group', ['verbose', _p.literal.dictionary(
+            ($) => ['group', ['verbose', p_.literal.dictionary(
                 {
-                    "indentation": _p_change_context(
+                    "indentation": p_change_context(
                         $['indentation'],
                         ($) => ['text', {
                             'delimiter': ['quote', null],
                             'value': $,
                         }],
                     ),
-                    "newline": _p_change_context(
+                    "newline": p_change_context(
                         $['newline'],
                         ($) => ['text', {
                             'delimiter': ['quote', null],

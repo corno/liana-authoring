@@ -1,7 +1,11 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -11,15 +15,15 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Range: t_signatures.Range = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Range: t_signatures.Range = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "start": _p_change_context(
+        "start": p_change_context(
             $['start'],
             ($) => Location(
                 $,
             ),
         ),
-        "end": _p_change_context(
+        "end": p_change_context(
             $['end'],
             ($) => Location(
                 $,
@@ -28,12 +32,12 @@ export const Range: t_signatures.Range = ($) => ['group', ['verbose', _p.literal
     },
 )]]
 
-export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', _p.decide.state(
+export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', p_decide_state(
     $,
     ($): t_out.Value.state => {
         switch ($[0]) {
             case 'range':
-                return _p.ss(
+                return p_.ss(
                     $,
                     ($) => ({
                         'option': 'range',
@@ -43,13 +47,13 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', _p.d
                     }),
                 )
             case 'end of document':
-                return _p.ss(
+                return p_.ss(
                     $,
                     ($) => ({
                         'option': 'end of document',
-                        'value': ['group', ['verbose', _p.literal.dictionary(
+                        'value': ['group', ['verbose', p_.literal.dictionary(
                             {
-                                "end": _p_change_context(
+                                "end": p_change_context(
                                     $['end'],
                                     ($) => Location(
                                         $,
@@ -60,22 +64,22 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', _p.d
                     }),
                 )
             default:
-                return _p.au(
+                return p_.au(
                     $[0],
                 )
         }
     },
 )]
 
-export const Location: t_signatures.Location = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Location: t_signatures.Location = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "relative": _p_change_context(
+        "relative": p_change_context(
             $['relative'],
             ($) => Relative_Location(
                 $,
             ),
         ),
-        "absolute": _p_change_context(
+        "absolute": p_change_context(
             $['absolute'],
             ($) => ['text', {
                 'delimiter': ['none', null],
@@ -87,9 +91,9 @@ export const Location: t_signatures.Location = ($) => ['group', ['verbose', _p.l
     },
 )]]
 
-export const Relative_Location: t_signatures.Relative_Location = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Relative_Location: t_signatures.Relative_Location = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "line": _p_change_context(
+        "line": p_change_context(
             $['line'],
             ($) => ['text', {
                 'delimiter': ['none', null],
@@ -98,7 +102,7 @@ export const Relative_Location: t_signatures.Relative_Location = ($) => ['group'
                 ),
             }],
         ),
-        "column": _p_change_context(
+        "column": p_change_context(
             $['column'],
             ($) => ['text', {
                 'delimiter': ['none', null],

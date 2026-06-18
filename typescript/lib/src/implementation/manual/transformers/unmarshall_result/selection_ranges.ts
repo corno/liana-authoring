@@ -24,13 +24,14 @@ export type Document = p_i.Transformer_With_Parameter<
 
 export const Document: Document = ($, $p) => {
     const doc = $
-    return $p.positions.__l_map(($): d_in.Range_Stack => p_.decide.state(
+    return $p.positions.__l_map_deprecated(($): d_in.Range_Stack => p_.from.state(
         t_to_unmarshall_result_value_at_position.Document(
             doc,
             {
                 'position': $,
             }
         ),
+    ).decide(
         ($): d_in.Range_Stack => {
             switch ($[0]) {
                 case 'value': return p_.ss($, ($): d_in.Range_Stack => {
@@ -43,7 +44,7 @@ export const Document: Document = ($, $p) => {
                     'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                     'parent': p_.literal.set($['parent range stack'])
                 }))
-                case 'property': return p_.ss($, ($) => p_.decide.state($.style, ($) => {
+                case 'property': return p_.ss($, ($) => p_.from.state($.style).decide(($) => {
                     switch ($[0]) {
                         case 'verbose': return p_.ss($, ($) => ({
                             'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
@@ -58,7 +59,7 @@ export const Document: Document = ($, $p) => {
                     }
                 }))
                 case 'state': return p_.ss($, ($) => ({
-                    'range': p_.decide.state($.intermediate.instance, ($) => {
+                    'range': p_.from.state($.intermediate.instance).decide(($) => {
                         switch ($[0]) {
                             case 'state': return p_.ss($, ($) => t_parse_tree_to_location.State($.xxx))
                             case 'list': return p_.ss($, ($) => t_parse_tree_to_location.List($.xxx))

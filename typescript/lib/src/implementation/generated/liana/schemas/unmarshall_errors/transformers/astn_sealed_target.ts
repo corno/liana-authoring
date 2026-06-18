@@ -1,7 +1,11 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -13,50 +17,50 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../astn_location/transformers/astn_sealed_target"
 
-export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
+export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list(
     $,
 ).map(
-    ($) => ['group', ['verbose', _p.literal.dictionary(
+    ($) => ['group', ['verbose', p_.literal.dictionary(
         {
-            "range": _p_change_context(
+            "range": p_change_context(
                 $['range'],
                 ($) => v_external_location.Range(
                     $,
                 ),
             ),
-            "type": _p_change_context(
+            "type": p_change_context(
                 $['type'],
-                ($) => ['state', _p.decide.state(
+                ($) => ['state', p_decide_state(
                     $,
                     ($): t_out.Value.state => {
                         switch ($[0]) {
                             case 'value':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'value',
-                                        'value': ['state', _p.decide.state(
+                                        'value': ['state', p_decide_state(
                                             $,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'invalid type':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'invalid type',
-                                                                'value': ['group', ['verbose', _p.literal.dictionary(
+                                                                'value': ['group', ['verbose', p_.literal.dictionary(
                                                                     {
-                                                                        "expected": _p_change_context(
+                                                                        "expected": p_change_context(
                                                                             $['expected'],
-                                                                            ($) => ['list', _p.list.from.list(
+                                                                            ($) => ['list', p_.from.list(
                                                                                 $,
                                                                             ).map(
-                                                                                ($) => ['state', _p.decide.state(
+                                                                                ($) => ['state', p_decide_state(
                                                                                     $,
                                                                                     ($): t_out.Value.state => {
                                                                                         switch ($[0]) {
                                                                                             case 'dictionary':
-                                                                                                return _p.ss(
+                                                                                                return p_.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'dictionary',
@@ -64,7 +68,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                     }),
                                                                                                 )
                                                                                             case 'group':
-                                                                                                return _p.ss(
+                                                                                                return p_.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'group',
@@ -72,7 +76,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                     }),
                                                                                                 )
                                                                                             case 'list':
-                                                                                                return _p.ss(
+                                                                                                return p_.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'list',
@@ -80,7 +84,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                     }),
                                                                                                 )
                                                                                             case 'nothing':
-                                                                                                return _p.ss(
+                                                                                                return p_.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'nothing',
@@ -88,7 +92,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                     }),
                                                                                                 )
                                                                                             case 'optional':
-                                                                                                return _p.ss(
+                                                                                                return p_.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'optional',
@@ -96,7 +100,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                     }),
                                                                                                 )
                                                                                             case 'state':
-                                                                                                return _p.ss(
+                                                                                                return p_.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'state',
@@ -104,7 +108,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                     }),
                                                                                                 )
                                                                                             case 'text':
-                                                                                                return _p.ss(
+                                                                                                return p_.ss(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'text',
@@ -112,7 +116,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                                                                     }),
                                                                                                 )
                                                                                             default:
-                                                                                                return _p.au(
+                                                                                                return p_.au(
                                                                                                     $[0],
                                                                                                 )
                                                                                         }
@@ -125,7 +129,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'missing':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing',
@@ -133,7 +137,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     default:
-                                                        return _p.au(
+                                                        return p_.au(
                                                             $[0],
                                                         )
                                                 }
@@ -142,22 +146,22 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                     }),
                                 )
                             case 'dictionary':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'dictionary',
-                                        'value': ['state', _p.decide.state(
+                                        'value': ['state', p_decide_state(
                                             $,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'duplicate entry':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'duplicate entry',
-                                                                'value': ['group', ['verbose', _p.literal.dictionary(
+                                                                'value': ['group', ['verbose', p_.literal.dictionary(
                                                                     {
-                                                                        "name": _p_change_context(
+                                                                        "name": p_change_context(
                                                                             $['name'],
                                                                             ($) => ['text', {
                                                                                 'delimiter': ['quote', null],
@@ -169,7 +173,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     default:
-                                                        return _p.au(
+                                                        return p_.au(
                                                             $[0],
                                                         )
                                                 }
@@ -178,22 +182,22 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                     }),
                                 )
                             case 'group':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'group',
-                                        'value': ['state', _p.decide.state(
+                                        'value': ['state', p_decide_state(
                                             $,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'duplicate property':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'duplicate property',
-                                                                'value': ['group', ['verbose', _p.literal.dictionary(
+                                                                'value': ['group', ['verbose', p_.literal.dictionary(
                                                                     {
-                                                                        "name": _p_change_context(
+                                                                        "name": p_change_context(
                                                                             $['name'],
                                                                             ($) => ['text', {
                                                                                 'delimiter': ['quote', null],
@@ -205,13 +209,13 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'missing property':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing property',
-                                                                'value': ['group', ['verbose', _p.literal.dictionary(
+                                                                'value': ['group', ['verbose', p_.literal.dictionary(
                                                                     {
-                                                                        "name": _p_change_context(
+                                                                        "name": p_change_context(
                                                                             $['name'],
                                                                             ($) => ['text', {
                                                                                 'delimiter': ['quote', null],
@@ -223,13 +227,13 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'missing property value':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing property value',
-                                                                'value': ['group', ['verbose', _p.literal.dictionary(
+                                                                'value': ['group', ['verbose', p_.literal.dictionary(
                                                                     {
-                                                                        "name": _p_change_context(
+                                                                        "name": p_change_context(
                                                                             $['name'],
                                                                             ($) => ['text', {
                                                                                 'delimiter': ['quote', null],
@@ -241,15 +245,15 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'superfluous property':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'superfluous property',
-                                                                'value': ['group', ['verbose', _p.literal.dictionary(
+                                                                'value': ['group', ['verbose', p_.literal.dictionary(
                                                                     {
-                                                                        "name": _p_change_context(
+                                                                        "name": p_change_context(
                                                                             $['name'],
-                                                                            ($) => ['optional', _p.decide.optional(
+                                                                            ($) => ['optional', p_decide_optional(
                                                                                 $,
                                                                                 ($): t_out.Value.optional => ['set', ['text', {
                                                                                     'delimiter': ['quote', null],
@@ -263,7 +267,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     default:
-                                                        return _p.au(
+                                                        return p_.au(
                                                             $[0],
                                                         )
                                                 }
@@ -272,16 +276,16 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                     }),
                                 )
                             case 'state':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'state',
-                                        'value': ['state', _p.decide.state(
+                                        'value': ['state', p_decide_state(
                                             $,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'more than 2 items in list':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'more than 2 items in list',
@@ -289,7 +293,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'missing option name':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing option name',
@@ -297,7 +301,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'option name is not a text':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'option name is not a text',
@@ -305,7 +309,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'missing value':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing value',
@@ -313,22 +317,22 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'unknown option':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'unknown option',
-                                                                'value': ['group', ['verbose', _p.literal.dictionary(
+                                                                'value': ['group', ['verbose', p_.literal.dictionary(
                                                                     {
-                                                                        "found": _p_change_context(
+                                                                        "found": p_change_context(
                                                                             $['found'],
                                                                             ($) => ['text', {
                                                                                 'delimiter': ['quote', null],
                                                                                 'value': $,
                                                                             }],
                                                                         ),
-                                                                        "expected": _p_change_context(
+                                                                        "expected": p_change_context(
                                                                             $['expected'],
-                                                                            ($) => ['dictionary', _p.dictionary.from.dictionary(
+                                                                            ($) => ['dictionary', p_.from.dictionary(
                                                                                 $,
                                                                             ).map(
                                                                                 ($, id) => ['nothing', null],
@@ -339,7 +343,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     case 'missing option':
-                                                        return _p.ss(
+                                                        return p_.ss(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing option',
@@ -347,7 +351,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                                             }),
                                                         )
                                                     default:
-                                                        return _p.au(
+                                                        return p_.au(
                                                             $[0],
                                                         )
                                                 }
@@ -356,7 +360,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
                                     }),
                                 )
                             default:
-                                return _p.au(
+                                return p_.au(
                                     $[0],
                                 )
                         }
@@ -367,25 +371,25 @@ export const Errors: t_signatures.Errors = ($) => ['list', _p.list.from.list(
     )]],
 )]
 
-export const Warnings: t_signatures.Warnings = ($) => ['list', _p.list.from.list(
+export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list(
     $,
 ).map(
-    ($) => ['group', ['verbose', _p.literal.dictionary(
+    ($) => ['group', ['verbose', p_.literal.dictionary(
         {
-            "range": _p_change_context(
+            "range": p_change_context(
                 $['range'],
                 ($) => v_external_location.Range(
                     $,
                 ),
             ),
-            "type": _p_change_context(
+            "type": p_change_context(
                 $['type'],
-                ($) => ['state', _p.decide.state(
+                ($) => ['state', p_decide_state(
                     $,
                     ($): t_out.Value.state => {
                         switch ($[0]) {
                             case 'expected apostrophed text':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'expected apostrophed text',
@@ -393,7 +397,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', _p.list.from.list
                                     }),
                                 )
                             case 'expected quoted text':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'expected quoted text',
@@ -401,7 +405,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', _p.list.from.list
                                     }),
                                 )
                             case 'expected backticked text':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'expected backticked text',
@@ -409,7 +413,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', _p.list.from.list
                                     }),
                                 )
                             case 'expected undelimited text':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'expected undelimited text',
@@ -417,7 +421,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', _p.list.from.list
                                     }),
                                 )
                             case 'expected a group':
-                                return _p.ss(
+                                return p_.ss(
                                     $,
                                     ($) => ({
                                         'option': 'expected a group',
@@ -425,7 +429,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', _p.list.from.list
                                     }),
                                 )
                             default:
-                                return _p.au(
+                                return p_.au(
                                     $[0],
                                 )
                         }

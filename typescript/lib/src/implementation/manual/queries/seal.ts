@@ -43,7 +43,7 @@ export const $$: interface_.query_functions.seal = p_.query_function(
             )
         ).refine(
             ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
-                p_temp.decide.state($, ($) => {
+                p_temp.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'unconstrained': return p_temp.ss($, ($) => $.content)
                         case 'constrained': return p_temp.ss($, ($) => $.content.unmarshalled)

@@ -1,7 +1,7 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/format/signatures/transformers/boilerplate_for_migrate"
 
@@ -16,33 +16,33 @@ export const Result: t_signatures.Result = ($) => v_text_edits.Text_Edits(
 )
 
 export const Error: t_signatures.Error = ($) => ({
-    'message': _p_change_context(
+    'message': p_change_context(
         $['message'],
         ($) => $,
     ),
 })
 
 export const Parameters: t_signatures.Parameters = ($) => ({
-    'options': _p_change_context(
+    'options': p_change_context(
         $['options'],
         ($) => ({
-            'insert spaces': _p_change_context(
+            'insert spaces': p_change_context(
                 $['insert spaces'],
                 ($) => $,
             ),
-            'preserve delimiters': _p_change_context(
+            'preserve delimiters': p_change_context(
                 $['preserve delimiters'],
                 ($) => $,
             ),
-            'preserve final newline state': _p_change_context(
+            'preserve final newline state': p_change_context(
                 $['preserve final newline state'],
                 ($) => $,
             ),
-            'preserve commas': _p_change_context(
+            'preserve commas': p_change_context(
                 $['preserve commas'],
                 ($) => $,
             ),
-            'indent string': _p_change_context(
+            'indent string': p_change_context(
                 $['indent string'],
                 ($) => $,
             ),

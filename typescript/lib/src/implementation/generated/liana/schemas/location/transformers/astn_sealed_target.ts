@@ -1,7 +1,7 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -11,9 +11,9 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Position: t_signatures.Position = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Position: t_signatures.Position = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "line": _p_change_context(
+        "line": p_change_context(
             $['line'],
             ($) => ['text', {
                 'delimiter': ['none', null],
@@ -22,7 +22,7 @@ export const Position: t_signatures.Position = ($) => ['group', ['verbose', _p.l
                 ),
             }],
         ),
-        "character": _p_change_context(
+        "character": p_change_context(
             $['character'],
             ($) => ['text', {
                 'delimiter': ['none', null],
@@ -34,15 +34,15 @@ export const Position: t_signatures.Position = ($) => ['group', ['verbose', _p.l
     },
 )]]
 
-export const Range_FE: t_signatures.Range_FE = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Range_FE: t_signatures.Range_FE = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "start": _p_change_context(
+        "start": p_change_context(
             $['start'],
             ($) => Position(
                 $,
             ),
         ),
-        "end": _p_change_context(
+        "end": p_change_context(
             $['end'],
             ($) => Position(
                 $,

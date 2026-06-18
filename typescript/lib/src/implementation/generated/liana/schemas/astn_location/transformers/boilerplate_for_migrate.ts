@@ -1,20 +1,24 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/astn_location/signatures/transformers/boilerplate_for_migrate"
 
 import * as t_out from "../../../../../../interface/generated/liana/schemas/astn_location/data"
 
 export const Range: t_signatures.Range = ($) => ({
-    'start': _p_change_context(
+    'start': p_change_context(
         $['start'],
         ($) => Location(
             $,
         ),
     ),
-    'end': _p_change_context(
+    'end': p_change_context(
         $['end'],
         ($) => Location(
             $,
@@ -22,22 +26,22 @@ export const Range: t_signatures.Range = ($) => ({
     ),
 })
 
-export const Possible_Range: t_signatures.Possible_Range = ($) => _p.decide.state(
+export const Possible_Range: t_signatures.Possible_Range = ($) => p_decide_state(
     $,
     ($): t_out.Possible_Range => {
         switch ($[0]) {
             case 'range':
-                return _p.ss(
+                return p_.ss(
                     $,
                     ($) => ['range', Range(
                         $,
                     )],
                 )
             case 'end of document':
-                return _p.ss(
+                return p_.ss(
                     $,
                     ($) => ['end of document', {
-                        'end': _p_change_context(
+                        'end': p_change_context(
                             $['end'],
                             ($) => Location(
                                 $,
@@ -46,7 +50,7 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => _p.decide.stat
                     }],
                 )
             default:
-                return _p.au(
+                return p_.au(
                     $[0],
                 )
         }
@@ -54,24 +58,24 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => _p.decide.stat
 )
 
 export const Location: t_signatures.Location = ($) => ({
-    'relative': _p_change_context(
+    'relative': p_change_context(
         $['relative'],
         ($) => Relative_Location(
             $,
         ),
     ),
-    'absolute': _p_change_context(
+    'absolute': p_change_context(
         $['absolute'],
         ($) => $,
     ),
 })
 
 export const Relative_Location: t_signatures.Relative_Location = ($) => ({
-    'line': _p_change_context(
+    'line': p_change_context(
         $['line'],
         ($) => $,
     ),
-    'column': _p_change_context(
+    'column': p_change_context(
         $['column'],
         ($) => $,
     ),

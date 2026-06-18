@@ -15,7 +15,7 @@ export namespace signatures {
     export type Error = p_i.Transformer<d_in.Error, d_out.Phrase>
 }
 
-export const Error: signatures.Error = ($) => p_.decide.state($, ($) => {
+export const Error: signatures.Error = ($) => p_.from.state($).decide(($) => {
     switch ($[0]) {
         case 'deserialize parse tree': return p_.ss($, ($) => t_deserialize_to_fp.Error($))
         case 'schema': return p_.ss($, ($) => t_get_schema_to_fp.Error($.error))

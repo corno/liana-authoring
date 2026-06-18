@@ -55,10 +55,10 @@ const d_schema_Value = (
         | ['concise', null]
     }
 ): Minimal_Completion_Suggestions => {
-    return p_.decide.state($, ($): Minimal_Completion_Suggestions => {
+    return p_.from.state($).decide(($): Minimal_Completion_Suggestions => {
         switch ($[0]) {
             case 'component': return p_.ss($, ($) => d_schema_Value(
-                p_.decide.state($.type, ($): d_schema.Value => {
+                p_.from.state($.type).decide(($): d_schema.Value => {
                     switch ($[0]) {
                         case 'external': return p_.ss($, ($) => $.module['l entry']['root value'])
                         case 'internal': return p_.ss($, ($) => $['l entry'].get_circular_dependent()['root value'])
@@ -87,7 +87,7 @@ const d_schema_Value = (
             case 'group': return p_.ss($, ($) => {
                 const group = $
                 return p_.literal.list<Minimal_Completion_Suggestion>([
-                    p_.decide.state($p.style, ($): Minimal_Completion_Suggestion => {
+                    p_.from.state($p.style).decide(($): Minimal_Completion_Suggestion => {
                         switch ($[0]) {
                             case 'verbose': return p_.ss($, ($) => ({
                                 'label': "",
@@ -97,9 +97,9 @@ const d_schema_Value = (
                                             '(': {
                                                 'comments': p_.literal.list([])
                                             },
-                                            'properties': p_.list.from.dictionary(
+                                            'properties': p_.from.dictionary(
                                                 group
-                                            ).convert(
+                                            ).convert_to_list(
                                                 ($, id) => ({
                                                     'id': id,
                                                     'value': p_.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
@@ -121,9 +121,9 @@ const d_schema_Value = (
                                             '<': {
                                                 'comments': p_.literal.list([])
                                             },
-                                            'properties': p_.list.from.dictionary(
+                                            'properties': p_.from.dictionary(
                                                 group
-                                            ).convert(
+                                            ).convert_to_list(
                                                 ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
                                             ),
                                             '>': {
@@ -162,9 +162,9 @@ export const Found: Found = ($, $p) => {
             const instance = $.instance
             const definition = $.definition
 
-            return p_.decide.state($.instance.type, ($) => {
+            return p_.from.state($.instance.type).decide(($) => {
                 switch ($[0]) {
-                    case 'concrete': return p_.ss($, ($) => p_.decide.state(definition, ($) => {
+                    case 'concrete': return p_.ss($, ($) => p_.from.state(definition).decide(($) => {
                         switch ($[0]) {
                             case 'reference': return p_.ss($, ($) => p_.literal.not_set()) //FIXME
                             default: return p_.literal.not_set()
@@ -173,7 +173,7 @@ export const Found: Found = ($, $p) => {
                     case 'include': return p_.ss($, ($) => p_.literal.not_set())
                     case 'missing': return p_.ss($, ($) => p_.literal.set({
                         'type': ['missing value', null],
-                        'suggestions': p_.list.from.list(
+                        'suggestions': p_.from.list(
                             d_schema_Value(
                                 definition,
                                 $p,
@@ -203,22 +203,22 @@ export const Found: Found = ($, $p) => {
         case 'property': return p_.ss($, ($) => p_.literal.not_set())
         case 'state': return p_.ss($, ($): d_out.Completion_Suggestions => {
             const definition = $.definition
-            return p_.decide.state($.intermediate.instance, ($): d_out.Completion_Suggestions => {
+            return p_.from.state($.intermediate.instance).decide(($): d_out.Completion_Suggestions => {
                 switch ($[0]) {
-                    case 'state': return p_.ss($, ($) => p_.decide.state($.xxx.status, ($): d_out.Completion_Suggestions => {
+                    case 'state': return p_.ss($, ($) => p_.from.state($.xxx.status).decide(($): d_out.Completion_Suggestions => {
                         switch ($[0]) {
                             case 'missing': return p_.ss($, ($) => {
                                 const missing_data_marker = $['#']
                                 return p_.literal.set({
                                     'type': ['missing option', null],
-                                    'suggestions': p_.list.from.dictionary(
+                                    'suggestions': p_.from.dictionary(
                                         definition.options
-                                    ).flatten(($, id) => {
+                                    ).flatten_to_list(($, id) => {
                                         const desc = $.description
                                         return d_schema_Value(
                                             $.value,
                                             $p,
-                                        ).__l_map(
+                                        ).__l_map_deprecated(
                                             ($): d_out.Completion_Suggestions.O.suggestions.L => p_change_context(
                                                 $,
                                                 ($) => ({

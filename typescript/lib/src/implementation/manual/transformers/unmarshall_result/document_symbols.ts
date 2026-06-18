@@ -25,22 +25,22 @@ export const Value: Value = ($) => {
 
     const instance = $.instance
 
-    return p_.decide.state($['unmarshall result'], ($): d_out.Value => {
+    return p_.from.state($['unmarshall result']).decide(($): d_out.Value => {
         switch ($[0]) {
             case 'error': return p_.ss($, ($) => ({
                 'kind': ['null', null],
                 'children': p_.literal.list([]),
                 'deprecated': false,
             }))
-            case 'success': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Value => {
+            case 'success': return p_.ss($, ($) => p_.from.state($).decide(($): d_out.Value => {
                 switch ($[0]) {
                     case 'component': return p_.ss($, ($) => Value($.value))
                     case 'dictionary': return p_.ss($, ($): d_out.Value => ({
                         'kind': ['object', null],
-                        'children': $.intermediate['entries as list'].__l_map(($): d_out.Symbol => ({
+                        'children': $.intermediate['entries as list'].__l_map_deprecated(($): d_out.Symbol => ({
                             'name': $.intermediate['id value pair'].id.token.value,
                             'detail': "entry",
-                            'value': p_.decide.state($.value, ($) => {
+                            'value': p_.from.state($.value).decide(($) => {
                                 switch ($[0]) {
                                     case 'set': return p_.ss($, ($) => Value($))
                                     case 'not set': return p_.ss($, ($) => ({
@@ -56,12 +56,12 @@ export const Value: Value = ($) => {
                     }))
                     case 'group': return p_.ss($, ($) => ({
                         'kind': ['struct', null],
-                        'children': p_.decide.state($.derived.style, ($) => {
+                        'children': p_.from.state($.derived.style).decide(($) => {
                             switch ($[0]) {
-                                case 'verbose': return p_.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => ({
+                                case 'verbose': return p_.ss($, ($) => $.properties.__l_map_deprecated(($): d_out.Symbol => ({
                                     'name': $.id,
                                     'detail': "property",
-                                    'value': p_.decide.state($['definition found'], ($) => {
+                                    'value': p_.from.state($['definition found']).decide(($) => {
                                         switch ($[0]) {
                                             case 'yes': return p_.ss($, ($) => $['value'].__decide(
                                                 ($): d_out.Value => Value($),
@@ -80,7 +80,7 @@ export const Value: Value = ($) => {
                                     'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                                     'selection range': $.intermediate['id value pair'].id.range,
                                 })))
-                                case 'concise': return p_.ss($, ($) => $.properties.__l_map(($): d_out.Symbol => p_.decide.state($['definition found'], ($) => {
+                                case 'concise': return p_.ss($, ($) => $.properties.__l_map_deprecated(($): d_out.Symbol => p_.from.state($['definition found']).decide(($) => {
                                     switch ($[0]) {
                                         case 'no': return p_.ss($, ($): d_out.Symbol => ({
                                             'value': {
@@ -109,24 +109,21 @@ export const Value: Value = ($) => {
                     }))
                     case 'list': return p_.ss($, ($) => ({
                         'kind': ['array', null],
-                        'children': p_.list.from.list($.derived.items).map_with_state(
-                            0,
-                            ($, state): d_out.Symbol => ({
-                                'name': `[${state}]`,
+                        'children': p_.from.list($.derived.items).map_with_index(
+                            ($, index): d_out.Symbol => ({
+                                'name': `[${index}]`,
                                 'detail': "item",
                                 'value': Value($),
                                 'range': t_parse_tree_to_location.Value($.instance),
                                 'selection range': t_parse_tree_to_location.Value($.instance),
                             }),
-                            ($, state) => state + 1,
-                            ($, state) => $
                         ),
                     }))
                     case 'nothing': return p_.ss($, ($) => ({
                         'kind': ['null', null],
                         'children': p_.literal.list([]),
                     }))
-                    case 'optional': return p_.ss($, ($) => p_.decide.state($.derived.status, ($) => {
+                    case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => Value($['child value']))
                             case 'not set': return p_.ss($, ($) => ({
@@ -140,9 +137,9 @@ export const Value: Value = ($) => {
                         'kind': ['string', null],
                         'children': p_.literal.list([]),
                     }))
-                    case 'simple': return p_.ss($, ($) => p_.decide.state($.definition, ($) => {
+                    case 'simple': return p_.ss($, ($) => p_.from.state($.definition).decide(($) => {
                         switch ($[0]) {
-                            case 'global': return p_.ss($, ($) => p_.decide.state($['l entry'].type, ($) => {
+                            case 'global': return p_.ss($, ($) => p_.from.state($['l entry'].type).decide(($) => {
                                 switch ($[0]) {
                                     case 'number': return p_.ss($, ($) => ({
                                         'kind': ['number', null],
@@ -162,7 +159,7 @@ export const Value: Value = ($) => {
                             default: return p_.au($[0])
                         }
                     }))
-                    case 'state': return p_.ss($, ($) => p_.decide.state($.derived['option status'], ($): d_out.Value => {
+                    case 'state': return p_.ss($, ($) => p_.from.state($.derived['option status']).decide(($): d_out.Value => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => ({
                                 'kind': ['enum member', null],

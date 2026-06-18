@@ -1,7 +1,11 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/text_edits/signatures/transformers/boilerplate_for_migrate"
 
@@ -9,34 +13,34 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/text
 
 import * as v_location from "../../astn_location/transformers/boilerplate_for_migrate"
 
-export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
+export const Text_Edits: t_signatures.Text_Edits = ($) => p_.from.list(
     $,
 ).map(
-    ($) => _p.decide.state(
+    ($) => p_decide_state(
         $,
         ($): t_out.Text_Edits.L => {
             switch ($[0]) {
                 case 'replace':
-                    return _p.ss(
+                    return p_.ss(
                         $,
                         ($) => ['replace', {
-                            'range': _p_change_context(
+                            'range': p_change_context(
                                 $['range'],
                                 ($) => v_location.Range(
                                     $,
                                 ),
                             ),
-                            'text': _p_change_context(
+                            'text': p_change_context(
                                 $['text'],
                                 ($) => $,
                             ),
                         }],
                     )
                 case 'delete':
-                    return _p.ss(
+                    return p_.ss(
                         $,
                         ($) => ['delete', {
-                            'range': _p_change_context(
+                            'range': p_change_context(
                                 $['range'],
                                 ($) => v_location.Range(
                                     $,
@@ -45,23 +49,23 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => _p.list.from.list(
                         }],
                     )
                 case 'insert':
-                    return _p.ss(
+                    return p_.ss(
                         $,
                         ($) => ['insert', {
-                            'location': _p_change_context(
+                            'location': p_change_context(
                                 $['location'],
                                 ($) => v_location.Location(
                                     $,
                                 ),
                             ),
-                            'text': _p_change_context(
+                            'text': p_change_context(
                                 $['text'],
                                 ($) => $,
                             ),
                         }],
                     )
                 default:
-                    return _p.au(
+                    return p_.au(
                         $[0],
                     )
             }

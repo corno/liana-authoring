@@ -1,11 +1,15 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/refiner'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
-import _p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
+import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
 
-import _p_variables from 'pareto-core/dist/implementation/specials/variables'
+import p_variables from 'pareto-core/dist/implementation/specials/variables'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/unmarshall_errors/signatures/refiners/astn_parse_tree"
 
@@ -17,46 +21,46 @@ import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual
 
 import * as v_external_location from "../../astn_location/refiners/astn_parse_tree"
 
-export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
+export const Errors: t_signatures.Errors = ($, abort) => p_.from.list(
     v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,
         ),
         {
-            'subdocument context': _p.literal.not_set(),
+            'subdocument context': p_.literal.not_set(),
         },
     )['items'],
 ).map(
-    ($) => _p_change_context(
+    ($) => p_change_context(
         $['value'],
-        ($) => _p_change_context(
+        ($) => p_change_context(
             v_unmarshalled_from_parse_tree.Verbose_Group(
                 $,
                 ($) => abort(
                     $,
                 ),
                 {
-                    'expected properties': _p.literal.dictionary(
+                    'expected properties': p_.literal.dictionary(
                         {
                             "range": null,
                             "type": null,
                         },
                     ),
-                    'subdocument context': _p.literal.not_set(),
+                    'subdocument context': p_.literal.not_set(),
                 },
             ),
-            ($) => _p_variables(
+            ($) => p_variables(
                 () => {
                     
                     const var_verbose_group_range = v_parse_tree_to_location.Value(
                         $['value'],
                         {
-                            'subdocument context': _p.literal.not_set(),
+                            'subdocument context': p_.literal.not_set(),
                         },
                     )
                     return {
-                        'range': _p_change_context(
+                        'range': p_change_context(
                             v_unmarshalled_from_parse_tree.Property(
                                 $,
                                 ($) => abort(
@@ -64,7 +68,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                 ),
                                 {
                                     'id': 'range',
-                                    'subdocument context': _p.literal.not_set(),
+                                    'subdocument context': p_.literal.not_set(),
                                 },
                             ),
                             ($) => v_external_location.Range(
@@ -74,7 +78,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                 ),
                             ),
                         ),
-                        'type': _p_change_context(
+                        'type': p_change_context(
                             v_unmarshalled_from_parse_tree.Property(
                                 $,
                                 ($) => abort(
@@ -82,63 +86,63 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                 ),
                                 {
                                     'id': 'type',
-                                    'subdocument context': _p.literal.not_set(),
+                                    'subdocument context': p_.literal.not_set(),
                                 },
                             ),
-                            ($) => _p_change_context(
+                            ($) => p_change_context(
                                 v_unmarshalled_from_parse_tree.State(
                                     $,
                                     ($) => abort(
                                         $,
                                     ),
                                 ),
-                                ($) => _p.decide.text(
+                                ($) => p_decide_text(
                                     $['option']['token']['value'],
                                     ($t): t_out.Errors.L.type_ => {
                                         switch ($t) {
                                             case 'value':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
-                                                    ($) => ['value', _p_change_context(
+                                                    ($) => ['value', p_change_context(
                                                         v_unmarshalled_from_parse_tree.State(
                                                             $,
                                                             ($) => abort(
                                                                 $,
                                                             ),
                                                         ),
-                                                        ($) => _p.decide.text(
+                                                        ($) => p_decide_text(
                                                             $['option']['token']['value'],
                                                             ($t): t_out.Errors.L.type_.value => {
                                                                 switch ($t) {
                                                                     case 'invalid type':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['invalid type', _p_change_context(
+                                                                            ($) => ['invalid type', p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
                                                                                     {
-                                                                                        'expected properties': _p.literal.dictionary(
+                                                                                        'expected properties': p_.literal.dictionary(
                                                                                             {
                                                                                                 "expected": null,
                                                                                             },
                                                                                         ),
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
-                                                                                ($) => _p_variables(
+                                                                                ($) => p_variables(
                                                                                     () => {
                                                                                         
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'subdocument context': _p.literal.not_set(),
+                                                                                                'subdocument context': p_.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
-                                                                                            'expected': _p_change_context(
+                                                                                            'expected': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -146,35 +150,35 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'expected',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
-                                                                                                ($) => _p.list.from.list(
+                                                                                                ($) => p_.from.list(
                                                                                                     v_unmarshalled_from_parse_tree.List(
                                                                                                         $,
                                                                                                         ($) => abort(
                                                                                                             $,
                                                                                                         ),
                                                                                                         {
-                                                                                                            'subdocument context': _p.literal.not_set(),
+                                                                                                            'subdocument context': p_.literal.not_set(),
                                                                                                         },
                                                                                                     )['items'],
                                                                                                 ).map(
-                                                                                                    ($) => _p_change_context(
+                                                                                                    ($) => p_change_context(
                                                                                                         $['value'],
-                                                                                                        ($) => _p_change_context(
+                                                                                                        ($) => p_change_context(
                                                                                                             v_unmarshalled_from_parse_tree.State(
                                                                                                                 $,
                                                                                                                 ($) => abort(
                                                                                                                     $,
                                                                                                                 ),
                                                                                                             ),
-                                                                                                            ($) => _p.decide.text(
+                                                                                                            ($) => p_decide_text(
                                                                                                                 $['option']['token']['value'],
                                                                                                                 ($t): t_out.Errors.L.type_.value.invalid_type.expected.L => {
                                                                                                                     switch ($t) {
                                                                                                                         case 'dictionary':
-                                                                                                                            return _p_change_context(
+                                                                                                                            return p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['dictionary', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
@@ -184,7 +188,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                 )],
                                                                                                                             )
                                                                                                                         case 'group':
-                                                                                                                            return _p_change_context(
+                                                                                                                            return p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['group', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
@@ -194,7 +198,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                 )],
                                                                                                                             )
                                                                                                                         case 'list':
-                                                                                                                            return _p_change_context(
+                                                                                                                            return p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['list', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
@@ -204,7 +208,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                 )],
                                                                                                                             )
                                                                                                                         case 'nothing':
-                                                                                                                            return _p_change_context(
+                                                                                                                            return p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['nothing', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
@@ -214,7 +218,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                 )],
                                                                                                                             )
                                                                                                                         case 'optional':
-                                                                                                                            return _p_change_context(
+                                                                                                                            return p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['optional', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
@@ -224,7 +228,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                 )],
                                                                                                                             )
                                                                                                                         case 'state':
-                                                                                                                            return _p_change_context(
+                                                                                                                            return p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['state', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
@@ -234,7 +238,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                 )],
                                                                                                                             )
                                                                                                                         case 'text':
-                                                                                                                            return _p_change_context(
+                                                                                                                            return p_change_context(
                                                                                                                                 $['value'],
                                                                                                                                 ($) => ['text', v_unmarshalled_from_parse_tree.Nothing(
                                                                                                                                     $,
@@ -250,7 +254,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                                                     'range': v_parse_tree_to_location.Value(
                                                                                                                                         $['value'],
                                                                                                                                         {
-                                                                                                                                            'subdocument context': _p.literal.not_set(),
+                                                                                                                                            'subdocument context': p_.literal.not_set(),
                                                                                                                                         },
                                                                                                                                     ),
                                                                                                                                 }],
@@ -268,7 +272,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'missing':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
                                                                             ($) => ['missing', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
@@ -284,7 +288,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 'range': v_parse_tree_to_location.Value(
                                                                                     $['value'],
                                                                                     {
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                             }],
@@ -295,48 +299,48 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                     )],
                                                 )
                                             case 'dictionary':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
-                                                    ($) => ['dictionary', _p_change_context(
+                                                    ($) => ['dictionary', p_change_context(
                                                         v_unmarshalled_from_parse_tree.State(
                                                             $,
                                                             ($) => abort(
                                                                 $,
                                                             ),
                                                         ),
-                                                        ($) => _p.decide.text(
+                                                        ($) => p_decide_text(
                                                             $['option']['token']['value'],
                                                             ($t): t_out.Errors.L.type_.dictionary => {
                                                                 switch ($t) {
                                                                     case 'duplicate entry':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['duplicate entry', _p_change_context(
+                                                                            ($) => ['duplicate entry', p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
                                                                                     {
-                                                                                        'expected properties': _p.literal.dictionary(
+                                                                                        'expected properties': p_.literal.dictionary(
                                                                                             {
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
-                                                                                ($) => _p_variables(
+                                                                                ($) => p_variables(
                                                                                     () => {
                                                                                         
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'subdocument context': _p.literal.not_set(),
+                                                                                                'subdocument context': p_.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
-                                                                                            'name': _p_change_context(
+                                                                                            'name': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -344,7 +348,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -366,7 +370,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 'range': v_parse_tree_to_location.Value(
                                                                                     $['value'],
                                                                                     {
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                             }],
@@ -377,48 +381,48 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                     )],
                                                 )
                                             case 'group':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
-                                                    ($) => ['group', _p_change_context(
+                                                    ($) => ['group', p_change_context(
                                                         v_unmarshalled_from_parse_tree.State(
                                                             $,
                                                             ($) => abort(
                                                                 $,
                                                             ),
                                                         ),
-                                                        ($) => _p.decide.text(
+                                                        ($) => p_decide_text(
                                                             $['option']['token']['value'],
                                                             ($t): t_out.Errors.L.type_.group => {
                                                                 switch ($t) {
                                                                     case 'duplicate property':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['duplicate property', _p_change_context(
+                                                                            ($) => ['duplicate property', p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
                                                                                     {
-                                                                                        'expected properties': _p.literal.dictionary(
+                                                                                        'expected properties': p_.literal.dictionary(
                                                                                             {
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
-                                                                                ($) => _p_variables(
+                                                                                ($) => p_variables(
                                                                                     () => {
                                                                                         
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'subdocument context': _p.literal.not_set(),
+                                                                                                'subdocument context': p_.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
-                                                                                            'name': _p_change_context(
+                                                                                            'name': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -426,7 +430,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -442,34 +446,34 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'missing property':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['missing property', _p_change_context(
+                                                                            ($) => ['missing property', p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
                                                                                     {
-                                                                                        'expected properties': _p.literal.dictionary(
+                                                                                        'expected properties': p_.literal.dictionary(
                                                                                             {
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
-                                                                                ($) => _p_variables(
+                                                                                ($) => p_variables(
                                                                                     () => {
                                                                                         
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'subdocument context': _p.literal.not_set(),
+                                                                                                'subdocument context': p_.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
-                                                                                            'name': _p_change_context(
+                                                                                            'name': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -477,7 +481,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -493,34 +497,34 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'missing property value':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['missing property value', _p_change_context(
+                                                                            ($) => ['missing property value', p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
                                                                                     {
-                                                                                        'expected properties': _p.literal.dictionary(
+                                                                                        'expected properties': p_.literal.dictionary(
                                                                                             {
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
-                                                                                ($) => _p_variables(
+                                                                                ($) => p_variables(
                                                                                     () => {
                                                                                         
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'subdocument context': _p.literal.not_set(),
+                                                                                                'subdocument context': p_.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
-                                                                                            'name': _p_change_context(
+                                                                                            'name': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -528,7 +532,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -544,34 +548,34 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'superfluous property':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['superfluous property', _p_change_context(
+                                                                            ($) => ['superfluous property', p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
                                                                                     {
-                                                                                        'expected properties': _p.literal.dictionary(
+                                                                                        'expected properties': p_.literal.dictionary(
                                                                                             {
                                                                                                 "name": null,
                                                                                             },
                                                                                         ),
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
-                                                                                ($) => _p_variables(
+                                                                                ($) => p_variables(
                                                                                     () => {
                                                                                         
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'subdocument context': _p.literal.not_set(),
+                                                                                                'subdocument context': p_.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
-                                                                                            'name': _p_change_context(
+                                                                                            'name': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -579,10 +583,10 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'name',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
-                                                                                                ($) => _p.optional.from.optional(
+                                                                                                ($) => p_.from.optional(
                                                                                                     v_unmarshalled_from_parse_tree.Optional(
                                                                                                         $,
                                                                                                         ($) => abort(
@@ -610,7 +614,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 'range': v_parse_tree_to_location.Value(
                                                                                     $['value'],
                                                                                     {
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                             }],
@@ -621,21 +625,21 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                     )],
                                                 )
                                             case 'state':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
-                                                    ($) => ['state', _p_change_context(
+                                                    ($) => ['state', p_change_context(
                                                         v_unmarshalled_from_parse_tree.State(
                                                             $,
                                                             ($) => abort(
                                                                 $,
                                                             ),
                                                         ),
-                                                        ($) => _p.decide.text(
+                                                        ($) => p_decide_text(
                                                             $['option']['token']['value'],
                                                             ($t): t_out.Errors.L.type_.state => {
                                                                 switch ($t) {
                                                                     case 'more than 2 items in list':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
                                                                             ($) => ['more than 2 items in list', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
@@ -645,7 +649,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'missing option name':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
                                                                             ($) => ['missing option name', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
@@ -655,7 +659,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'option name is not a text':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
                                                                             ($) => ['option name is not a text', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
@@ -665,7 +669,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'missing value':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
                                                                             ($) => ['missing value', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
@@ -675,35 +679,35 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'unknown option':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
-                                                                            ($) => ['unknown option', _p_change_context(
+                                                                            ($) => ['unknown option', p_change_context(
                                                                                 v_unmarshalled_from_parse_tree.Verbose_Group(
                                                                                     $,
                                                                                     ($) => abort(
                                                                                         $,
                                                                                     ),
                                                                                     {
-                                                                                        'expected properties': _p.literal.dictionary(
+                                                                                        'expected properties': p_.literal.dictionary(
                                                                                             {
                                                                                                 "found": null,
                                                                                                 "expected": null,
                                                                                             },
                                                                                         ),
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
-                                                                                ($) => _p_variables(
+                                                                                ($) => p_variables(
                                                                                     () => {
                                                                                         
                                                                                         const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                                                             $['value'],
                                                                                             {
-                                                                                                'subdocument context': _p.literal.not_set(),
+                                                                                                'subdocument context': p_.literal.not_set(),
                                                                                             },
                                                                                         )
                                                                                         return {
-                                                                                            'found': _p_change_context(
+                                                                                            'found': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -711,7 +715,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'found',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
                                                                                                 ($) => v_unmarshalled_from_parse_tree.Text(
@@ -721,7 +725,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                 ),
                                                                                             ),
-                                                                                            'expected': _p_change_context(
+                                                                                            'expected': p_change_context(
                                                                                                 v_unmarshalled_from_parse_tree.Property(
                                                                                                     $,
                                                                                                     ($) => abort(
@@ -729,20 +733,20 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                                     ),
                                                                                                     {
                                                                                                         'id': 'expected',
-                                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
-                                                                                                ($) => _p_change_context(
+                                                                                                ($) => p_change_context(
                                                                                                     v_unmarshalled_from_parse_tree.Dictionary(
                                                                                                         $,
                                                                                                         ($) => abort(
                                                                                                             $,
                                                                                                         ),
                                                                                                         {
-                                                                                                            'subdocument context': _p.literal.not_set(),
+                                                                                                            'subdocument context': p_.literal.not_set(),
                                                                                                         },
                                                                                                     ),
-                                                                                                    ($) => _p.dictionary.from.dictionary(
+                                                                                                    ($) => p_.from.dictionary(
                                                                                                         $['entries'],
                                                                                                     ).map(
                                                                                                         ($, id) => v_unmarshalled_from_parse_tree.Nothing(
@@ -760,7 +764,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                             )],
                                                                         )
                                                                     case 'missing option':
-                                                                        return _p_change_context(
+                                                                        return p_change_context(
                                                                             $['value'],
                                                                             ($) => ['missing option', v_unmarshalled_from_parse_tree.Nothing(
                                                                                 $,
@@ -776,7 +780,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                                                 'range': v_parse_tree_to_location.Value(
                                                                                     $['value'],
                                                                                     {
-                                                                                        'subdocument context': _p.literal.not_set(),
+                                                                                        'subdocument context': p_.literal.not_set(),
                                                                                     },
                                                                                 ),
                                                                             }],
@@ -793,7 +797,7 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
                                                             {
-                                                                'subdocument context': _p.literal.not_set(),
+                                                                'subdocument context': p_.literal.not_set(),
                                                             },
                                                         ),
                                                     }],
@@ -810,46 +814,46 @@ export const Errors: t_signatures.Errors = ($, abort) => _p.list.from.list(
     ),
 )
 
-export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
+export const Warnings: t_signatures.Warnings = ($, abort) => p_.from.list(
     v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,
         ),
         {
-            'subdocument context': _p.literal.not_set(),
+            'subdocument context': p_.literal.not_set(),
         },
     )['items'],
 ).map(
-    ($) => _p_change_context(
+    ($) => p_change_context(
         $['value'],
-        ($) => _p_change_context(
+        ($) => p_change_context(
             v_unmarshalled_from_parse_tree.Verbose_Group(
                 $,
                 ($) => abort(
                     $,
                 ),
                 {
-                    'expected properties': _p.literal.dictionary(
+                    'expected properties': p_.literal.dictionary(
                         {
                             "range": null,
                             "type": null,
                         },
                     ),
-                    'subdocument context': _p.literal.not_set(),
+                    'subdocument context': p_.literal.not_set(),
                 },
             ),
-            ($) => _p_variables(
+            ($) => p_variables(
                 () => {
                     
                     const var_verbose_group_range = v_parse_tree_to_location.Value(
                         $['value'],
                         {
-                            'subdocument context': _p.literal.not_set(),
+                            'subdocument context': p_.literal.not_set(),
                         },
                     )
                     return {
-                        'range': _p_change_context(
+                        'range': p_change_context(
                             v_unmarshalled_from_parse_tree.Property(
                                 $,
                                 ($) => abort(
@@ -857,7 +861,7 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                 ),
                                 {
                                     'id': 'range',
-                                    'subdocument context': _p.literal.not_set(),
+                                    'subdocument context': p_.literal.not_set(),
                                 },
                             ),
                             ($) => v_external_location.Range(
@@ -867,7 +871,7 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                 ),
                             ),
                         ),
-                        'type': _p_change_context(
+                        'type': p_change_context(
                             v_unmarshalled_from_parse_tree.Property(
                                 $,
                                 ($) => abort(
@@ -875,22 +879,22 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                 ),
                                 {
                                     'id': 'type',
-                                    'subdocument context': _p.literal.not_set(),
+                                    'subdocument context': p_.literal.not_set(),
                                 },
                             ),
-                            ($) => _p_change_context(
+                            ($) => p_change_context(
                                 v_unmarshalled_from_parse_tree.State(
                                     $,
                                     ($) => abort(
                                         $,
                                     ),
                                 ),
-                                ($) => _p.decide.text(
+                                ($) => p_decide_text(
                                     $['option']['token']['value'],
                                     ($t): t_out.Warnings.L.type_ => {
                                         switch ($t) {
                                             case 'expected apostrophed text':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
                                                     ($) => ['expected apostrophed text', v_unmarshalled_from_parse_tree.Nothing(
                                                         $,
@@ -900,7 +904,7 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                                     )],
                                                 )
                                             case 'expected quoted text':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
                                                     ($) => ['expected quoted text', v_unmarshalled_from_parse_tree.Nothing(
                                                         $,
@@ -910,7 +914,7 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                                     )],
                                                 )
                                             case 'expected backticked text':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
                                                     ($) => ['expected backticked text', v_unmarshalled_from_parse_tree.Nothing(
                                                         $,
@@ -920,7 +924,7 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                                     )],
                                                 )
                                             case 'expected undelimited text':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
                                                     ($) => ['expected undelimited text', v_unmarshalled_from_parse_tree.Nothing(
                                                         $,
@@ -930,7 +934,7 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                                     )],
                                                 )
                                             case 'expected a group':
-                                                return _p_change_context(
+                                                return p_change_context(
                                                     $['value'],
                                                     ($) => ['expected a group', v_unmarshalled_from_parse_tree.Nothing(
                                                         $,
@@ -946,7 +950,7 @@ export const Warnings: t_signatures.Warnings = ($, abort) => _p.list.from.list(
                                                         'range': v_parse_tree_to_location.Value(
                                                             $['value'],
                                                             {
-                                                                'subdocument context': _p.literal.not_set(),
+                                                                'subdocument context': p_.literal.not_set(),
                                                             },
                                                         ),
                                                     }],

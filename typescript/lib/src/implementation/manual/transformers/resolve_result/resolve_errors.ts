@@ -27,17 +27,17 @@ export const Document: Document = ($) => {
 
 export const Value: Value = ($) => {
     const range = t_astn_parse_tree_to_location.Value($.unmarshalled.instance)
-    return p_.decide.state($['unmarshall result'], ($) => {
+    return p_.from.state($['unmarshall result']).decide(($) => {
         switch ($[0]) {
             case 'error': return p_.ss($, ($) => p_.literal.list([])) //reported by the unmarshaller, it is not the responsibility of this transformer to report them
-            case 'success': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Errors => {
+            case 'success': return p_.ss($, ($) => p_.from.state($).decide(($): d_out.Errors => {
                 switch ($[0]) {
-                    case 'dictionary': return p_.ss($, ($) => p_.list.from.dictionary(
+                    case 'dictionary': return p_.ss($, ($) => p_.from.dictionary(
                         $.entries
-                    ).flatten(
-                        ($) => p_.decide.state($['unmarshall result'], ($) => {
+                    ).flatten_to_list(
+                        ($) => p_.from.state($['unmarshall result']).decide(($) => {
                             switch ($[0]) {
-                                case 'success': return p_.ss($, ($) => p_.decide.state($.value, ($) => {
+                                case 'success': return p_.ss($, ($) => p_.from.state($.value).decide(($) => {
                                     switch ($[0]) {
                                         case 'set': return p_.ss($, ($) => Value($))
                                         case 'not set': return p_.ss($, ($) => p_.literal.list([]))
@@ -49,10 +49,10 @@ export const Value: Value = ($) => {
                             }
                         })
                     ))
-                    case 'group': return p_.ss($, ($) => p_.list.from.dictionary(
+                    case 'group': return p_.ss($, ($) => p_.from.dictionary(
                         $.properties
-                    ).flatten(
-                        ($) => p_.decide.state($['unmarshall result'], ($) => {
+                    ).flatten_to_list(
+                        ($) => p_.from.state($['unmarshall result']).decide(($) => {
                             switch ($[0]) {
                                 case 'success': return p_.ss($, ($) => Value($.resolved))
                                 case 'error': return p_.ss($, ($) => p_.literal.list([]))
@@ -61,17 +61,17 @@ export const Value: Value = ($) => {
                         })
                     ))
                     case 'simple': return p_.ss($, ($) => p_.literal.list([]))
-                    case 'list': return p_.ss($, ($) => p_.list.from.list(
+                    case 'list': return p_.ss($, ($) => p_.from.list(
                         $.items
                     ).flatten(
                         ($) => Value($)
                     ))
                     case 'nothing': return p_.ss($, ($) => p_.literal.list([]))
                     case 'reference': return p_.ss($, ($) => {
-                        return p_.decide.state($, ($): d_out.Errors => {
+                        return p_.from.state($).decide(($): d_out.Errors => {
                             switch ($[0]) {
                                 case 'derived': return p_.ss($, ($) => p_.literal.list([]))
-                                case 'selected': return p_.ss($, ($) => p_.decide.state($['resolve status'], ($): d_out.Errors => {
+                                case 'selected': return p_.ss($, ($) => p_.from.state($['resolve status']).decide(($): d_out.Errors => {
                                     switch ($[0]) {
                                         case 'to be implemented': return p_.ss($, ($) => p_.literal.list<d_out.Error>([
                                             // {
@@ -90,7 +90,7 @@ export const Value: Value = ($) => {
                     case 'component': return p_.ss($, ($) => {
                         return Value($.value)
                     })
-                    case 'optional': return p_.ss($, ($) => p_.decide.state($.status, ($) => {
+                    case 'optional': return p_.ss($, ($) => p_.from.state($.status).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => Value($['child value']))
                             case 'not set': return p_.ss($, ($) => p_.literal.list([]))

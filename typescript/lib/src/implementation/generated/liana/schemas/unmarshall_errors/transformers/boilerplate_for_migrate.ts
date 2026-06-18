@@ -1,7 +1,11 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/unmarshall_errors/signatures/transformers/boilerplate_for_migrate"
 
@@ -9,79 +13,79 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/unma
 
 import * as v_location from "../../astn_location/transformers/boilerplate_for_migrate"
 
-export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
+export const Errors: t_signatures.Errors = ($) => p_.from.list(
     $,
 ).map(
     ($) => ({
-        'range': _p_change_context(
+        'range': p_change_context(
             $['range'],
             ($) => v_location.Range(
                 $,
             ),
         ),
-        'type': _p_change_context(
+        'type': p_change_context(
             $['type'],
-            ($) => _p.decide.state(
+            ($) => p_decide_state(
                 $,
                 ($): t_out.Errors.L.type_ => {
                     switch ($[0]) {
                         case 'value':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
-                                ($) => ['value', _p.decide.state(
+                                ($) => ['value', p_decide_state(
                                     $,
                                     ($): t_out.Errors.L.type_.value => {
                                         switch ($[0]) {
                                             case 'invalid type':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['invalid type', {
-                                                        'expected': _p_change_context(
+                                                        'expected': p_change_context(
                                                             $['expected'],
-                                                            ($) => _p.list.from.list(
+                                                            ($) => p_.from.list(
                                                                 $,
                                                             ).map(
-                                                                ($) => _p.decide.state(
+                                                                ($) => p_decide_state(
                                                                     $,
                                                                     ($): t_out.Errors.L.type_.value.invalid_type.expected.L => {
                                                                         switch ($[0]) {
                                                                             case 'dictionary':
-                                                                                return _p.ss(
+                                                                                return p_.ss(
                                                                                     $,
                                                                                     ($) => ['dictionary', null],
                                                                                 )
                                                                             case 'group':
-                                                                                return _p.ss(
+                                                                                return p_.ss(
                                                                                     $,
                                                                                     ($) => ['group', null],
                                                                                 )
                                                                             case 'list':
-                                                                                return _p.ss(
+                                                                                return p_.ss(
                                                                                     $,
                                                                                     ($) => ['list', null],
                                                                                 )
                                                                             case 'nothing':
-                                                                                return _p.ss(
+                                                                                return p_.ss(
                                                                                     $,
                                                                                     ($) => ['nothing', null],
                                                                                 )
                                                                             case 'optional':
-                                                                                return _p.ss(
+                                                                                return p_.ss(
                                                                                     $,
                                                                                     ($) => ['optional', null],
                                                                                 )
                                                                             case 'state':
-                                                                                return _p.ss(
+                                                                                return p_.ss(
                                                                                     $,
                                                                                     ($) => ['state', null],
                                                                                 )
                                                                             case 'text':
-                                                                                return _p.ss(
+                                                                                return p_.ss(
                                                                                     $,
                                                                                     ($) => ['text', null],
                                                                                 )
                                                                             default:
-                                                                                return _p.au(
+                                                                                return p_.au(
                                                                                     $[0],
                                                                                 )
                                                                         }
@@ -92,12 +96,12 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                                     }],
                                                 )
                                             case 'missing':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['missing', null],
                                                 )
                                             default:
-                                                return _p.au(
+                                                return p_.au(
                                                     $[0],
                                                 )
                                         }
@@ -105,24 +109,24 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                 )],
                             )
                         case 'dictionary':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
-                                ($) => ['dictionary', _p.decide.state(
+                                ($) => ['dictionary', p_decide_state(
                                     $,
                                     ($): t_out.Errors.L.type_.dictionary => {
                                         switch ($[0]) {
                                             case 'duplicate entry':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['duplicate entry', {
-                                                        'name': _p_change_context(
+                                                        'name': p_change_context(
                                                             $['name'],
                                                             ($) => $,
                                                         ),
                                                     }],
                                                 )
                                             default:
-                                                return _p.au(
+                                                return p_.au(
                                                     $[0],
                                                 )
                                         }
@@ -130,49 +134,49 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                 )],
                             )
                         case 'group':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
-                                ($) => ['group', _p.decide.state(
+                                ($) => ['group', p_decide_state(
                                     $,
                                     ($): t_out.Errors.L.type_.group => {
                                         switch ($[0]) {
                                             case 'duplicate property':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['duplicate property', {
-                                                        'name': _p_change_context(
+                                                        'name': p_change_context(
                                                             $['name'],
                                                             ($) => $,
                                                         ),
                                                     }],
                                                 )
                                             case 'missing property':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['missing property', {
-                                                        'name': _p_change_context(
+                                                        'name': p_change_context(
                                                             $['name'],
                                                             ($) => $,
                                                         ),
                                                     }],
                                                 )
                                             case 'missing property value':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['missing property value', {
-                                                        'name': _p_change_context(
+                                                        'name': p_change_context(
                                                             $['name'],
                                                             ($) => $,
                                                         ),
                                                     }],
                                                 )
                                             case 'superfluous property':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['superfluous property', {
-                                                        'name': _p_change_context(
+                                                        'name': p_change_context(
                                                             $['name'],
-                                                            ($) => _p.optional.from.optional(
+                                                            ($) => p_.from.optional(
                                                                 $,
                                                             ).map(
                                                                 ($) => $,
@@ -181,7 +185,7 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                                     }],
                                                 )
                                             default:
-                                                return _p.au(
+                                                return p_.au(
                                                     $[0],
                                                 )
                                         }
@@ -189,43 +193,43 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                 )],
                             )
                         case 'state':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
-                                ($) => ['state', _p.decide.state(
+                                ($) => ['state', p_decide_state(
                                     $,
                                     ($): t_out.Errors.L.type_.state => {
                                         switch ($[0]) {
                                             case 'more than 2 items in list':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['more than 2 items in list', null],
                                                 )
                                             case 'missing option name':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['missing option name', null],
                                                 )
                                             case 'option name is not a text':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['option name is not a text', null],
                                                 )
                                             case 'missing value':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['missing value', null],
                                                 )
                                             case 'unknown option':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['unknown option', {
-                                                        'found': _p_change_context(
+                                                        'found': p_change_context(
                                                             $['found'],
                                                             ($) => $,
                                                         ),
-                                                        'expected': _p_change_context(
+                                                        'expected': p_change_context(
                                                             $['expected'],
-                                                            ($) => _p.dictionary.from.dictionary(
+                                                            ($) => p_.from.dictionary(
                                                                 $,
                                                             ).map(
                                                                 ($, id) => null,
@@ -234,12 +238,12 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                                     }],
                                                 )
                                             case 'missing option':
-                                                return _p.ss(
+                                                return p_.ss(
                                                     $,
                                                     ($) => ['missing option', null],
                                                 )
                                             default:
-                                                return _p.au(
+                                                return p_.au(
                                                     $[0],
                                                 )
                                         }
@@ -247,7 +251,7 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
                                 )],
                             )
                         default:
-                            return _p.au(
+                            return p_.au(
                                 $[0],
                             )
                     }
@@ -257,49 +261,49 @@ export const Errors: t_signatures.Errors = ($) => _p.list.from.list(
     }),
 )
 
-export const Warnings: t_signatures.Warnings = ($) => _p.list.from.list(
+export const Warnings: t_signatures.Warnings = ($) => p_.from.list(
     $,
 ).map(
     ($) => ({
-        'range': _p_change_context(
+        'range': p_change_context(
             $['range'],
             ($) => v_location.Range(
                 $,
             ),
         ),
-        'type': _p_change_context(
+        'type': p_change_context(
             $['type'],
-            ($) => _p.decide.state(
+            ($) => p_decide_state(
                 $,
                 ($): t_out.Warnings.L.type_ => {
                     switch ($[0]) {
                         case 'expected apostrophed text':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ['expected apostrophed text', null],
                             )
                         case 'expected quoted text':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ['expected quoted text', null],
                             )
                         case 'expected backticked text':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ['expected backticked text', null],
                             )
                         case 'expected undelimited text':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ['expected undelimited text', null],
                             )
                         case 'expected a group':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ['expected a group', null],
                             )
                         default:
-                            return _p.au(
+                            return p_.au(
                                 $[0],
                             )
                     }

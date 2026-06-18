@@ -1,7 +1,11 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/diagnostics/signatures/transformers/boilerplate_for_migrate"
 
@@ -11,7 +15,7 @@ import * as v_location from "../../astn_location/transformers/boilerplate_for_mi
 
 import * as v_path_unrestricted from "../../path_unrestricted/transformers/boilerplate_for_migrate"
 
-export const Diagnostics: t_signatures.Diagnostics = ($) => _p.list.from.list(
+export const Diagnostics: t_signatures.Diagnostics = ($) => p_.from.list(
     $,
 ).map(
     ($) => Diagnostic(
@@ -20,43 +24,43 @@ export const Diagnostics: t_signatures.Diagnostics = ($) => _p.list.from.list(
 )
 
 export const Diagnostic: t_signatures.Diagnostic = ($) => ({
-    'severity': _p_change_context(
+    'severity': p_change_context(
         $['severity'],
-        ($) => _p.decide.state(
+        ($) => p_decide_state(
             $,
             ($): t_out.Diagnostic.severity => {
                 switch ($[0]) {
                     case 'error':
-                        return _p.ss(
+                        return p_.ss(
                             $,
                             ($) => ['error', null],
                         )
                     case 'warning':
-                        return _p.ss(
+                        return p_.ss(
                             $,
                             ($) => ['warning', null],
                         )
                     case 'information':
-                        return _p.ss(
+                        return p_.ss(
                             $,
                             ($) => ['information', null],
                         )
                     case 'hint':
-                        return _p.ss(
+                        return p_.ss(
                             $,
                             ($) => ['hint', null],
                         )
                     default:
-                        return _p.au(
+                        return p_.au(
                             $[0],
                         )
                 }
             },
         ),
     ),
-    'range': _p_change_context(
+    'range': p_change_context(
         $['range'],
-        ($) => _p.optional.from.optional(
+        ($) => p_.from.optional(
             $,
         ).map(
             ($) => v_location.Possible_Range(
@@ -64,29 +68,29 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
             ),
         ),
     ),
-    'message': _p_change_context(
+    'message': p_change_context(
         $['message'],
         ($) => $,
     ),
-    'related information': _p_change_context(
+    'related information': p_change_context(
         $['related information'],
-        ($) => _p.optional.from.optional(
+        ($) => p_.from.optional(
             $,
         ).map(
-            ($) => _p.list.from.list(
+            ($) => p_.from.list(
                 $,
             ).map(
                 ($) => ({
-                    'location': _p_change_context(
+                    'location': p_change_context(
                         $['location'],
                         ($) => ({
-                            'file path': _p_change_context(
+                            'file path': p_change_context(
                                 $['file path'],
                                 ($) => v_path_unrestricted.Node_Path(
                                     $,
                                 ),
                             ),
-                            'range': _p_change_context(
+                            'range': p_change_context(
                                 $['range'],
                                 ($) => v_location.Possible_Range(
                                     $,
@@ -94,7 +98,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
                             ),
                         }),
                     ),
-                    'message': _p_change_context(
+                    'message': p_change_context(
                         $['message'],
                         ($) => $,
                     ),
@@ -102,29 +106,29 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
             ),
         ),
     ),
-    'type': _p_change_context(
+    'type': p_change_context(
         $['type'],
-        ($) => _p.decide.state(
+        ($) => p_decide_state(
             $,
             ($): t_out.Diagnostic.type_ => {
                 switch ($[0]) {
                     case 'semantic':
-                        return _p.ss(
+                        return p_.ss(
                             $,
                             ($) => ['semantic', null],
                         )
                     case 'deserialize':
-                        return _p.ss(
+                        return p_.ss(
                             $,
                             ($) => ['deserialize', null],
                         )
                     case 'schema':
-                        return _p.ss(
+                        return p_.ss(
                             $,
                             ($) => ['schema', null],
                         )
                     default:
-                        return _p.au(
+                        return p_.au(
                             $[0],
                         )
                 }
@@ -134,7 +138,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
 })
 
 export const Result: t_signatures.Result = ($) => ({
-    'diagnostics': _p_change_context(
+    'diagnostics': p_change_context(
         $['diagnostics'],
         ($) => Diagnostics(
             $,
@@ -143,17 +147,17 @@ export const Result: t_signatures.Result = ($) => ({
 })
 
 export const Parameters: t_signatures.Parameters = ($) => ({
-    'content': _p_change_context(
+    'content': p_change_context(
         $['content'],
         ($) => $,
     ),
-    'file path': _p_change_context(
+    'file path': p_change_context(
         $['file path'],
         ($) => v_path_unrestricted.Node_Path(
             $,
         ),
     ),
-    'tab size': _p_change_context(
+    'tab size': p_change_context(
         $['tab size'],
         ($) => $,
     ),

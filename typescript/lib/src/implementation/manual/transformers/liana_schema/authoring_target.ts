@@ -25,14 +25,14 @@ export const Value_data: p_i.Transformer_With_Parameter<
         | ['concise', null]
         | ['verbose', null]
     }
-> = ($, $p) => p_.decide.state($, ($): d_out.Value.data => {
+> = ($, $p) => p_.from.state($).decide(($): d_out.Value.data => {
     switch ($[0]) {
         case 'simple': return p_.ss($, ($) => ['concrete', {
             'type': ['text', {
                 'delimiter': ['none', null],
-                'value': p_.decide.state($, ($) => {
+                'value': p_.from.state($).decide(($) => {
                     switch ($[0]) {
-                        case 'global': return p_.ss($, ($) => p_.decide.state($['l entry'].type, ($) => {
+                        case 'global': return p_.ss($, ($) => p_.from.state($['l entry'].type).decide(($) => {
                             switch ($[0]) {
                                 case 'number': return p_.ss($, ($) => "0")
                                 case 'boolean': return p_.ss($, ($) => "false")
@@ -80,7 +80,7 @@ export const Value_data: p_i.Transformer_With_Parameter<
                 'comments': p_.literal.list([])
             }
         }])
-        case 'component': return p_.ss($, ($) => p_.decide.state($.type, ($) => {
+        case 'component': return p_.ss($, ($) => p_.from.state($.type).decide(($) => {
             switch ($[0]) {
                 case 'external': return p_.ss($, ($) => Value_data($.module['l entry']['root value'], $p))
                 case 'internal': return p_.ss($, ($) => Value_data($['l entry'].get_circular_dependent()['root value'], $p))
@@ -103,15 +103,15 @@ export const Value_data: p_i.Transformer_With_Parameter<
         case 'group': return p_.ss($, ($): d_out.Value.data => {
             const xx = $
             return ['concrete', {
-                'type': ['group', p_.decide.state($p.style, ($): d_out.Value.data.concrete.type_.group => {
+                'type': ['group', p_.from.state($p.style).decide(($): d_out.Value.data.concrete.type_.group => {
                     switch ($[0]) {
                         case 'concise': return p_.ss($, ($) => ['concise', {
                             '<': {
                                 'comments': p_.literal.list([])
                             },
-                            'properties': p_.list.from.dictionary(
+                            'properties': p_.from.dictionary(
                                 xx
-                            ).convert(
+                            ).convert_to_list(
                                 ($, id): d_out.Items.L => Value(
                                     $.value,
                                     $p
@@ -125,9 +125,9 @@ export const Value_data: p_i.Transformer_With_Parameter<
                             '(': {
                                 'comments': p_.literal.list([])
                             },
-                            'properties': p_.list.from.dictionary(
+                            'properties': p_.from.dictionary(
                                 xx
-                            ).convert(
+                            ).convert_to_list(
                                 ($, id): d_out.ID_Value_Pairs.L => ({
                                     'id': id,
                                     'value': p_.literal.set(Value(
@@ -172,7 +172,7 @@ export const Value_data: p_i.Transformer_With_Parameter<
 //     $: d_in.Resolver_Value,
 // ): d_out.Value => ({
 //     'data': ['concrete', {
-//         'type': p_.decide.state($, ($): d_out.Value.data.concrete.type_ => {
+//         'type': p_.from.state($).decide(($): d_out.Value.data.concrete.type_ => {
 //             switch ($[0]) {
 //                 case 'simple': return p_.ss($, ($) => ['text', {
 //                     'delimiter': ['none', null],
@@ -209,7 +209,7 @@ export const Value_data: p_i.Transformer_With_Parameter<
 //                         'comments': p_.literal.list([])
 //                     }
 //                 }])
-//                 case 'component': return p_.ss($, ($) => p_.decide.state($.location, ($) => {
+//                 case 'component': return p_.ss($, ($) => p_.from.state($.location).decide(($) => {
 //                     switch ($[0]) {
 //                         case 'external': return p_.ss($, ($) => p_implement_me("xx"))
 //                         case 'internal': return p_.ss($, ($) => p_implement_me("xx"))
@@ -229,7 +229,7 @@ export const Value_data: p_i.Transformer_With_Parameter<
 //                     '(': {
 //                         'comments': p_.literal.list([])
 //                     },
-//                     'properties': p_.list.from.dictionary(
+//                     'properties': p_.from.dictionary(
 //                         $
 //                     ).convert(
 //                         ($, id): d_out.ID_Value_Pairs.L => ({

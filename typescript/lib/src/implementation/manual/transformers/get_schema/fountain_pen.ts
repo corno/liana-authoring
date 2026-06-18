@@ -14,7 +14,7 @@ export namespace signatures {
     export type Error = p_i.Transformer<d_in.Error, d_out.Phrase>
 }
 
-export const Error: signatures.Error = ($) => p_.decide.state($.type, ($) => {
+export const Error: signatures.Error = ($) => p_.from.state($.type).decide(($) => {
     switch ($[0]) {
         case 'deserialize': return p_.ss($, ($) => t_deserialize_resolved_to_fp.Error($))
         case 'read file': return p_.ss($, ($) => t_read_file_to_fountain_pen.Error($))

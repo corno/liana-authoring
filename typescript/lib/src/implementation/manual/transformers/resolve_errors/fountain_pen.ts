@@ -20,7 +20,7 @@ export namespace interface_ {
 
 }
 
-export const Error: interface_.Error = ($) => p_.decide.state($.type, ($) => {
+export const Error: interface_.Error = ($) => p_.from.state($.type).decide(($) => {
     switch ($[0]) {
         case 'to be implemented': return p_.ss($, ($) => sh.ph.composed([
             sh.ph.literal("this error type is not yet implemented, please report it to the developers")

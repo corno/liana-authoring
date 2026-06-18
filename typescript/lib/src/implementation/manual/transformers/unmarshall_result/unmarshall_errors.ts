@@ -29,17 +29,17 @@ export const Document: Document = ($) => {
 export const Value: Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     const def = $.definition
-    return p_.decide.state($['unmarshall result'], ($): d_out.Errors => {
+    return p_.from.state($['unmarshall result']).decide(($): d_out.Errors => {
         switch ($[0]) {
-            case 'error': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Errors => {
+            case 'error': return p_.ss($, ($) => p_.from.state($).decide(($): d_out.Errors => {
                 switch ($[0]) {
-                    case 'incorrect': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Errors => {
+                    case 'incorrect': return p_.ss($, ($) => p_.from.state($).decide(($): d_out.Errors => {
                         switch ($[0]) {
                             case 'wrong type': return p_.ss($, ($) => p_.literal.list([
                                 {
                                     'range': start_token_range,
                                     'type': ['value', ['invalid type', {
-                                        'expected': p_.decide.state(def, ($): d_out.Errors.L.type_.value.invalid_type.expected => {
+                                        'expected': p_.from.state(def).decide(($): d_out.Errors.L.type_.value.invalid_type.expected => {
                                             switch ($[0]) {
                                                 case 'state': return p_.ss($, ($) => p_.literal.list([['state', null]]))
                                                 case 'component': return p_.ss($, ($) => p_unreachable_code_path("a component cannot be incorrect by itself"))
@@ -49,7 +49,7 @@ export const Value: Value = ($) => {
                                                 case 'nothing': return p_.ss($, ($) => p_.literal.list([['nothing', null]]))
                                                 case 'simple': return p_.ss($, ($) => p_.literal.list([['text', null]]))
                                                 case 'optional': return p_.ss($, ($) => p_.literal.list([['optional', null]]))
-                                                case 'reference': return p_.ss($, ($) => p_.decide.state($.type, ($) => {
+                                                case 'reference': return p_.ss($, ($) => p_.from.state($.type).decide(($) => {
                                                     switch ($[0]) {
                                                         case 'derived': return p_.ss($, ($) => p_.literal.list([['nothing', null]]))
                                                         case 'selected': return p_.ss($, ($) => p_.literal.list([['text', null]]))
@@ -65,7 +65,7 @@ export const Value: Value = ($) => {
                             ]))
                             case 'list as state format error': return p_.ss($, ($) => {
                                 const start_token = $.list['[']
-                                return p_.decide.state($.type, ($): d_out.Errors => {
+                                return p_.from.state($.type).decide(($): d_out.Errors => {
                                     switch ($[0]) {
                                         case 'missing option item': return p_.ss($, ($): d_out.Errors => p_.literal.list([
                                             {
@@ -100,7 +100,7 @@ export const Value: Value = ($) => {
                                     'range': $['option token'].range,
                                     'type': ['state', ['unknown option', {
                                         'found': $['option token'].token.value,
-                                        'expected': $.definition.options.__d_map(($) => null)
+                                        'expected': $.definition.options.__d_map_deprecated(($) => null)
                                     }]]
                                 }
                             ]))
@@ -118,22 +118,22 @@ export const Value: Value = ($) => {
                     default: return p_.au($[0])
                 }
             }))
-            case 'success': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Errors => {
+            case 'success': return p_.ss($, ($) => p_.from.state($).decide(($): d_out.Errors => {
                 switch ($[0]) {
                     case 'dictionary': return p_.ss($, ($) => {
 
                         return p_.literal.nested_list([
                             //duplicate id's
-                            p_.list.from.dictionary(
+                            p_.from.dictionary(
                                 $.derived.entries
-                            ).flatten(
+                            ).flatten_to_list(
                                 ($, id): d_out.Errors => {
-                                    return p_.decide.state($.result, ($): d_out.Errors => {
+                                    return p_.from.state($.result).decide(($): d_out.Errors => {
                                         switch ($[0]) {
                                             case 'success': return p_.ss($, ($) => p_.literal.list([]))
-                                            case 'error': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                                            case 'error': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                                 switch ($[0]) {
-                                                    case 'duplicate': return p_.ss($, ($) => $.instances.__l_map(($): d_out.Errors.L => ({
+                                                    case 'duplicate': return p_.ss($, ($) => $.instances.__l_map_deprecated(($): d_out.Errors.L => ({
                                                         'range': $.intermediate['id value pair'].id.range,
                                                         'type': ['dictionary', ['duplicate entry', {
                                                             name: id
@@ -148,13 +148,13 @@ export const Value: Value = ($) => {
                                 }
                             ),
                             //diagnostics for each entry
-                            p_.list.from.list(
+                            p_.from.list(
                                 $.intermediate['entries as list'],
                             ).flatten(
                                 ($) => {
                                     const intermediate = $.intermediate
                                     return p_.literal.nested_list([
-                                        p_.decide.state($.value, ($) => {
+                                        p_.from.state($.value).decide(($) => {
                                             switch ($[0]) {
                                                 case 'set': return p_.ss($, ($) => Value($))
                                                 case 'not set': return p_.ss($, ($) => p_.literal.list<d_out.Errors.L>([
@@ -176,15 +176,15 @@ export const Value: Value = ($) => {
                     case 'group': return p_.ss($, ($) => {
 
                         return p_.literal.nested_list([
-                            p_.decide.state($.derived.style, ($) => {
+                            p_.from.state($.derived.style).decide(($) => {
                                 switch ($[0]) {
                                     case 'concise': return p_.ss($, ($) => p_.literal.nested_list([
-                                        p_.list.from.list(
+                                        p_.from.list(
                                             $.properties
                                         ).flatten(
                                             ($) => {
                                                 const item = $.item
-                                                return p_.decide.state($['definition found'], ($): d_out.Errors => {
+                                                return p_.from.state($['definition found']).decide(($): d_out.Errors => {
                                                     switch ($[0]) {
                                                         case 'no': return p_.ss($, ($) => p_.literal.list([
                                                             {
@@ -203,14 +203,14 @@ export const Value: Value = ($) => {
                                     ]))
                                     case 'verbose': return p_.ss($, ($) => p_.literal.nested_list([
                                         //diagnostics for each property
-                                        p_.list.from.list(
+                                        p_.from.list(
                                             $.properties,
                                         ).flatten<d_out.Errors.L>(
                                             ($) => {
                                                 const id_value_pair = $.intermediate['id value pair']
 
                                                 return p_.literal.nested_list([
-                                                    p_.decide.state($['definition found'], ($): d_out.Errors => {
+                                                    p_.from.state($['definition found']).decide(($): d_out.Errors => {
                                                         switch ($[0]) {
                                                             case 'yes': return p_.ss($, ($) => $['value'].__decide(
                                                                 ($) => Value($),
@@ -236,18 +236,14 @@ export const Value: Value = ($) => {
                                     default: return p_.au($[0])
                                 }
                             }),
-                            p_.list.from.list(
-                                $.derived.properties.__to_list(($, id) => ({
-                                    'id': id,
-                                    'value': $
-                                }))
-                            ).flatten(
-                                ($): d_out.Errors => {
-                                    const id = $.id
-                                    return p_.decide.state($.value.result, ($) => {
+                            p_.from.dictionary(
+                                $.derived.properties
+                            ).flatten_to_list(
+                                ($, id): d_out.Errors => {
+                                    return p_.from.state($.result).decide(($) => {
                                         switch ($[0]) {
                                             case 'success': return p_.ss($, ($) => p_.literal.list([]))
-                                            case 'error': return p_.ss($, ($): d_out.Errors => p_.decide.state($, ($): d_out.Errors => {
+                                            case 'error': return p_.ss($, ($): d_out.Errors => p_.from.state($).decide(($): d_out.Errors => {
                                                 switch ($[0]) {
                                                     case 'missing': return p_.ss($, ($): d_out.Errors => p_.literal.list<d_out.Errors.L>([
                                                         {
@@ -257,7 +253,7 @@ export const Value: Value = ($) => {
                                                             }]]
                                                         }
                                                     ]))
-                                                    case 'multiple': return p_.ss($, ($) => $.instances.__l_map(($): d_out.Errors.L => ({
+                                                    case 'multiple': return p_.ss($, ($) => $.instances.__l_map_deprecated(($): d_out.Errors.L => ({
                                                         'range': $.intermediate['id value pair'].id.range,
                                                         'type': ['group', ['duplicate property', {
                                                             'name': $.intermediate['id value pair'].id.token.value
@@ -274,13 +270,13 @@ export const Value: Value = ($) => {
                         ])
                     })
                     case 'simple': return p_.ss($, ($) => p_.literal.list([]))
-                    case 'list': return p_.ss($, ($) => p_.list.from.list(
+                    case 'list': return p_.ss($, ($) => p_.from.list(
                         $.derived.items
                     ).flatten(
                         ($) => Value($)
                     ))
                     case 'nothing': return p_.ss($, ($) => p_.literal.list([]))
-                    case 'reference': return p_.ss($, ($) => p_.decide.state($.type, ($): d_out.Errors => {
+                    case 'reference': return p_.ss($, ($) => p_.from.state($.type).decide(($): d_out.Errors => {
                         switch ($[0]) {
                             case 'derived': return p_.ss($, ($) => p_.literal.nested_list([
                             ]))
@@ -292,7 +288,7 @@ export const Value: Value = ($) => {
                     case 'component': return p_.ss($, ($) => {
                         return Value($.value)
                     })
-                    case 'optional': return p_.ss($, ($) => p_.decide.state($.derived.status, ($) => {
+                    case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => Value($['child value']))
                             case 'not set': return p_.ss($, ($) => p_.literal.list([]))
@@ -300,7 +296,7 @@ export const Value: Value = ($) => {
                         }
                     }))
                     case 'state': return p_.ss($, ($): d_out.Errors => {
-                        return p_.decide.state($.derived['option status'], ($): d_out.Errors => {
+                        return p_.from.state($.derived['option status']).decide(($): d_out.Errors => {
                             switch ($[0]) {
                                 case 'missing data': return p_.ss($, ($) => p_.literal.list([
                                     {

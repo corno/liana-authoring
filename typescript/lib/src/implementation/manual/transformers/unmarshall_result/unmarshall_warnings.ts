@@ -27,13 +27,13 @@ export const Document: Document = ($) => {
 
 export const Value: Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
-    return p_.decide.state($['unmarshall result'], ($) => {
+    return p_.from.state($['unmarshall result']).decide(($) => {
         switch ($[0]) {
             case 'error': return p_.ss($, ($) => p_.literal.list([
             ]))
-            case 'success': return p_.ss($, ($) => p_.decide.state($, ($): d_out.Warnings => {
+            case 'success': return p_.ss($, ($) => p_.from.state($).decide(($): d_out.Warnings => {
                 switch ($[0]) {
-                    case 'dictionary': return p_.ss($, ($) => p_.list.from.list(
+                    case 'dictionary': return p_.ss($, ($) => p_.from.list(
                         $.intermediate['entries as list'],
                     ).flatten(
                         ($) => $.intermediate['id value pair'].id.token.type[0] !== 'apostrophed'
@@ -43,7 +43,7 @@ export const Value: Value = ($) => {
                                     'type': ['expected apostrophed text', null]
                                 }
                             ])
-                            : p_.decide.state($.value, ($) => {
+                            : p_.from.state($.value).decide(($) => {
                                 switch ($[0]) {
                                     case 'set': return p_.ss($, ($) => Value($))
                                     case 'not set': return p_.ss($, ($) => p_.literal.list<d_out.Warnings.L>([]))
@@ -58,13 +58,13 @@ export const Value: Value = ($) => {
                                 'type': ['expected a group', null]
                             }
                         ])
-                        : p_.decide.state($.derived.style, ($) => {
+                        : p_.from.state($.derived.style).decide(($) => {
                             switch ($[0]) {
-                                case 'concise': return p_.ss($, ($) => p_.list.from.list(
+                                case 'concise': return p_.ss($, ($) => p_.from.list(
                                     $.properties
                                 ).flatten(
                                     ($) => {
-                                        return p_.decide.state($['definition found'], ($) => {
+                                        return p_.from.state($['definition found']).decide(($) => {
                                             switch ($[0]) {
                                                 case 'no': return p_.ss($, ($) => p_.literal.list([]))
                                                 case 'yes': return p_.ss($, ($) => Value($['value']))
@@ -73,7 +73,7 @@ export const Value: Value = ($) => {
                                         })
                                     }
                                 ))
-                                case 'verbose': return p_.ss($, ($) => p_.list.from.list(
+                                case 'verbose': return p_.ss($, ($) => p_.from.list(
                                     $.properties,
                                 ).flatten<d_out.Warnings.L>(
                                     ($) => $.intermediate['id value pair'].id.token.type[0] !== 'backticked'
@@ -83,7 +83,7 @@ export const Value: Value = ($) => {
                                                 'type': ['expected backticked text', null]
                                             }
                                         ])
-                                        : p_.decide.state($['definition found'], ($) => {
+                                        : p_.from.state($['definition found']).decide(($) => {
                                             switch ($[0]) {
                                                 case 'yes': return p_.ss($, ($) => $['value'].__decide(
                                                     ($) => Value($),
@@ -98,7 +98,7 @@ export const Value: Value = ($) => {
                                 default: return p_.au($[0])
                             }
                         }))
-                    case 'simple': return p_.ss($, ($) => p_.decide.state($.instance.token.type, ($): boolean => {
+                    case 'simple': return p_.ss($, ($) => p_.from.state($.instance.token.type).decide(($): boolean => {
                         switch ($[0]) {
                             case 'quoted': return false
                             case 'apostrophed': return true
@@ -113,13 +113,13 @@ export const Value: Value = ($) => {
                         }])
                         : p_.literal.list([])
                     )
-                    case 'list': return p_.ss($, ($) => p_.list.from.list(
+                    case 'list': return p_.ss($, ($) => p_.from.list(
                         $.derived.items
                     ).flatten(
                         ($) => Value($)
                     ))
                     case 'nothing': return p_.ss($, ($) => p_.literal.list([]))
-                    case 'reference': return p_.ss($, ($) => p_.decide.state($.type, ($): d_out.Warnings => {
+                    case 'reference': return p_.ss($, ($) => p_.from.state($.type).decide(($): d_out.Warnings => {
                         switch ($[0]) {
                             case 'derived': return p_.ss($, ($) => p_.literal.list([
                             ]))
@@ -133,7 +133,7 @@ export const Value: Value = ($) => {
                         }
                     }))
                     case 'component': return p_.ss($, ($) => Value($.value))
-                    case 'optional': return p_.ss($, ($) => p_.decide.state($.derived.status, ($) => {
+                    case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => Value($['child value']))
                             case 'not set': return p_.ss($, ($) => p_.literal.list([]))
@@ -141,7 +141,7 @@ export const Value: Value = ($) => {
                         }
                     }))
                     case 'state': return p_.ss($, ($): d_out.Warnings => {
-                        return p_.decide.state($.derived['option status'], ($): d_out.Warnings => {
+                        return p_.from.state($.derived['option status']).decide(($): d_out.Warnings => {
                             switch ($[0]) {
                                 case 'missing data': return p_.ss($, ($) => p_.literal.list([]))
                                 case 'set': return p_.ss($, ($) => $.intermediate['option token'].token.type[0] !== 'backticked'

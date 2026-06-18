@@ -32,7 +32,7 @@ export type Value = p_i.Transformer_With_Parameter<
 >
 
 export const Document: Document = ($, $p) => ({
-    'header': p_.optional.from.optional($['header']).map(($) => $.value),
+    'header': p_.from.optional($['header']).map(($) => $.value),
     'content': Value(
         $.content,
         {
@@ -51,7 +51,7 @@ export const Value: Value = ($, $p) => {
     }
     const start_token_range = t_parse_tree_to_start_token_location.Value($)
     const optional_value_range_stack = p_.literal.set(value_range_stack)
-    return p_.decide.state($.type, ($): d_out.Value => {
+    return p_.from.state($.type).decide(($): d_out.Value => {
         switch ($[0]) {
             case 'concrete': return p_.ss($, ($): d_out.Value => {
                 const concrete_value = $
@@ -60,14 +60,14 @@ export const Value: Value = ($, $p) => {
                     'property path': $p['property path'],
                     'instance': value,
                     'unmarshall result': p_create_refinement_context<d_out.Unmarshalled_Value, d_out.Value_Unmarshall_Error>(
-                        (abort) => p_.decide.state($p.definition, ($): d_out.Unmarshalled_Value => {
+                        (abort) => p_.from.state($p.definition).decide(($): d_out.Unmarshalled_Value => {
                             switch ($[0]) {
                                 case 'component': return p_.ss($, ($): d_out.Unmarshalled_Value => ['component', {
                                     'definition': $,
                                     'value': Value(
                                         value,
                                         {
-                                            'definition': p_.decide.state($.type, ($) => {
+                                            'definition': p_.from.state($.type).decide(($) => {
                                                 switch ($[0]) {
                                                     case 'external': return p_.ss($, ($) => $.module['l entry']['root value'])
                                                     case 'internal acyclic': return p_.ss($, ($) => $['l entry']['root value'])
@@ -82,10 +82,10 @@ export const Value: Value = ($, $p) => {
                                 }])
                                 case 'dictionary': return p_.ss($, ($): d_out.Unmarshalled_Value => {
                                     const dict_def = $
-                                    return ['dictionary', p_.decide.state(concrete_value, ($): d_out.Dictionary => {
+                                    return ['dictionary', p_.from.state(concrete_value).decide(($): d_out.Dictionary => {
                                         switch ($[0]) {
                                             case 'dictionary': return p_.ss($, ($): d_out.Dictionary => {
-                                                const entries = $.entries.__l_map(($): d_out.Entry => {
+                                                const entries = $.entries.__l_map_deprecated(($): d_out.Entry => {
                                                     const entry = $
                                                     return {
                                                         'definition': dict_def,
@@ -122,12 +122,12 @@ export const Value: Value = ($, $p) => {
                                                         'entries as list': entries,
                                                     },
                                                     'derived': {
-                                                        'entries': p_.dictionary.from.list(entries).group(
+                                                        'entries': p_.from.list(entries).group(
                                                             ($) => $.intermediate['id value pair'].id.token.value,
 
-                                                        ).__d_map(($) => {
+                                                        ).__d_map_deprecated(($) => {
                                                             return {
-                                                                'result': p_.decide.list($).has_single_item(
+                                                                'result': p_.from.list($).on_has_single_item(
                                                                     ($): d_out.Entry_Unmarshall_Result => ['success', $],
                                                                     ($): d_out.Entry_Unmarshall_Result => ['error', ['duplicate', {
                                                                         'instances': $
@@ -147,12 +147,12 @@ export const Value: Value = ($, $p) => {
                                     const group_def = $
                                     const Concise_Properties = (
                                         $: d_in.Items
-                                    ): d_out.Concise_Properties => p_.list.from.list(
+                                    ): d_out.Concise_Properties => p_.from.list(
                                         $
                                     ).join(
-                                        p_.list.from.dictionary(
+                                        p_.from.dictionary(
                                             group_def
-                                        ).convert(
+                                        ).convert_to_list(
                                             ($, id) => ({
                                                 'id': id,
                                                 'definition': $
@@ -189,7 +189,7 @@ export const Value: Value = ($, $p) => {
                                         }
                                     )
                                     const Verbose_Properties = ($: d_in.ID_Value_Pairs): d_out.Verbose_Properties => {
-                                        return $.__l_map(($) => {
+                                        return $.__l_map_deprecated(($) => {
                                             const id_value_pair = $
                                             return {
                                                 'id': $.id.token.value,
@@ -202,7 +202,7 @@ export const Value: Value = ($, $p) => {
                                                         return ['yes', {
                                                             'definition': $,
                                                             'value': id_value_pair.assignment.__decide(
-                                                                ($) => p_.optional.from.optional($.value).map(
+                                                                ($) => p_.from.optional($.value).map(
                                                                     ($) => Value(
                                                                         $,
                                                                         {
@@ -230,8 +230,8 @@ export const Value: Value = ($, $p) => {
                                             }
                                         })
                                     }
-                                    return ['group', p_.decide.state(concrete_value, ($): d_out.Group => {
-                                        const instance: d_out.Group['intermediate']['instance'] = p_.decide.state($, ($) => {
+                                    return ['group', p_.from.state(concrete_value).decide(($): d_out.Group => {
+                                        const instance: d_out.Group['intermediate']['instance'] = p_.from.state($).decide(($) => {
                                             switch ($[0]) {
                                                 case 'dictionary': return p_.ss($, ($) => ['dictionary', {
                                                     'dummy': null,
@@ -239,7 +239,7 @@ export const Value: Value = ($, $p) => {
                                                 }])
                                                 case 'group': return p_.ss($, ($) => ['group', {
                                                     'dummy': null,
-                                                    'type': p_.decide.state($, ($): d_out.Group_Type => {
+                                                    'type': p_.from.state($).decide(($): d_out.Group_Type => {
                                                         switch ($[0]) {
                                                             case 'concise': return p_.ss($, ($) => ['concise', {
                                                                 'properties': Concise_Properties($.properties)
@@ -258,7 +258,7 @@ export const Value: Value = ($, $p) => {
                                                 default: return abort(['incorrect', ['wrong type', null]])
                                             }
                                         })
-                                        const group_type: d_out.Group_Type = p_.decide.state(instance, ($): d_out.Group_Type => {
+                                        const group_type: d_out.Group_Type = p_.from.state(instance).decide(($): d_out.Group_Type => {
                                             switch ($[0]) {
                                                 case 'dictionary': return p_.ss($, ($) => ['verbose', {
                                                     'properties': $.properties
@@ -277,17 +277,17 @@ export const Value: Value = ($, $p) => {
                                             },
                                             'derived': {
                                                 'style': group_type,
-                                                'properties': p_.decide.state(group_type, ($): d_out.Group['derived']['properties'] => {
+                                                'properties': p_.from.state(group_type).decide(($): d_out.Group['derived']['properties'] => {
                                                     switch ($[0]) {
                                                         case 'verbose': return p_.ss($, ($) => {
-                                                            const instance_lookup = p_.dictionary.from.list($.properties).group(
+                                                            const instance_lookup = p_.from.list($.properties).group(
                                                                 ($) => $.intermediate['id value pair'].id.token.value
                                                             )
-                                                            return group_def.__d_map(($, id) => ({
+                                                            return group_def.__d_map_deprecated(($, id) => ({
                                                                 'definition': $,
                                                                 'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
-                                                                    ($): d_out.Property['result'] => p_.decide.list($).has_single_item(
-                                                                        ($): d_out.Property['result'] => p_.decide.state($['definition found'], ($) => {
+                                                                    ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
+                                                                        ($): d_out.Property['result'] => p_.from.state($['definition found']).decide(($) => {
                                                                             switch ($[0]) {
                                                                                 case 'yes': return p_.ss($, ($): d_out.Property['result'] => $['value'].__decide(
                                                                                     ($): d_out.Property['result'] => ['success', $],
@@ -316,10 +316,10 @@ export const Value: Value = ($, $p) => {
                                                             }))
                                                         })
                                                         case 'concise': return p_.ss($, ($) => {
-                                                            const instance_lookup = p_.dictionary.from.list(
-                                                                p_.list.from.list(
+                                                            const instance_lookup = p_.from.list(
+                                                                p_.from.list(
                                                                     $.properties
-                                                                ).map_optionally(($) => p_.decide.state($['definition found'], ($): p_di.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
+                                                                ).map_optionally(($) => p_.from.state($['definition found']).decide(($): p_di.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
                                                                     switch ($[0]) {
                                                                         case 'no': return p_.ss($, ($) => p_.literal.not_set())
                                                                         case 'yes': return p_.ss($, ($) => p_.literal.set($))
@@ -329,10 +329,10 @@ export const Value: Value = ($, $p) => {
                                                             ).group(
                                                                 ($) => $.id
                                                             )
-                                                            return group_def.__d_map(($, id) => ({
+                                                            return group_def.__d_map_deprecated(($, id) => ({
                                                                 'definition': $,
                                                                 'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
-                                                                    ($): d_out.Property['result'] => p_.decide.list($).has_single_item(
+                                                                    ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
                                                                         ($): d_out.Property['result'] => ['success', $['value']],
                                                                         () => p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
                                                                         (): d_out.Property['result'] => ['error', ['missing', {
@@ -354,7 +354,7 @@ export const Value: Value = ($, $p) => {
                                 })
                                 case 'list': return p_.ss($, ($) => {
                                     const def = $
-                                    return ['list', p_.decide.state(concrete_value, ($) => {
+                                    return ['list', p_.from.state(concrete_value).decide(($) => {
                                         switch ($[0]) {
                                             case 'list': return p_.ss($, ($) => {
                                                 return {
@@ -362,7 +362,7 @@ export const Value: Value = ($, $p) => {
                                                     'instance': $,
                                                     'derived': {
 
-                                                        'items': $.items.__l_map(($) => Value(
+                                                        'items': $.items.__l_map_deprecated(($) => Value(
                                                             $.value,
                                                             {
                                                                 'definition': def.value,
@@ -382,7 +382,7 @@ export const Value: Value = ($, $p) => {
                                     const def = $
                                     return ['nothing', {
                                         'definition': def,
-                                        'instance': p_.decide.state(concrete_value, ($) => {
+                                        'instance': p_.from.state(concrete_value).decide(($) => {
                                             switch ($[0]) {
                                                 case 'nothing': return p_.ss($, ($) => ['nothing', $])
                                                 case 'text': return p_.ss($, ($) => $.token.value === "null"
@@ -396,7 +396,7 @@ export const Value: Value = ($, $p) => {
                                 })
                                 case 'simple': return p_.ss($, ($): d_out.Unmarshalled_Value => {
                                     const def = $
-                                    return ['simple', p_.decide.state(concrete_value, ($) => {
+                                    return ['simple', p_.from.state(concrete_value).decide(($) => {
                                         switch ($[0]) {
                                             case 'text': return p_.ss($, ($) => ({
                                                 'definition': def,
@@ -409,7 +409,7 @@ export const Value: Value = ($, $p) => {
                                 })
                                 case 'optional': return p_.ss($, ($): d_out.Unmarshalled_Value => {
                                     const def = $
-                                    const instance = p_.decide.state(concrete_value, ($): d_out.Optional_Instance => {
+                                    const instance = p_.from.state(concrete_value).decide(($): d_out.Optional_Instance => {
                                         switch ($[0]) {
                                             case 'text': return p_.ss($, ($) => $.token.value === "null"
                                                 ? ['null literal', $]
@@ -417,10 +417,10 @@ export const Value: Value = ($, $p) => {
                                             )
                                             case 'list': return p_.ss($, ($) => {
                                                 const list = $
-                                                return ['list', p_.decide.list($.items).has_first_item(
+                                                return ['list', p_.from.list($.items).on_has_first_item(
                                                     ($, rest) => {
                                                         const item_value = $
-                                                        return p_.decide.list(rest).has_items(
+                                                        return p_.from.list(rest).on_has_items(
                                                             ($) => abort(['incorrect', ['wrong type', null]]), // Error: too many items
                                                             () => ({
                                                                 'xxx': list,
@@ -443,7 +443,7 @@ export const Value: Value = ($, $p) => {
                                                     () => abort(['incorrect', ['wrong type', null]]) // Error: empty list
                                                 )]
                                             })
-                                            case 'optional': return p_.ss($, ($): d_out.Optional_Instance => ['optional', p_.decide.state($, ($): d_out.Optional_Instance_Optional => {
+                                            case 'optional': return p_.ss($, ($): d_out.Optional_Instance => ['optional', p_.from.state($).decide(($): d_out.Optional_Instance_Optional => {
                                                 switch ($[0]) {
                                                     case 'set': return p_.ss($, ($) => ['set', {
                                                         'xxx': $,
@@ -471,14 +471,14 @@ export const Value: Value = ($, $p) => {
                                     return ['optional', {
                                         'definition': def,
                                         'instance': instance,
-                                        'derived': p_.decide.state(instance, ($): d_out.Optional['derived'] => {
+                                        'derived': p_.from.state(instance).decide(($): d_out.Optional['derived'] => {
                                             switch ($[0]) {
                                                 case 'list': return p_.ss($, ($) => ({
                                                     'status': ['set', {
                                                         'child value': $['child value']
                                                     }]
                                                 }))
-                                                case 'optional': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                                                case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                                     switch ($[0]) {
                                                         case 'set': return p_.ss($, ($) => ({
                                                             'status': ['set', {
@@ -501,13 +501,13 @@ export const Value: Value = ($, $p) => {
                                 })
                                 case 'reference': return p_.ss($, ($): d_out.Unmarshalled_Value => {
                                     return ['reference', {
-                                        'type': p_.decide.state($.type, ($) => {
+                                        'type': p_.from.state($.type).decide(($) => {
                                             switch ($[0]) {
                                                 case 'derived': return p_.ss($, ($) => {
                                                     return ['derived', {
                                                         'definition': $,
                                                         'intermediate': {
-                                                            'instance': p_.decide.state(concrete_value, ($) => {
+                                                            'instance': p_.from.state(concrete_value).decide(($) => {
                                                                 switch ($[0]) {
                                                                     case 'nothing': return p_.ss($, ($) => ['nothing', $])
                                                                     case 'text': return p_.ss($, ($) => $.token.value === "null"
@@ -522,7 +522,7 @@ export const Value: Value = ($, $p) => {
                                                 })
                                                 case 'selected': return p_.ss($, ($) => {
                                                     const def = $
-                                                    return ['selected', p_.decide.state(concrete_value, ($) => {
+                                                    return ['selected', p_.from.state(concrete_value).decide(($) => {
                                                         switch ($[0]) {
                                                             case 'text': return p_.ss($, ($) => ({
                                                                 'definition': def,
@@ -543,33 +543,34 @@ export const Value: Value = ($, $p) => {
                                 case 'state': return p_.ss($, ($): d_out.Unmarshalled_Value => {
                                     const def = $
                                     const intermediate: d_out.State['intermediate'] = {
-                                        'instance': p_.decide.state(concrete_value, ($) => {
+                                        'instance': p_.from.state(concrete_value).decide(($) => {
                                             switch ($[0]) {
                                                 case 'list': return p_.ss($, ($) => {
                                                     const list = $
-                                                    return p_.decide.list($.items).has_first_item(
+                                                    return p_.from.list($.items).on_has_first_item(
                                                         ($, rest) => {
                                                             const option_value = $.value
-                                                            return p_.decide.state($.value.type, ($) => {
+                                                            return p_.from.state($.value.type).decide(($) => {
                                                                 switch ($[0]) {
-                                                                    case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                                                                    case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                                                         switch ($[0]) {
                                                                             case 'text': return p_.ss($, ($) => {
                                                                                 const option_token = $
                                                                                 const option_name = $.token.value
-                                                                                return p_.decide.list(rest).has_first_item(
+                                                                                return p_.from.list(rest).on_has_first_item(
                                                                                     ($, rest) => {
                                                                                         const raw_value = $
 
-                                                                                        return p_.decide.list(rest).has_items(
+                                                                                        return p_.from.list(rest).on_has_items(
                                                                                             ($) => abort(['incorrect', ['list as state format error', {
                                                                                                 'list': list,
                                                                                                 'type': ['too many items', null]
                                                                                             }]]),
                                                                                             () => ['list', {
                                                                                                 'xxx': list,
-                                                                                                'option status': ['set', p_.decide.optional(
+                                                                                                'option status': ['set', p_.from.optional(
                                                                                                     def.options.__get_possible_entry_deprecated(option_name),
+                                                                                                ).decide(
                                                                                                     ($): d_out.State_Set => {
                                                                                                         const option_def = $
                                                                                                         return {
@@ -629,15 +630,16 @@ export const Value: Value = ($, $p) => {
                                                 })
                                                 case 'state': return p_.ss($, ($) => ['state', {
                                                     'xxx': $,
-                                                    'option status': p_.decide.state($.status, ($): d_out.State_Option => {
+                                                    'option status': p_.from.state($.status).decide(($): d_out.State_Option => {
                                                         switch ($[0]) {
                                                             case 'missing': return p_.ss($, ($) => ['missing data', { 'intermediate': $['#'] }])
                                                             case 'set': return p_.ss($, ($): d_out.State_Option => {
                                                                 const value = $.value
                                                                 const option_name = $.option.token.value
                                                                 const option_token = $.option
-                                                                return ['set', p_.decide.optional(
+                                                                return ['set', p_.from.optional(
                                                                     def.options.__get_possible_entry_deprecated(option_name),
+                                                                ).decide(
                                                                     ($): d_out.State_Set => ({
                                                                         'intermediate': {
                                                                             'option token': option_token,
@@ -678,7 +680,7 @@ export const Value: Value = ($, $p) => {
                                         'property pathx': $p['property path'],
                                         'intermediate': intermediate,
                                         'derived': {
-                                            'option status': p_.decide.state(intermediate.instance, ($) => {
+                                            'option status': p_.from.state(intermediate.instance).decide(($) => {
                                                 switch ($[0]) {
                                                     case 'list': return p_.ss($, ($) => $['option status'])
                                                     case 'state': return p_.ss($, ($) => $['option status'])
@@ -690,7 +692,7 @@ export const Value: Value = ($, $p) => {
                                 })
                                 case 'text': return p_.ss($, ($) => {
                                     const def = $
-                                    return ['text', p_.decide.state(concrete_value, ($) => {
+                                    return ['text', p_.from.state(concrete_value).decide(($) => {
                                         switch ($[0]) {
                                             case 'text': return p_.ss($, ($) => ({
                                                 'definition': def,

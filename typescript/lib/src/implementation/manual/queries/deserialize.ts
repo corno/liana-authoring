@@ -14,7 +14,7 @@ import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/lis
 import * as r_resolve_result_from_unmarshall_result from "../transformers/unmarshall_result/resolve_result"
 
 export const $$: interface_.query_functions.deserialize = p_.query_function(
-    ($d, $s, $q) =>  p_super_query_result( $q['get schema path'](
+    ($d, $s, $q) => p_super_query_result($q['get schema path'](
         {
             'context path': $d['file path'].context,
         },
@@ -31,7 +31,7 @@ export const $$: interface_.query_functions.deserialize = p_.query_function(
             }]
         )
     ).refine(
-        ($v, abort) => p_r.decide.state($v, ($) => {
+        ($v, abort) => p_r.from.state($v).decide(($) => {
             switch ($[0]) {
                 case 'constrained': return p_r.ss($, ($): d.Result => ['constrained', r_resolve_result_from_unmarshall_result.Document(
                     r_unmarshall_result_from_loc.Document(
@@ -45,8 +45,14 @@ export const $$: interface_.query_functions.deserialize = p_.query_function(
                             'tab size': $d['tab size'],
                         }
                     ),
-                    p_implement_me("!!!"),
-                    p_implement_me("!!!"),
+                    {
+                        'acyclic': {
+                           // 'default': $['module resolver'].entry.signature['resolved parameters'].lookups
+                        },
+                        'cyclic': {
+                            'default': p_implement_me("!!!")
+                        }
+                    },
                     {
                         'definition': $['module resolver'].entry,
                         'resolvers': $.resolver

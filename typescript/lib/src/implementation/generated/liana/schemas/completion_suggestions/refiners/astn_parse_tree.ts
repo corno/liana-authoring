@@ -1,11 +1,15 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/refiner'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
-import _p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
+import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
 
-import _p_variables from 'pareto-core/dist/implementation/specials/variables'
+import p_variables from 'pareto-core/dist/implementation/specials/variables'
 
 import * as t_signatures from "../../../../../../interface/generated/liana/schemas/completion_suggestions/signatures/refiners/astn_parse_tree"
 
@@ -19,7 +23,7 @@ import * as v_external_location from "../../location/refiners/astn_parse_tree"
 
 import * as v_external_text_edits from "../../text_edits/refiners/astn_parse_tree"
 
-export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, abort) => _p.optional.from.optional(
+export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, abort) => p_.from.optional(
     v_unmarshalled_from_parse_tree.Optional(
         $,
         ($) => abort(
@@ -27,33 +31,33 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
         ),
     )['optional'],
 ).map(
-    ($) => _p_change_context(
+    ($) => p_change_context(
         v_unmarshalled_from_parse_tree.Verbose_Group(
             $,
             ($) => abort(
                 $,
             ),
             {
-                'expected properties': _p.literal.dictionary(
+                'expected properties': p_.literal.dictionary(
                     {
                         "type": null,
                         "suggestions": null,
                     },
                 ),
-                'subdocument context': _p.literal.not_set(),
+                'subdocument context': p_.literal.not_set(),
             },
         ),
-        ($) => _p_variables(
+        ($) => p_variables(
             () => {
                 
                 const var_verbose_group_range = v_parse_tree_to_location.Value(
                     $['value'],
                     {
-                        'subdocument context': _p.literal.not_set(),
+                        'subdocument context': p_.literal.not_set(),
                     },
                 )
                 return {
-                    'type': _p_change_context(
+                    'type': p_change_context(
                         v_unmarshalled_from_parse_tree.Property(
                             $,
                             ($) => abort(
@@ -61,22 +65,22 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                             ),
                             {
                                 'id': 'type',
-                                'subdocument context': _p.literal.not_set(),
+                                'subdocument context': p_.literal.not_set(),
                             },
                         ),
-                        ($) => _p_change_context(
+                        ($) => p_change_context(
                             v_unmarshalled_from_parse_tree.State(
                                 $,
                                 ($) => abort(
                                     $,
                                 ),
                             ),
-                            ($) => _p.decide.text(
+                            ($) => p_decide_text(
                                 $['option']['token']['value'],
                                 ($t): t_out.Completion_Suggestions.O.type_ => {
                                     switch ($t) {
                                         case 'missing value':
-                                            return _p_change_context(
+                                            return p_change_context(
                                                 $['value'],
                                                 ($) => ['missing value', v_unmarshalled_from_parse_tree.Nothing(
                                                     $,
@@ -86,7 +90,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                 )],
                                             )
                                         case 'missing option':
-                                            return _p_change_context(
+                                            return p_change_context(
                                                 $['value'],
                                                 ($) => ['missing option', v_unmarshalled_from_parse_tree.Nothing(
                                                     $,
@@ -96,7 +100,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                 )],
                                             )
                                         case 'reference':
-                                            return _p_change_context(
+                                            return p_change_context(
                                                 $['value'],
                                                 ($) => ['reference', v_unmarshalled_from_parse_tree.Nothing(
                                                     $,
@@ -106,7 +110,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                 )],
                                             )
                                         case 'property name':
-                                            return _p_change_context(
+                                            return p_change_context(
                                                 $['value'],
                                                 ($) => ['property name', v_unmarshalled_from_parse_tree.Nothing(
                                                     $,
@@ -116,7 +120,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                 )],
                                             )
                                         case 'option name':
-                                            return _p_change_context(
+                                            return p_change_context(
                                                 $['value'],
                                                 ($) => ['option name', v_unmarshalled_from_parse_tree.Nothing(
                                                     $,
@@ -132,7 +136,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                     'range': v_parse_tree_to_location.Value(
                                                         $['value'],
                                                         {
-                                                            'subdocument context': _p.literal.not_set(),
+                                                            'subdocument context': p_.literal.not_set(),
                                                         },
                                                     ),
                                                 }],
@@ -142,7 +146,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                             ),
                         ),
                     ),
-                    'suggestions': _p_change_context(
+                    'suggestions': p_change_context(
                         v_unmarshalled_from_parse_tree.Property(
                             $,
                             ($) => abort(
@@ -150,50 +154,50 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                             ),
                             {
                                 'id': 'suggestions',
-                                'subdocument context': _p.literal.not_set(),
+                                'subdocument context': p_.literal.not_set(),
                             },
                         ),
-                        ($) => _p.list.from.list(
+                        ($) => p_.from.list(
                             v_unmarshalled_from_parse_tree.List(
                                 $,
                                 ($) => abort(
                                     $,
                                 ),
                                 {
-                                    'subdocument context': _p.literal.not_set(),
+                                    'subdocument context': p_.literal.not_set(),
                                 },
                             )['items'],
                         ).map(
-                            ($) => _p_change_context(
+                            ($) => p_change_context(
                                 $['value'],
-                                ($) => _p_change_context(
+                                ($) => p_change_context(
                                     v_unmarshalled_from_parse_tree.Verbose_Group(
                                         $,
                                         ($) => abort(
                                             $,
                                         ),
                                         {
-                                            'expected properties': _p.literal.dictionary(
+                                            'expected properties': p_.literal.dictionary(
                                                 {
                                                     "label": null,
                                                     "insert text": null,
                                                     "documentation": null,
                                                 },
                                             ),
-                                            'subdocument context': _p.literal.not_set(),
+                                            'subdocument context': p_.literal.not_set(),
                                         },
                                     ),
-                                    ($) => _p_variables(
+                                    ($) => p_variables(
                                         () => {
                                             
                                             const var_verbose_group_range = v_parse_tree_to_location.Value(
                                                 $['value'],
                                                 {
-                                                    'subdocument context': _p.literal.not_set(),
+                                                    'subdocument context': p_.literal.not_set(),
                                                 },
                                             )
                                             return {
-                                                'label': _p_change_context(
+                                                'label': p_change_context(
                                                     v_unmarshalled_from_parse_tree.Property(
                                                         $,
                                                         ($) => abort(
@@ -201,7 +205,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         ),
                                                         {
                                                             'id': 'label',
-                                                            'subdocument context': _p.literal.not_set(),
+                                                            'subdocument context': p_.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -211,7 +215,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         ),
                                                     ),
                                                 ),
-                                                'insert text': _p_change_context(
+                                                'insert text': p_change_context(
                                                     v_unmarshalled_from_parse_tree.Property(
                                                         $,
                                                         ($) => abort(
@@ -219,7 +223,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         ),
                                                         {
                                                             'id': 'insert text',
-                                                            'subdocument context': _p.literal.not_set(),
+                                                            'subdocument context': p_.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(
@@ -229,7 +233,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         ),
                                                     ),
                                                 ),
-                                                'documentation': _p_change_context(
+                                                'documentation': p_change_context(
                                                     v_unmarshalled_from_parse_tree.Property(
                                                         $,
                                                         ($) => abort(
@@ -237,7 +241,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                                         ),
                                                         {
                                                             'id': 'documentation',
-                                                            'subdocument context': _p.literal.not_set(),
+                                                            'subdocument context': p_.literal.not_set(),
                                                         },
                                                     ),
                                                     ($) => v_unmarshalled_from_parse_tree.Text(

@@ -1,7 +1,11 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
+const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => $.__decide(assign, otherwise)
+const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -15,7 +19,7 @@ import * as v_external_location from "../../astn_location/transformers/astn_seal
 
 import * as v_external_path_unrestricted from "../../path_unrestricted/transformers/astn_sealed_target"
 
-export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', _p.list.from.list(
+export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', p_.from.list(
     $,
 ).map(
     ($) => Diagnostic(
@@ -23,16 +27,16 @@ export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', _p.list.fro
     ),
 )]
 
-export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "severity": _p_change_context(
+        "severity": p_change_context(
             $['severity'],
-            ($) => ['state', _p.decide.state(
+            ($) => ['state', p_decide_state(
                 $,
                 ($): t_out.Value.state => {
                     switch ($[0]) {
                         case 'error':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ({
                                     'option': 'error',
@@ -40,7 +44,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'warning':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ({
                                     'option': 'warning',
@@ -48,7 +52,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'information':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ({
                                     'option': 'information',
@@ -56,7 +60,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'hint':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ({
                                     'option': 'hint',
@@ -64,16 +68,16 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         default:
-                            return _p.au(
+                            return p_.au(
                                 $[0],
                             )
                     }
                 },
             )],
         ),
-        "range": _p_change_context(
+        "range": p_change_context(
             $['range'],
-            ($) => ['optional', _p.decide.optional(
+            ($) => ['optional', p_decide_optional(
                 $,
                 ($): t_out.Value.optional => ['set', v_external_location.Possible_Range(
                     $,
@@ -81,33 +85,33 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                 () => ['not set', null],
             )],
         ),
-        "message": _p_change_context(
+        "message": p_change_context(
             $['message'],
             ($) => ['text', {
                 'delimiter': ['quote', null],
                 'value': $,
             }],
         ),
-        "related information": _p_change_context(
+        "related information": p_change_context(
             $['related information'],
-            ($) => ['optional', _p.decide.optional(
+            ($) => ['optional', p_decide_optional(
                 $,
-                ($): t_out.Value.optional => ['set', ['list', _p.list.from.list(
+                ($): t_out.Value.optional => ['set', ['list', p_.from.list(
                     $,
                 ).map(
-                    ($) => ['group', ['verbose', _p.literal.dictionary(
+                    ($) => ['group', ['verbose', p_.literal.dictionary(
                         {
-                            "location": _p_change_context(
+                            "location": p_change_context(
                                 $['location'],
-                                ($) => ['group', ['verbose', _p.literal.dictionary(
+                                ($) => ['group', ['verbose', p_.literal.dictionary(
                                     {
-                                        "file path": _p_change_context(
+                                        "file path": p_change_context(
                                             $['file path'],
                                             ($) => v_external_path_unrestricted.Node_Path(
                                                 $,
                                             ),
                                         ),
-                                        "range": _p_change_context(
+                                        "range": p_change_context(
                                             $['range'],
                                             ($) => v_external_location.Possible_Range(
                                                 $,
@@ -116,7 +120,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                     },
                                 )]],
                             ),
-                            "message": _p_change_context(
+                            "message": p_change_context(
                                 $['message'],
                                 ($) => ['text', {
                                     'delimiter': ['quote', null],
@@ -129,14 +133,14 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                 () => ['not set', null],
             )],
         ),
-        "type": _p_change_context(
+        "type": p_change_context(
             $['type'],
-            ($) => ['state', _p.decide.state(
+            ($) => ['state', p_decide_state(
                 $,
                 ($): t_out.Value.state => {
                     switch ($[0]) {
                         case 'semantic':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ({
                                     'option': 'semantic',
@@ -144,7 +148,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'deserialize':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ({
                                     'option': 'deserialize',
@@ -152,7 +156,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'schema':
-                            return _p.ss(
+                            return p_.ss(
                                 $,
                                 ($) => ({
                                     'option': 'schema',
@@ -160,7 +164,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         default:
-                            return _p.au(
+                            return p_.au(
                                 $[0],
                             )
                     }
@@ -170,9 +174,9 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
     },
 )]]
 
-export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Result: t_signatures.Result = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "diagnostics": _p_change_context(
+        "diagnostics": p_change_context(
             $['diagnostics'],
             ($) => Diagnostics(
                 $,
@@ -181,22 +185,22 @@ export const Result: t_signatures.Result = ($) => ['group', ['verbose', _p.liter
     },
 )]]
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "content": _p_change_context(
+        "content": p_change_context(
             $['content'],
             ($) => ['text', {
                 'delimiter': ['quote', null],
                 'value': $,
             }],
         ),
-        "file path": _p_change_context(
+        "file path": p_change_context(
             $['file path'],
             ($) => v_external_path_unrestricted.Node_Path(
                 $,
             ),
         ),
-        "tab size": _p_change_context(
+        "tab size": p_change_context(
             $['tab size'],
             ($) => ['text', {
                 'delimiter': ['none', null],

@@ -1,7 +1,7 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -13,9 +13,9 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../location/transformers/astn_sealed_target"
 
-export const Sort_Parameters: t_signatures.Sort_Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Sort_Parameters: t_signatures.Sort_Parameters = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "position": _p_change_context(
+        "position": p_change_context(
             $['position'],
             ($) => v_external_location.Position(
                 $,

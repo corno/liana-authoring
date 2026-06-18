@@ -11,7 +11,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
-export const Found: p_i.Transformer<d_in.Found, d_out.Phrase> = ($) => p_.decide.state($, ($) => {
+export const Found: p_i.Transformer<d_in.Found, d_out.Phrase> = ($) => p_.from.state($).decide(($) => {
     switch ($[0]) {
         case 'dictionary': return p_.ss($, ($) => sh.ph.literal("dictionary"))
         case 'group': return p_.ss($, ($) => sh.ph.literal("group"))
@@ -34,15 +34,15 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = (
     $,
 ) => {
     return sh.ph.composed([
-        p_.decide.state($.type, ($) => {
+        p_.from.state($.type).decide(($) => {
             switch ($[0]) {
-                case 'boolean': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'boolean': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.literal("wrong type, expected boolean"))
                         default: return p_.au($[0])
                     }
                 }))
-                case 'dictionary': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'dictionary': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.composed([
                             sh.ph.literal("wrong type, expected 'dictionary', found '"),
@@ -53,7 +53,7 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = (
                         default: return p_.au($[0])
                     }
                 }))
-                case 'group': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'group': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'missing property': return p_.ss($, ($) => sh.ph.composed([
                             sh.ph.literal("missing property: '"),
@@ -79,32 +79,32 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = (
                         default: return p_.au($[0])
                     }
                 }))
-                case 'list': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'list': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.literal("wrong type, expected list"))
                         default: return p_.au($[0])
                     }
                 }))
-                case 'number': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'number': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.literal("wrong type, expected number"))
                         default: return p_.au($[0])
                     }
                 }))
-                case 'optional': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.literal("wrong type, expected optional"))
                         case 'foo': return p_.ss($, ($) => sh.ph.literal("foo"))
                         default: return p_.au($[0])
                     }
                 }))
-                case 'reference': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'reference': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.literal("wrong type, expected reference"))
                         default: return p_.au($[0])
                     }
                 }))
-                case 'state': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'state': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.composed([
                             sh.ph.literal("wrong type, expected 'state', found '"),
@@ -120,7 +120,7 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = (
                         default: return p_.au($[0])
                     }
                 }))
-                case 'text': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'text': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
                         case 'wrong type': return p_.ss($, ($) => sh.ph.literal("wrong type, expected text"))
                         default: return p_.au($[0])

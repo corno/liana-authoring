@@ -23,7 +23,7 @@ export type Document = p_i.Transformer_With_Parameter<
 
 const Property_Path = ($: d_in.Property_Path): string => t_fp_to_text.Phrase(
     sh.ph.rich(
-        $.__l_map(($) => p_.decide.state($, ($) => {
+        $.__l_map_deprecated(($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'group': return p_.ss($, ($) => sh.ph.literal($))
                 case 'optional': return p_.ss($, ($) => sh.ph.literal("O"))
@@ -43,8 +43,9 @@ const Property_Path = ($: d_in.Property_Path): string => t_fp_to_text.Phrase(
 )
 
 export const Document: Document = ($, $p) => {
-    return p_.decide.state(
+    return p_.from.state(
         t_to_unmarshall_result_value_at_position.Document($, $p),
+    ).decide(
         ($) => {
             switch ($[0]) {
                 case 'value': return p_.ss($, ($) => {
@@ -52,11 +53,11 @@ export const Document: Document = ($, $p) => {
                     return p_.literal.nested_list([
                         [
                             Property_Path($['property path']),
-                            p_.decide.state($['unmarshall result'], ($): string => {
+                            p_.from.state($['unmarshall result']).decide(($): string => {
                                 switch ($[0]) {
-                                    case 'error': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                                    case 'error': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                         switch ($[0]) {
-                                            case 'incorrect': return p_.ss($, ($) => p_.decide.state(def, ($) => {
+                                            case 'incorrect': return p_.ss($, ($) => p_.from.state(def).decide(($) => {
                                                 switch ($[0]) {
                                                     case 'component': return p_.ss($, ($) => "component")
                                                     case 'dictionary': return p_.ss($, ($) => "dictionary")
@@ -75,7 +76,7 @@ export const Document: Document = ($, $p) => {
                                             default: return p_.au($[0])
                                         }
                                     }))
-                                    case 'success': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                                    case 'success': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                         switch ($[0]) {
                                             case 'simple': return p_.ss($, ($) => "simple value")
                                             case 'component': return p_.ss($, ($) => "component")
@@ -83,7 +84,7 @@ export const Document: Document = ($, $p) => {
                                             case 'group': return p_.ss($, ($) => "group")
                                             case 'list': return p_.ss($, ($) => "list")
                                             case 'nothing': return p_.ss($, ($) => "nothing")
-                                            case 'optional': return p_.ss($, ($) => p_.decide.state($.derived.status, ($) => {
+                                            case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
                                                 switch ($[0]) {
                                                     case 'set': return p_.ss($, ($) => "optional")
                                                     case 'not set': return p_.ss($, ($) => "not set optional")
@@ -105,11 +106,11 @@ export const Document: Document = ($, $p) => {
                 case 'entry': return p_.ss($, ($) => p_.literal.list([
                     Property_Path($['property path']),
                 ]))
-                case 'property': return p_.ss($, ($) => p_.decide.state($.style, ($) => {
+                case 'property': return p_.ss($, ($) => p_.from.state($.style).decide(($) => {
                     switch ($[0]) {
                         case 'verbose': return p_.ss($, ($) => p_.literal.list([
                             $.id,
-                            p_.decide.state($['definition found'], ($) => {
+                            p_.from.state($['definition found']).decide(($) => {
                                 switch ($[0]) {
                                     case 'yes': return p_.ss($, ($) => $.definition.description.__decide(
                                         ($) => $,
@@ -130,7 +131,7 @@ export const Document: Document = ($, $p) => {
                 case 'state': return p_.ss($, ($) => {
                     const def = $.definition
                     const prop_path = Property_Path($['property pathx'])
-                    return p_.decide.state($.derived['option status'], ($) => {
+                    return p_.from.state($.derived['option status']).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => p_.literal.list([
                                 prop_path,

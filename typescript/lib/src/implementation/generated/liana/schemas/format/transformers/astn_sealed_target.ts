@@ -1,7 +1,7 @@
 
-import * as _p from 'pareto-core/dist/assign'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 
-import _p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import _p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
@@ -19,9 +19,9 @@ export const Result: t_signatures.Result = ($) => v_external_text_edits.Text_Edi
     $,
 )
 
-export const Error: t_signatures.Error = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Error: t_signatures.Error = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "message": _p_change_context(
+        "message": p_change_context(
             $['message'],
             ($) => ['text', {
                 'delimiter': ['quote', null],
@@ -31,13 +31,13 @@ export const Error: t_signatures.Error = ($) => ['group', ['verbose', _p.literal
     },
 )]]
 
-export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', _p.literal.dictionary(
+export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', p_.literal.dictionary(
     {
-        "options": _p_change_context(
+        "options": p_change_context(
             $['options'],
-            ($) => ['group', ['verbose', _p.literal.dictionary(
+            ($) => ['group', ['verbose', p_.literal.dictionary(
                 {
-                    "insert spaces": _p_change_context(
+                    "insert spaces": p_change_context(
                         $['insert spaces'],
                         ($) => ['text', {
                             'delimiter': ['none', null],
@@ -46,7 +46,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
                             ),
                         }],
                     ),
-                    "preserve delimiters": _p_change_context(
+                    "preserve delimiters": p_change_context(
                         $['preserve delimiters'],
                         ($) => ['text', {
                             'delimiter': ['none', null],
@@ -55,7 +55,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
                             ),
                         }],
                     ),
-                    "preserve final newline state": _p_change_context(
+                    "preserve final newline state": p_change_context(
                         $['preserve final newline state'],
                         ($) => ['text', {
                             'delimiter': ['none', null],
@@ -64,7 +64,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
                             ),
                         }],
                     ),
-                    "preserve commas": _p_change_context(
+                    "preserve commas": p_change_context(
                         $['preserve commas'],
                         ($) => ['text', {
                             'delimiter': ['none', null],
@@ -73,7 +73,7 @@ export const Parameters: t_signatures.Parameters = ($) => ['group', ['verbose', 
                             ),
                         }],
                     ),
-                    "indent string": _p_change_context(
+                    "indent string": p_change_context(
                         $['indent string'],
                         ($) => ['text', {
                             'delimiter': ['quote', null],

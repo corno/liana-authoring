@@ -91,24 +91,24 @@ export const Value: Value = ($, $p) => {
     ): d_out.Found => ['value', $]
 
 
-    return p_.decide.state($['unmarshall result'], ($) => {
+    return p_.from.state($['unmarshall result']).decide(($) => {
         switch ($[0]) {
             case 'error': return p_.ss($, ($) => this_value())
-            case 'success': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'success': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'simple': return p_.ss($, ($) => this_value())
                     case 'component': return p_.ss($, ($) => Value($.value, $p))
-                    case 'dictionary': return p_.ss($, ($) => p_.decide.list($.intermediate['entries as list']).has_match(
+                    case 'dictionary': return p_.ss($, ($) => p_.from.list($.intermediate['entries as list']).on_has_match(
                         ($): d_out.Possibly_Found => {
                             const entry = $
-                            return p_.decide.boolean<d_out.Possibly_Found>(
+                            return p_.from.boolean(
                                 range_overlaps_position(
                                     {
                                         'start': $.intermediate['id value pair'].id.range.start,
-                                        'end': p_.decide.state($.value, ($) => {
+                                        'end': p_.from.state($.value).decide(($) => {
                                             switch ($[0]) {
                                                 case 'set': return p_.ss($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
-                                                case 'not set':return p_.ss($, ($) => entry.intermediate['id value pair'].id.range.end)
+                                                case 'not set': return p_.ss($, ($) => entry.intermediate['id value pair'].id.range.end)
                                                 default: return p_.au($[0])
                                             }
                                         }),
@@ -117,10 +117,11 @@ export const Value: Value = ($, $p) => {
                                         'position': $p.position,
                                     }
                                 ),
-                                (): d_out.Possibly_Found => p_.decide.state($.value, ($): d_out.Possibly_Found => {
+                            ).decide(
+                                (): d_out.Possibly_Found => p_.from.state($.value).decide(($): d_out.Possibly_Found => {
                                     switch ($[0]) {
-                                        case 'set': return p_.ss($, ($) =>  Value_possibly_found($, $p))
-                                        case 'not set':return p_.ss($, ($) => p_.literal.set(['entry', entry]))
+                                        case 'set': return p_.ss($, ($) => Value_possibly_found($, $p))
+                                        case 'not set': return p_.ss($, ($) => p_.literal.set(['entry', entry]))
                                         default: return p_.au($[0])
                                     }
                                 }),
@@ -129,33 +130,34 @@ export const Value: Value = ($, $p) => {
                         },
                         () => this_value()
                     ))
-                    case 'group': return p_.ss($, ($) => p_.decide.state($.derived.style, ($) => {
+                    case 'group': return p_.ss($, ($) => p_.from.state($.derived.style).decide(($) => {
                         switch ($[0]) {
-                            case 'verbose': return p_.ss($, ($) => p_.decide.list($.properties).has_match(
+                            case 'verbose': return p_.ss($, ($) => p_.from.list($.properties).on_has_match(
                                 ($): d_out.Possibly_Found => {
                                     const prop = $
-                                    return p_.decide.boolean(
+                                    return p_.from.boolean(
                                         range_overlaps_position(
                                             t_parse_tree_to_full_value_range.ID_Value_Pair(prop.intermediate['id value pair']),
                                             {
                                                 'position': $p.position,
                                             }
                                         ),
-                                        () => p_.decide.state($['definition found'], ($): d_out.Possibly_Found => {
+                                    ).decide(
+                                        () => p_.from.state($['definition found']).decide(($): d_out.Possibly_Found => {
 
                                             switch ($[0]) {
                                                 case 'yes': return p_.ss($, ($) => $['value'].__decide(
                                                     ($): d_out.Possibly_Found => p_.literal.set(Value_possibly_found($, $p).__decide(
                                                         ($) => $,
-                                                        (): d_out.Found => ['property', {'style': ['verbose', prop]}]
+                                                        (): d_out.Found => ['property', { 'style': ['verbose', prop] }]
                                                     )),
                                                     () => {
-                                                        return p_.literal.set(['property', {'style': ['verbose', prop]}])
+                                                        return p_.literal.set(['property', { 'style': ['verbose', prop] }])
                                                     }
                                                 ))
                                                 case 'no': return p_.ss($, ($) => {
 
-                                                    return p_.literal.set(['property', {'style': ['verbose', prop]}])
+                                                    return p_.literal.set(['property', { 'style': ['verbose', prop] }])
                                                 })
                                                 default: return p_.au($[0])
                                             }
@@ -165,20 +167,21 @@ export const Value: Value = ($, $p) => {
                                 },
                                 () => this_value()
                             ))
-                            case 'concise': return p_.ss($, ($) => p_.decide.list($.properties).has_match(
+                            case 'concise': return p_.ss($, ($) => p_.from.list($.properties).on_has_match(
                                 ($) => {
                                     const prop = $
-                                    return p_.decide.boolean(
+                                    return p_.from.boolean(
                                         range_overlaps_position(
                                             t_parse_tree_to_full_value_range.Value(prop.item.value),
                                             {
                                                 'position': $p.position,
                                             }
                                         ),
-                                        () => p_.literal.set(p_.decide.state($['definition found'], ($): d_out.Found => {
+                                    ).decide(
+                                        () => p_.literal.set(p_.from.state($['definition found']).decide(($): d_out.Found => {
                                             switch ($[0]) {
                                                 case 'yes': return p_.ss($, ($) => Value($['value'], $p))
-                                                case 'no': return p_.ss($, ($) => ['property', {'style': ['unknown concise', prop]}])
+                                                case 'no': return p_.ss($, ($) => ['property', { 'style': ['unknown concise', prop] }])
                                                 default: return p_.au($[0])
                                             }
                                         })),
@@ -190,12 +193,12 @@ export const Value: Value = ($, $p) => {
                             default: return p_.au($[0])
                         }
                     }))
-                    case 'list': return p_.ss($, ($) => p_.decide.list($.derived.items).has_match(
+                    case 'list': return p_.ss($, ($) => p_.from.list($.derived.items).on_has_match(
                         ($) => Value_possibly_found($, $p),
                         () => this_value()
                     ))
                     case 'nothing': return p_.ss($, ($) => this_value())
-                    case 'optional': return p_.ss($, ($) => p_.decide.state($.derived.status, ($) => {
+                    case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => Value_possibly_found($['child value'], $p).__decide(
                                 ($): d_out.Found => $,
@@ -208,7 +211,7 @@ export const Value: Value = ($, $p) => {
                     case 'reference': return p_.ss($, ($) => this_value())
                     case 'state': return p_.ss($, ($): d_out.Found => {
                         const valid_state = $
-                        return p_.decide.state($.derived['option status'], ($) => {
+                        return p_.from.state($.derived['option status']).decide(($) => {
                             switch ($[0]) {
                                 case 'set': return p_.ss($, ($): d_out.Found => Value_possibly_found($.value, $p).__decide(
                                     ($): d_out.Found => $,

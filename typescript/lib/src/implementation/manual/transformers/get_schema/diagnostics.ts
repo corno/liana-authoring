@@ -10,7 +10,7 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
 
 export const Error: p_i.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
-	return p_.decide.state($.type, ($) => {
+	return p_.from.state($.type).decide(($) => {
 		switch ($[0]) {
 			case 'read file': return p_.ss($, ($): d_out.Diagnostics.L => ({
 				'message': "Failed to read schema file",
