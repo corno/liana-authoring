@@ -1,7 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
-import * as p_temp from 'pareto-core/dist/assign'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
 import p_variables from 'pareto-core/dist/implementation/specials/variables'
