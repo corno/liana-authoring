@@ -1,5 +1,6 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_temp from 'pareto-core/dist/assign'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
@@ -9,17 +10,45 @@ import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_out from "../../../../interface/data/resolve_result"
 
-export const Document: p_i.Transformer_With_Parameter<
+namespace p_i_temp {
+
+    type Acyclic_Lookup<Acyclic_Entry> = {
+        get: (id: string) => Acyclic_Entry
+    }
+    type Cyclic_Lookup<Cyclic_Entry> = {
+        get: (id: string) => Cyclic_Entry
+    }
+
+    export type Transformer_With_Lookups_And_Parameter<
+        Input extends p_di.Value,
+        Result extends p_di.Value,
+        Acyclic_Entry,
+        Cyclic_Entry,
+        Parameter extends p_di.Value,
+    > = (
+        $: Input,
+        $a: { [key:string]: Acyclic_Lookup<Acyclic_Entry>},
+        $c: { [key:string]: Cyclic_Lookup<Cyclic_Entry>},
+        $p: Parameter
+    ) => Result
+
+}
+
+export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
     d_in.Document,
     d_out.Document,
+    d_out.Value,
+    d_out.Value,
     {
         'definition': d_in_definition.Resolver_Modules.D,
         'resolvers': d_in_definition.Resolver
     }
-> = ($, $p) => ({
+> = ($, $a, $c, $p) => ({
     'unmarshalled': $,
     'content': Value(
         $.content,
+        $a,
+        $c,
         {
             'definition': $p.definition['root value resolver'],
             // 'module parameters': p_.literal.not_set(),
@@ -86,8 +115,10 @@ export const Document: p_i.Transformer_With_Parameter<
 // }
 
 
-export const Value: p_i.Transformer_With_Parameter<
+export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
     d_in.Value,
+    d_out.Value,
+    d_out.Value,
     d_out.Value,
     {
         'definition': d_in_definition.Resolver_Value,
@@ -97,7 +128,7 @@ export const Value: p_i.Transformer_With_Parameter<
         // 'acyclic siblings': p_di.Optional_Value<d_function.Acyclic_Siblings>
         // 'cyclic siblings': p_di.Optional_Value<d_function.Cyclic_Siblings>
     }
-> = ($, $p) => {
+> = ($, $a, $c, $p) => {
     return {
         'definition': $p.definition,
         'unmarshalled': $,
@@ -116,6 +147,8 @@ export const Value: p_i.Transformer_With_Parameter<
                                             'unmarshalled': $,
                                             'value': Value(
                                                 $.value,
+                                                p_implement_me("!!!"),
+                                                p_implement_me("!!!"),
                                                 {
                                                     'definition': p_.decide.state(def.location, ($) => {
                                                         switch ($[0]) {
@@ -201,7 +234,7 @@ export const Value: p_i.Transformer_With_Parameter<
                                             'unmarshalled': $,
                                             'entries': p_temp.dictionary.from.dictionary(
                                                 $.derived.entries,
-                                            ).resolve_dynamic(($, id, $al, $cl): d_out.Entry => ({
+                                            ).resolve_transformer(($, id, $al, $cl): d_out.Entry => ({
                                                 'unmarshall result': p_.decide.state($.result, ($): d_out.Entry['unmarshall result'] => {
                                                     switch ($[0]) {
                                                         case 'success': return p_.ss($, ($) => p_.decide.state($.value, ($) => {
@@ -209,6 +242,8 @@ export const Value: p_i.Transformer_With_Parameter<
                                                                 case 'set': return p_.ss($, ($) => ['success', {
                                                                     'value': ['set', Value(
                                                                         $,
+                                                                        $a,
+                                                                        $c,
                                                                         {
                                                                             'definition': def.resolver,
                                                                             'resolver': $p.resolver,
@@ -254,7 +289,7 @@ export const Value: p_i.Transformer_With_Parameter<
                                                             }
                                                         }
                                                     )
-                                                ).resolve_dynamic(($, id, $al, $cl) => {
+                                                ).resolve_transformer(($, id, $al, $cl) => {
                                                     const resolver = $.definition
                                                     return $.unmarshalled.__decide(
                                                         ($) => p_.decide.state($.result, ($): d_out.Property => {
@@ -264,6 +299,8 @@ export const Value: p_i.Transformer_With_Parameter<
                                                                         'definition': resolver,
                                                                         'resolved': Value(
                                                                             $,
+                                                                            $a,
+                                                                            $c,
                                                                             {
                                                                                 'definition': resolver,
                                                                                 'resolver': $p.resolver,
@@ -299,6 +336,8 @@ export const Value: p_i.Transformer_With_Parameter<
                                             'unmarshalled': $,
                                             'items': $.derived.items.__l_map(($) => Value(
                                                 $,
+                                                $a,
+                                                $c,
                                                 {
                                                     'definition': def.resolver,
                                                     'resolver': $p.resolver,
@@ -336,6 +375,8 @@ export const Value: p_i.Transformer_With_Parameter<
                                                     case 'set': return p_.ss($, ($) => ['set', {
                                                         'child value': Value(
                                                             $['child value'],
+                                                            $a,
+                                                            $c,
                                                             {
                                                                 'definition': def.resolver,
                                                                 'resolver': $p.resolver,
@@ -407,6 +448,8 @@ export const Value: p_i.Transformer_With_Parameter<
                                                 switch ($[0]) {
                                                     case 'set': return p_.ss($, ($) => p_.literal.set(Value(
                                                         $.value,
+                                                        $a,
+                                                        $c,
                                                         {
                                                             'definition': def.options.__get_entry_deprecated(
                                                                 $.option,

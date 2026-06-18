@@ -45,7 +45,9 @@ export const Value: Value = ($) => p_.decide.state($['unmarshall result'], ($): 
                 ))
                 case 'group': return p_.ss($, ($) => p_.decide.state($.derived.style, ($): d_out.Links => {
                     switch ($[0]) {
-                        case 'verbose': return p_.ss($, ($) => p_.list.from.list($.properties).flatten(($): d_out.Links => p_.decide.state($['definition found'], ($): d_out.Links => {
+                        case 'verbose': return p_.ss($, ($) => p_.list.from.list(
+                            $.properties
+                        ).flatten(($): d_out.Links => p_.decide.state($['definition found'], ($): d_out.Links => {
                             switch ($[0]) {
                                 case 'yes': return p_.ss($, ($) => $['value'].__decide(
                                     ($): d_out.Links => Value($),
@@ -55,7 +57,9 @@ export const Value: Value = ($) => p_.decide.state($['unmarshall result'], ($): 
                                 default: return p_.au($[0])
                             }
                         })))
-                        case 'concise': return p_.ss($, ($) => p_.list.from.list($.properties).flatten(($): d_out.Links => p_.decide.state($['definition found'], ($): d_out.Links => {
+                        case 'concise': return p_.ss($, ($) => p_.list.from.list(
+                            $.properties
+                        ).flatten(($): d_out.Links => p_.decide.state($['definition found'], ($): d_out.Links => {
                             switch ($[0]) {
                                 case 'no': return p_.ss($, ($): d_out.Links => p_.literal.list([]))
                                 case 'yes': return p_.ss($, ($): d_out.Links => Value($['value']))
@@ -65,7 +69,9 @@ export const Value: Value = ($) => p_.decide.state($['unmarshall result'], ($): 
                         default: return p_.au($[0])
                     }
                 }))
-                case 'list': return p_.ss($, ($): d_out.Links => p_.list.from.list($.derived.items).flatten(
+                case 'list': return p_.ss($, ($): d_out.Links => p_.list.from.list(
+                    $.derived.items
+                ).flatten(
                     ($) => Value($)
                 ))
                 case 'nothing': return p_.ss($, ($) => p_.literal.list([]))

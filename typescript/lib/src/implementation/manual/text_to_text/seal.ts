@@ -14,7 +14,10 @@ import * as t_sealed_target_to_text from "astn-core/dist/implementation/manual/t
 
 export const $$: Signature = ($, abort, $p) => t_sealed_target_to_text.Document(
     r_sealed_target_from_loc.Document(
-        p_list_from_text($, ($) => $),
+        p_list_from_text(
+            $,
+            ($) => $
+        ),
         ($) => abort($),
         {
             'unmarshall': $p.unmarshall,

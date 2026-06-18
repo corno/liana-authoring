@@ -2,6 +2,7 @@ import * as p_ from 'pareto-core/dist/implementation/query'
 import * as p_r from 'pareto-core/dist/implementation/refiner'
 import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
 import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
+import p_implement_me from 'pareto-core-dev/dist/implement_me'
 
 import * as interface_ from "../../../interface/queries"
 
@@ -44,6 +45,8 @@ export const $$: interface_.query_functions.deserialize = p_.query_function(
                             'tab size': $d['tab size'],
                         }
                     ),
+                    p_implement_me("!!!"),
+                    p_implement_me("!!!"),
                     {
                         'definition': $['module resolver'].entry,
                         'resolvers': $.resolver
