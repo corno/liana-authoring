@@ -51,9 +51,9 @@ export type Lookups = {
         // },
     },
     'cyclic': {
-        'default': {
-            'foo': p_i_temp.Cyclic_Lookup<d_out.Value>
-        },
+        // 'default': {
+        //     'foo': p_i_temp.Cyclic_Lookup<d_out.Value>
+        // },
     }
 }
 
@@ -167,7 +167,10 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                             'unmarshalled': $,
                                             'value': Value(
                                                 $.value,
-                                                p_implement_me("!!!"),
+                                                {
+                                                    'acyclic': {},
+                                                    'cyclic': {},
+                                                },
                                                 {
                                                     'definition': p_.from.state(def.location).decide(($) => {
                                                         switch ($[0]) {

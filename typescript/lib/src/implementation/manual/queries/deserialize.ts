@@ -50,7 +50,7 @@ export const $$: interface_.query_functions.deserialize = p_.query_function(
                            // 'default': $['module resolver'].entry.signature['resolved parameters'].lookups
                         },
                         'cyclic': {
-                            'default': p_implement_me("!!!")
+                            //'default': p_implement_me("!!!")
                         }
                     },
                     {
