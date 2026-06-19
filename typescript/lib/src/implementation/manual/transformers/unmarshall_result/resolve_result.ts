@@ -1,8 +1,10 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
 import p_variables from 'pareto-core/dist/implementation/specials/variables'
+import p_temp_dictionary from 'pareto-core/dist/temp/Generic_Dictionary'
 
 import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_in_definition from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
@@ -10,31 +12,17 @@ import * as d_out from "../../../../interface/data/resolve_result"
 
 namespace p_i_temp {
 
-    export type Acyclic_Lookup<Acyclic_Entry> = {
-        geta: (id: string) => Acyclic_Entry
-    }
-
-    type Acyclic_Lookups = {
-        [key: string]: Acyclic_Lookup<any>
-    }
-
-    export type Cyclic_Lookup<Cyclic_Entry> = {
-        getc: (id: string) => Cyclic_Entry
-    }
-
-    type Cyclic_Lookups = {
-        [key: string]: Cyclic_Lookup<any>
-    }
-
-    type Lookups = {
-        acyclic: { [key: string]: Acyclic_Lookups },
-        cyclic: { [key: string]: Cyclic_Lookups },
-    }
+    type Lookup_Type =
+        | { [key: string]: Lookup_Type }
+        | p_temp_dictionary.Generic_Dictionary<any>
+        | p_i.lookup.Acyclic<any>
+        | p_i.lookup.Cyclic<any>
+        | p_i.lookup.Stack<any>
 
     export type Transformer_With_Lookups_And_Parameter<
         Input extends p_di.Value,
         Result extends p_di.Value,
-        My_Lookups extends Lookups,
+        My_Lookups extends Lookup_Type,
         Parameter extends p_di.Value,
     > = (
         $: Input,
@@ -42,28 +30,66 @@ namespace p_i_temp {
         $p: Parameter
     ) => Result
 
+    export const from_option_decide = <T extends p_di.Value, R>(
+        $: p_di.Optional_Value<T>,
+        set: (value: T) => R,
+        not_set: () => R
+    ): R => {
+        let result: R
+        $.__extract_data(
+            (value) => {
+                result = set(value)
+            },
+            () => {
+                result = not_set()
+            }
+        )
+        return result!
+    }
+
+}
+
+export type Acyclic_Parameter_Resolve_Status =
+    | ['to be implemented', null]
+    | ['resolved', p_i.lookup.Acyclic<d_out.Entry>]
+    | ['not found because of root', null]
+
+export type Cyclic_Parameter_Resolve_Status =
+    | ['to be implemented', null]
+    | ['resolved', p_i.lookup.Cyclic<d_out.Entry>]
+    | ['not found because of root', null]
+
+export type Stack_Parameter_Resolve_Status =
+    | ['to be implemented', null]
+    | ['resolved', p_i.lookup.Stack<d_out.Entry>]
+    | ['not found because of root', null]
+
+export type Lookup_Parameters = {
+    'acyclic': p_temp_dictionary.Generic_Dictionary<Acyclic_Parameter_Resolve_Status>
+    'cyclic': p_temp_dictionary.Generic_Dictionary<Cyclic_Parameter_Resolve_Status>
+    'stack': p_temp_dictionary.Generic_Dictionary<Stack_Parameter_Resolve_Status>
 }
 
 export type Lookups = {
-    'acyclic': {
-        // 'default': {
-        //     'foo': p_i_temp.Acyclic_Lookup<d_out.Value>
-        // },
-    },
-    'cyclic': {
-        // 'default': {
-        //     'foo': p_i_temp.Cyclic_Lookup<d_out.Value>
-        // },
+    'parameters': Lookup_Parameters
+    'siblings': {
+        'acyclic': p_i.lookup.Acyclic<d_out.Entry>
+        'cyclic': p_i.lookup.Cyclic<d_out.Entry>
     }
 }
+
+export type Module_Parameter_Resolve_Status =
+    | ['not found because of root', null]
+    | ['to be implemented', null]
 
 export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
     d_in.Document,
     d_out.Document,
     Lookups,
     {
-        'definition': d_in_definition.Resolver_Modules.D,
+        'definition': d_in_definition.Resolver_Modules.D
         'resolvers': d_in_definition.Resolver
+        'module parameters': p_di.Dictionary<Module_Parameter_Resolve_Status>
     }
 > = ($, $l, $p) => ({
     'unmarshalled': $,
@@ -72,11 +98,8 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
         $l,
         {
             'definition': $p.definition['root value resolver'],
-            // 'module parameters': p_.literal.not_set(),
-            // 'lookup parameters': p_.literal.not_set(),
             'resolver': $p.resolvers,
-            // 'acyclic siblings': p_.literal.not_set(),
-            // 'cyclic siblings': p_.literal.not_set(),
+            'module parameters': $p['module parameters'],
         }
     )
 })
@@ -135,18 +158,21 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //     // })
 // }
 
+export const Resolver_Optional_Value_Initialization = (
+    $: d_in_definition.Resolver_Optional_Value_Initialization
+): Module_Parameter_Resolve_Status => {
+    return ['to be implemented', null]
+}
+
 
 export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
     d_in.Value,
     d_out.Value,
     Lookups,
     {
-        'definition': d_in_definition.Resolver_Value,
+        'definition': d_in_definition.Resolver_Value
         'resolver': d_in_definition.Resolver
-        // 'module parameters': p_di.Optional_Value<d_function.Module_Parameters>
-        // 'lookup parameters': p_di.Optional_Value<d_function.Lookup_Parameters>
-        // 'acyclic siblings': p_di.Optional_Value<d_function.Acyclic_Siblings>
-        // 'cyclic siblings': p_di.Optional_Value<d_function.Cyclic_Siblings>
+        'module parameters': p_di.Dictionary<Module_Parameter_Resolve_Status>
     }
 > = ($, $l, $p) => {
     return {
@@ -163,87 +189,136 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                 const def = $
                                 return ['component', p_.from.state(unmarshalled_value).decide(($) => {
                                     switch ($[0]) {
-                                        case 'component': return p_.ss($, ($) => ({
-                                            'unmarshalled': $,
-                                            'value': Value(
-                                                $.value,
-                                                {
-                                                    'acyclic': {},
-                                                    'cyclic': {},
-                                                },
-                                                {
-                                                    'definition': p_.from.state(def.location).decide(($) => {
-                                                        switch ($[0]) {
-                                                            case 'external': return p_.ss($, ($) => p_implement_me("external component"))
-                                                            case 'internal': return p_.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
-                                                                $['l id'],
-                                                                {
-                                                                    'no_such_entry': () => p_unreachable_code_path("for every signature, there must be a resolver implemented")
-                                                                }
-                                                            )['root value resolver'])
-                                                            default: return p_.au($[0])
+                                        case 'component': return p_.ss($, ($) => {
+                                            const def2 = p_.from.state(def.location).decide(($): d_in_definition.Resolver_Modules_.D => {
+                                                switch ($[0]) {
+                                                    case 'external': return p_.ss($, ($) => p_implement_me("external component"))
+                                                    case 'internal': return p_.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
+                                                        $['l id'],
+                                                        {
+                                                            'no_such_entry': () => p_unreachable_code_path("for every signature, there must be a resolver implemented")
                                                         }
-                                                    }),
-                                                    'resolver': $p.resolver,
-                                                    // 'module parameters': p_.literal.not_set(), //FIXME 
-                                                    // 'lookup parameters': p_.literal.not_set(), //FIXME
-                                                    // 'module parameters': p_.from.optional(def.arguments).map(
-                                                    //     ($) => ({
-                                                    //         'lookups': p_.from.optional($.lookups).map(
-                                                    //             ($) => $.__d_map_deprecated(($) => p_.from.state($).decide(($) => {
-                                                    //                 switch ($[0]) {
-                                                    //                     case 'stack': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                                                    //                         switch ($[0]) {
-                                                    //                             case 'empty': return p_.ss($, ($) => null)
-                                                    //                             case 'push': return p_.ss($, ($) => {
-                                                    //                                 Resolver_Lookup_Selection(
-                                                    //                                     null,
-                                                    //                                     {
-                                                    //                                         'definition': $.item,
-                                                    //                                         'acyclic siblings': $p['acyclic siblings'],
-                                                    //                                         'cyclic siblings': $p['cyclic siblings'],
-                                                    //                                         'lookup parameters': $p['lookup parameters'],
-                                                    //                                     }
-                                                    //                                 )
-                                                    //                                 Resolver_Lookup_Selection(
-                                                    //                                     null,
-                                                    //                                     {
-                                                    //                                         'definition': $.stack,
-                                                    //                                         'acyclic siblings': $p['acyclic siblings'],
-                                                    //                                         'cyclic siblings': $p['cyclic siblings'],
-                                                    //                                         'lookup parameters': $p['lookup parameters'],
-                                                    //                                     }
-                                                    //                                 )
-                                                    //                                 return null
-                                                    //                             })
-                                                    //                             default: return p_.au($[0])
-                                                    //                         }
-                                                    //                     }))
-                                                    //                     case 'acyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'cyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'selection': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     default: return p_.au($[0])
-                                                    //                 }
-                                                    //             }))
-
-                                                    //         ),
-                                                    //         'modules': p_.from.optional($.modules).map(
-                                                    //             ($) => $.__d_map_deprecated(($) => p_.from.state($).decide(($) => {
-                                                    //                 switch ($[0]) {
-                                                    //                     case 'optional': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'required': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     case 'parameter': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                    //                     default: return p_.au($[0])
-                                                    //                 }
-                                                    //             }))
-                                                    //         )
-                                                    //     })
-                                                    // ),
-                                                    // 'acyclic siblings': p_.literal.not_set(),
-                                                    // 'cyclic siblings': p_.literal.not_set(),
+                                                    ))
+                                                    default: return p_.au($[0])
                                                 }
-                                            )
-                                        }))
+                                            })
+                                            return {
+                                                'unmarshalled': $,
+                                                'value': Value(
+                                                    $.value,
+                                                    {
+                                                        'parameters': p_i_temp.from_option_decide(
+                                                            def.arguments,
+                                                            ($) => p_i_temp.from_option_decide(
+                                                                $.lookups,
+                                                                ($) => ({
+                                                                    'acyclic': p_temp_dictionary.map_value_dictionary_to_generic_dictionary(
+                                                                        $,
+                                                                        ($): Acyclic_Parameter_Resolve_Status => ['to be implemented', null]
+                                                                    ),
+                                                                    'cyclic': p_temp_dictionary.map_value_dictionary_to_generic_dictionary(
+                                                                        $,
+                                                                        ($): Cyclic_Parameter_Resolve_Status => ['to be implemented', null]
+                                                                    ),
+                                                                    'stack': p_temp_dictionary.map_value_dictionary_to_generic_dictionary(
+                                                                        $,
+                                                                        ($): Stack_Parameter_Resolve_Status => ['to be implemented', null]
+                                                                    )
+                                                                }),
+                                                                () => $l.parameters
+                                                            ),
+                                                            () => $l.parameters
+
+                                                        ),
+                                                        'siblings': $l.siblings,
+                                                    },
+                                                    {
+                                                        'definition': def2['root value resolver'],
+                                                        'resolver': $p.resolver,
+                                                        'module parameters': p_i_temp.from_option_decide(
+                                                            def.arguments,
+                                                            ($) => p_i_temp.from_option_decide(
+                                                                $.modules,
+                                                                ($) => $.__d_map_deprecated(
+                                                                    ($): Module_Parameter_Resolve_Status => p_.from.state($).decide(($) => {
+                                                                        switch ($[0]) {
+                                                                            case 'optional': return p_.ss($, ($) => Resolver_Optional_Value_Initialization($))
+                                                                            case 'parameter': return p_.ss($, ($) => $p['module parameters'].__get_entry_deprecated(
+                                                                                $['l id'],
+                                                                                {
+                                                                                    'no_such_entry': () => p_unreachable_code_path("for every parameter, there must be a module parameter provided")
+                                                                                }
+                                                                            ))
+                                                                            case 'required': return p_.ss($, ($) => ['to be implemented', null])
+                                                                            default: return p_.au($[0])
+                                                                        }
+                                                                    })
+                                                                ),
+                                                                () => $p['module parameters']
+                                                            ),
+                                                            () => $p['module parameters']
+
+                                                        ),
+                                                        // 'module parameters': p_.literal.not_set(), //FIXME 
+                                                        // 'lookup parameters': p_.literal.not_set(), //FIXME
+                                                        // 'module parameters': p_.from.optional(def.arguments).map(
+                                                        //     ($) => ({
+                                                        //         'lookups': p_.from.optional($.lookups).map(
+                                                        //             ($) => $.__d_map_deprecated(($) => p_.from.state($).decide(($) => {
+                                                        //                 switch ($[0]) {
+                                                        //                     case 'stack': return p_.ss($, ($) => p_.from.state($).decide(($) => {
+                                                        //                         switch ($[0]) {
+                                                        //                             case 'empty': return p_.ss($, ($) => null)
+                                                        //                             case 'push': return p_.ss($, ($) => {
+                                                        //                                 Resolver_Lookup_Selection(
+                                                        //                                     null,
+                                                        //                                     {
+                                                        //                                         'definition': $.item,
+                                                        //                                         'acyclic siblings': $p['acyclic siblings'],
+                                                        //                                         'cyclic siblings': $p['cyclic siblings'],
+                                                        //                                         'lookup parameters': $p['lookup parameters'],
+                                                        //                                     }
+                                                        //                                 )
+                                                        //                                 Resolver_Lookup_Selection(
+                                                        //                                     null,
+                                                        //                                     {
+                                                        //                                         'definition': $.stack,
+                                                        //                                         'acyclic siblings': $p['acyclic siblings'],
+                                                        //                                         'cyclic siblings': $p['cyclic siblings'],
+                                                        //                                         'lookup parameters': $p['lookup parameters'],
+                                                        //                                     }
+                                                        //                                 )
+                                                        //                                 return null
+                                                        //                             })
+                                                        //                             default: return p_.au($[0])
+                                                        //                         }
+                                                        //                     }))
+                                                        //                     case 'acyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                        //                     case 'cyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                        //                     case 'selection': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                        //                     default: return p_.au($[0])
+                                                        //                 }
+                                                        //             }))
+
+                                                        //         ),
+                                                        //         'modules': p_.from.optional($.modules).map(
+                                                        //             ($) => $.__d_map_deprecated(($) => p_.from.state($).decide(($) => {
+                                                        //                 switch ($[0]) {
+                                                        //                     case 'optional': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                        //                     case 'required': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                        //                     case 'parameter': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                        //                     default: return p_.au($[0])
+                                                        //                 }
+                                                        //             }))
+                                                        //         )
+                                                        //     })
+                                                        // ),
+                                                        // 'acyclic siblings': p_.literal.not_set(),
+                                                        // 'cyclic siblings': p_.literal.not_set(),
+                                                    }
+                                                )
+                                            }
+                                        })
                                         default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                     }
                                 })]
@@ -264,14 +339,17 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                 case 'set': return p_.ss($, ($) => ['success', {
                                                                     'value': ['set', Value(
                                                                         $,
-                                                                        $l,
+                                                                        {
+                                                                            'parameters': $l.parameters,
+                                                                            'siblings': {
+                                                                                'acyclic': $al,
+                                                                                'cyclic': $cl,
+                                                                            }
+                                                                        },
                                                                         {
                                                                             'definition': def.resolver,
                                                                             'resolver': $p.resolver,
-                                                                            // 'module parameters': $p['module parameters'],
-                                                                            // 'lookup parameters': $p['lookup parameters'],
-                                                                            // 'acyclic siblings': p_.literal.set($al),
-                                                                            // 'cyclic siblings': p_.literal.set($cl),
+                                                                            'module parameters': $p['module parameters'],
                                                                         }
                                                                     )]
                                                                 }])
@@ -324,10 +402,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                             {
                                                                                 'definition': resolver,
                                                                                 'resolver': $p.resolver,
-                                                                                // 'module parameters': $p['module parameters'],
-                                                                                // 'lookup parameters': $p['lookup parameters'],
-                                                                                // 'acyclic siblings': $p['acyclic siblings'],
-                                                                                // 'cyclic siblings': $p['cyclic siblings'],
+                                                                                'module parameters': $p['module parameters'],
                                                                             }
                                                                         )
                                                                     }]
@@ -360,10 +435,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 {
                                                     'definition': def.resolver,
                                                     'resolver': $p.resolver,
-                                                    // 'module parameters': $p['module parameters'],
-                                                    // 'lookup parameters': $p['lookup parameters'],
-                                                    // 'acyclic siblings': $p['acyclic siblings'],
-                                                    // 'cyclic siblings': $p['cyclic siblings'],
+                                                    'module parameters': $p['module parameters'],
                                                 }
                                             ))
                                         }))
@@ -398,10 +470,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                             {
                                                                 'definition': def.resolver,
                                                                 'resolver': $p.resolver,
-                                                                // 'module parameters': $p['module parameters'],
-                                                                // 'lookup parameters': $p['lookup parameters'],
-                                                                // 'acyclic siblings': $p['acyclic siblings'],
-                                                                // 'cyclic siblings': $p['cyclic siblings'],
+                                                                'module parameters': $p['module parameters'],
                                                             }
                                                         )
                                                     }])
@@ -475,10 +544,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                 }
                                                             ).resolver,
                                                             'resolver': $p.resolver,
-                                                            // 'module parameters': $p['module parameters'],
-                                                            // 'lookup parameters': $p['lookup parameters'],
-                                                            // 'acyclic siblings': $p['acyclic siblings'],
-                                                            // 'cyclic siblings': $p['cyclic siblings'],
+                                                            'module parameters': $p['module parameters'],
                                                         }
                                                     )))
                                                     case 'missing data': return p_.ss($, ($) => p_.literal.not_set())
