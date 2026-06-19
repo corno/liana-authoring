@@ -1,5 +1,5 @@
 import * as p_ri from 'pareto-core/dist/interface/refiner'
-import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
+import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/list_from_text'
 
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"

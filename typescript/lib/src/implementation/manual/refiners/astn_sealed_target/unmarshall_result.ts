@@ -10,7 +10,7 @@ import * as d_function from "../../../../interface/data/sealed_target_from_unmar
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
-import p_variables from 'pareto-core/dist/implementation/specials/variables'
+import p_variables from 'pareto-core/dist/implementation/refiner/specials/variables'
 
 //signatures
 // export type Document = p_i.Refiner<d_out.Document, d_function.Error, d_in.Document>

@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
-import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
-import p_variables from 'pareto-core/dist/implementation/specials/variables'
+import p_unreachable_code_path from 'pareto-core/dist/implementation/transformer/specials/unreachable_code_path'
+import p_variables from 'pareto-core/dist/implementation/transformer/specials/variables'
 import p_temp_dictionary from 'pareto-core/dist/temp/Generic_Dictionary'
 
 import * as d_in from "../../../../interface/data/unmarshall_result"
@@ -164,6 +164,12 @@ export const Resolver_Optional_Value_Initialization = (
     return ['to be implemented', null]
 }
 
+export const Resolver_Guaranteed_Value_Selection = (
+    $: d_in_definition.Resolver_Guaranteed_Value_Selection
+): Module_Parameter_Resolve_Status => {
+    return ['to be implemented', null]
+}
+
 
 export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
     d_in.Value,
@@ -249,7 +255,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                     'no_such_entry': () => p_unreachable_code_path("for every parameter, there must be a module parameter provided")
                                                                                 }
                                                                             ))
-                                                                            case 'required': return p_.ss($, ($) => ['to be implemented', null])
+                                                                            case 'required': return p_.ss($, ($) => Resolver_Guaranteed_Value_Selection($))
                                                                             default: return p_.au($[0])
                                                                         }
                                                                     })

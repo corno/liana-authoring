@@ -1,6 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
-import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -219,9 +218,7 @@ export const Found: Found = ($, $p) => {
                                             $.value,
                                             $p,
                                         ).__l_map_deprecated(
-                                            ($): d_out.Completion_Suggestions.O.suggestions.L => p_change_context(
-                                                $,
-                                                ($) => ({
+                                            ($): d_out.Completion_Suggestions.O.suggestions.L => ({
                                                     'label': id + $.label,
                                                     'documentation': desc.__decide<string>(
                                                         ($) => $,
@@ -247,14 +244,7 @@ export const Found: Found = ($, $p) => {
                                                             'write delimiters': false, //skip the pipe
                                                         }
                                                     ),
-                                                    'additional text edits': p_.literal.list<d_out_text_edits.Text_Edits.L>([
-                                                        ['delete', {
-                                                            'range': missing_data_marker.range
-                                                        }]
-                                                    ]),
-                                                    'type': ['state', null]
                                                 })
-                                            )
                                         )
                                     })
                                 })
