@@ -6,7 +6,7 @@ import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/l
 import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 import p_temp_dictionary from 'pareto-core/dist/temp/Generic_Dictionary'
-import p_select_lookup from 'pareto-core/dist/implementation/transformer/select_lookup'
+import p_select_lookup from 'pareto-core/dist/implementation/transformer/specials/lookup'
 
 import * as interface_ from "../../../interface/queries"
 
