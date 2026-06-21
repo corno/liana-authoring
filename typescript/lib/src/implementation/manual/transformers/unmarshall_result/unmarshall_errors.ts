@@ -100,7 +100,7 @@ export const Value: Value = ($) => {
                                     'range': $['option token'].range,
                                     'type': ['state', ['unknown option', {
                                         'found': $['option token'].token.value,
-                                        'expected': $.definition.options.__d_map_deprecated(($) => null)
+                                        'expected': p_.from.dictionary($.definition.options).map(($) => null)
                                     }]]
                                 }
                             ]))
@@ -133,7 +133,7 @@ export const Value: Value = ($) => {
                                             case 'success': return p_.ss($, ($) => p_.literal.list([]))
                                             case 'error': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                                 switch ($[0]) {
-                                                    case 'duplicate': return p_.ss($, ($) => $.instances.__l_map_deprecated(($): d_out.Errors.L => ({
+                                                    case 'duplicate': return p_.ss($, ($) => p_.from.list($.instances).map(($): d_out.Errors.L => ({
                                                         'range': $.intermediate['id value pair'].id.range,
                                                         'type': ['dictionary', ['duplicate entry', {
                                                             name: id
@@ -205,7 +205,7 @@ export const Value: Value = ($) => {
 
                                             return p_.from.state($['definition found']).decide(($): d_out.Errors => {
                                                 switch ($[0]) {
-                                                    case 'yes': return p_.ss($, ($) => $['value'].__decide(
+                                                    case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
                                                         ($) => Value($),
                                                         (): d_out.Errors => p_.literal.list([
                                                             //the property is missing, it is reported at another place (where the concise and verbose properties are merged)
@@ -244,7 +244,7 @@ export const Value: Value = ($) => {
                                                             }]]
                                                         }
                                                     ]))
-                                                    case 'multiple': return p_.ss($, ($) => $.instances.__l_map_deprecated(($): d_out.Errors.L => ({
+                                                    case 'multiple': return p_.ss($, ($) => p_.from.list($.instances).map(($): d_out.Errors.L => ({
                                                         'range': $.intermediate['id value pair'].id.range,
                                                         'type': ['group', ['duplicate property', {
                                                             'name': $.intermediate['id value pair'].id.token.value

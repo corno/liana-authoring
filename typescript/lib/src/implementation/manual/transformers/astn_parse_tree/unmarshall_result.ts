@@ -85,14 +85,14 @@ export const Value: Value = ($, $p) => {
                                     return ['dictionary', p_.from.state(concrete_value).decide(($): d_out.Dictionary => {
                                         switch ($[0]) {
                                             case 'dictionary': return p_.ss($, ($): d_out.Dictionary => {
-                                                const entries = $.entries.__l_map_deprecated(($): d_out.Entry => {
+                                                const entries = p_.from.list($.entries).map(($): d_out.Entry => {
                                                     const entry = $
                                                     return {
                                                         'definition': dict_def,
                                                         'property path': $p['property path'],
                                                         'id': $.id.token.value,
-                                                        'value': $.assignment.__decide(
-                                                            ($): d_out.Entry['value'] => $.value.__decide(
+                                                        'value': p_.from.optional($.assignment).decide(
+                                                            ($): d_out.Entry['value'] => p_.from.optional($.value).decide(
                                                                 ($): d_out.Entry['value'] => ['set', Value(
                                                                     $,
                                                                     {
@@ -122,10 +122,10 @@ export const Value: Value = ($, $p) => {
                                                         'entries as list': entries,
                                                     },
                                                     'derived': {
-                                                        'entries': p_.from.list(entries).group(
+                                                        'entries': p_.from.dictionary(p_.from.list(entries).group(
                                                             ($) => $.intermediate['id value pair'].id.token.value,
 
-                                                        ).__d_map_deprecated(($) => {
+                                                        )).map(($) => {
                                                             return {
                                                                 'result': p_.from.list($).on_has_single_item(
                                                                     ($): d_out.Entry_Unmarshall_Result => ['success', $],
@@ -162,7 +162,7 @@ export const Value: Value = ($, $p) => {
                                             const instance = $
                                             return {
                                                 'item': $,
-                                                'definition found': $o.__decide(
+                                                'definition found': p_.from.optional($o).decide(
                                                     ($): d_out.Concise_Property_Definition_Found => ['yes', {
                                                         'definition': $.definition,
                                                         'id': $.id,
@@ -189,19 +189,19 @@ export const Value: Value = ($, $p) => {
                                         }
                                     )
                                     const Verbose_Properties = ($: d_in.ID_Value_Pairs): d_out.Verbose_Properties => {
-                                        return $.__l_map_deprecated(($) => {
+                                        return p_.from.list($).map(($) => {
                                             const id_value_pair = $
                                             return {
                                                 'id': $.id.token.value,
                                                 'intermediate': {
                                                     'id value pair': $,
                                                 },
-                                                'definition found': group_def.__get_possible_entry_deprecated($.id.token.value).__decide(
+                                                'definition found': p_.from.optional(group_def.__get_possible_entry_deprecated($.id.token.value)).decide(
                                                     ($): d_out.Verbose_Property_Definition_Found => {
                                                         const prop_def = $
                                                         return ['yes', {
                                                             'definition': $,
-                                                            'value': id_value_pair.assignment.__decide(
+                                                            'value': p_.from.optional(id_value_pair.assignment).decide(
                                                                 ($) => p_.from.optional($.value).map(
                                                                     ($) => Value(
                                                                         $,
@@ -283,13 +283,13 @@ export const Value: Value = ($, $p) => {
                                                             const instance_lookup = p_.from.list($.properties).group(
                                                                 ($) => $.intermediate['id value pair'].id.token.value
                                                             )
-                                                            return group_def.__d_map_deprecated(($, id) => ({
+                                                            return p_.from.dictionary(group_def).map(($, id) => ({
                                                                 'definition': $,
-                                                                'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
+                                                                'result': p_.from.optional(instance_lookup.__get_possible_entry_deprecated(id)).decide(
                                                                     ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
                                                                         ($): d_out.Property['result'] => p_.from.state($['definition found']).decide(($) => {
                                                                             switch ($[0]) {
-                                                                                case 'yes': return p_.ss($, ($): d_out.Property['result'] => $['value'].__decide(
+                                                                                case 'yes': return p_.ss($, ($): d_out.Property['result'] => p_.from.optional($['value']).decide(
                                                                                     ($): d_out.Property['result'] => ['success', $],
                                                                                     (): d_out.Property['result'] => ['error', ['missing', {
                                                                                         'start token range': start_token_range
@@ -329,9 +329,9 @@ export const Value: Value = ($, $p) => {
                                                             ).group(
                                                                 ($) => $.id
                                                             )
-                                                            return group_def.__d_map_deprecated(($, id) => ({
+                                                            return p_.from.dictionary(group_def).map(($, id) => ({
                                                                 'definition': $,
-                                                                'result': instance_lookup.__get_possible_entry_deprecated(id).__decide(
+                                                                'result': p_.from.optional(instance_lookup.__get_possible_entry_deprecated(id)).decide(
                                                                     ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
                                                                         ($): d_out.Property['result'] => ['success', $['value']],
                                                                         () => p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
@@ -362,7 +362,7 @@ export const Value: Value = ($, $p) => {
                                                     'instance': $,
                                                     'derived': {
 
-                                                        'items': $.items.__l_map_deprecated(($) => Value(
+                                                        'items': p_.from.list($.items).map(($) => Value(
                                                             $.value,
                                                             {
                                                                 'definition': def.value,

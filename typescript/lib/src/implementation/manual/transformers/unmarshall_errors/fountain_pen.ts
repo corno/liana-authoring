@@ -31,7 +31,7 @@ export const Error: p_i.Transformer<
                 case 'invalid type': return p_.ss($, ($) => sh.ph.composed([
                     sh.ph.literal("invalid value type, expected "),
                     sh.ph.rich(
-                        $.expected.__l_map_deprecated(($) => sh.ph.composed([
+                        p_.from.list($.expected).map(($) => sh.ph.composed([
                             sh.ph.literal("'"),
                             sh.ph.literal($[0]),
                             sh.ph.literal("'")
@@ -69,7 +69,7 @@ export const Error: p_i.Transformer<
                 ]))
                 case 'superfluous property': return p_.ss($, ($) => sh.ph.composed([
                     sh.ph.literal("superfluous property"),
-                    $.name.__decide(
+                    p_.from.optional($.name).decide(
                         ($) => sh.ph.composed([
                             sh.ph.literal(" '"),
                             sh.ph.literal($),

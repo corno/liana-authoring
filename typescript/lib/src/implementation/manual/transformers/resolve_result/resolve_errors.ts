@@ -98,7 +98,7 @@ export const Value: Value = ($) => {
                         }
                     }))
                     case 'state': return p_.ss($, ($): d_out.Errors => {
-                        return $.option.__decide(
+                        return p_.from.optional($.option).decide(
                             ($) => Value($),
                             (): d_out.Errors => p_.literal.list([])
                         )

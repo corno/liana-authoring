@@ -85,7 +85,7 @@ export const Value: Value = ($) => {
                                         ])
                                         : p_.from.state($['definition found']).decide(($) => {
                                             switch ($[0]) {
-                                                case 'yes': return p_.ss($, ($) => $['value'].__decide(
+                                                case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
                                                     ($) => Value($),
                                                     (): d_out.Warnings => p_.literal.list([])
                                                 ))

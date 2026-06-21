@@ -16,7 +16,7 @@ export type Document = p_i.Transformer<
     d_out.Diagnostics
 >
 
-export const Document: Document = ($) => t_to_resolve_result_to_errors.Document($).__l_map_deprecated(($) => ({
+export const Document: Document = ($) => p_.from.list(t_to_resolve_result_to_errors.Document($)).map(($) => ({
     'severity': $.severity,
     'range': p_.literal.set(['range', $.range]),
     'related information': p_.literal.not_set(),

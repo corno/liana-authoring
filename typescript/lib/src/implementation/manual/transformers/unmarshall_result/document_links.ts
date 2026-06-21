@@ -49,7 +49,7 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                             $.properties
                         ).flatten(($): d_out.Links => p_.from.state($['definition found']).decide(($): d_out.Links => {
                             switch ($[0]) {
-                                case 'yes': return p_.ss($, ($) => $['value'].__decide(
+                                case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
                                     ($): d_out.Links => Value($),
                                     (): d_out.Links => p_.literal.list([])
                                 ))

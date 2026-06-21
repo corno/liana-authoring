@@ -23,7 +23,7 @@ export type Document = p_i.Transformer_With_Parameter<
 
 const Property_Path = ($: d_in.Property_Path): string => t_fp_to_text.Phrase(
     sh.ph.rich(
-        $.__l_map_deprecated(($) => p_.from.state($).decide(($) => {
+        p_.from.list($).map(($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'group': return p_.ss($, ($) => sh.ph.literal($))
                 case 'optional': return p_.ss($, ($) => sh.ph.literal("O"))
@@ -110,7 +110,7 @@ export const Document: Document = ($, $p) => {
                             $.id,
                             p_.from.state($['definition found']).decide(($) => {
                                 switch ($[0]) {
-                                    case 'yes': return p_.ss($, ($) => $.definition.description.__decide(
+                                    case 'yes': return p_.ss($, ($) => p_.from.optional($.definition.description).decide(
                                         ($) => $,
                                         () => ""
                                     ))
@@ -133,7 +133,7 @@ export const Document: Document = ($, $p) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => p_.literal.list([
                                 prop_path,
-                                $.definition.description.__decide(
+                                p_.from.optional($.definition.description).decide(
                                     ($) => $,
                                     () => "no description"
                                 ),

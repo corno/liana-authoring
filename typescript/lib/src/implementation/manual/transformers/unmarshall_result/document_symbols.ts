@@ -37,7 +37,7 @@ export const Value: Value = ($) => {
                     case 'component': return p_.ss($, ($) => Value($.value))
                     case 'dictionary': return p_.ss($, ($): d_out.Value => ({
                         'kind': ['object', null],
-                        'children': $.intermediate['entries as list'].__l_map_deprecated(($): d_out.Symbol => ({
+                        'children': p_.from.list($.intermediate['entries as list']).map(($): d_out.Symbol => ({
                             'name': $.intermediate['id value pair'].id.token.value,
                             'detail': "entry",
                             'value': p_.from.state($.value).decide(($) => {
@@ -58,12 +58,12 @@ export const Value: Value = ($) => {
                         'kind': ['struct', null],
                         'children': p_.from.state($.derived.style).decide(($) => {
                             switch ($[0]) {
-                                case 'verbose': return p_.ss($, ($) => $.properties.__l_map_deprecated(($): d_out.Symbol => ({
+                                case 'verbose': return p_.ss($, ($) => p_.from.list($.properties).map(($): d_out.Symbol => ({
                                     'name': $.id,
                                     'detail': "property",
                                     'value': p_.from.state($['definition found']).decide(($) => {
                                         switch ($[0]) {
-                                            case 'yes': return p_.ss($, ($) => $['value'].__decide(
+                                            case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
                                                 ($): d_out.Value => Value($),
                                                 (): d_out.Value => ({
                                                     'kind': ['null', null],
@@ -80,7 +80,7 @@ export const Value: Value = ($) => {
                                     'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
                                     'selection range': $.intermediate['id value pair'].id.range,
                                 })))
-                                case 'concise': return p_.ss($, ($) => $.properties.__l_map_deprecated(($): d_out.Symbol => p_.from.state($['definition found']).decide(($) => {
+                                case 'concise': return p_.ss($, ($) => p_.from.list($.properties).map(($): d_out.Symbol => p_.from.state($['definition found']).decide(($) => {
                                     switch ($[0]) {
                                         case 'no': return p_.ss($, ($): d_out.Symbol => ({
                                             'value': {

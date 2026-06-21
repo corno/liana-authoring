@@ -214,13 +214,13 @@ export const Found: Found = ($, $p) => {
                                         definition.options
                                     ).flatten_to_list(($, id) => {
                                         const desc = $.description
-                                        return d_schema_Value(
+                                        return p_.from.list(d_schema_Value(
                                             $.value,
                                             $p,
-                                        ).__l_map_deprecated(
+                                        )).map(
                                             ($): d_out.Completion_Suggestions.O.suggestions.L => ({
                                                     'label': id + $.label,
-                                                    'documentation': desc.__decide<string>(
+                                                    'documentation': p_.from.optional(desc).decide<string>(
                                                         ($) => $,
                                                         () => ""
                                                     ),

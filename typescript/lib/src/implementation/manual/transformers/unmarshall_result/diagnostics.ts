@@ -19,7 +19,7 @@ export type Document = p_i.Transformer<
 >
 
 export const Document: Document = ($) => p_.literal.nested_list([
-    t_to_unmarshall_result_to_errors.Document($).__l_map_deprecated(($) => {
+    p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(($) => {
         return ({
             'severity': ['error', null],
             'range': p_.literal.set(['range', $.range]),
@@ -34,7 +34,7 @@ export const Document: Document = ($) => p_.literal.nested_list([
             'type': ['semantic', null],
         })
     }),
-    t_to_unmarshall_result_to_warnings.Document($).__l_map_deprecated(($): d_out.Diagnostics.L => {
+    p_.from.list(t_to_unmarshall_result_to_warnings.Document($)).map(($): d_out.Diagnostics.L => {
         return ({
             'severity': ['warning', null],
             'range': p_.literal.set(['range', $.range]),

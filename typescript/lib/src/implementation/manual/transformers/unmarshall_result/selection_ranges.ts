@@ -24,7 +24,7 @@ export type Document = p_i.Transformer_With_Parameter<
 
 export const Document: Document = ($, $p) => {
     const doc = $
-    return $p.positions.__l_map_deprecated(($): d_in.Range_Stack => p_.from.state(
+    return p_.from.list($p.positions).map(($): d_in.Range_Stack => p_.from.state(
         t_to_unmarshall_result_value_at_position.Document(
             doc,
             {

@@ -146,8 +146,8 @@ export const Value: Value = ($, $p) => {
                                         () => p_.from.state($['definition found']).decide(($): d_out.Possibly_Found => {
 
                                             switch ($[0]) {
-                                                case 'yes': return p_.ss($, ($) => $['value'].__decide(
-                                                    ($): d_out.Possibly_Found => p_.literal.set(Value_possibly_found($, $p).__decide(
+                                                case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
+                                                    ($): d_out.Possibly_Found => p_.literal.set(p_.from.optional(Value_possibly_found($, $p)).decide(
                                                         ($) => $,
                                                         (): d_out.Found => ['property', { 'style': ['verbose', prop] }]
                                                     )),
@@ -200,7 +200,7 @@ export const Value: Value = ($, $p) => {
                     case 'nothing': return p_.ss($, ($) => this_value())
                     case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
                         switch ($[0]) {
-                            case 'set': return p_.ss($, ($) => Value_possibly_found($['child value'], $p).__decide(
+                            case 'set': return p_.ss($, ($) => p_.from.optional(Value_possibly_found($['child value'], $p)).decide(
                                 ($): d_out.Found => $,
                                 (): d_out.Found => this_value()
                             ))
@@ -213,7 +213,7 @@ export const Value: Value = ($, $p) => {
                         const valid_state = $
                         return p_.from.state($.derived['option status']).decide(($) => {
                             switch ($[0]) {
-                                case 'set': return p_.ss($, ($): d_out.Found => Value_possibly_found($.value, $p).__decide(
+                                case 'set': return p_.ss($, ($): d_out.Found => p_.from.optional(Value_possibly_found($.value, $p)).decide(
                                     ($): d_out.Found => $,
                                     (): d_out.Found => ['state', valid_state]
                                 ))

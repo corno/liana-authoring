@@ -132,7 +132,7 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //     //     switch ($[0]) {
 //     //         case 'acyclic': return p_.ss($, ($) => p_.from.state($).decide(($) => {
 //     //             switch ($[0]) {
-//     //                 case 'siblings': return p_.ss($, ($) => $p['acyclic siblings'].__decide(
+//     //                 case 'siblings': return p_.ss($, ($) => $p['acyclic siblings'].__ decide(
 //     //                     ($) => ['acyclic siblings', $],
 //     //                     () => p_unreachable_code_path("acyclic siblings should have been provided for this definition")
 //     //                 ))
@@ -142,14 +142,14 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //     //         }))
 //     //         case 'cyclic': return p_.ss($, ($) => p_.from.state($).decide(($) => {
 //     //             switch ($[0]) {
-//     //                 case 'siblings': return p_.ss($, ($) => $p['cyclic siblings'].__decide(
+//     //                 case 'siblings': return p_.ss($, ($) => $p['cyclic siblings'].__ decide(
 //     //                     ($) => ['cyclic siblings', $],
 //     //                     () => p_unreachable_code_path("cyclic siblings should have been provided for this definition")
 //     //                 ))
 //     //                 default: return p_.au($[0])
 //     //             }
 //     //         }))
-//     //         case 'parameter': return p_.ss($, ($) => $p['module parameters'].__decide(
+//     //         case 'parameter': return p_.ss($, ($) => $p['module parameters'].__ decide(
 //     //             ($) => ['parameter', $p['module parameters']],
 //     //             () => p_unreachable_code_path("module parameters should have been provided for this definition")
 //     //         ))
@@ -245,7 +245,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                             def.arguments,
                                                             ($) => p_i_temp.from_option_decide(
                                                                 $.modules,
-                                                                ($) => $.__d_map_deprecated(
+                                                                ($) => p_.from.dictionary($).map(
                                                                     ($): Module_Parameter_Resolve_Status => p_.from.state($).decide(($) => {
                                                                         switch ($[0]) {
                                                                             case 'optional': return p_.ss($, ($) => Resolver_Optional_Value_Initialization($))
@@ -270,7 +270,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                         // 'module parameters': p_.from.optional(def.arguments).map(
                                                         //     ($) => ({
                                                         //         'lookups': p_.from.optional($.lookups).map(
-                                                        //             ($) => $.__d_map_deprecated(($) => p_.from.state($).decide(($) => {
+                                                        //             ($) => $.__ d_map_deprecated(($) => p_.from.state($).decide(($) => {
                                                         //                 switch ($[0]) {
                                                         //                     case 'stack': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                                                         //                         switch ($[0]) {
@@ -308,7 +308,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
 
                                                         //         ),
                                                         //         'modules': p_.from.optional($.modules).map(
-                                                        //             ($) => $.__d_map_deprecated(($) => p_.from.state($).decide(($) => {
+                                                        //             ($) => $.__ d_map_deprecated(($) => p_.from.state($).decide(($) => {
                                                         //                 switch ($[0]) {
                                                         //                     case 'optional': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
                                                         //                     case 'required': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
@@ -396,7 +396,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                     )
                                                 ).resolve(($, id, $al, $cl) => {
                                                     const resolver = $.definition
-                                                    return $.unmarshalled.__decide(
+                                                    return p_.from.optional($.unmarshalled).decide(
                                                         ($) => p_.from.state($.result).decide(($): d_out.Property => {
                                                             switch ($[0]) {
                                                                 case 'success': return p_.ss($, ($): d_out.Property => ({
@@ -435,7 +435,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                     switch ($[0]) {
                                         case 'list': return p_.ss($, ($): d_out.List => ({
                                             'unmarshalled': $,
-                                            'items': $.derived.items.__l_map_deprecated(($) => Value(
+                                            'items': p_.from.list($.derived.items).map(($) => Value(
                                                 $,
                                                 $l,
                                                 {
