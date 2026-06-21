@@ -16,20 +16,16 @@ export type Document = p_i.Transformer<
     d_out.Diagnostics
 >
 
-export const Document: Document = ($) => p_.literal.nested_list([
-    t_to_resolve_result_to_errors.Document($).__l_map_deprecated(($) => {
-        return ({
-            'severity': $.severity,
-            'range': p_.literal.set(['range', $.range]),
-            'related information': p_.literal.not_set(),
-            'message': t_fp_to_text.Phrase(
-                t_resolve_errors_to_fp.Error($),
-                {
-                    'indentation': "    ",
-                    'newline': "\n",
-                }
-            ),
-            'type': ['semantic', null],
-        })
-    }),
-])
+export const Document: Document = ($) => t_to_resolve_result_to_errors.Document($).__l_map_deprecated(($) => ({
+    'severity': $.severity,
+    'range': p_.literal.set(['range', $.range]),
+    'related information': p_.literal.not_set(),
+    'message': t_fp_to_text.Phrase(
+        t_resolve_errors_to_fp.Error($),
+        {
+            'indentation': "    ",
+            'newline': "\n",
+        }
+    ),
+    'type': ['semantic', null],
+}))

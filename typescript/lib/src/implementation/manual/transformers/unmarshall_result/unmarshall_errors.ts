@@ -153,11 +153,10 @@ export const Value: Value = ($) => {
                             ).flatten(
                                 ($) => {
                                     const intermediate = $.intermediate
-                                    return p_.literal.nested_list([
-                                        p_.from.state($.value).decide(($) => {
-                                            switch ($[0]) {
-                                                case 'set': return p_.ss($, ($) => Value($))
-                                                case 'not set': return p_.ss($, ($) => p_.literal.list<d_out.Errors.L>([
+                                    return p_.from.state($.value).decide(($) => {
+                                        switch ($[0]) {
+                                            case 'set': return p_.ss($, ($) => Value($))
+                                            case 'not set': return p_.ss($, ($) => p_.literal.list<d_out.Errors.L>([
                                                 {
                                                     'range': intermediate['id value pair'].id.range,
                                                     'type': ['group', ['missing property value', { //missing property value
@@ -165,10 +164,9 @@ export const Value: Value = ($) => {
                                                     }]]
                                                 }
                                             ]))
-                                                default: return p_.au($[0])
-                                            }
-                                        })
-                                    ])
+                                            default: return p_.au($[0])
+                                        }
+                                    })
                                 }
                             )
                         ])
@@ -178,61 +176,54 @@ export const Value: Value = ($) => {
                         return p_.literal.nested_list([
                             p_.from.state($.derived.style).decide(($) => {
                                 switch ($[0]) {
-                                    case 'concise': return p_.ss($, ($) => p_.literal.nested_list([
-                                        p_.from.list(
-                                            $.properties
-                                        ).flatten(
-                                            ($) => {
-                                                const item = $.item
-                                                return p_.from.state($['definition found']).decide(($): d_out.Errors => {
-                                                    switch ($[0]) {
-                                                        case 'no': return p_.ss($, ($) => p_.literal.list([
-                                                            {
-                                                                'range': t_astn_parse_tree_to_location.Value(item.value),
-                                                                'type': ['group', ['superfluous property', {
-                                                                    'name': p_.literal.not_set()
-                                                                }]]
-                                                            }
-                                                        ]))
-                                                        case 'yes': return p_.ss($, ($) => Value($['value']))
-                                                        default: return p_.au($[0])
-                                                    }
-                                                })
-                                            }
-                                        ),
-                                    ]))
-                                    case 'verbose': return p_.ss($, ($) => p_.literal.nested_list([
-                                        //diagnostics for each property
-                                        p_.from.list(
-                                            $.properties,
-                                        ).flatten<d_out.Errors.L>(
-                                            ($) => {
-                                                const id_value_pair = $.intermediate['id value pair']
-
-                                                return p_.literal.nested_list([
-                                                    p_.from.state($['definition found']).decide(($): d_out.Errors => {
-                                                        switch ($[0]) {
-                                                            case 'yes': return p_.ss($, ($) => $['value'].__decide(
-                                                                ($) => Value($),
-                                                                (): d_out.Errors => p_.literal.list([
-                                                                    //the property is missing, it is reported at another place (where the concise and verbose properties are merged)
-                                                                ])
-                                                            ))
-                                                            case 'no': return p_.ss($, ($) => p_.literal.list([
-                                                                {
-                                                                    'range': id_value_pair.id.range,
-                                                                    'type': ['group', ['superfluous property', {
-                                                                        'name': p_.literal.set(id_value_pair.id.token.value)
-                                                                    }]]
-                                                                }
-                                                            ]))
-                                                            default: return p_.au($[0])
+                                    case 'concise': return p_.ss($, ($) => p_.from.list(
+                                        $.properties
+                                    ).flatten(
+                                        ($) => {
+                                            const item = $.item
+                                            return p_.from.state($['definition found']).decide(($): d_out.Errors => {
+                                                switch ($[0]) {
+                                                    case 'no': return p_.ss($, ($) => p_.literal.list([
+                                                        {
+                                                            'range': t_astn_parse_tree_to_location.Value(item.value),
+                                                            'type': ['group', ['superfluous property', {
+                                                                'name': p_.literal.not_set()
+                                                            }]]
                                                         }
-                                                    })
-                                                ])
-                                            }
-                                        )
-                                    ]))
+                                                    ]))
+                                                    case 'yes': return p_.ss($, ($) => Value($['value']))
+                                                    default: return p_.au($[0])
+                                                }
+                                            })
+                                        }
+                                    ))
+                                    case 'verbose': return p_.ss($, ($) => p_.from.list(
+                                        $.properties,
+                                    ).flatten<d_out.Errors.L>(
+                                        ($) => {
+                                            const id_value_pair = $.intermediate['id value pair']
+
+                                            return p_.from.state($['definition found']).decide(($): d_out.Errors => {
+                                                switch ($[0]) {
+                                                    case 'yes': return p_.ss($, ($) => $['value'].__decide(
+                                                        ($) => Value($),
+                                                        (): d_out.Errors => p_.literal.list([
+                                                            //the property is missing, it is reported at another place (where the concise and verbose properties are merged)
+                                                        ])
+                                                    ))
+                                                    case 'no': return p_.ss($, ($) => p_.literal.list([
+                                                        {
+                                                            'range': id_value_pair.id.range,
+                                                            'type': ['group', ['superfluous property', {
+                                                                'name': p_.literal.set(id_value_pair.id.token.value)
+                                                            }]]
+                                                        }
+                                                    ]))
+                                                    default: return p_.au($[0])
+                                                }
+                                            })
+                                        }
+                                    ))
                                     default: return p_.au($[0])
                                 }
                             }),
@@ -278,9 +269,9 @@ export const Value: Value = ($) => {
                     case 'nothing': return p_.ss($, ($) => p_.literal.list([]))
                     case 'reference': return p_.ss($, ($) => p_.from.state($.type).decide(($): d_out.Errors => {
                         switch ($[0]) {
-                            case 'derived': return p_.ss($, ($) => p_.literal.nested_list([
+                            case 'derived': return p_.ss($, ($) => p_.literal.list([
                             ]))
-                            case 'selected': return p_.ss($, ($) => p_.literal.nested_list([
+                            case 'selected': return p_.ss($, ($) => p_.literal.list([
                             ]))
                             default: return p_.au($[0])
                         }

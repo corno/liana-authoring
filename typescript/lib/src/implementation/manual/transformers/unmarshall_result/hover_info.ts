@@ -50,57 +50,55 @@ export const Document: Document = ($, $p) => {
             switch ($[0]) {
                 case 'value': return p_.ss($, ($) => {
                     const def = $.definition
-                    return p_.literal.nested_list([
-                        [
-                            Property_Path($['property path']),
-                            p_.from.state($['unmarshall result']).decide(($): string => {
-                                switch ($[0]) {
-                                    case 'error': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                                        switch ($[0]) {
-                                            case 'incorrect': return p_.ss($, ($) => p_.from.state(def).decide(($) => {
-                                                switch ($[0]) {
-                                                    case 'component': return p_.ss($, ($) => "component")
-                                                    case 'dictionary': return p_.ss($, ($) => "dictionary")
-                                                    case 'group': return p_.ss($, ($) => "group")
-                                                    case 'list': return p_.ss($, ($) => "list")
-                                                    case 'nothing': return p_.ss($, ($) => "nothing")
-                                                    case 'simple': return p_.ss($, ($) => "simple")
-                                                    case 'optional': return p_.ss($, ($) => "optional")
-                                                    case 'reference': return p_.ss($, ($) => "reference")
-                                                    case 'state': return p_.ss($, ($) => "state")
-                                                    case 'text': return p_.ss($, ($) => "text")
-                                                    default: return p_.au($[0])
-                                                }
-                                            }))
-                                            case 'missing': return p_.ss($, ($) => "use ctrl+d to get suggestions")
-                                            default: return p_.au($[0])
-                                        }
-                                    }))
-                                    case 'success': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                                        switch ($[0]) {
-                                            case 'simple': return p_.ss($, ($) => "simple value")
-                                            case 'component': return p_.ss($, ($) => "component")
-                                            case 'dictionary': return p_.ss($, ($) => "dictionary")
-                                            case 'group': return p_.ss($, ($) => "group")
-                                            case 'list': return p_.ss($, ($) => "list")
-                                            case 'nothing': return p_.ss($, ($) => "nothing")
-                                            case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
-                                                switch ($[0]) {
-                                                    case 'set': return p_.ss($, ($) => "optional")
-                                                    case 'not set': return p_.ss($, ($) => "not set optional")
-                                                    default: return p_.au($[0])
-                                                }
-                                            }))
-                                            case 'reference': return p_.ss($, ($) => "reference")
-                                            case 'state': return p_.ss($, ($) => "state")
-                                            case 'text': return p_.ss($, ($) => "text")
-                                            default: return p_.au($[0])
-                                        }
-                                    }))
-                                    default: return p_.au($[0])
-                                }
-                            }),
-                        ],
+                    return p_.literal.list([
+                        Property_Path($['property path']),
+                        p_.from.state($['unmarshall result']).decide(($): string => {
+                            switch ($[0]) {
+                                case 'error': return p_.ss($, ($) => p_.from.state($).decide(($) => {
+                                    switch ($[0]) {
+                                        case 'incorrect': return p_.ss($, ($) => p_.from.state(def).decide(($) => {
+                                            switch ($[0]) {
+                                                case 'component': return p_.ss($, ($) => "component")
+                                                case 'dictionary': return p_.ss($, ($) => "dictionary")
+                                                case 'group': return p_.ss($, ($) => "group")
+                                                case 'list': return p_.ss($, ($) => "list")
+                                                case 'nothing': return p_.ss($, ($) => "nothing")
+                                                case 'simple': return p_.ss($, ($) => "simple")
+                                                case 'optional': return p_.ss($, ($) => "optional")
+                                                case 'reference': return p_.ss($, ($) => "reference")
+                                                case 'state': return p_.ss($, ($) => "state")
+                                                case 'text': return p_.ss($, ($) => "text")
+                                                default: return p_.au($[0])
+                                            }
+                                        }))
+                                        case 'missing': return p_.ss($, ($) => "use ctrl+d to get suggestions")
+                                        default: return p_.au($[0])
+                                    }
+                                }))
+                                case 'success': return p_.ss($, ($) => p_.from.state($).decide(($) => {
+                                    switch ($[0]) {
+                                        case 'simple': return p_.ss($, ($) => "simple value")
+                                        case 'component': return p_.ss($, ($) => "component")
+                                        case 'dictionary': return p_.ss($, ($) => "dictionary")
+                                        case 'group': return p_.ss($, ($) => "group")
+                                        case 'list': return p_.ss($, ($) => "list")
+                                        case 'nothing': return p_.ss($, ($) => "nothing")
+                                        case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(($) => {
+                                            switch ($[0]) {
+                                                case 'set': return p_.ss($, ($) => "optional")
+                                                case 'not set': return p_.ss($, ($) => "not set optional")
+                                                default: return p_.au($[0])
+                                            }
+                                        }))
+                                        case 'reference': return p_.ss($, ($) => "reference")
+                                        case 'state': return p_.ss($, ($) => "state")
+                                        case 'text': return p_.ss($, ($) => "text")
+                                        default: return p_.au($[0])
+                                    }
+                                }))
+                                default: return p_.au($[0])
+                            }
+                        }),
                     ])
                 })
                 case 'entry': return p_.ss($, ($) => p_.literal.list([
