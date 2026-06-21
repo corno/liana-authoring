@@ -18,7 +18,7 @@ export type Document = p_i.Transformer<
     d_out.Diagnostics
 >
 
-export const Document: Document = ($) => p_.literal.nested_list([
+export const Document: Document = ($) => p_.literal.segmented_list([
     p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(($) => {
         return ({
             'severity': ['error', null],

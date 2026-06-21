@@ -170,12 +170,10 @@ export const Value: Value = ($, $p) => {
                                                             instance.value,
                                                             {
                                                                 'definition': $.definition.value,
-                                                                'property path': p_.literal.nested_list([
+                                                                'property path': p_.literal.chain(
                                                                     $p['property path'],
-                                                                    p_.literal.list([
-                                                                        ['group', $.id]
-                                                                    ])
-                                                                ]),
+                                                                    ['group', $.id]
+                                                                ),
                                                                 'parent range stack': optional_value_range_stack,
                                                             }
                                                         )
@@ -207,12 +205,10 @@ export const Value: Value = ($, $p) => {
                                                                         $,
                                                                         {
                                                                             'definition': prop_def.value,
-                                                                            'property path': p_.literal.nested_list([
+                                                                            'property path': p_.literal.chain(
                                                                                 $p['property path'],
-                                                                                p_.literal.list([
-                                                                                    ['group', id_value_pair.id.token.value]
-                                                                                ])
-                                                                            ]),
+                                                                                ['group', id_value_pair.id.token.value]
+                                                                            ),
                                                                             'parent range stack': p_.literal.set({
                                                                                 'range': t_parse_tree_to_full_location.ID_Value_Pair(id_value_pair),
                                                                                 'parent': optional_value_range_stack,
@@ -428,12 +424,10 @@ export const Value: Value = ($, $p) => {
                                                                     item_value.value,
                                                                     {
                                                                         'definition': def,
-                                                                        'property path': p_.literal.nested_list([
+                                                                        'property path': p_.literal.chain(
                                                                             $p['property path'],
-                                                                            p_.literal.list([
-                                                                                ['optional', null]
-                                                                            ])
-                                                                        ]),
+                                                                            ['optional', null]
+                                                                        ),
                                                                         'parent range stack': optional_value_range_stack,
                                                                     }
                                                                 )
@@ -451,12 +445,10 @@ export const Value: Value = ($, $p) => {
                                                             $.value,
                                                             {
                                                                 'definition': def,
-                                                                'property path': p_.literal.nested_list([
+                                                                'property path': p_.literal.chain(
                                                                     $p['property path'],
-                                                                    p_.literal.list([
-                                                                        ['optional', null]
-                                                                    ])
-                                                                ]),
+                                                                    ['optional', null]
+                                                                ),
                                                                 'parent range stack': optional_value_range_stack,
                                                             }
                                                         )
@@ -650,12 +642,10 @@ export const Value: Value = ($, $p) => {
                                                                             value,
                                                                             {
                                                                                 'definition': $.value,
-                                                                                'property path': p_.literal.nested_list([
+                                                                                'property path': p_.literal.chain(
                                                                                     $p['property path'],
-                                                                                    p_.literal.list([
-                                                                                        ['state', option_name]
-                                                                                    ])
-                                                                                ]),
+                                                                                    ['state', option_name]
+                                                                                ),
                                                                                 'parent range stack': optional_value_range_stack,
                                                                             }
                                                                         )
@@ -706,7 +696,7 @@ export const Value: Value = ($, $p) => {
                                 default: return p_.au($[0])
                             }
                         })
-                    ).__extract_data<d_out.Value['unmarshall result']>(
+                    ).__decide<d_out.Value['unmarshall result']>(
                         ($) => ['success', $],
                         ($) => ['error', ['incorrect', ['wrong type', null]]],
                     ),

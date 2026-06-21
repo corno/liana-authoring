@@ -122,7 +122,7 @@ export const Value: Value = ($) => {
                 switch ($[0]) {
                     case 'dictionary': return p_.ss($, ($) => {
 
-                        return p_.literal.nested_list([
+                        return p_.literal.segmented_list([
                             //duplicate id's
                             p_.from.dictionary(
                                 $.derived.entries
@@ -173,7 +173,7 @@ export const Value: Value = ($) => {
                     })
                     case 'group': return p_.ss($, ($) => {
 
-                        return p_.literal.nested_list([
+                        return p_.literal.segmented_list([
                             p_.from.state($.derived.style).decide(($) => {
                                 switch ($[0]) {
                                     case 'concise': return p_.ss($, ($) => p_.from.list(
