@@ -194,9 +194,8 @@ export const Value: Value = ($, $p) => {
                                                 'intermediate': {
                                                     'id value pair': $,
                                                 },
-                                                'definition found': p_.from.optional(
-                                                    p_.from.dictionary(group_def).get_possible_entry($.id.token.value)
-                                                ).decide(
+                                                'definition found': p_.from.dictionary(group_def).get_possible_entry(
+                                                    $.id.token.value,
                                                     ($): d_out.Verbose_Property_Definition_Found => {
                                                         const prop_def = $
                                                         return ['yes', {
@@ -283,9 +282,8 @@ export const Value: Value = ($, $p) => {
                                                             )
                                                             return p_.from.dictionary(group_def).map(($, id) => ({
                                                                 'definition': $,
-                                                                'result': p_.from.optional(
-                                                                    p_.from.dictionary(instance_lookup).get_possible_entry(id)
-                                                                ).decide(
+                                                                'result': p_.from.dictionary(instance_lookup).get_possible_entry(
+                                                                    id,
                                                                     ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
                                                                         ($): d_out.Property['result'] => p_.from.state($['definition found']).decide(($) => {
                                                                             switch ($[0]) {
@@ -331,9 +329,8 @@ export const Value: Value = ($, $p) => {
                                                             )
                                                             return p_.from.dictionary(group_def).map(($, id) => ({
                                                                 'definition': $,
-                                                                'result': p_.from.optional(
-                                                                    p_.from.dictionary(instance_lookup).get_possible_entry(id)
-                                                                ).decide(
+                                                                'result': p_.from.dictionary(instance_lookup).get_possible_entry(
+                                                                    id,
                                                                     ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
                                                                         ($): d_out.Property['result'] => ['success', $['value']],
                                                                         () => p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
@@ -566,9 +563,8 @@ export const Value: Value = ($, $p) => {
                                                                                             }]]),
                                                                                             () => ['list', {
                                                                                                 'xxx': list,
-                                                                                                'option status': ['set', p_.from.optional(
-                                                                                                    p_.from.dictionary(def.options).get_possible_entry(option_name),
-                                                                                                ).decide(
+                                                                                                'option status': ['set', p_.from.dictionary(def.options).get_possible_entry(
+                                                                                                    option_name,
                                                                                                     ($): d_out.State_Set => {
                                                                                                         const option_def = $
                                                                                                         return {
@@ -635,9 +631,8 @@ export const Value: Value = ($, $p) => {
                                                                 const value = $.value
                                                                 const option_name = $.option.token.value
                                                                 const option_token = $.option
-                                                                return ['set', p_.from.optional(
-                                                                    p_.from.dictionary(def.options).get_possible_entry(option_name),
-                                                                ).decide(
+                                                                return ['set', p_.from.dictionary(def.options).get_possible_entry(
+                                                                    option_name,
                                                                     ($): d_out.State_Set => ({
                                                                         'intermediate': {
                                                                             'option token': option_token,
