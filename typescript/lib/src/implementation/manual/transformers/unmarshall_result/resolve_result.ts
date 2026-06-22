@@ -199,11 +199,13 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                             const def2 = p_.from.state(def.location).decide(($): d_in_definition.Resolver_Modules_.D => {
                                                 switch ($[0]) {
                                                     case 'external': return p_.ss($, ($) => p_implement_me("external component"))
-                                                    case 'internal': return p_.ss($, ($) => $p.resolver.modules.__get_entry_deprecated(
-                                                        $['l id'],
-                                                        {
-                                                            'no_such_entry': () => p_unreachable_code_path("for every signature, there must be a resolver implemented")
-                                                        }
+                                                    case 'internal': return p_.ss($, ($) => p_.from.optional(
+                                                        p_.from.dictionary($p.resolver.modules).get_possible_entry(
+                                                            $['l id']
+                                                        )
+                                                    ).decide(
+                                                        ($) => $,
+                                                        () => p_unreachable_code_path("the resolver should have been provided with a module parameter for this definition")
                                                     ))
                                                     default: return p_.au($[0])
                                                 }
@@ -249,11 +251,11 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                     ($): Module_Parameter_Resolve_Status => p_.from.state($).decide(($) => {
                                                                         switch ($[0]) {
                                                                             case 'optional': return p_.ss($, ($) => Resolver_Optional_Value_Initialization($))
-                                                                            case 'parameter': return p_.ss($, ($) => $p['module parameters'].__get_entry_deprecated(
+                                                                            case 'parameter': return p_.ss($, ($) => p_.from.dictionary($p['module parameters']).get_possible_entry(
                                                                                 $['l id'],
-                                                                                {
-                                                                                    'no_such_entry': () => p_unreachable_code_path("for every parameter, there must be a module parameter provided")
-                                                                                }
+                                                                            ).__decide(
+                                                                                ($) => $,
+                                                                            () => p_unreachable_code_path("for every parameter, there must be a module parameter provided")
                                                                             ))
                                                                             case 'required': return p_.ss($, ($) => Resolver_Guaranteed_Value_Selection($))
                                                                             default: return p_.au($[0])
@@ -543,11 +545,11 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                         $.value,
                                                         $l,
                                                         {
-                                                            'definition': def.options.__get_entry_deprecated(
+                                                            'definition': p_.from.dictionary(def.options).get_possible_entry(
                                                                 $.option,
-                                                                {
-                                                                    'no_such_entry': () => p_unreachable_code_path("the definition is resolved")
-                                                                }
+                                                            ).__decide(
+                                                                ($) => $,
+                                                                () => p_unreachable_code_path("the definition is resolved")
                                                             ).resolver,
                                                             'resolver': $p.resolver,
                                                             'module parameters': $p['module parameters'],

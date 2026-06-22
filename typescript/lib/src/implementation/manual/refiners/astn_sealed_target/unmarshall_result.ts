@@ -161,7 +161,7 @@ export const Value: Value = ($, abort) => {
                             }))
                         })]]
                     })
-                    case 'list': return p_.ss($, ($) => ['list', $.derived.items.__l_map_deprecated(($) => Value($, abort))])
+                    case 'list': return p_.ss($, ($) => ['list', p_.from.list($.derived.items).map(($) => Value($, abort))])
                     case 'nothing': return p_.ss($, ($): d_out.Value => ['nothing', null])
                     case 'simple': return p_.ss($, ($): d_out.Value => ['text', {
                         'value': $.instance.token.value,
