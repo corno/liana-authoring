@@ -532,7 +532,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                 })]
                             })
                             case 'state': return p_.ss($, ($) => {
-                                const def = $
+                                const $v_def = $
                                 return ['state', p_.from.state(unmarshalled_value).decide(($) => {
                                     switch ($[0]) {
                                         case 'state': return p_.ss($, ($) => ({
@@ -543,7 +543,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                         $.value,
                                                         $l,
                                                         {
-                                                            'definition': p_.from.dictionary(def.options).get_possible_entry(
+                                                            'definition': p_.from.dictionary($v_def.options).get_possible_entry(
                                                                 $.option,
                                                                 ($) => $,
                                                                 () => p_unreachable_code_path("the definition is resolved")

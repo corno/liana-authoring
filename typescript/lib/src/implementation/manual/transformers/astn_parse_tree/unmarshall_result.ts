@@ -85,7 +85,7 @@ export const Value: Value = ($, $p) => {
                                     return ['dictionary', p_.from.state(concrete_value).decide(($): d_out.Dictionary => {
                                         switch ($[0]) {
                                             case 'dictionary': return p_.ss($, ($): d_out.Dictionary => {
-                                                const entries = p_.from.list($.entries).map(($): d_out.Entry => {
+                                                const $_entries = p_.from.list($.entries).map(($): d_out.Entry => {
                                                     const entry = $
                                                     return {
                                                         'definition': dict_def,
@@ -119,14 +119,12 @@ export const Value: Value = ($, $p) => {
                                                     'definition': dict_def,
                                                     'intermediate': {
                                                         'instance': $,
-                                                        'entries as list': entries,
+                                                        'entries as list': $_entries,
                                                     },
                                                     'derived': {
-                                                        'entries': p_.from.dictionary(p_.from.list(entries).group(
+                                                        'entries': p_.from.list($_entries).group(
                                                             ($) => $.intermediate['id value pair'].id.token.value,
-
-                                                        )).map(($) => {
-                                                            return {
+                                                            ($) => ({
                                                                 'result': p_.from.list($).on_has_single_item(
                                                                     ($): d_out.Entry_Unmarshall_Result => ['success', $],
                                                                     ($): d_out.Entry_Unmarshall_Result => ['error', ['duplicate', {
@@ -134,8 +132,8 @@ export const Value: Value = ($, $p) => {
                                                                     }]],
                                                                     (): d_out.Entry_Unmarshall_Result => p_unreachable_code_path("we are grouping by id, so there cannot be no entries having this id")
                                                                 )
-                                                            }
-                                                        })
+                                                            })
+                                                        )
                                                     }
                                                 }
                                             })
@@ -144,14 +142,14 @@ export const Value: Value = ($, $p) => {
                                     })]
                                 })
                                 case 'group': return p_.ss($, ($): d_out.Unmarshalled_Value => {
-                                    const group_def = $
+                                    const $_group_def = $
                                     const Concise_Properties = (
                                         $: d_in.Items
                                     ): d_out.Concise_Properties => p_.from.list(
                                         $
                                     ).join(
                                         p_.from.dictionary(
-                                            group_def
+                                            $_group_def
                                         ).convert_to_list(
                                             ($, id) => ({
                                                 'id': id,
@@ -194,7 +192,7 @@ export const Value: Value = ($, $p) => {
                                                 'intermediate': {
                                                     'id value pair': $,
                                                 },
-                                                'definition found': p_.from.dictionary(group_def).get_possible_entry(
+                                                'definition found': p_.from.dictionary($_group_def).get_possible_entry(
                                                     $.id.token.value,
                                                     ($): d_out.Verbose_Property_Definition_Found => {
                                                         const prop_def = $
@@ -268,7 +266,7 @@ export const Value: Value = ($, $p) => {
                                             }
                                         })
                                         return {
-                                            'definition': group_def,
+                                            'definition': $_group_def,
                                             'intermediate': {
                                                 'instance': instance,
                                             },
@@ -277,12 +275,13 @@ export const Value: Value = ($, $p) => {
                                                 'properties': p_.from.state(group_type).decide(($): d_out.Group['derived']['properties'] => {
                                                     switch ($[0]) {
                                                         case 'verbose': return p_.ss($, ($) => {
-                                                            const instance_lookup = p_.from.list($.properties).group(
-                                                                ($) => $.intermediate['id value pair'].id.token.value
+                                                            const $v_instance_lookup = p_.from.list($.properties).group(
+                                                                ($) => $.intermediate['id value pair'].id.token.value,
+                                                                ($) => $
                                                             )
-                                                            return p_.from.dictionary(group_def).map(($, id) => ({
+                                                            return p_.from.dictionary($_group_def).map(($, id) => ({
                                                                 'definition': $,
-                                                                'result': p_.from.dictionary(instance_lookup).get_possible_entry(
+                                                                'result': p_.from.dictionary($v_instance_lookup).get_possible_entry(
                                                                     id,
                                                                     ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
                                                                         ($): d_out.Property['result'] => p_.from.state($['definition found']).decide(($) => {
@@ -314,7 +313,7 @@ export const Value: Value = ($, $p) => {
                                                             }))
                                                         })
                                                         case 'concise': return p_.ss($, ($) => {
-                                                            const instance_lookup = p_.from.list(
+                                                            const $_instance_lookup = p_.from.list(
                                                                 p_.from.list(
                                                                     $.properties
                                                                 ).map_optionally(($) => p_.from.state($['definition found']).decide(($): p_di.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
@@ -325,11 +324,12 @@ export const Value: Value = ($, $p) => {
                                                                     }
                                                                 }))
                                                             ).group(
-                                                                ($) => $.id
+                                                                ($) => $.id,
+                                                                ($) => $
                                                             )
-                                                            return p_.from.dictionary(group_def).map(($, id) => ({
+                                                            return p_.from.dictionary($_group_def).map(($, id) => ({
                                                                 'definition': $,
-                                                                'result': p_.from.dictionary(instance_lookup).get_possible_entry(
+                                                                'result': p_.from.dictionary($_instance_lookup).get_possible_entry(
                                                                     id,
                                                                     ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
                                                                         ($): d_out.Property['result'] => ['success', $['value']],
@@ -536,7 +536,7 @@ export const Value: Value = ($, $p) => {
                                     }]
                                 })
                                 case 'state': return p_.ss($, ($): d_out.Unmarshalled_Value => {
-                                    const def = $
+                                    const $v_def = $
                                     const intermediate: d_out.State['intermediate'] = {
                                         'instance': p_.from.state(concrete_value).decide(($) => {
                                             switch ($[0]) {
@@ -563,7 +563,7 @@ export const Value: Value = ($, $p) => {
                                                                                             }]]),
                                                                                             () => ['list', {
                                                                                                 'xxx': list,
-                                                                                                'option status': ['set', p_.from.dictionary(def.options).get_possible_entry(
+                                                                                                'option status': ['set', p_.from.dictionary($v_def.options).get_possible_entry(
                                                                                                     option_name,
                                                                                                     ($): d_out.State_Set => {
                                                                                                         const option_def = $
@@ -584,7 +584,7 @@ export const Value: Value = ($, $p) => {
                                                                                                         }
                                                                                                     },
                                                                                                     () => abort(['incorrect', ['unknown option', {
-                                                                                                        'definition': def,
+                                                                                                        'definition': $v_def,
                                                                                                         'option token': option_token,
                                                                                                     }]])
                                                                                                 )],
@@ -631,7 +631,7 @@ export const Value: Value = ($, $p) => {
                                                                 const value = $.value
                                                                 const option_name = $.option.token.value
                                                                 const option_token = $.option
-                                                                return ['set', p_.from.dictionary(def.options).get_possible_entry(
+                                                                return ['set', p_.from.dictionary($v_def.options).get_possible_entry(
                                                                     option_name,
                                                                     ($): d_out.State_Set => ({
                                                                         'intermediate': {
@@ -652,7 +652,7 @@ export const Value: Value = ($, $p) => {
                                                                         )
                                                                     }),
                                                                     () => abort(['incorrect', ['unknown option', {
-                                                                        'definition': def,
+                                                                        'definition': $v_def,
                                                                         'option token': $.option
                                                                     }]])
                                                                 )]
@@ -666,7 +666,7 @@ export const Value: Value = ($, $p) => {
                                         })
                                     }
                                     return ['state', {
-                                        'definition': def,
+                                        'definition': $v_def,
                                         'parent range stack': value_range_stack,
                                         'property pathx': $p['property path'],
                                         'intermediate': intermediate,
