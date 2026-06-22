@@ -79,8 +79,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
             ),
             "suggestions": p_change_context(
                 $['suggestions'],
-                ($) => ['list', p_.from.list(
-                    $,
+                ($) => ['list', p_.from.list($,
                 ).map(
                     ($) => ['group', ['verbose', p_.literal.dictionary(
                         {

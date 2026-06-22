@@ -24,52 +24,54 @@ export type Document = p_i.Transformer_With_Parameter<
 
 export const Document: Document = ($, $p) => {
     const doc = $
-    return p_.from.list($p.positions).map(($): d_in.Range_Stack => p_.from.state(
-        t_to_unmarshall_result_value_at_position.Document(
+    return p_.from.list($p.positions).map(
+        ($): d_in.Range_Stack => p_.from.state(t_to_unmarshall_result_value_at_position.Document(
             doc,
             {
                 'position': $,
             }
         ),
-    ).decide(
-        ($): d_in.Range_Stack => {
-            switch ($[0]) {
-                case 'value': return p_.ss($, ($): d_in.Range_Stack => {
-                    return {
-                        'range': t_parse_tree_to_location.Value($.instance),
-                        'parent': $['optional parent range stack']
-                    }
-                })
-                case 'entry': return p_.ss($, ($) => ({
-                    'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
-                    'parent': p_.literal.set($['parent range stack'])
-                }))
-                case 'property': return p_.ss($, ($) => p_.from.state($.style).decide(($) => {
-                    switch ($[0]) {
-                        case 'verbose': return p_.ss($, ($) => ({
-                            'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
-                            'parent': p_.literal.set($['parent range stack'])
-                        }))
-                        case 'unknown concise': return p_.ss($, ($) => ({
-                            'range': t_parse_tree_to_location.Value($.item.value),
-                            'parent': p_.literal.set($['parent range stack'])
-                        }))
-
-                        default: return p_.au($[0])
-                    }
-                }))
-                case 'state': return p_.ss($, ($) => ({
-                    'range': p_.from.state($.intermediate.instance).decide(($) => {
-                        switch ($[0]) {
-                            case 'state': return p_.ss($, ($) => t_parse_tree_to_location.State($.xxx))
-                            case 'list': return p_.ss($, ($) => t_parse_tree_to_location.List($.xxx))
-                            default: return p_.au($[0])
+        ).decide(
+            ($): d_in.Range_Stack => {
+                switch ($[0]) {
+                    case 'value': return p_.ss($, ($): d_in.Range_Stack => {
+                        return {
+                            'range': t_parse_tree_to_location.Value($.instance),
+                            'parent': $['optional parent range stack']
                         }
-                    }),
-                    'parent': p_.literal.set($['parent range stack'])
-                }))
-                default: return p_.au($[0])
+                    })
+                    case 'entry': return p_.ss($, ($) => ({
+                        'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                        'parent': p_.literal.set($['parent range stack'])
+                    }))
+                    case 'property': return p_.ss($, ($) => p_.from.state($.style).decide(
+                        ($) => {
+                            switch ($[0]) {
+                                case 'verbose': return p_.ss($, ($) => ({
+                                    'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                                    'parent': p_.literal.set($['parent range stack'])
+                                }))
+                                case 'unknown concise': return p_.ss($, ($) => ({
+                                    'range': t_parse_tree_to_location.Value($.item.value),
+                                    'parent': p_.literal.set($['parent range stack'])
+                                }))
+
+                                default: return p_.au($[0])
+                            }
+                        }))
+                    case 'state': return p_.ss($, ($) => ({
+                        'range': p_.from.state($.intermediate.instance).decide(
+                            ($) => {
+                                switch ($[0]) {
+                                    case 'state': return p_.ss($, ($) => t_parse_tree_to_location.State($.xxx))
+                                    case 'list': return p_.ss($, ($) => t_parse_tree_to_location.List($.xxx))
+                                    default: return p_.au($[0])
+                                }
+                            }),
+                        'parent': p_.literal.set($['parent range stack'])
+                    }))
+                    default: return p_.au($[0])
+                }
             }
-        }
-    ))
+        ))
 }

@@ -10,32 +10,33 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
 
 export const Error: p_i.Transformer_With_Parameter<d_in.Error, d_out.Diagnostics.L, { 'schema path': d_path.Node_Path }> = ($, $p) => {
-	return p_.from.state($.type).decide(($) => {
-		switch ($[0]) {
-			case 'read file': return p_.ss($, ($): d_out.Diagnostics.L => ({
-				'message': "Failed to read schema file",
-				'severity': ['error', null],
-				'related information': p_.literal.not_set(),
-				'range': p_.literal.not_set(),
-				'type': ['schema', null]
-		}))
-			case 'deserialize': return p_.ss($, ($): d_out.Diagnostics.L => ({
-				'message': "failed to deserialize schema: " + t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" }),
-				'severity': ['error', null],
-				'related information': p_.literal.set(p_.literal.list([
-					{
-						'location': {
-							'file path': $p['schema path'],
-							'range': t_deserialize_resolved_to_location.Error($)
-						},
-						'message': t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" })
-					}
-				])),
-				'range': p_.literal.not_set(),
-				'type': ['schema', null]
+	return p_.from.state($.type).decide(
+		($) => {
+			switch ($[0]) {
+				case 'read file': return p_.ss($, ($): d_out.Diagnostics.L => ({
+					'message': "Failed to read schema file",
+					'severity': ['error', null],
+					'related information': p_.literal.not_set(),
+					'range': p_.literal.not_set(),
+					'type': ['schema', null]
+				}))
+				case 'deserialize': return p_.ss($, ($): d_out.Diagnostics.L => ({
+					'message': "failed to deserialize schema: " + t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" }),
+					'severity': ['error', null],
+					'related information': p_.literal.set(p_.literal.list([
+						{
+							'location': {
+								'file path': $p['schema path'],
+								'range': t_deserialize_resolved_to_location.Error($)
+							},
+							'message': t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" })
+						}
+					])),
+					'range': p_.literal.not_set(),
+					'type': ['schema', null]
 
-			}))
-			default: return p_.au($[0])
-		}
-	})
+				}))
+				default: return p_.au($[0])
+			}
+		})
 }

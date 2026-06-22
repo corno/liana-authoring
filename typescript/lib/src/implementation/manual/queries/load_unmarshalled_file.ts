@@ -18,35 +18,36 @@ export const $$: interface_.query_functions.load_unmarshalled_file = p_.query_fu
         $d['file path'],
         ($): d.Error => ['read file', $]
     )).query(
-        ($) => p_variables(() => {
-            const instance = $
-            return q_deserialize(
-                null,
-                {
-                    'get schema': q_get_schema(
-                        null,
-                        {
-                            'read file': $q['read file']
-                        },
-                    ),
-                    'get schema path': q_get_schema_path(
-                        null,
-                        {
-                            'stat': $q['stat'],
-                        },
-                    )
-                },
-            )(
-                {
-                    'content': p_text_from_list(
-                        instance,
-                        ($) => $
-                    ),
-                    'file path': $d['file path'],
-                    'tab size': $d['tab size'],
-                },
-                ($): d.Error => ['deserialize', $]
-            )
-        })
+        ($) => p_variables(
+            () => {
+                const instance = $
+                return q_deserialize(
+                    null,
+                    {
+                        'get schema': q_get_schema(
+                            null,
+                            {
+                                'read file': $q['read file']
+                            },
+                        ),
+                        'get schema path': q_get_schema_path(
+                            null,
+                            {
+                                'stat': $q['stat'],
+                            },
+                        )
+                    },
+                )(
+                    {
+                        'content': p_text_from_list(
+                            instance,
+                            ($) => $
+                        ),
+                        'file path': $d['file path'],
+                        'tab size': $d['tab size'],
+                    },
+                    ($): d.Error => ['deserialize', $]
+                )
+            })
     )
 )

@@ -22,52 +22,53 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const $$: interface_.query_functions.seal = p_.query_function(
     ($d, $s, $q) => p_super_query_result(
-            q_get_unmarshalled_file(
-                null,
-                {
-                    'read file': $q['read file'],
-                    'stat': $q['stat'],
-                },
-            )(
-                {
-                    'file path': $d.path, //to determine the schema path
-                    'tab size': $s['tab size'],
-                },
-                ($): d_process_file_data.Error => sh.ph.composed([
-                    sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
-                    sh.ph.literal("FIX location: "),
-                    t_load_file_to_fp.Error(
-                        $,
-                    )
-                ])
-            )
-        ).refine(
-            ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
-                p_temp.from.state($).decide(($) => {
+        q_get_unmarshalled_file(
+            null,
+            {
+                'read file': $q['read file'],
+                'stat': $q['stat'],
+            },
+        )(
+            {
+                'file path': $d.path, //to determine the schema path
+                'tab size': $s['tab size'],
+            },
+            ($): d_process_file_data.Error => sh.ph.composed([
+                sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
+                sh.ph.literal("FIX location: "),
+                t_load_file_to_fp.Error(
+                    $,
+                )
+            ])
+        )
+    ).refine(
+        ($, abort) => r_astn_sealed_target_from_unmarshall_result.Value(
+            p_temp.from.state($).decide(
+                ($) => {
                     switch ($[0]) {
                         case 'unconstrained': return p_temp.ss($, ($) => $.content)
                         case 'constrained': return p_temp.ss($, ($) => $.content.unmarshalled)
                         default: return p_temp.au($[0])
                     }
                 }),
-                ($) => abort(sh.ph.composed([
-                    sh.ph.literal("FIX location: "),
-                    t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
-                        $,
-                    )
-                ]))
-            ),
-        ).transform(
-            ($) => ({
-                'data': p_list_from_text(
-                    t_fp_to_text.Paragraph(
-                        t_astn_sealed_target_to_fp.Document(
-                            $
-                        ),
-                        $s['serialization parameters']
-                    ),
-                    ($) => $,
+            ($) => abort(sh.ph.composed([
+                sh.ph.literal("FIX location: "),
+                t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
+                    $,
                 )
-            })
-        )
+            ]))
+        ),
+    ).transform(
+        ($) => ({
+            'data': p_list_from_text(
+                t_fp_to_text.Paragraph(
+                    t_astn_sealed_target_to_fp.Document(
+                        $
+                    ),
+                    $s['serialization parameters']
+                ),
+                ($) => $,
+            )
+        })
+    )
 )

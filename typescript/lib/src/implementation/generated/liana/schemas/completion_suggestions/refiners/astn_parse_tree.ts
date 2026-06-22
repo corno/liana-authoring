@@ -23,8 +23,7 @@ import * as v_external_location from "../../location/refiners/astn_parse_tree"
 
 import * as v_external_text_edits from "../../text_edits/refiners/astn_parse_tree"
 
-export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, abort) => p_.from.optional(
-    v_unmarshalled_from_parse_tree.Optional(
+export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, abort) => p_.from.optional(v_unmarshalled_from_parse_tree.Optional(
         $,
         ($) => abort(
             $,
@@ -157,8 +156,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($, a
                                 'subdocument context': p_.literal.not_set(),
                             },
                         ),
-                        ($) => p_.from.list(
-                            v_unmarshalled_from_parse_tree.List(
+                        ($) => p_.from.list(v_unmarshalled_from_parse_tree.List(
                                 $,
                                 ($) => abort(
                                     $,

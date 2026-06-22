@@ -153,8 +153,7 @@ export const Context_Path: t_signatures.Context_Path = ($, abort) => p_change_co
     ),
 )
 
-export const Context_Subpath: t_signatures.Context_Subpath = ($, abort) => p_.from.list(
-    v_unmarshalled_from_parse_tree.List(
+export const Context_Subpath: t_signatures.Context_Subpath = ($, abort) => p_.from.list(v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,

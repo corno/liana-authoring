@@ -19,34 +19,36 @@ export type Document = p_i.Transformer<
 >
 
 export const Document: Document = ($) => p_.literal.segmented_list([
-    p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(($) => {
-        return ({
-            'severity': ['error', null],
-            'range': p_.literal.set(['range', $.range]),
-            'related information': p_.literal.not_set(),
-            'message': t_fp_to_text.Phrase(
-                t_unmarshall_errors_to_fp.Error($),
-                {
-                    'indentation': "    ",
-                    'newline': "\n",
-                }
-            ),
-            'type': ['semantic', null],
-        })
-    }),
-    p_.from.list(t_to_unmarshall_result_to_warnings.Document($)).map(($): d_out.Diagnostics.L => {
-        return ({
-            'severity': ['warning', null],
-            'range': p_.literal.set(['range', $.range]),
-            'related information': p_.literal.not_set(),
-            'message': t_fp_to_text.Phrase(
-                t_unmarshall_warnings_to_fp.Warning($),
-                {
-                    'indentation': "    ",
-                    'newline': "\n",
-                }
-            ),
-            'type': ['semantic', null],
-        })
-    }),
+    p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(
+        ($) => {
+            return ({
+                'severity': ['error', null],
+                'range': p_.literal.set(['range', $.range]),
+                'related information': p_.literal.not_set(),
+                'message': t_fp_to_text.Phrase(
+                    t_unmarshall_errors_to_fp.Error($),
+                    {
+                        'indentation': "    ",
+                        'newline': "\n",
+                    }
+                ),
+                'type': ['semantic', null],
+            })
+        }),
+    p_.from.list(t_to_unmarshall_result_to_warnings.Document($)).map(
+        ($): d_out.Diagnostics.L => {
+            return ({
+                'severity': ['warning', null],
+                'range': p_.literal.set(['range', $.range]),
+                'related information': p_.literal.not_set(),
+                'message': t_fp_to_text.Phrase(
+                    t_unmarshall_warnings_to_fp.Warning($),
+                    {
+                        'indentation': "    ",
+                        'newline': "\n",
+                    }
+                ),
+                'type': ['semantic', null],
+            })
+        }),
 ])

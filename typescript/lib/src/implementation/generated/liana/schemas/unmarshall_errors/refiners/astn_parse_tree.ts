@@ -21,8 +21,7 @@ import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual
 
 import * as v_external_location from "../../astn_location/refiners/astn_parse_tree"
 
-export const Errors: t_signatures.Errors = ($, abort) => p_.from.list(
-    v_unmarshalled_from_parse_tree.List(
+export const Errors: t_signatures.Errors = ($, abort) => p_.from.list(v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,
@@ -153,8 +152,7 @@ export const Errors: t_signatures.Errors = ($, abort) => p_.from.list(
                                                                                                         'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
-                                                                                                ($) => p_.from.list(
-                                                                                                    v_unmarshalled_from_parse_tree.List(
+                                                                                                ($) => p_.from.list(v_unmarshalled_from_parse_tree.List(
                                                                                                         $,
                                                                                                         ($) => abort(
                                                                                                             $,
@@ -586,8 +584,7 @@ export const Errors: t_signatures.Errors = ($, abort) => p_.from.list(
                                                                                                         'subdocument context': p_.literal.not_set(),
                                                                                                     },
                                                                                                 ),
-                                                                                                ($) => p_.from.optional(
-                                                                                                    v_unmarshalled_from_parse_tree.Optional(
+                                                                                                ($) => p_.from.optional(v_unmarshalled_from_parse_tree.Optional(
                                                                                                         $,
                                                                                                         ($) => abort(
                                                                                                             $,
@@ -746,8 +743,7 @@ export const Errors: t_signatures.Errors = ($, abort) => p_.from.list(
                                                                                                             'subdocument context': p_.literal.not_set(),
                                                                                                         },
                                                                                                     ),
-                                                                                                    ($) => p_.from.dictionary(
-                                                                                                        $['entries'],
+                                                                                                    ($) => p_.from.dictionary($['entries'],
                                                                                                     ).map(
                                                                                                         ($, id) => v_unmarshalled_from_parse_tree.Nothing(
                                                                                                             $,
@@ -814,8 +810,7 @@ export const Errors: t_signatures.Errors = ($, abort) => p_.from.list(
     ),
 )
 
-export const Warnings: t_signatures.Warnings = ($, abort) => p_.from.list(
-    v_unmarshalled_from_parse_tree.List(
+export const Warnings: t_signatures.Warnings = ($, abort) => p_.from.list(v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,

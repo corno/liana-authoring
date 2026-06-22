@@ -13,8 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/text
 
 import * as v_location from "../../astn_location/transformers/boilerplate_for_migrate"
 
-export const Text_Edits: t_signatures.Text_Edits = ($) => p_.from.list(
-    $,
+export const Text_Edits: t_signatures.Text_Edits = ($) => p_.from.list($,
 ).map(
     ($) => p_decide_state(
         $,

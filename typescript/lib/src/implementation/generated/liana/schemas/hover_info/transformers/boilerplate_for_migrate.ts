@@ -7,8 +7,7 @@ import * as t_signatures from "../../../../../../interface/generated/liana/schem
 
 import * as t_out from "../../../../../../interface/generated/liana/schemas/hover_info/data"
 
-export const Hover_Texts: t_signatures.Hover_Texts = ($) => p_.from.list(
-    $,
+export const Hover_Texts: t_signatures.Hover_Texts = ($) => p_.from.list($,
 ).map(
     ($) => $,
 )

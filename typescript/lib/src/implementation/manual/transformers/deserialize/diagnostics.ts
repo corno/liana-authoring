@@ -12,30 +12,31 @@ import * as t_deserialize_to_fp from "astn-core/dist/implementation/manual/trans
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
 export const Error: p_i.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
-	return p_.from.state($).decide(($) => {
-		switch ($[0]) {
-			case 'schema path': return p_.ss($, ($) => ({
-				'severity': ['error', null],
-				'message': `no schema found`,
-				'range': p_.literal.not_set(),
-				'related information': p_.literal.not_set(),
-				'type': ['deserialize', null]
-			}))
-			case 'schema': return p_.ss($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
-			case 'deserialize parse tree': return p_.ss($, ($) => ({
-				'severity': ['error', null],
-				'message': t_fp_to_text.Phrase(
-					t_deserialize_to_fp.Error($),
-					{
-						'indentation': "    ",
-						'newline': "\n",
-					}
-				),
-				'range': p_.literal.set(t_deserialize_to_location.Error($)),
-				'related information': p_.literal.not_set(),
-				'type': ['deserialize', null]
-			}))
-			default: return p_.au($[0])
-		}
-	})
+	return p_.from.state($).decide(
+		($) => {
+			switch ($[0]) {
+				case 'schema path': return p_.ss($, ($) => ({
+					'severity': ['error', null],
+					'message': `no schema found`,
+					'range': p_.literal.not_set(),
+					'related information': p_.literal.not_set(),
+					'type': ['deserialize', null]
+				}))
+				case 'schema': return p_.ss($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
+				case 'deserialize parse tree': return p_.ss($, ($) => ({
+					'severity': ['error', null],
+					'message': t_fp_to_text.Phrase(
+						t_deserialize_to_fp.Error($),
+						{
+							'indentation': "    ",
+							'newline': "\n",
+						}
+					),
+					'range': p_.literal.set(t_deserialize_to_location.Error($)),
+					'related information': p_.literal.not_set(),
+					'type': ['deserialize', null]
+				}))
+				default: return p_.au($[0])
+			}
+		})
 }

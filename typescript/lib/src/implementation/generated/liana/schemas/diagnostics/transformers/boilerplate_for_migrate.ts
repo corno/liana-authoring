@@ -15,8 +15,7 @@ import * as v_location from "../../astn_location/transformers/boilerplate_for_mi
 
 import * as v_path_unrestricted from "../../path_unrestricted/transformers/boilerplate_for_migrate"
 
-export const Diagnostics: t_signatures.Diagnostics = ($) => p_.from.list(
-    $,
+export const Diagnostics: t_signatures.Diagnostics = ($) => p_.from.list($,
 ).map(
     ($) => Diagnostic(
         $,
@@ -60,8 +59,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
     ),
     'range': p_change_context(
         $['range'],
-        ($) => p_.from.optional(
-            $,
+        ($) => p_.from.optional($,
         ).map(
             ($) => v_location.Possible_Range(
                 $,
@@ -74,11 +72,9 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
     ),
     'related information': p_change_context(
         $['related information'],
-        ($) => p_.from.optional(
-            $,
+        ($) => p_.from.optional($,
         ).map(
-            ($) => p_.from.list(
-                $,
+            ($) => p_.from.list($,
             ).map(
                 ($) => ({
                     'location': p_change_context(

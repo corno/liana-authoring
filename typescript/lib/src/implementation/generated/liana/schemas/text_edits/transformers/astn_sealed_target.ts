@@ -17,8 +17,7 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../astn_location/transformers/astn_sealed_target"
 
-export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', p_.from.list(
-    $,
+export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', p_.from.list($,
 ).map(
     ($) => ['state', p_decide_state(
         $,

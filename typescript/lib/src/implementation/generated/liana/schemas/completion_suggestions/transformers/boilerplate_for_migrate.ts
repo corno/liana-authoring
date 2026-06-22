@@ -15,8 +15,7 @@ import * as v_location from "../../location/transformers/boilerplate_for_migrate
 
 import * as v_text_edits from "../../text_edits/transformers/boilerplate_for_migrate"
 
-export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => p_.from.optional(
-    $,
+export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) => p_.from.optional($,
 ).map(
     ($) => ({
         'type': p_change_context(
@@ -60,8 +59,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
         ),
         'suggestions': p_change_context(
             $['suggestions'],
-            ($) => p_.from.list(
-                $,
+            ($) => p_.from.list($,
             ).map(
                 ($) => ({
                     'label': p_change_context(

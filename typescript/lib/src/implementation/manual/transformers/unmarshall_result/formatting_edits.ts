@@ -63,45 +63,48 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
         case 'value': return p_.ss($, ($): d_out.Optional_Formatting_Edit => {
             return Value($, $p)
         })
-        case 'entry': return p_.ss($, ($) => p_.from.state($.value).decide(($) => {
-            switch ($[0]) {
-                case 'set': return p_.ss($, ($) => Value($, $p))
-                case 'not set': return p_.ss($, ($) => p_.literal.not_set())
-                default: return p_.au($[0])
-            }
-        }))
-        case 'property': return p_.ss($, ($) => p_.from.state($.style).decide(($) => {
-            switch ($[0]) {
-                case 'verbose': return p_.ss($, ($) => p_.from.state($['definition found']).decide(($) => {
-                    switch ($[0]) {
-                        case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
-                            ($) => Value($, $p),
-                            () => p_.literal.not_set()
-                        ))
-                        case 'no': return p_.ss($, ($) => p_.literal.not_set())
-                        default: return p_.au($[0])
-                    }
-                }))
-                case 'unknown concise': return p_.ss($, ($) => {
-                    return p_.literal.not_set()
-                })
-                default: return p_.au($[0])
-            }
-        }))
-        case 'state': return p_.ss($, ($): d_out.Optional_Formatting_Edit => p_.from.state($.derived['option status']).decide(($) => {
-            switch ($[0]) {
-                case 'set': return p_.ss($, ($) => Value($.value, $p))
-                case 'missing data': return p_.ss($, ($) => p_.literal.not_set())
-                default: return p_.au($[0])
-            }
-        }))
+        case 'entry': return p_.ss($, ($) => p_.from.state($.value).decide(
+            ($) => {
+                switch ($[0]) {
+                    case 'set': return p_.ss($, ($) => Value($, $p))
+                    case 'not set': return p_.ss($, ($) => p_.literal.not_set())
+                    default: return p_.au($[0])
+                }
+            }))
+        case 'property': return p_.ss($, ($) => p_.from.state($.style).decide(
+            ($) => {
+                switch ($[0]) {
+                    case 'verbose': return p_.ss($, ($) => p_.from.state($['definition found']).decide(
+                        ($) => {
+                            switch ($[0]) {
+                                case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
+                                    ($) => Value($, $p),
+                                    () => p_.literal.not_set()
+                                ))
+                                case 'no': return p_.ss($, ($) => p_.literal.not_set())
+                                default: return p_.au($[0])
+                            }
+                        }))
+                    case 'unknown concise': return p_.ss($, ($) => {
+                        return p_.literal.not_set()
+                    })
+                    default: return p_.au($[0])
+                }
+            }))
+        case 'state': return p_.ss($, ($): d_out.Optional_Formatting_Edit => p_.from.state($.derived['option status']).decide(
+            ($) => {
+                switch ($[0]) {
+                    case 'set': return p_.ss($, ($) => Value($.value, $p))
+                    case 'missing data': return p_.ss($, ($) => p_.literal.not_set())
+                    default: return p_.au($[0])
+                }
+            }))
         default: return p_.au($[0])
     }
 }
 
 export const Document: Document = ($, $p) => {
-    return p_.from.state(
-        t_to_unmarshall_result_value_at_position.Document($, $p),
+    return p_.from.state(t_to_unmarshall_result_value_at_position.Document($, $p),
     ).decide(
         ($) => Found($, $p)
     )

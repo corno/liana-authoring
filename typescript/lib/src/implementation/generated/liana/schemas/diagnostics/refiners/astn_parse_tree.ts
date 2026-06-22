@@ -23,8 +23,7 @@ import * as v_external_location from "../../astn_location/refiners/astn_parse_tr
 
 import * as v_external_path_unrestricted from "../../path_unrestricted/refiners/astn_parse_tree"
 
-export const Diagnostics: t_signatures.Diagnostics = ($, abort) => p_.from.list(
-    v_unmarshalled_from_parse_tree.List(
+export const Diagnostics: t_signatures.Diagnostics = ($, abort) => p_.from.list(v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,
@@ -164,8 +163,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($, abort) => p_change_contex
                             'subdocument context': p_.literal.not_set(),
                         },
                     ),
-                    ($) => p_.from.optional(
-                        v_unmarshalled_from_parse_tree.Optional(
+                    ($) => p_.from.optional(v_unmarshalled_from_parse_tree.Optional(
                             $,
                             ($) => abort(
                                 $,
@@ -209,16 +207,14 @@ export const Diagnostic: t_signatures.Diagnostic = ($, abort) => p_change_contex
                             'subdocument context': p_.literal.not_set(),
                         },
                     ),
-                    ($) => p_.from.optional(
-                        v_unmarshalled_from_parse_tree.Optional(
+                    ($) => p_.from.optional(v_unmarshalled_from_parse_tree.Optional(
                             $,
                             ($) => abort(
                                 $,
                             ),
                         )['optional'],
                     ).map(
-                        ($) => p_.from.list(
-                            v_unmarshalled_from_parse_tree.List(
+                        ($) => p_.from.list(v_unmarshalled_from_parse_tree.List(
                                 $,
                                 ($) => abort(
                                     $,

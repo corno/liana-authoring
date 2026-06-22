@@ -39,8 +39,7 @@ export const Context_Path: t_signatures.Context_Path = ($) => ({
     ),
 })
 
-export const Context_Subpath: t_signatures.Context_Subpath = ($) => p_.from.list(
-    $,
+export const Context_Subpath: t_signatures.Context_Subpath = ($) => p_.from.list($,
 ).map(
     ($) => $,
 )

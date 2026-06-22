@@ -11,8 +11,7 @@ import * as t_out from "astn-core/dist/interface/generated/liana/schemas/sealed_
 
 import * as v_primitives_to_text from "liana-core/dist/implementation/manual/transformers/primitives/text"
 
-export const Hover_Texts: t_signatures.Hover_Texts = ($) => ['list', p_.from.list(
-    $,
+export const Hover_Texts: t_signatures.Hover_Texts = ($) => ['list', p_.from.list($,
 ).map(
     ($) => ['text', {
         'delimiter': ['quote', null],

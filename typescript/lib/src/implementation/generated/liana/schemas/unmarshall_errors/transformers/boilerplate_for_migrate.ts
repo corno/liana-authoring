@@ -13,8 +13,7 @@ import * as t_out from "../../../../../../interface/generated/liana/schemas/unma
 
 import * as v_location from "../../astn_location/transformers/boilerplate_for_migrate"
 
-export const Errors: t_signatures.Errors = ($) => p_.from.list(
-    $,
+export const Errors: t_signatures.Errors = ($) => p_.from.list($,
 ).map(
     ($) => ({
         'range': p_change_context(
@@ -42,8 +41,7 @@ export const Errors: t_signatures.Errors = ($) => p_.from.list(
                                                     ($) => ['invalid type', {
                                                         'expected': p_change_context(
                                                             $['expected'],
-                                                            ($) => p_.from.list(
-                                                                $,
+                                                            ($) => p_.from.list($,
                                                             ).map(
                                                                 ($) => p_decide_state(
                                                                     $,
@@ -176,8 +174,7 @@ export const Errors: t_signatures.Errors = ($) => p_.from.list(
                                                     ($) => ['superfluous property', {
                                                         'name': p_change_context(
                                                             $['name'],
-                                                            ($) => p_.from.optional(
-                                                                $,
+                                                            ($) => p_.from.optional($,
                                                             ).map(
                                                                 ($) => $,
                                                             ),
@@ -229,8 +226,7 @@ export const Errors: t_signatures.Errors = ($) => p_.from.list(
                                                         ),
                                                         'expected': p_change_context(
                                                             $['expected'],
-                                                            ($) => p_.from.dictionary(
-                                                                $,
+                                                            ($) => p_.from.dictionary($,
                                                             ).map(
                                                                 ($, id) => null,
                                                             ),
@@ -261,8 +257,7 @@ export const Errors: t_signatures.Errors = ($) => p_.from.list(
     }),
 )
 
-export const Warnings: t_signatures.Warnings = ($) => p_.from.list(
-    $,
+export const Warnings: t_signatures.Warnings = ($) => p_.from.list($,
 ).map(
     ($) => ({
         'range': p_change_context(

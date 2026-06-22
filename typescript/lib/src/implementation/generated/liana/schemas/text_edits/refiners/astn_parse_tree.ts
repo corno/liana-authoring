@@ -21,8 +21,7 @@ import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual
 
 import * as v_external_location from "../../astn_location/refiners/astn_parse_tree"
 
-export const Text_Edits: t_signatures.Text_Edits = ($, abort) => p_.from.list(
-    v_unmarshalled_from_parse_tree.List(
+export const Text_Edits: t_signatures.Text_Edits = ($, abort) => p_.from.list(v_unmarshalled_from_parse_tree.List(
         $,
         ($) => abort(
             $,

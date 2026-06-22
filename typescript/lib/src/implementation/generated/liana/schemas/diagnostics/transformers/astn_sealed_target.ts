@@ -19,8 +19,7 @@ import * as v_external_location from "../../astn_location/transformers/astn_seal
 
 import * as v_external_path_unrestricted from "../../path_unrestricted/transformers/astn_sealed_target"
 
-export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', p_.from.list(
-    $,
+export const Diagnostics: t_signatures.Diagnostics = ($) => ['list', p_.from.list($,
 ).map(
     ($) => Diagnostic(
         $,
@@ -96,8 +95,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
             $['related information'],
             ($) => ['optional', p_decide_optional(
                 $,
-                ($): t_out.Value.optional => ['set', ['list', p_.from.list(
-                    $,
+                ($): t_out.Value.optional => ['set', ['list', p_.from.list($,
                 ).map(
                     ($) => ['group', ['verbose', p_.literal.dictionary(
                         {

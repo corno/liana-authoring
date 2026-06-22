@@ -17,8 +17,7 @@ import * as v_primitives_to_text from "liana-core/dist/implementation/manual/tra
 
 import * as v_external_location from "../../astn_location/transformers/astn_sealed_target"
 
-export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list(
-    $,
+export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
 ).map(
     ($) => ['group', ['verbose', p_.literal.dictionary(
         {
@@ -52,8 +51,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list(
                                                                     {
                                                                         "expected": p_change_context(
                                                                             $['expected'],
-                                                                            ($) => ['list', p_.from.list(
-                                                                                $,
+                                                                            ($) => ['list', p_.from.list($,
                                                                             ).map(
                                                                                 ($) => ['state', p_decide_state(
                                                                                     $,
@@ -332,8 +330,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list(
                                                                         ),
                                                                         "expected": p_change_context(
                                                                             $['expected'],
-                                                                            ($) => ['dictionary', p_.from.dictionary(
-                                                                                $,
+                                                                            ($) => ['dictionary', p_.from.dictionary($,
                                                                             ).map(
                                                                                 ($, id) => ['nothing', null],
                                                                             )],
@@ -371,8 +368,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list(
     )]],
 )]
 
-export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list(
-    $,
+export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list($,
 ).map(
     ($) => ['group', ['verbose', p_.literal.dictionary(
         {

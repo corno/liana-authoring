@@ -50,8 +50,7 @@ export const Context_Path: t_signatures.Context_Path = ($) => ['group', ['verbos
     },
 )]]
 
-export const Context_Subpath: t_signatures.Context_Subpath = ($) => ['list', p_.from.list(
-    $,
+export const Context_Subpath: t_signatures.Context_Subpath = ($) => ['list', p_.from.list($,
 ).map(
     ($) => ['text', {
         'delimiter': ['quote', null],
