@@ -52,15 +52,15 @@ export const $$: interface_.query_functions.seal = p_.query_function(
                     }
                 }),
             ($) => abort(
-sh.ph.composed([
-                sh.ph.literal("FIX location: "),
-                t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
-                    $,
-                )
-            ]))
+                sh.ph.composed([
+                    sh.ph.literal("FIX location: "),
+                    t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
+                        $,
+                    )
+                ]))
         ),
     ).transform(
-        ($) => ({
+        ($): d_process_file_data.Result => ({
             'data': p_list_from_text(
                 t_fp_to_text.Paragraph(
                     t_astn_sealed_target_to_fp.Document(
