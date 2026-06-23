@@ -8,7 +8,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 //dependencies
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
+import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 
 
 export namespace interface_ {

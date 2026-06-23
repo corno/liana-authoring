@@ -11,7 +11,7 @@ import * as t_to_unmarshall_result_value_at_position from "./found"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
+import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 
 export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,

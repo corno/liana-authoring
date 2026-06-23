@@ -18,7 +18,7 @@ import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/tr
 import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manual/transformers/sealed_target/fountain_pen"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
+import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 
 export const $$: interface_.query_functions.seal = p_.query_function(
     ($d, $s, $q) => p_super_query_result(
