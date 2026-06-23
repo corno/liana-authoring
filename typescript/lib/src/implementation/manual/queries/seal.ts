@@ -51,7 +51,8 @@ export const $$: interface_.query_functions.seal = p_.query_function(
                         default: return p_temp.au($[0])
                     }
                 }),
-            ($) => abort(sh.ph.composed([
+            ($) => abort(
+sh.ph.composed([
                 sh.ph.literal("FIX location: "),
                 t_auth_targ_from_unmarshall_result_to_fountain_pen.Error(
                     $,
