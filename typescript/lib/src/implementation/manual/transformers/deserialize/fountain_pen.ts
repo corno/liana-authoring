@@ -12,7 +12,9 @@ import * as t_get_schema_to_fp from "../get_schema/fountain_pen"
 import * as t_get_schema_path_to_fp from "../get_schema_path/fountain_pen"
 
 export namespace signatures {
-    export type Error = p_i.Transformer<d_in.Error, d_out.Phrase>
+    export type Error = p_i.Transformer<
+d_in.Error, d_out.Phrase
+>
 }
 
 export const Error: signatures.Error = ($) => p_.from.state($).decide(

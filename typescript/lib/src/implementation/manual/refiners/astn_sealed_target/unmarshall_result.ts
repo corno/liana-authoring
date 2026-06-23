@@ -16,7 +16,9 @@ import p_variables from 'pareto-core/dist/implementation/refiner/specials/variab
 // export type Document = p_i.Refiner<d_out.Document, d_function.Error, d_in.Document>
 export type Value = p_i.Refiner<d_out.Value, d_function.Error, d_in.Value>
 
-export const Found: p_ti.Transformer<d_in_astn_parse_tree.Value, d_function.Found> = ($) => {
+export const Found: p_ti.Transformer<
+d_in_astn_parse_tree.Value, d_function.Found
+> = ($) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {

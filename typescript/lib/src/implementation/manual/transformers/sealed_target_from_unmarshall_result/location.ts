@@ -11,6 +11,8 @@ import * as d_out from "astn-core/dist/interface/generated/liana/schemas/locatio
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
-export const Error: p_i.Transformer<d_in.Error, d_out.Range> = (
+export const Error: p_i.Transformer<
+d_in.Error, d_out.Range
+> = (
     $,
 ) => $.range

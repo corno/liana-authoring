@@ -11,7 +11,9 @@ import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/ma
 import * as t_stat_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/stat_possible_node/fountain_pen"
 
 export namespace signatures {
-    export type Error = p_i.Transformer<d_in.Error, d_out.Phrase>
+    export type Error = p_i.Transformer<
+d_in.Error, d_out.Phrase
+>
 }
 
 //shorthands

@@ -11,7 +11,9 @@ import * as t_deserialize_to_location from "astn-core/dist/implementation/manual
 import * as t_deserialize_to_fp from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/fountain_pen"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
-export const Error: p_i.Transformer<d_in.Error, d_out.Diagnostics.L> = ($) => {
+export const Error: p_i.Transformer<
+d_in.Error, d_out.Diagnostics.L
+> = ($) => {
 	return p_.from.state($).decide(
 		($) => {
 			switch ($[0]) {
