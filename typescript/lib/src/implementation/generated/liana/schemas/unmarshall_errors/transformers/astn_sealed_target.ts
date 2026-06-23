@@ -332,7 +332,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                             $['expected'],
                                                                             ($) => ['dictionary', p_.from.dictionary($,
                                                                             ).map(
-                                                                                ($, id) => ['nothing', null],
+                                                                                ($, id): t_out.Value => ['nothing', null],
                                                                             )],
                                                                         ),
                                                                     },

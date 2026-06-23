@@ -112,7 +112,7 @@ export const Value: Value = ($, abort) => {
 
                                 const grouped = $.derived.entries
                                 return ['dictionary', p_.from.dictionary(grouped).map(
-                                    ($, id) => p_.from.state($.result).decide(
+                                    ($, id): d_out.Value => p_.from.state($.result).decide(
                                         ($) => {
                                             switch ($[0]) {
                                                 case 'success': return p_.ss($, ($) => {
