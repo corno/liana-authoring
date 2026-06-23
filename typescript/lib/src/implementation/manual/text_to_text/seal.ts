@@ -5,7 +5,9 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_function from "../../../interface/data/seal"
 
-type Signature = p_ri.Refiner_With_Parameter<d_out.Text, d_function.Error, d_in.Text, d_function.Parameters>
+type Signature = p_ri.Refiner_With_Parameter<
+d_out.Text, d_function.Error, d_in.Text, d_function.Parameters
+>
 
 //dependencies
 import * as r_sealed_target_from_loc from "../refiners/astn_sealed_target/list_of_characters"

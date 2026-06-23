@@ -13,11 +13,18 @@ import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/ma
 import p_variables from 'pareto-core/dist/implementation/refiner/specials/variables'
 
 //signatures
-// export type Document = p_i.Refiner<d_out.Document, d_function.Error, d_in.Document>
-export type Value = p_i.Refiner<d_out.Value, d_function.Error, d_in.Value>
+// export type Document = p_i.Refiner<
+// d_out.Document, d_function.Error, d_in.Document
+// >
+export type Value = p_i.Refiner<
+    d_out.Value,
+    d_function.Error,
+    d_in.Value
+>
 
 export const Found: p_ti.Transformer<
-d_in_astn_parse_tree.Value, d_function.Found
+    d_in_astn_parse_tree.Value,
+    d_function.Found
 > = ($) => {
     return p_.from.state($.type).decide(
         ($) => {

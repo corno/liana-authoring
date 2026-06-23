@@ -5,7 +5,9 @@ import * as d_function_deserialize_parse_tree from "astn-core/dist/interface/gen
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 
-type Signature = p_i.Refiner_With_Parameter<d_out.Text, d_function_deserialize_parse_tree.Error, d_in.Text, d_function.Parameters>
+type Signature = p_i.Refiner_With_Parameter<
+d_out.Text, d_function_deserialize_parse_tree.Error, d_in.Text, d_function.Parameters
+>
 
 //dependencies
 import * as t_ast_2_json from "astn/dist/implementation/manual/transformers/parse_tree/json_target"

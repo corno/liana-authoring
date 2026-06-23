@@ -11,8 +11,12 @@ import * as r_unmarshall_result_from_parse_tree from "../../transformers/astn_pa
 
 
 //signatures
-export type Document = p_i.Refiner_With_Parameter<d_out.Document, d_function.Error, d_in.Document, d_function.Parameters>
-export type Value = p_i.Refiner_With_Parameter<d_out.Value, d_function.Error, d_in.Value, d_function.Parameters>
+export type Document = p_i.Refiner_With_Parameter<
+d_out.Document, d_function.Error, d_in.Document, d_function.Parameters
+>
+export type Value = p_i.Refiner_With_Parameter<
+d_out.Value, d_function.Error, d_in.Value, d_function.Parameters
+>
 
 // export const Document: Document = ($, abort, $p) => r_from_unmarshall_result.Document(
 //     r_unmarshall_result_from_parse_tree.Document($, $p),
