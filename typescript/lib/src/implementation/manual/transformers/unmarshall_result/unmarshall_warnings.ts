@@ -35,8 +35,7 @@ export const Value: Value = ($) => {
                 case 'success': return p_.ss($, ($) => p_.from.state($).decide(
                     ($): d_out.Warnings => {
                         switch ($[0]) {
-                            case 'dictionary': return p_.ss($, ($) => p_.from.list($.intermediate['entries as list'],
-                            ).flatten(
+                            case 'dictionary': return p_.ss($, ($) => p_.from.list($.intermediate['entries as list']).flatten(
                                 ($) => $.intermediate['id value pair'].id.token.type[0] !== 'apostrophed'
                                     ? p_.literal.list([
                                         {
@@ -63,8 +62,7 @@ export const Value: Value = ($) => {
                                 : p_.from.state($.derived.style).decide(
                                     ($) => {
                                         switch ($[0]) {
-                                            case 'concise': return p_.ss($, ($) => p_.from.list($.properties
-                                            ).flatten(
+                                            case 'concise': return p_.ss($, ($) => p_.from.list($.properties).flatten(
                                                 ($) => {
                                                     return p_.from.state($['definition found']).decide(
                                                         ($) => {
@@ -76,8 +74,7 @@ export const Value: Value = ($) => {
                                                         })
                                                 }
                                             ))
-                                            case 'verbose': return p_.ss($, ($) => p_.from.list($.properties,
-                                            ).flatten<d_out.Warnings.L>(
+                                            case 'verbose': return p_.ss($, ($) => p_.from.list($.properties).flatten<d_out.Warnings.L>(
                                                 ($) => $.intermediate['id value pair'].id.token.type[0] !== 'backticked'
                                                     ? p_.literal.list([
                                                         {
@@ -117,8 +114,7 @@ export const Value: Value = ($) => {
                                 }])
                                 : p_.literal.list([])
                             )
-                            case 'list': return p_.ss($, ($) => p_.from.list($.derived.items
-                            ).flatten(
+                            case 'list': return p_.ss($, ($) => p_.from.list($.derived.items    ).flatten(
                                 ($) => Value($)
                             ))
                             case 'nothing': return p_.ss($, ($) => p_.literal.list([]))

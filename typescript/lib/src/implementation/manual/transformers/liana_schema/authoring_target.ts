@@ -105,7 +105,7 @@ export const Value_data: p_i.Transformer_With_Parameter<
                 }]
             }])
             case 'group': return p_.ss($, ($): d_out.Value.data => {
-                const xx = $
+                const $v_xx = $
                 return ['concrete', {
                     'type': ['group', p_.from.state($p.style).decide(
                         ($): d_out.Value.data.concrete.type_.group => {
@@ -114,8 +114,7 @@ export const Value_data: p_i.Transformer_With_Parameter<
                                     '<': {
                                         'comments': p_.literal.list([])
                                     },
-                                    'properties': p_.from.dictionary(xx
-                                    ).convert_to_list(
+                                    'properties': p_.from.dictionary($v_xx).convert_to_list(
                                         ($, id): d_out.Items.L => Value(
                                             $.value,
                                             $p
@@ -129,8 +128,7 @@ export const Value_data: p_i.Transformer_With_Parameter<
                                     '(': {
                                         'comments': p_.literal.list([])
                                     },
-                                    'properties': p_.from.dictionary(xx
-                                    ).convert_to_list(
+                                    'properties': p_.from.dictionary($v_xx).convert_to_list(
                                         ($, id): d_out.ID_Value_Pairs.L => ({
                                             'id': id,
                                             'value': p_.literal.set(Value(

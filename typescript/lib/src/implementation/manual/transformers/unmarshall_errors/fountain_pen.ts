@@ -100,8 +100,7 @@ export const Error: p_i.Transformer<
                             sh.ph.literal($.found),
                             sh.ph.literal("', expected one of "),
                             sh.ph.composed(
-                                p_.from.dictionary($.expected,
-                                ).convert_to_list(
+                                p_.from.dictionary($.expected,).convert_to_list(
                                     ($, id) => sh.ph.composed([
                                         sh.ph.literal("'"),
                                         sh.ph.literal(id),

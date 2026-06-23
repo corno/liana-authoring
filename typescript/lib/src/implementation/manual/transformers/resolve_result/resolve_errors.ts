@@ -34,8 +34,7 @@ export const Value: Value = ($) => {
                 case 'success': return p_.ss($, ($) => p_.from.state($).decide(
                     ($): d_out.Errors => {
                         switch ($[0]) {
-                            case 'dictionary': return p_.ss($, ($) => p_.from.dictionary($.entries
-                            ).flatten_to_list(
+                            case 'dictionary': return p_.ss($, ($) => p_.from.dictionary($.entries).flatten_to_list(
                                 ($) => p_.from.state($['unmarshall result']).decide(
                                     ($) => {
                                         switch ($[0]) {
@@ -52,8 +51,7 @@ export const Value: Value = ($) => {
                                         }
                                     })
                             ))
-                            case 'group': return p_.ss($, ($) => p_.from.dictionary($.properties
-                            ).flatten_to_list(
+                            case 'group': return p_.ss($, ($) => p_.from.dictionary($.properties).flatten_to_list(
                                 ($) => p_.from.state($['unmarshall result']).decide(
                                     ($) => {
                                         switch ($[0]) {
@@ -64,8 +62,7 @@ export const Value: Value = ($) => {
                                     })
                             ))
                             case 'simple': return p_.ss($, ($) => p_.literal.list([]))
-                            case 'list': return p_.ss($, ($) => p_.from.list($.items
-                            ).flatten(
+                            case 'list': return p_.ss($, ($) => p_.from.list($.items).flatten(
                                 ($) => Value($)
                             ))
                             case 'nothing': return p_.ss($, ($) => p_.literal.list([]))

@@ -99,8 +99,7 @@ const d_schema_Value = (
                                                     '(': {
                                                         'comments': p_.literal.list([])
                                                     },
-                                                    'properties': p_.from.dictionary(group
-                                                    ).convert_to_list(
+                                                    'properties': p_.from.dictionary(group).convert_to_list(
                                                         ($, id) => ({
                                                             'id': id,
                                                             'value': p_.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
@@ -122,8 +121,7 @@ const d_schema_Value = (
                                                     '<': {
                                                         'comments': p_.literal.list([])
                                                     },
-                                                    'properties': p_.from.dictionary(group
-                                                    ).convert_to_list(
+                                                    'properties': p_.from.dictionary(group).convert_to_list(
                                                         ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
                                                     ),
                                                     '>': {
@@ -176,9 +174,9 @@ export const Found: Found = ($, $p) => {
                         case 'missing': return p_.ss($, ($) => p_.literal.set({
                             'type': ['missing value', null],
                             'suggestions': p_.from.list(d_schema_Value(
-                                    definition,
-                                    $p,
-                                ),
+                                definition,
+                                $p,
+                            ),
                             ).map(
                                 ($): d_out.Completion_Suggestions.O.suggestions.L => ({
                                     'label': "value" + $.label,
@@ -214,8 +212,7 @@ export const Found: Found = ($, $p) => {
                                         const missing_data_marker = $['#']
                                         return p_.literal.set({
                                             'type': ['missing option', null],
-                                            'suggestions': p_.from.dictionary(definition.options
-                                            ).flatten_to_list(
+                                            'suggestions': p_.from.dictionary(definition.options).flatten_to_list(
                                                 ($, id) => {
                                                     const desc = $.description
                                                     return p_.from.list(d_schema_Value(

@@ -45,7 +45,8 @@ const Property_Path = ($: d_in.Property_Path): string => t_fp_to_text.Phrase(
 )
 
 export const Document: Document = ($, $p) => {
-    return p_.from.state(t_to_unmarshall_result_value_at_position.Document($, $p),
+    return p_.from.state(
+        t_to_unmarshall_result_value_at_position.Document($, $p)
     ).decide(
         ($) => {
             switch ($[0]) {

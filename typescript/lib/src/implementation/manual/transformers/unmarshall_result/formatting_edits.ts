@@ -104,7 +104,8 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
 }
 
 export const Document: Document = ($, $p) => {
-    return p_.from.state(t_to_unmarshall_result_value_at_position.Document($, $p),
+    return p_.from.state(
+        t_to_unmarshall_result_value_at_position.Document($, $p),
     ).decide(
         ($) => Found($, $p)
     )

@@ -151,10 +151,8 @@ export const Value: Value = ($, $p) => {
                                             const $_group_def = $
                                             const Concise_Properties = (
                                                 $: d_in.Items
-                                            ): d_out.Concise_Properties => p_.from.list($
-                                            ).join(
-                                                p_.from.dictionary($_group_def
-                                                ).convert_to_list(
+                                            ): d_out.Concise_Properties => p_.from.list($).join(
+                                                p_.from.dictionary($_group_def).convert_to_list(
                                                     ($, id) => ({
                                                         'id': id,
                                                         'definition': $
@@ -325,8 +323,8 @@ export const Value: Value = ($, $p) => {
                                                                                 }))
                                                                         })
                                                                         case 'concise': return p_.ss($, ($) => {
-                                                                            const $_instance_lookup = p_.from.list(p_.from.list($.properties
-                                                                                ).map_optionally(
+                                                                            const $_instance_lookup = p_.from.list(
+                                                                                p_.from.list($.properties).map_optionally(
                                                                                     ($) => p_.from.state($['definition found']).decide(
                                                                                         ($): p_di.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
                                                                                             switch ($[0]) {

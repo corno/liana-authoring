@@ -132,8 +132,7 @@ export const Value: Value = ($) => {
 
                                 return p_.literal.segmented_list([
                                     //duplicate id's
-                                    p_.from.dictionary($.derived.entries
-                                    ).flatten_to_list(
+                                    p_.from.dictionary($.derived.entries     ).flatten_to_list(
                                         ($, id): d_out.Errors => {
                                             return p_.from.state($.result).decide(
                                                 ($): d_out.Errors => {
@@ -158,8 +157,7 @@ export const Value: Value = ($) => {
                                         }
                                     ),
                                     //diagnostics for each entry
-                                    p_.from.list($.intermediate['entries as list'],
-                                    ).flatten(
+                                    p_.from.list($.intermediate['entries as list'],    ).flatten(
                                         ($) => {
                                             const intermediate = $.intermediate
                                             return p_.from.state($.value).decide(
@@ -187,8 +185,7 @@ export const Value: Value = ($) => {
                                     p_.from.state($.derived.style).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'concise': return p_.ss($, ($) => p_.from.list($.properties
-                                                ).flatten(
+                                                case 'concise': return p_.ss($, ($) => p_.from.list($.properties    ).flatten(
                                                     ($) => {
                                                         const item = $.item
                                                         return p_.from.state($['definition found']).decide(
@@ -208,8 +205,7 @@ export const Value: Value = ($) => {
                                                             })
                                                     }
                                                 ))
-                                                case 'verbose': return p_.ss($, ($) => p_.from.list($.properties,
-                                                ).flatten<d_out.Errors.L>(
+                                                case 'verbose': return p_.ss($, ($) => p_.from.list($.properties,        ).flatten<d_out.Errors.L>(
                                                     ($) => {
                                                         const id_value_pair = $.intermediate['id value pair']
 
@@ -238,8 +234,7 @@ export const Value: Value = ($) => {
                                                 default: return p_.au($[0])
                                             }
                                         }),
-                                    p_.from.dictionary($.derived.properties
-                                    ).flatten_to_list(
+                                    p_.from.dictionary($.derived.properties   ).flatten_to_list(
                                         ($, id): d_out.Errors => {
                                             return p_.from.state($.result).decide(
                                                 ($) => {
@@ -274,8 +269,7 @@ export const Value: Value = ($) => {
                                 ])
                             })
                             case 'simple': return p_.ss($, ($) => p_.literal.list([]))
-                            case 'list': return p_.ss($, ($) => p_.from.list($.derived.items
-                            ).flatten(
+                            case 'list': return p_.ss($, ($) => p_.from.list($.derived.items     ).flatten(
                                 ($) => Value($)
                             ))
                             case 'nothing': return p_.ss($, ($) => p_.literal.list([]))

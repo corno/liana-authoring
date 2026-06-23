@@ -256,8 +256,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                     ($) => {
                                                                                         switch ($[0]) {
                                                                                             case 'optional': return p_.ss($, ($) => Resolver_Optional_Value_Initialization($))
-                                                                                            case 'parameter': return p_.ss($, ($) => p_.from.dictionary($p['module parameters']
-                                                                                            ).get_possible_entry(
+                                                                                            case 'parameter': return p_.ss($, ($) => p_.from.dictionary($p['module parameters']).get_possible_entry(
                                                                                                 $['l id'],
                                                                                                 ($) => $,
                                                                                                 () => p_unreachable_code_path("for every parameter, there must be a module parameter provided")
@@ -348,8 +347,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 switch ($[0]) {
                                                     case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
                                                         'unmarshalled': $,
-                                                        'entries': p_.from.dictionary($.derived.entries,
-                                                        ).resolve(
+                                                        'entries': p_.from.dictionary($.derived.entries).resolve(
                                                             ($, id, $al, $cl): d_out.Entry => ({
                                                                 'unmarshall result': p_.from.state($.result).decide(
                                                                     ($): d_out.Entry['unmarshall result'] => {
@@ -399,8 +397,8 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                         'unmarshalled': $,
                                                         'properties': p_variables(
                                                             () => {
-                                                                return p_.from.dictionary(p_.from.dictionary(def
-                                                                    ).join(
+                                                                return p_.from.dictionary(
+                                                                    p_.from.dictionary(def).join(
                                                                         $.derived.properties,
                                                                         ($, $o, id) => {
                                                                             return {
