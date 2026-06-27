@@ -31,7 +31,6 @@ export const Value: Value = ($) => {
                 case 'error': return p_.ss($, ($) => ({
                     'kind': ['null', null],
                     'children': p_.literal.list([]),
-                    'deprecated': false,
                 }))
                 case 'success': return p_.ss($, ($) => p_.from.state($).decide(
                     ($): d_out.Value => {
@@ -185,12 +184,10 @@ export const Value: Value = ($) => {
                                                     'selection range': $.intermediate['option token'].range,
                                                 }
                                             ]),
-                                            'deprecated': false,
                                         }))
                                         case 'missing data': return p_.ss($, ($) => ({
                                             'kind': ['null', null],
                                             'children': p_.literal.list([]),
-                                            'deprecated': true,
                                         }))
                                         default: return p_.au($[0])
                                     }
@@ -198,7 +195,6 @@ export const Value: Value = ($) => {
                             case 'text': return p_.ss($, ($) => ({
                                 'kind': ['string', null],
                                 'children': p_.literal.list([]),
-                                'deprecated': false,
                             }))
                             default: return p_.au($[0])
                         }
