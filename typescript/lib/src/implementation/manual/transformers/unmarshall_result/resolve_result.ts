@@ -35,16 +35,10 @@ namespace p_i_temp {
         set: (value: T) => R,
         not_set: () => R
     ): R => {
-        let result: R
-        $.__extract_data(
-            (value) => {
-                result = set(value)
-            },
-            () => {
-                result = not_set()
-            }
-        )
-        return result!
+        const raw = $.__get_raw()
+        return raw === null
+            ? not_set()
+            : set(raw[0])
     }
 
 }
