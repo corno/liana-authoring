@@ -7,10 +7,6 @@ import * as d_out from "astn-core/dist/interface/generated/liana/schemas/locatio
 
 //dependencies
 
-//shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
-
-
 export const Error: p_i.Transformer<
 d_in.Error, d_out.Range
 > = (

@@ -8,10 +8,7 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 import * as d_astn_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 import * as d_out from "../../../../interface/data/found"
 
-// import { $$ as op_expect_1_element } from "pareto-standard-operations/dist/implementation/operations/impure/list/expect_exactly_one_element"
-
 //dependencies
-import * as t_parse_tree_to_start_token_range from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
 import * as t_parse_tree_to_full_value_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
 
@@ -82,9 +79,6 @@ export const Value_possibly_found: Value_possibly_found = ($, $p) => {
 
 export const Value: Value = ($, $p) => {
 
-    const value = $
-
-    const value_range = t_parse_tree_to_start_token_range.Value($.instance)
 
 
     const this_value = (

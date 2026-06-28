@@ -4,7 +4,6 @@ import * as p_i from 'pareto-core/dist/interface/transformer'
 //data types
 import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_out from "../../../../interface/data/document_symbols"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 //dependencies
 import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"

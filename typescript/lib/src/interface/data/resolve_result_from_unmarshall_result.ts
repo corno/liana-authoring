@@ -1,6 +1,6 @@
-import * as p_ti from 'pareto-core/dist/interface/transformer'
+// import * as p_ti from 'pareto-core/dist/interface/transformer'
 
-import * as d_resolve_result from "./resolve_result"
+// import * as d_resolve_result from "./resolve_result"
 
 
 // export type Parameters = {

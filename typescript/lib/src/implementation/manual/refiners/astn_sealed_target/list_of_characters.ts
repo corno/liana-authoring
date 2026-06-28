@@ -2,7 +2,6 @@ import * as p_i from 'pareto-core/dist/interface/refiner'
 
 //data types
 // import * as d_in from "pareto-liana/dist/interface/to_be_generated/unmashall_result"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
 import * as d_function_unmarshall from "../../../../interface/data/unmarshall_result_from_loc"
 import * as d_function_seal from "../../../../interface/data/seal"

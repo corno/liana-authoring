@@ -5,10 +5,6 @@ import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as d_in from "../../../../interface/data/unmarshall_result"
 import * as d_out from "../../../../interface/data/document_links"
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
-
-//dependencies
-import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
 export type Document = p_i.Transformer<
     d_in.Document,

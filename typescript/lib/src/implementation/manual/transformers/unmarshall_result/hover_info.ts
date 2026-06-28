@@ -136,7 +136,6 @@ export const Document: Document = ($, $p) => {
                         }
                     }))
                 case 'state': return p_.ss($, ($) => {
-                    const def = $.definition
                     const prop_path = Property_Path($['property pathx'])
                     return p_.from.state($.derived['option status']).decide(
                         ($) => {

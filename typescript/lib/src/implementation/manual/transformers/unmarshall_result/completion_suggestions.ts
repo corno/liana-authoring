@@ -9,7 +9,6 @@ import * as d_out from "../../../../interface/generated/liana/schemas/completion
 import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
 import * as d_ast_target from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_out_text_edits from "../../../../interface/generated/liana/schemas/text_edits/data"
 import * as d_outx from "../../../../interface/data/found"
 
 //dependencies
@@ -157,7 +156,6 @@ const d_schema_Value = (
 export const Found: Found = ($, $p) => {
     switch ($[0]) {
         case 'value': return p_.ss($, ($): d_out.Completion_Suggestions => {
-            const instance = $.instance
             const definition = $.definition
 
             return p_.from.state($.instance.type).decide(
@@ -209,7 +207,6 @@ export const Found: Found = ($, $p) => {
                             ($): d_out.Completion_Suggestions => {
                                 switch ($[0]) {
                                     case 'missing': return p_.ss($, ($) => {
-                                        const missing_data_marker = $['#']
                                         return p_.literal.set({
                                             'type': ['missing option', null],
                                             'suggestions': p_.from.dictionary(definition.options).flatten_to_list(

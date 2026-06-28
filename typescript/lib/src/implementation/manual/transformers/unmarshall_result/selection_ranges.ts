@@ -11,9 +11,6 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 import * as t_to_unmarshall_result_value_at_position from "./found"
 import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
 
-//shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
-
 export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
     p_di.List<d_out.Range_Stack>,

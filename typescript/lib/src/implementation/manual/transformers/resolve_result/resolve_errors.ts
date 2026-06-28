@@ -5,9 +5,6 @@ import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as d_in from "../../../../interface/data/resolve_result"
 import * as d_out from "../../../../interface/data/resolve_errors"
 
-//dependencies
-import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
-
 export type Document = p_i.Transformer<
     d_in.Document,
     d_out.Errors
@@ -26,7 +23,7 @@ export const Document: Document = ($) => {
 }
 
 export const Value: Value = ($) => {
-    const range = t_astn_parse_tree_to_location.Value($.unmarshalled.instance)
+    // const range = t_astn_parse_tree_to_location.Value($.unmarshalled.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
             switch ($[0]) {
