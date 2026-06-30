@@ -3,7 +3,6 @@ import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import p_implement_me from 'pareto-core-dev/dist/implement_me'
 import p_unreachable_code_path from 'pareto-core/dist/implementation/transformer/specials/unreachable_code_path'
-import p_variables from 'pareto-core/dist/implementation/transformer/specials/variables'
 import p_temp_dictionary from 'pareto-core/dist/temp/Generic_Dictionary'
 
 import * as d_in from "../../../../interface/data/unmarshall_result"
@@ -389,48 +388,45 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 switch ($[0]) {
                                                     case 'group': return p_.ss($, ($): d_out.Group => ({
                                                         'unmarshalled': $,
-                                                        'properties': p_variables(
-                                                            () => {
-                                                                return p_.from.dictionary(
-                                                                    p_.from.dictionary(def).join(
-                                                                        $.derived.properties,
-                                                                        ($, $o, id) => {
-                                                                            return {
-                                                                                'definition': $.resolver,
-                                                                                'unmarshalled': $o,
-                                                                            }
-                                                                        }
-                                                                    )
-                                                                ).resolve(
-                                                                    ($, id, $al, $cl) => {
-                                                                        const resolver = $.definition
-                                                                        return p_.from.optional($.unmarshalled).decide(
-                                                                            ($) => p_.from.state($.result).decide(
-                                                                                ($): d_out.Property => {
-                                                                                    switch ($[0]) {
-                                                                                        case 'success': return p_.ss($, ($): d_out.Property => ({
-                                                                                            'unmarshall result': ['success', {
+                                                        'properties': p_.from.dictionary(
+                                                            p_.from.dictionary(def).join(
+                                                                $.derived.properties,
+                                                                ($, $o, id) => {
+                                                                    return {
+                                                                        'definition': $.resolver,
+                                                                        'unmarshalled': $o,
+                                                                    }
+                                                                }
+                                                            )
+                                                        ).resolve(
+                                                            ($, id, $al, $cl) => {
+                                                                const resolver = $.definition
+                                                                return p_.from.optional($.unmarshalled).decide(
+                                                                    ($) => p_.from.state($.result).decide(
+                                                                        ($): d_out.Property => {
+                                                                            switch ($[0]) {
+                                                                                case 'success': return p_.ss($, ($): d_out.Property => ({
+                                                                                    'unmarshall result': ['success', {
+                                                                                        'definition': resolver,
+                                                                                        'resolved': Value(
+                                                                                            $,
+                                                                                            $l,
+                                                                                            {
                                                                                                 'definition': resolver,
-                                                                                                'resolved': Value(
-                                                                                                    $,
-                                                                                                    $l,
-                                                                                                    {
-                                                                                                        'definition': resolver,
-                                                                                                        'resolver': $p.resolver,
-                                                                                                        'module parameters': $p['module parameters'],
-                                                                                                    }
-                                                                                                )
-                                                                                            }]
-                                                                                        }))
-                                                                                        case 'error': return p_.ss($, ($): d_out.Property => ({
-                                                                                            'unmarshall result': ['error', $]
-                                                                                        }))
-                                                                                        default: return p_.au($[0])
-                                                                                    }
-                                                                                }),
-                                                                            () => p_unreachable_code_path("both dictionaries are driven by the definitions in the schema")
-                                                                        )
-                                                                    })
+                                                                                                'resolver': $p.resolver,
+                                                                                                'module parameters': $p['module parameters'],
+                                                                                            }
+                                                                                        )
+                                                                                    }]
+                                                                                }))
+                                                                                case 'error': return p_.ss($, ($): d_out.Property => ({
+                                                                                    'unmarshall result': ['error', $]
+                                                                                }))
+                                                                                default: return p_.au($[0])
+                                                                            }
+                                                                        }),
+                                                                    () => p_unreachable_code_path("both dictionaries are driven by the definitions in the schema")
+                                                                )
                                                             }),
 
                                                     }))
