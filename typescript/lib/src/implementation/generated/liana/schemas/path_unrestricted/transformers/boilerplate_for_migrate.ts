@@ -49,12 +49,12 @@ export const Start: t_signatures.Start = ($) => p_decide_state(
     ($): t_out.Start => {
         switch ($[0]) {
             case 'absolute':
-                return p_.ss(
+                return p_.option(
                     $,
                     ($) => ['absolute', null],
                 )
             case 'relative':
-                return p_.ss(
+                return p_.option(
                     $,
                     ($) => ['relative', {
                         'up steps': p_change_context(

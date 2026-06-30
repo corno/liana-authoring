@@ -30,7 +30,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                     ($): t_out.Value.state => {
                         switch ($[0]) {
                             case 'missing value':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'missing value',
@@ -38,7 +38,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                                     }),
                                 )
                             case 'missing option':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'missing option',
@@ -46,7 +46,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                                     }),
                                 )
                             case 'reference':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'reference',
@@ -54,7 +54,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                                     }),
                                 )
                             case 'property name':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'property name',
@@ -62,7 +62,7 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                                     }),
                                 )
                             case 'option name':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'option name',

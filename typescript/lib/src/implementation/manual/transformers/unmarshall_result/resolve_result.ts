@@ -105,9 +105,9 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 // ) => p_.from.state($).decide(
 //($) => {
 //     switch ($[0]) {
-//         case 'acyclic siblings': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-//         case 'cyclic siblings': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-//         case 'parameter': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+//         case 'acyclic siblings': return p_.option($, ($) => p_implement_me("!!!!!!!"))
+//         case 'cyclic siblings': return p_.option($, ($) => p_implement_me("!!!!!!!"))
+//         case 'parameter': return p_.option($, ($) => p_implement_me("!!!!!!!"))
 //         default: return p_.au($[0])
 //     }
 // })
@@ -124,28 +124,28 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //     return p_implement_me("!!!!!!!")
 //     // return p_.decide.state($p.definition.type, ($): d_function.Lookup => {
 //     //     switch ($[0]) {
-//     //         case 'acyclic': return p_.ss($, ($) => p_.from.state($).decide(
+//     //         case 'acyclic': return p_.option($, ($) => p_.from.state($).decide(
 //($) => {
 //     //             switch ($[0]) {
-//     //                 case 'siblings': return p_.ss($, ($) => $p['acyclic siblings'].__ decide(
+//     //                 case 'siblings': return p_.option($, ($) => $p['acyclic siblings'].__ decide(
 //     //                     ($) => ['acyclic siblings', $],
 //     //                     () => p_unreachable_code_path("acyclic siblings should have been provided for this definition")
 //     //                 ))
-//     //                 case 'resolved dictionary': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+//     //                 case 'resolved dictionary': return p_.option($, ($) => p_implement_me("!!!!!!!"))
 //     //                 default: return p_.au($[0])
 //     //             }
 //     //         }))
-//     //         case 'cyclic': return p_.ss($, ($) => p_.from.state($).decide(
+//     //         case 'cyclic': return p_.option($, ($) => p_.from.state($).decide(
 //($) => {
 //     //             switch ($[0]) {
-//     //                 case 'siblings': return p_.ss($, ($) => $p['cyclic siblings'].__ decide(
+//     //                 case 'siblings': return p_.option($, ($) => $p['cyclic siblings'].__ decide(
 //     //                     ($) => ['cyclic siblings', $],
 //     //                     () => p_unreachable_code_path("cyclic siblings should have been provided for this definition")
 //     //                 ))
 //     //                 default: return p_.au($[0])
 //     //             }
 //     //         }))
-//     //         case 'parameter': return p_.ss($, ($) => $p['module parameters'].__ decide(
+//     //         case 'parameter': return p_.option($, ($) => $p['module parameters'].__ decide(
 //     //             ($) => ['parameter', $p['module parameters']],
 //     //             () => p_unreachable_code_path("module parameters should have been provided for this definition")
 //     //         ))
@@ -183,23 +183,23 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
         'unmarshall result': p_.from.state($['unmarshall result']).decide(
             ($): d_out.Value_Unmarshall_Result => {
                 switch ($[0]) {
-                    case 'error': return p_.ss($, ($) => ['error', $])
-                    case 'success': return p_.ss($, ($) => {
+                    case 'error': return p_.option($, ($) => ['error', $])
+                    case 'success': return p_.option($, ($) => {
                         const unmarshalled_value = $
                         return ['success', p_.from.state($p.definition).decide(
                             ($): d_out.Resolved_Value_Type => {
                                 switch ($[0]) {
-                                    case 'component': return p_.ss($, ($) => {
+                                    case 'component': return p_.option($, ($) => {
                                         const def = $
                                         return ['component', p_.from.state(unmarshalled_value).decide(
                                             ($) => {
                                                 switch ($[0]) {
-                                                    case 'component': return p_.ss($, ($) => {
+                                                    case 'component': return p_.option($, ($) => {
                                                         const def2 = p_.from.state(def.location).decide(
                                                             ($): d_in_definition.Resolver_Modules_.D => {
                                                                 switch ($[0]) {
-                                                                    case 'external': return p_.ss($, ($) => p_implement_me("external component"))
-                                                                    case 'internal': return p_.ss($, ($) => p_.from.dictionary($p.resolver.modules).get_possible_entry(
+                                                                    case 'external': return p_.option($, ($) => p_implement_me("external component"))
+                                                                    case 'internal': return p_.option($, ($) => p_.from.dictionary($p.resolver.modules).get_possible_entry(
                                                                         $['l id'],
                                                                         ($) => $,
                                                                         () => p_unreachable_code_path("the resolver should have been provided with a module parameter for this definition")
@@ -248,13 +248,13 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                 ($): Module_Parameter_Resolve_Status => p_.from.state($).decide(
                                                                                     ($) => {
                                                                                         switch ($[0]) {
-                                                                                            case 'optional': return p_.ss($, ($) => Resolver_Optional_Value_Initialization($))
-                                                                                            case 'parameter': return p_.ss($, ($) => p_.from.dictionary($p['module parameters']).get_possible_entry(
+                                                                                            case 'optional': return p_.option($, ($) => Resolver_Optional_Value_Initialization($))
+                                                                                            case 'parameter': return p_.option($, ($) => p_.from.dictionary($p['module parameters']).get_possible_entry(
                                                                                                 $['l id'],
                                                                                                 ($) => $,
                                                                                                 () => p_unreachable_code_path("for every parameter, there must be a module parameter provided")
                                                                                             ))
-                                                                                            case 'required': return p_.ss($, ($) => Resolver_Guaranteed_Value_Selection($))
+                                                                                            case 'required': return p_.option($, ($) => Resolver_Guaranteed_Value_Selection($))
                                                                                             default: return p_.au($[0])
                                                                                         }
                                                                                     })
@@ -273,11 +273,11 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                     // ($) => p_.from.state($).decide(
                                                                     //($) => {
                                                                     //                 switch ($[0]) {
-                                                                    //                     case 'stack': return p_.ss($, ($) => p_.from.state($).decide(
+                                                                    //                     case 'stack': return p_.option($, ($) => p_.from.state($).decide(
                                                                     //($) => {
                                                                     //                         switch ($[0]) {
-                                                                    //                             case 'empty': return p_.ss($, ($) => null)
-                                                                    //                             case 'push': return p_.ss($, ($) => {
+                                                                    //                             case 'empty': return p_.option($, ($) => null)
+                                                                    //                             case 'push': return p_.option($, ($) => {
                                                                     //                                 Resolver_Lookup_Selection(
                                                                     //                                     null,
                                                                     //                                     {
@@ -301,9 +301,9 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                     //                             default: return p_.au($[0])
                                                                     //                         }
                                                                     //                     }))
-                                                                    //                     case 'acyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                                    //                     case 'cyclic': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                                    //                     case 'selection': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                                    //                     case 'acyclic': return p_.option($, ($) => p_implement_me("!!!!!!!"))
+                                                                    //                     case 'cyclic': return p_.option($, ($) => p_implement_me("!!!!!!!"))
+                                                                    //                     case 'selection': return p_.option($, ($) => p_implement_me("!!!!!!!"))
                                                                     //                     default: return p_.au($[0])
                                                                     //                 }
                                                                     //             }))
@@ -314,9 +314,9 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                     // ($) => p_.from.state($).decide(
                                                                     //($) => {
                                                                     //                 switch ($[0]) {
-                                                                    //                     case 'optional': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                                    //                     case 'required': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
-                                                                    //                     case 'parameter': return p_.ss($, ($) => p_implement_me("!!!!!!!"))
+                                                                    //                     case 'optional': return p_.option($, ($) => p_implement_me("!!!!!!!"))
+                                                                    //                     case 'required': return p_.option($, ($) => p_implement_me("!!!!!!!"))
+                                                                    //                     case 'parameter': return p_.option($, ($) => p_implement_me("!!!!!!!"))
                                                                     //                     default: return p_.au($[0])
                                                                     //                 }
                                                                     //             }))
@@ -333,22 +333,22 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 }
                                             })]
                                     })
-                                    case 'dictionary': return p_.ss($, ($) => {
+                                    case 'dictionary': return p_.option($, ($) => {
                                         const def = $
                                         return ['dictionary', p_.from.state(unmarshalled_value).decide(
                                             ($): d_out.Dictionary => {
                                                 switch ($[0]) {
-                                                    case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
+                                                    case 'dictionary': return p_.option($, ($): d_out.Dictionary => ({
                                                         'unmarshalled': $,
                                                         'entries': p_.from.dictionary($.derived.entries).resolve(
                                                             ($, id, $al, $cl): d_out.Entry => ({
                                                                 'unmarshall result': p_.from.state($.result).decide(
                                                                     ($): d_out.Entry['unmarshall result'] => {
                                                                         switch ($[0]) {
-                                                                            case 'success': return p_.ss($, ($) => p_.from.state($.value).decide(
+                                                                            case 'success': return p_.option($, ($) => p_.from.state($.value).decide(
                                                                                 ($) => {
                                                                                     switch ($[0]) {
-                                                                                        case 'set': return p_.ss($, ($) => ['success', {
+                                                                                        case 'set': return p_.option($, ($) => ['success', {
                                                                                             'value': ['set', Value(
                                                                                                 $,
                                                                                                 {
@@ -365,13 +365,13 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                                 }
                                                                                             )]
                                                                                         }])
-                                                                                        case 'not set': return p_.ss($, ($) => ['success', {
+                                                                                        case 'not set': return p_.option($, ($) => ['success', {
                                                                                             'value': ['not set', null]
                                                                                         }])
                                                                                         default: return p_.au($[0])
                                                                                     }
                                                                                 }))
-                                                                            case 'error': return p_.ss($, ($) => ['error', null])
+                                                                            case 'error': return p_.option($, ($) => ['error', null])
                                                                             default: return p_.au($[0])
                                                                         }
                                                                     })
@@ -381,12 +381,12 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 }
                                             })]
                                     })
-                                    case 'group': return p_.ss($, ($) => {
+                                    case 'group': return p_.option($, ($) => {
                                         const def = $
                                         return ['group', p_.from.state(unmarshalled_value).decide(
                                             ($): d_out.Group => {
                                                 switch ($[0]) {
-                                                    case 'group': return p_.ss($, ($): d_out.Group => ({
+                                                    case 'group': return p_.option($, ($): d_out.Group => ({
                                                         'unmarshalled': $,
                                                         'properties': p_.from.dictionary(
                                                             p_.from.dictionary(def).join(
@@ -405,7 +405,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                     ($) => p_.from.state($.result).decide(
                                                                         ($): d_out.Property => {
                                                                             switch ($[0]) {
-                                                                                case 'success': return p_.ss($, ($): d_out.Property => ({
+                                                                                case 'success': return p_.option($, ($): d_out.Property => ({
                                                                                     'unmarshall result': ['success', {
                                                                                         'definition': resolver,
                                                                                         'resolved': Value(
@@ -419,7 +419,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                         )
                                                                                     }]
                                                                                 }))
-                                                                                case 'error': return p_.ss($, ($): d_out.Property => ({
+                                                                                case 'error': return p_.option($, ($): d_out.Property => ({
                                                                                     'unmarshall result': ['error', $]
                                                                                 }))
                                                                                 default: return p_.au($[0])
@@ -434,12 +434,12 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 }
                                             })]
                                     })
-                                    case 'list': return p_.ss($, ($) => {
+                                    case 'list': return p_.option($, ($) => {
                                         const def = $
                                         return ['list', p_.from.state(unmarshalled_value).decide(
                                             ($): d_out.List => {
                                                 switch ($[0]) {
-                                                    case 'list': return p_.ss($, ($): d_out.List => ({
+                                                    case 'list': return p_.option($, ($): d_out.List => ({
                                                         'unmarshalled': $,
                                                         'items': p_.from.list($.derived.items).map(
                                                             ($) => Value(
@@ -456,31 +456,31 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 }
                                             })]
                                     })
-                                    case 'nothing': return p_.ss($, ($) => ['nothing', p_.from.state(unmarshalled_value).decide(
+                                    case 'nothing': return p_.option($, ($) => ['nothing', p_.from.state(unmarshalled_value).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'nothing': return p_.ss($, ($) => $)
+                                                case 'nothing': return p_.option($, ($) => $)
                                                 default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                             }
                                         })])
-                                    case 'simple': return p_.ss($, ($) => ['simple', p_.from.state(unmarshalled_value).decide(
+                                    case 'simple': return p_.option($, ($) => ['simple', p_.from.state(unmarshalled_value).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'simple': return p_.ss($, ($) => $)
+                                                case 'simple': return p_.option($, ($) => $)
                                                 default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                             }
                                         })])
-                                    case 'optional': return p_.ss($, ($) => {
+                                    case 'optional': return p_.option($, ($) => {
                                         const def = $
                                         return ['optional', p_.from.state(unmarshalled_value).decide(
                                             ($): d_out.Optional => {
                                                 switch ($[0]) {
-                                                    case 'optional': return p_.ss($, ($): d_out.Optional => ({
+                                                    case 'optional': return p_.option($, ($): d_out.Optional => ({
                                                         'unmarshalled': $,
                                                         'status': p_.from.state($.derived.status).decide(
                                                             ($) => {
                                                                 switch ($[0]) {
-                                                                    case 'set': return p_.ss($, ($) => ['set', {
+                                                                    case 'set': return p_.option($, ($) => ['set', {
                                                                         'child value': Value(
                                                                             $['child value'],
                                                                             $l,
@@ -491,7 +491,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                             }
                                                                         )
                                                                     }])
-                                                                    case 'not set': return p_.ss($, ($) => ['not set', null])
+                                                                    case 'not set': return p_.option($, ($) => ['not set', null])
                                                                     default: return p_.au($[0])
                                                                 }
 
@@ -501,20 +501,20 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 }
                                             })]
                                     })
-                                    case 'reference': return p_.ss($, ($) => {
+                                    case 'reference': return p_.option($, ($) => {
                                         const def = $
                                         return ['reference', p_.from.state(def.type).decide(
                                             ($): d_out.Reference => {
                                                 switch ($[0]) {
-                                                    case 'derived': return p_.ss($, ($) => ['derived', null])
-                                                    case 'selected': return p_.ss($, ($) => {
+                                                    case 'derived': return p_.option($, ($) => ['derived', null])
+                                                    case 'selected': return p_.option($, ($) => {
                                                         const unmarshalled = p_.from.state(unmarshalled_value).decide(
                                                             ($) => {
                                                                 switch ($[0]) {
-                                                                    case 'reference': return p_.ss($, ($) => p_.from.state($.type).decide(
+                                                                    case 'reference': return p_.option($, ($) => p_.from.state($.type).decide(
                                                                         ($) => {
                                                                             switch ($[0]) {
-                                                                                case 'selected': return p_.ss($, ($) => $)
+                                                                                case 'selected': return p_.option($, ($) => $)
                                                                                 default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                                                             }
                                                                         }))
@@ -545,17 +545,17 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 }
                                             })]
                                     })
-                                    case 'state': return p_.ss($, ($) => {
+                                    case 'state': return p_.option($, ($) => {
                                         const $v_def = $
                                         return ['state', p_.from.state(unmarshalled_value).decide(
                                             ($) => {
                                                 switch ($[0]) {
-                                                    case 'state': return p_.ss($, ($) => ({
+                                                    case 'state': return p_.option($, ($) => ({
                                                         'unmarshalled': $,
                                                         'option': p_.from.state($.derived['option status']).decide(
                                                             ($) => {
                                                                 switch ($[0]) {
-                                                                    case 'set': return p_.ss($, ($) => p_.literal.set(Value(
+                                                                    case 'set': return p_.option($, ($) => p_.literal.set(Value(
                                                                         $.value,
                                                                         $l,
                                                                         {
@@ -568,7 +568,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                             'module parameters': $p['module parameters'],
                                                                         }
                                                                     )))
-                                                                    case 'missing data': return p_.ss($, ($) => p_.literal.not_set())
+                                                                    case 'missing data': return p_.option($, ($) => p_.literal.not_set())
                                                                     default: return p_.au($[0])
                                                                 }
                                                             })
@@ -577,10 +577,10 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 }
                                             })]
                                     })
-                                    case 'text': return p_.ss($, ($) => ['text', p_.from.state(unmarshalled_value).decide(
+                                    case 'text': return p_.option($, ($) => ['text', p_.from.state(unmarshalled_value).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'text': return p_.ss($, ($) => $)
+                                                case 'text': return p_.option($, ($) => $)
                                                 default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                             }
                                         })])

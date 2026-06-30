@@ -19,9 +19,9 @@ d_in.Error, d_out.Phrase
 export const Error: signatures.Error = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
-            case 'deserialize parse tree': return p_.ss($, ($) => t_deserialize_to_fp.Error($))
-            case 'schema': return p_.ss($, ($) => t_get_schema_to_fp.Error($.error))
-            case 'schema path': return p_.ss($, ($) => t_get_schema_path_to_fp.Error($))
+            case 'deserialize parse tree': return p_.option($, ($) => t_deserialize_to_fp.Error($))
+            case 'schema': return p_.option($, ($) => t_get_schema_to_fp.Error($.error))
+            case 'schema path': return p_.option($, ($) => t_get_schema_path_to_fp.Error($))
             default: return p_.au($[0])
         }
     })

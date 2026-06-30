@@ -35,7 +35,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                 ($): t_out.Value.state => {
                     switch ($[0]) {
                         case 'error':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ({
                                     'option': 'error',
@@ -43,7 +43,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'warning':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ({
                                     'option': 'warning',
@@ -51,7 +51,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'information':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ({
                                     'option': 'information',
@@ -59,7 +59,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'hint':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ({
                                     'option': 'hint',
@@ -138,7 +138,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                 ($): t_out.Value.state => {
                     switch ($[0]) {
                         case 'semantic':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ({
                                     'option': 'semantic',
@@ -146,7 +146,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'deserialize':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ({
                                     'option': 'deserialize',
@@ -154,7 +154,7 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ['group', ['verbose', 
                                 }),
                             )
                         case 'schema':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ({
                                     'option': 'schema',

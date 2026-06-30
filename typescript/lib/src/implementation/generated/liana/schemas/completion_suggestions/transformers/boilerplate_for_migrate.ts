@@ -25,27 +25,27 @@ export const Completion_Suggestions: t_signatures.Completion_Suggestions = ($) =
                 ($): t_out.Completion_Suggestions.O.type_ => {
                     switch ($[0]) {
                         case 'missing value':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ['missing value', null],
                             )
                         case 'missing option':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ['missing option', null],
                             )
                         case 'reference':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ['reference', null],
                             )
                         case 'property name':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ['property name', null],
                             )
                         case 'option name':
-                            return p_.ss(
+                            return p_.option(
                                 $,
                                 ($) => ['option name', null],
                             )

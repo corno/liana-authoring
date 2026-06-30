@@ -19,14 +19,14 @@ export const Error: p_i.Transformer_With_Parameter<
 	return p_.from.state($.type).decide(
 		($) => {
 			switch ($[0]) {
-				case 'read file': return p_.ss($, ($): d_out.Diagnostics.L => ({
+				case 'read file': return p_.option($, ($): d_out.Diagnostics.L => ({
 					'message': "Failed to read schema file",
 					'severity': ['error', null],
 					'related information': p_.literal.not_set(),
 					'range': p_.literal.not_set(),
 					'type': ['schema', null]
 				}))
-				case 'deserialize': return p_.ss($, ($): d_out.Diagnostics.L => ({
+				case 'deserialize': return p_.option($, ($): d_out.Diagnostics.L => ({
 					'message': "failed to deserialize schema: " + t_fp_to_text.Phrase(t_deserialize_resolved_to_fp.Error($), { 'indentation': "    ", 'newline': "\n" }),
 					'severity': ['error', null],
 					'related information': p_.literal.set(p_.literal.list([

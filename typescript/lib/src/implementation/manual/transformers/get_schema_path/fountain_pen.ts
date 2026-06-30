@@ -20,8 +20,8 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 export const Error: signatures.Error = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
-            case 'not found': return p_.ss($, ($) => sh.ph.literal("schema not found"))
-            case 'stat error': return p_.ss($, ($) => t_stat_to_fountain_pen.Error($))
+            case 'not found': return p_.option($, ($) => sh.ph.literal("schema not found"))
+            case 'stat error': return p_.option($, ($) => t_stat_to_fountain_pen.Error($))
             default: return p_.au($[0])
         }
     })

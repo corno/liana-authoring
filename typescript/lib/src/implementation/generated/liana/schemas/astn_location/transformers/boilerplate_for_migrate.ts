@@ -31,14 +31,14 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => p_decide_state
     ($): t_out.Possible_Range => {
         switch ($[0]) {
             case 'range':
-                return p_.ss(
+                return p_.option(
                     $,
                     ($) => ['range', Range(
                         $,
                     )],
                 )
             case 'end of document':
-                return p_.ss(
+                return p_.option(
                     $,
                     ($) => ['end of document', {
                         'end': p_change_context(

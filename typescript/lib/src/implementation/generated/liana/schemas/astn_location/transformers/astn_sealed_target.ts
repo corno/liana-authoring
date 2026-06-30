@@ -37,7 +37,7 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', p_de
     ($): t_out.Value.state => {
         switch ($[0]) {
             case 'range':
-                return p_.ss(
+                return p_.option(
                     $,
                     ($) => ({
                         'option': 'range',
@@ -47,7 +47,7 @@ export const Possible_Range: t_signatures.Possible_Range = ($) => ['state', p_de
                     }),
                 )
             case 'end of document':
-                return p_.ss(
+                return p_.option(
                     $,
                     ($) => ({
                         'option': 'end of document',

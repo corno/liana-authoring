@@ -28,23 +28,23 @@ export const Found: p_ti.Transformer<
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($): d_function.Found => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($): d_function.Found => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'dictionary': return p_.ss($, ($) => ['dictionary', null])
-                            case 'group': return p_.ss($, ($) => ['group', null])
-                            case 'list': return p_.ss($, ($) => ['list', null])
-                            case 'nothing': return p_.ss($, ($) => ['nothing', null])
-                            case 'optional': return p_.ss($, ($) => ['optional', null])
-                            case 'state': return p_.ss($, ($) => ['state', null])
-                            case 'text': return p_.ss($, ($) => ['text', {
+                            case 'dictionary': return p_.option($, ($) => ['dictionary', null])
+                            case 'group': return p_.option($, ($) => ['group', null])
+                            case 'list': return p_.option($, ($) => ['list', null])
+                            case 'nothing': return p_.option($, ($) => ['nothing', null])
+                            case 'optional': return p_.option($, ($) => ['optional', null])
+                            case 'state': return p_.option($, ($) => ['state', null])
+                            case 'text': return p_.option($, ($) => ['text', {
                                 'value': $.token.value
                             }])
                             default: return p_.au($[0])
                         }
                     }))
-                case 'include': return p_.ss($, ($) => ['include', null])
-                case 'missing': return p_.ss($, ($) => ['missing data', null])
+                case 'include': return p_.option($, ($) => ['include', null])
+                case 'missing': return p_.option($, ($) => ['missing data', null])
                 default: return p_.au($[0])
             }
         })
@@ -60,34 +60,34 @@ export const Value: Value = ($, abort) => {
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
             switch ($[0]) {
-                case 'error': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'error': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'incorrect': return p_.ss($, ($) => p_.from.state($).decide(
+                            case 'incorrect': return p_.option($, ($) => p_.from.state($).decide(
                                 ($) => {
                                     switch ($[0]) {
-                                        case 'wrong type': return p_.ss($, ($) => abort({
+                                        case 'wrong type': return p_.option($, ($) => abort({
                                             'type': ['number', ['wrong type', null]], //FIXME!!!
                                             'range': start_token_range
                                         }))
-                                        case 'list as state format error': return p_.ss($, ($) => {
+                                        case 'list as state format error': return p_.option($, ($) => {
                                             const start_token = $.list['[']
                                             return p_.from.state($.type).decide(
                                                 ($) => {
                                                     switch ($[0]) {
-                                                        case 'missing option item': return p_.ss($, ($) => abort({
+                                                        case 'missing option item': return p_.option($, ($) => abort({
                                                             'type': ['state', ['missing option item', null]],
                                                             'range': start_token.range
                                                         }))
-                                                        case 'option item is not a text': return p_.ss($, ($) => abort({
+                                                        case 'option item is not a text': return p_.option($, ($) => abort({
                                                             'type': ['state', ['option item is not a text', null]],
                                                             'range': t_astn_parse_tree_to_location.Value($.value)
                                                         }))
-                                                        case 'missing value item': return p_.ss($, ($) => abort({
+                                                        case 'missing value item': return p_.option($, ($) => abort({
                                                             'type': ['state', ['missing value item', null]],
                                                             'range': start_token.range
                                                         }))
-                                                        case 'too many items': return p_.ss($, ($) => abort({
+                                                        case 'too many items': return p_.option($, ($) => abort({
                                                             'type': ['state', ['too many items', null]],
                                                             'range': start_token.range
                                                         }))
@@ -95,14 +95,14 @@ export const Value: Value = ($, abort) => {
                                                     }
                                                 })
                                         })
-                                        case 'unknown option': return p_.ss($, ($) => abort({
+                                        case 'unknown option': return p_.option($, ($) => abort({
                                             'type': ['state', ['unknown option', null]],
                                             'range': $['option token'].range
                                         }))
                                         default: return p_.au($[0])
                                     }
                                 }))
-                            case 'missing': return p_.ss($, ($) => abort({
+                            case 'missing': return p_.option($, ($) => abort({
                                 'type': ['dictionary', ['foo', null]],
                                 'range': start_token_range
                             }))
@@ -110,11 +110,11 @@ export const Value: Value = ($, abort) => {
                             default: return p_.au($[0])
                         }
                     }))
-                case 'success': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'success': return p_.option($, ($) => p_.from.state($).decide(
                     ($): d_out.Value => {
                         switch ($[0]) {
-                            case 'component': return p_.ss($, ($) => Value($.value, abort))
-                            case 'dictionary': return p_.ss($, ($) => {
+                            case 'component': return p_.option($, ($) => Value($.value, abort))
+                            case 'dictionary': return p_.option($, ($) => {
 
                                 const dictionary_range = $.intermediate.instance['{'].range
 
@@ -123,24 +123,24 @@ export const Value: Value = ($, abort) => {
                                     ($, id): d_out.Value => p_.from.state($.result).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'success': return p_.ss($, ($) => {
+                                                case 'success': return p_.option($, ($) => {
                                                     const intermediate = $.intermediate
                                                     return p_.from.state($.value).decide(
                                                         ($) => {
                                                             switch ($[0]) {
-                                                                case 'not set': return p_.ss($, ($) => abort({
+                                                                case 'not set': return p_.option($, ($) => abort({
                                                                     'type': ['dictionary', ['foo', null]],
                                                                     'range': intermediate['id value pair'].id.range
                                                                 }))
-                                                                case 'set': return p_.ss($, ($) => Value($, abort))
+                                                                case 'set': return p_.option($, ($) => Value($, abort))
                                                                 default: return p_.au($[0])
                                                             }
                                                         })
                                                 })
-                                                case 'error': return p_.ss($, ($) => p_.from.state($).decide(
+                                                case 'error': return p_.option($, ($) => p_.from.state($).decide(
                                                     ($) => {
                                                         switch ($[0]) {
-                                                            case 'duplicate': return p_.ss($, ($) => abort({
+                                                            case 'duplicate': return p_.option($, ($) => abort({
                                                                 'type': ['dictionary', ['foo', null]],
                                                                 'range': dictionary_range
                                                             }))
@@ -151,22 +151,22 @@ export const Value: Value = ($, abort) => {
                                             }
                                         }))]
                             })
-                            case 'group': return p_.ss($, ($) => {
+                            case 'group': return p_.option($, ($) => {
                                 return ['group', ['verbose', p_.from.dictionary($.derived.properties).map(
                                     ($, id) => p_.from.state($.result).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'success': return p_.ss($, ($) => Value($, abort))
-                                                case 'error': return p_.ss($, ($) => p_.from.state($).decide(
+                                                case 'success': return p_.option($, ($) => Value($, abort))
+                                                case 'error': return p_.option($, ($) => p_.from.state($).decide(
                                                     ($) => {
                                                         switch ($[0]) {
-                                                            case 'missing': return p_.ss($, ($) => abort({
+                                                            case 'missing': return p_.option($, ($) => abort({
                                                                 'type': ['group', ['missing property', {
                                                                     'name': id
                                                                 }]],
                                                                 'range': start_token_range
                                                             }))
-                                                            case 'multiple': return p_.ss($, ($) => abort({
+                                                            case 'multiple': return p_.option($, ($) => abort({
                                                                 'type': ['group', ['multiple instances for property', {
                                                                     'name': id
                                                                 }]],
@@ -180,27 +180,27 @@ export const Value: Value = ($, abort) => {
                                         })
                                 )]]
                             })
-                            case 'list': return p_.ss($, ($) => ['list', p_.from.list($.derived.items).map(
+                            case 'list': return p_.option($, ($) => ['list', p_.from.list($.derived.items).map(
                                 ($) => Value($, abort))])
-                            case 'nothing': return p_.ss($, ($): d_out.Value => ['nothing', null])
-                            case 'simple': return p_.ss($, ($): d_out.Value => ['text', {
+                            case 'nothing': return p_.option($, ($): d_out.Value => ['nothing', null])
+                            case 'simple': return p_.option($, ($): d_out.Value => ['text', {
                                 'value': $.instance.token.value,
                                 'delimiter': ['none', null],
 
                             }])
-                            case 'optional': return p_.ss($, ($): d_out.Value => ['optional', p_.from.state($.derived.status).decide(
+                            case 'optional': return p_.option($, ($): d_out.Value => ['optional', p_.from.state($.derived.status).decide(
                                 ($): d_out.Value.optional => {
                                     switch ($[0]) {
-                                        case 'set': return p_.ss($, ($) => ['set', Value($['child value'], abort)])
-                                        case 'not set': return p_.ss($, ($) => ['not set', null])
+                                        case 'set': return p_.option($, ($) => ['set', Value($['child value'], abort)])
+                                        case 'not set': return p_.option($, ($) => ['not set', null])
                                         default: return p_.au($[0])
                                     }
                                 })])
-                            case 'reference': return p_.ss($, ($): d_out.Value => p_.from.state($.type).decide(
+                            case 'reference': return p_.option($, ($): d_out.Value => p_.from.state($.type).decide(
                                 ($) => {
                                     switch ($[0]) {
-                                        case 'derived': return p_.ss($, ($) => ['nothing', null])
-                                        case 'selected': return p_.ss($, ($) => ['text', {
+                                        case 'derived': return p_.option($, ($) => ['nothing', null])
+                                        case 'selected': return p_.option($, ($) => ['text', {
                                             'value': $.intermediate.instance.token.value,
                                             'delimiter': ['apostrophe', null],
 
@@ -208,15 +208,15 @@ export const Value: Value = ($, abort) => {
                                         default: return p_.au($[0])
                                     }
                                 }))
-                            case 'state': return p_.ss($, ($): d_out.Value => {
+                            case 'state': return p_.option($, ($): d_out.Value => {
                                 return p_.from.state($.derived['option status']).decide(
                                     ($): d_out.Value => {
                                         switch ($[0]) {
-                                            case 'missing data': return p_.ss($, ($) => abort({
+                                            case 'missing data': return p_.option($, ($) => abort({
                                                 'type': ['state', ['missing data', null]],
                                                 'range': $.intermediate.range
                                             }))
-                                            case 'set': return p_.ss($, ($): d_out.Value => ['state', {
+                                            case 'set': return p_.option($, ($): d_out.Value => ['state', {
                                                 'option': $.option,
                                                 'value': Value($.value, abort)
                                             }])
@@ -224,7 +224,7 @@ export const Value: Value = ($, abort) => {
                                         }
                                     })
                             })
-                            case 'text': return p_.ss($, ($): d_out.Value => ['text', {
+                            case 'text': return p_.option($, ($): d_out.Value => ['text', {
                                 'value': $.instance.token.value,
                                 'delimiter': ['quote', null],
 

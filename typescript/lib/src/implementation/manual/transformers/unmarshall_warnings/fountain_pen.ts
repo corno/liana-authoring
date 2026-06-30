@@ -16,19 +16,19 @@ d_in.Warnings.L, d_out.Phrase.composed
 > = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
-            case 'expected apostrophed text': return p_.ss($, ($) => p_.literal.list([
+            case 'expected apostrophed text': return p_.option($, ($) => p_.literal.list([
                 sh.ph.literal("Expected a text with apostrophes (')")
             ]))
-            case 'expected backticked text': return p_.ss($, ($) => p_.literal.list([
+            case 'expected backticked text': return p_.option($, ($) => p_.literal.list([
                 sh.ph.literal("Expected a text with backticks (`)")
             ]))
-            case 'expected quoted text': return p_.ss($, ($) => p_.literal.list([
+            case 'expected quoted text': return p_.option($, ($) => p_.literal.list([
                 sh.ph.literal("Expected a text with quotes (\")")
             ]))
-            case 'expected undelimited text': return p_.ss($, ($) => p_.literal.list([
+            case 'expected undelimited text': return p_.option($, ($) => p_.literal.list([
                 sh.ph.literal("Expected a text without delimiters")
             ]))
-            case 'expected a group': return p_.ss($, ($) => p_.literal.list([
+            case 'expected a group': return p_.option($, ($) => p_.literal.list([
                 sh.ph.literal("Expected a group")
             ]))
             default: return p_.au($[0])

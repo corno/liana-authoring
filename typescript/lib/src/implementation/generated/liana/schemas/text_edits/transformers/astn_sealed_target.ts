@@ -24,7 +24,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', p_.from.list(
         ($): t_out.Value.state => {
             switch ($[0]) {
                 case 'replace':
-                    return p_.ss(
+                    return p_.option(
                         $,
                         ($) => ({
                             'option': 'replace',
@@ -48,7 +48,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', p_.from.list(
                         }),
                     )
                 case 'delete':
-                    return p_.ss(
+                    return p_.option(
                         $,
                         ($) => ({
                             'option': 'delete',
@@ -65,7 +65,7 @@ export const Text_Edits: t_signatures.Text_Edits = ($) => ['list', p_.from.list(
                         }),
                     )
                 case 'insert':
-                    return p_.ss(
+                    return p_.option(
                         $,
                         ($) => ({
                             'option': 'insert',

@@ -34,7 +34,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                     ($): t_out.Value.state => {
                         switch ($[0]) {
                             case 'value':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'value',
@@ -43,7 +43,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'invalid type':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'invalid type',
@@ -58,7 +58,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                                     ($): t_out.Value.state => {
                                                                                         switch ($[0]) {
                                                                                             case 'dictionary':
-                                                                                                return p_.ss(
+                                                                                                return p_.option(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'dictionary',
@@ -66,7 +66,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                                                     }),
                                                                                                 )
                                                                                             case 'group':
-                                                                                                return p_.ss(
+                                                                                                return p_.option(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'group',
@@ -74,7 +74,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                                                     }),
                                                                                                 )
                                                                                             case 'list':
-                                                                                                return p_.ss(
+                                                                                                return p_.option(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'list',
@@ -82,7 +82,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                                                     }),
                                                                                                 )
                                                                                             case 'nothing':
-                                                                                                return p_.ss(
+                                                                                                return p_.option(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'nothing',
@@ -90,7 +90,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                                                     }),
                                                                                                 )
                                                                                             case 'optional':
-                                                                                                return p_.ss(
+                                                                                                return p_.option(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'optional',
@@ -98,7 +98,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                                                     }),
                                                                                                 )
                                                                                             case 'state':
-                                                                                                return p_.ss(
+                                                                                                return p_.option(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'state',
@@ -106,7 +106,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                                                                     }),
                                                                                                 )
                                                                                             case 'text':
-                                                                                                return p_.ss(
+                                                                                                return p_.option(
                                                                                                     $,
                                                                                                     ($) => ({
                                                                                                         'option': 'text',
@@ -127,7 +127,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'missing':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing',
@@ -144,7 +144,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                     }),
                                 )
                             case 'dictionary':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'dictionary',
@@ -153,7 +153,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'duplicate entry':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'duplicate entry',
@@ -180,7 +180,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                     }),
                                 )
                             case 'group':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'group',
@@ -189,7 +189,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'duplicate property':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'duplicate property',
@@ -207,7 +207,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'missing property':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing property',
@@ -225,7 +225,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'missing property value':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing property value',
@@ -243,7 +243,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'superfluous property':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'superfluous property',
@@ -274,7 +274,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                     }),
                                 )
                             case 'state':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'state',
@@ -283,7 +283,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                             ($): t_out.Value.state => {
                                                 switch ($[0]) {
                                                     case 'more than 2 items in list':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'more than 2 items in list',
@@ -291,7 +291,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'missing option name':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing option name',
@@ -299,7 +299,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'option name is not a text':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'option name is not a text',
@@ -307,7 +307,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'missing value':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing value',
@@ -315,7 +315,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'unknown option':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'unknown option',
@@ -340,7 +340,7 @@ export const Errors: t_signatures.Errors = ($) => ['list', p_.from.list($,
                                                             }),
                                                         )
                                                     case 'missing option':
-                                                        return p_.ss(
+                                                        return p_.option(
                                                             $,
                                                             ($) => ({
                                                                 'option': 'missing option',
@@ -385,7 +385,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list($,
                     ($): t_out.Value.state => {
                         switch ($[0]) {
                             case 'expected apostrophed text':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'expected apostrophed text',
@@ -393,7 +393,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list($,
                                     }),
                                 )
                             case 'expected quoted text':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'expected quoted text',
@@ -401,7 +401,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list($,
                                     }),
                                 )
                             case 'expected backticked text':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'expected backticked text',
@@ -409,7 +409,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list($,
                                     }),
                                 )
                             case 'expected undelimited text':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'expected undelimited text',
@@ -417,7 +417,7 @@ export const Warnings: t_signatures.Warnings = ($) => ['list', p_.from.list($,
                                     }),
                                 )
                             case 'expected a group':
-                                return p_.ss(
+                                return p_.option(
                                     $,
                                     ($) => ({
                                         'option': 'expected a group',

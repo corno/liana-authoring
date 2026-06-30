@@ -88,13 +88,13 @@ export const Value: Value = ($, $p) => {
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
             switch ($[0]) {
-                case 'error': return p_.ss($, ($) => this_value())
-                case 'success': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'error': return p_.option($, ($) => this_value())
+                case 'success': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'simple': return p_.ss($, ($) => this_value())
-                            case 'component': return p_.ss($, ($) => Value($.value, $p))
-                            case 'dictionary': return p_.ss($, ($) => p_.from.list($.intermediate['entries as list']).on_has_match(
+                            case 'simple': return p_.option($, ($) => this_value())
+                            case 'component': return p_.option($, ($) => Value($.value, $p))
+                            case 'dictionary': return p_.option($, ($) => p_.from.list($.intermediate['entries as list']).on_has_match(
                                 ($): d_out.Possibly_Found => {
                                     const entry = $
                                     return p_.from.boolean(
@@ -104,8 +104,8 @@ export const Value: Value = ($, $p) => {
                                                 'end': p_.from.state($.value).decide(
                                                     ($) => {
                                                         switch ($[0]) {
-                                                            case 'set': return p_.ss($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
-                                                            case 'not set': return p_.ss($, ($) => entry.intermediate['id value pair'].id.range.end)
+                                                            case 'set': return p_.option($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
+                                                            case 'not set': return p_.option($, ($) => entry.intermediate['id value pair'].id.range.end)
                                                             default: return p_.au($[0])
                                                         }
                                                     }),
@@ -118,8 +118,8 @@ export const Value: Value = ($, $p) => {
                                         (): d_out.Possibly_Found => p_.from.state($.value).decide(
                                             ($): d_out.Possibly_Found => {
                                                 switch ($[0]) {
-                                                    case 'set': return p_.ss($, ($) => Value_possibly_found($, $p))
-                                                    case 'not set': return p_.ss($, ($) => p_.literal.set(['entry', entry]))
+                                                    case 'set': return p_.option($, ($) => Value_possibly_found($, $p))
+                                                    case 'not set': return p_.option($, ($) => p_.literal.set(['entry', entry]))
                                                     default: return p_.au($[0])
                                                 }
                                             }),
@@ -128,10 +128,10 @@ export const Value: Value = ($, $p) => {
                                 },
                                 () => this_value()
                             ))
-                            case 'group': return p_.ss($, ($) => p_.from.state($.derived.style).decide(
+                            case 'group': return p_.option($, ($) => p_.from.state($.derived.style).decide(
                                 ($) => {
                                     switch ($[0]) {
-                                        case 'verbose': return p_.ss($, ($) => p_.from.list($.properties).on_has_match(
+                                        case 'verbose': return p_.option($, ($) => p_.from.list($.properties).on_has_match(
                                             ($): d_out.Possibly_Found => {
                                                 const prop = $
                                                 return p_.from.boolean(
@@ -146,7 +146,7 @@ export const Value: Value = ($, $p) => {
                                                         ($): d_out.Possibly_Found => {
 
                                                             switch ($[0]) {
-                                                                case 'yes': return p_.ss($, ($) => p_.from.optional($['value']).decide(
+                                                                case 'yes': return p_.option($, ($) => p_.from.optional($['value']).decide(
                                                                     ($): d_out.Possibly_Found => p_.literal.set(p_.from.optional(Value_possibly_found($, $p)).decide(
                                                                         ($) => $,
                                                                         (): d_out.Found => ['property', { 'style': ['verbose', prop] }]
@@ -155,7 +155,7 @@ export const Value: Value = ($, $p) => {
                                                                         return p_.literal.set(['property', { 'style': ['verbose', prop] }])
                                                                     }
                                                                 ))
-                                                                case 'no': return p_.ss($, ($) => {
+                                                                case 'no': return p_.option($, ($) => {
 
                                                                     return p_.literal.set(['property', { 'style': ['verbose', prop] }])
                                                                 })
@@ -167,7 +167,7 @@ export const Value: Value = ($, $p) => {
                                             },
                                             () => this_value()
                                         ))
-                                        case 'concise': return p_.ss($, ($) => p_.from.list($.properties).on_has_match(
+                                        case 'concise': return p_.option($, ($) => p_.from.list($.properties).on_has_match(
                                             ($) => {
                                                 const prop = $
                                                 return p_.from.boolean(
@@ -181,8 +181,8 @@ export const Value: Value = ($, $p) => {
                                                     () => p_.literal.set(p_.from.state($['definition found']).decide(
                                                         ($): d_out.Found => {
                                                             switch ($[0]) {
-                                                                case 'yes': return p_.ss($, ($) => Value($['value'], $p))
-                                                                case 'no': return p_.ss($, ($) => ['property', { 'style': ['unknown concise', prop] }])
+                                                                case 'yes': return p_.option($, ($) => Value($['value'], $p))
+                                                                case 'no': return p_.option($, ($) => ['property', { 'style': ['unknown concise', prop] }])
                                                                 default: return p_.au($[0])
                                                             }
                                                         })),
@@ -194,38 +194,38 @@ export const Value: Value = ($, $p) => {
                                         default: return p_.au($[0])
                                     }
                                 }))
-                            case 'list': return p_.ss($, ($) => p_.from.list($.derived.items).on_has_match(
+                            case 'list': return p_.option($, ($) => p_.from.list($.derived.items).on_has_match(
                                 ($) => Value_possibly_found($, $p),
                                 () => this_value()
                             ))
-                            case 'nothing': return p_.ss($, ($) => this_value())
-                            case 'optional': return p_.ss($, ($) => p_.from.state($.derived.status).decide(
+                            case 'nothing': return p_.option($, ($) => this_value())
+                            case 'optional': return p_.option($, ($) => p_.from.state($.derived.status).decide(
                                 ($) => {
                                     switch ($[0]) {
-                                        case 'set': return p_.ss($, ($) => p_.from.optional(Value_possibly_found($['child value'], $p)).decide(
+                                        case 'set': return p_.option($, ($) => p_.from.optional(Value_possibly_found($['child value'], $p)).decide(
                                             ($): d_out.Found => $,
                                             (): d_out.Found => this_value()
                                         ))
-                                        case 'not set': return p_.ss($, ($) => this_value())
+                                        case 'not set': return p_.option($, ($) => this_value())
                                         default: return p_.au($[0])
                                     }
                                 }))
-                            case 'reference': return p_.ss($, ($) => this_value())
-                            case 'state': return p_.ss($, ($): d_out.Found => {
+                            case 'reference': return p_.option($, ($) => this_value())
+                            case 'state': return p_.option($, ($): d_out.Found => {
                                 const valid_state = $
                                 return p_.from.state($.derived['option status']).decide(
                                     ($) => {
                                         switch ($[0]) {
-                                            case 'set': return p_.ss($, ($): d_out.Found => p_.from.optional(Value_possibly_found($.value, $p)).decide(
+                                            case 'set': return p_.option($, ($): d_out.Found => p_.from.optional(Value_possibly_found($.value, $p)).decide(
                                                 ($): d_out.Found => $,
                                                 (): d_out.Found => ['state', valid_state]
                                             ))
-                                            case 'missing data': return p_.ss($, ($) => ['state', valid_state])
+                                            case 'missing data': return p_.option($, ($) => ['state', valid_state])
                                             default: return p_.au($[0])
                                         }
                                     })
                             })
-                            case 'text': return p_.ss($, ($) => this_value())
+                            case 'text': return p_.option($, ($) => this_value())
                             default: return p_.au($[0])
                         }
                     }))

@@ -30,22 +30,22 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
             ($): t_out.Diagnostic.severity => {
                 switch ($[0]) {
                     case 'error':
-                        return p_.ss(
+                        return p_.option(
                             $,
                             ($) => ['error', null],
                         )
                     case 'warning':
-                        return p_.ss(
+                        return p_.option(
                             $,
                             ($) => ['warning', null],
                         )
                     case 'information':
-                        return p_.ss(
+                        return p_.option(
                             $,
                             ($) => ['information', null],
                         )
                     case 'hint':
-                        return p_.ss(
+                        return p_.option(
                             $,
                             ($) => ['hint', null],
                         )
@@ -109,17 +109,17 @@ export const Diagnostic: t_signatures.Diagnostic = ($) => ({
             ($): t_out.Diagnostic.type_ => {
                 switch ($[0]) {
                     case 'semantic':
-                        return p_.ss(
+                        return p_.option(
                             $,
                             ($) => ['semantic', null],
                         )
                     case 'deserialize':
-                        return p_.ss(
+                        return p_.option(
                             $,
                             ($) => ['deserialize', null],
                         )
                     case 'schema':
-                        return p_.ss(
+                        return p_.option(
                             $,
                             ($) => ['schema', null],
                         )

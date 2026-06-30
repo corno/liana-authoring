@@ -17,15 +17,15 @@ d_in.Error, d_out.Diagnostics.L
 	return p_.from.state($).decide(
 		($) => {
 			switch ($[0]) {
-				case 'schema path': return p_.ss($, ($) => ({
+				case 'schema path': return p_.option($, ($) => ({
 					'severity': ['error', null],
 					'message': `no schema found`,
 					'range': p_.literal.not_set(),
 					'related information': p_.literal.not_set(),
 					'type': ['deserialize', null]
 				}))
-				case 'schema': return p_.ss($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
-				case 'deserialize parse tree': return p_.ss($, ($) => ({
+				case 'schema': return p_.option($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
+				case 'deserialize parse tree': return p_.option($, ($) => ({
 					'severity': ['error', null],
 					'message': t_fp_to_text.Phrase(
 						t_deserialize_to_fp.Error($),
