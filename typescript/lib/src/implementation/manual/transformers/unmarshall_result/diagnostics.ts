@@ -9,8 +9,8 @@ import * as d_out from "../../../../interface/generated/liana/schemas/diagnostic
 import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors"
 import * as t_to_unmarshall_result_to_warnings from "../unmarshall_result/unmarshall_warnings"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
-import * as t_unmarshall_errors_to_fp from "../unmarshall_errors/fountain_pen"
-import * as t_unmarshall_warnings_to_fp from "../unmarshall_warnings/fountain_pen"
+import * as t_unmarshall_errors_to_fp from "../unmarshall_errors/prose"
+import * as t_unmarshall_warnings_to_fp from "../unmarshall_warnings/prose"
 
 
 export type Document = p_i.Transformer<

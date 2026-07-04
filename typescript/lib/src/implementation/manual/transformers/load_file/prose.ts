@@ -13,7 +13,7 @@ d_in.Error, d_out.Phrase
 
 //dependencies
 import * as t_read_file_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
-import * as t_deserialize_to_fp from "../deserialize/fountain_pen"
+import * as t_deserialize_to_fp from "../deserialize/prose"
 
 export const Error: signatures.Error = ($) => p_.from.state($).decide(
     ($) => {

@@ -7,8 +7,8 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 
 //dependencies
 import * as t_deserialize_to_fp from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/fountain_pen"
-import * as t_get_schema_to_fp from "../get_schema/fountain_pen"
-import * as t_get_schema_path_to_fp from "../get_schema_path/fountain_pen"
+import * as t_get_schema_to_fp from "../get_schema/prose"
+import * as t_get_schema_path_to_fp from "../get_schema_path/prose"
 
 export namespace signatures {
     export type Error = p_i.Transformer<

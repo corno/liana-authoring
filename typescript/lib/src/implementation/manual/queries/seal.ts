@@ -10,10 +10,10 @@ import * as d_process_file_data from "pareto-common/dist/interface/data/process_
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file"
-import * as t_load_file_to_fp from "../transformers/load_file/fountain_pen"
+import * as t_load_file_to_fp from "../transformers/load_file/prose"
 import * as t_unrestricted_path_to_text from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/text"
 import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result"
-import * as t_auth_targ_from_unmarshall_result_to_fountain_pen from "../transformers/sealed_target_from_unmarshall_result/fountain_pen"
+import * as t_auth_targ_from_unmarshall_result_to_fountain_pen from "../transformers/sealed_target_from_unmarshall_result/prose"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manual/transformers/sealed_target/fountain_pen"
 
