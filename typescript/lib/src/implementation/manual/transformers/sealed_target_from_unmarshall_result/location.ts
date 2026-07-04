@@ -8,7 +8,8 @@ import * as d_out from "astn-core/dist/interface/generated/liana/schemas/locatio
 //dependencies
 
 export const Error: p_i.Transformer<
-d_in.Error, d_out.Range
+    d_in.Error,
+    d_out.Range
 > = (
     $,
 ) => $.range

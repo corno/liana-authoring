@@ -11,7 +11,7 @@ import * as d_path from "pareto-resources/dist/interface/generated/liana/schemas
 //dependencies
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
-import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
+import * as t_deserialize_resolved_to_prose from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
 
 
 export type Temp_Error = {
@@ -35,7 +35,7 @@ export const Error: p_i.Transformer_With_Parameter<
 > = ($, $p) => ({
     'type': ['deserialize', null],
     'message': t_fp_to_text.Phrase(
-        t_deserialize_resolved_to_fp.Error($),
+        t_deserialize_resolved_to_prose.Error($),
         {
             'indentation': "    ",
             'newline': "\n",

@@ -12,7 +12,8 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 
 
 export const Warning: p_i.Transformer<
-d_in.Warnings.L, d_out.Phrase.composed
+    d_in.Warnings.L,
+    d_out.Phrase.composed
 > = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {

@@ -10,8 +10,9 @@ import * as t_stat_to_prose from "pareto-resources/dist/implementation/manual/tr
 
 export namespace signatures {
     export type Error = p_i.Transformer<
-d_in.Error, d_out.Phrase
->
+        d_in.Error,
+        d_out.Phrase
+    >
 }
 
 //shorthands

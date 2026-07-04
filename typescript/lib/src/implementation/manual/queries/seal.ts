@@ -10,12 +10,12 @@ import * as d_process_file_data from "pareto-common/dist/interface/data/process_
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file"
-import * as t_load_file_to_fp from "../transformers/load_file/prose"
+import * as t_load_file_to_prose from "../transformers/load_file/prose"
 import * as t_unrestricted_path_to_text from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/text"
 import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result"
 import * as t_auth_targ_from_unmarshall_result_to_prose from "../transformers/sealed_target_from_unmarshall_result/prose"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
-import * as t_astn_sealed_target_to_fp from "astn-core/dist/implementation/manual/transformers/sealed_target/fountain_pen"
+import * as t_astn_sealed_target_to_prose from "astn-core/dist/implementation/manual/transformers/sealed_target/fountain_pen"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
@@ -36,7 +36,7 @@ export const $$: interface_.query_functions.seal = p_.query_function(
             ($): d_process_file_data.Error => sh.ph.composed([
                 sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
                 sh.ph.literal("FIX location: "),
-                t_load_file_to_fp.Error(
+                t_load_file_to_prose.Error(
                     $,
                 )
             ])
@@ -63,7 +63,7 @@ export const $$: interface_.query_functions.seal = p_.query_function(
         ($): d_process_file_data.Result => ({
             'data': p_list_from_text(
                 t_fp_to_text.Paragraph(
-                    t_astn_sealed_target_to_fp.Document(
+                    t_astn_sealed_target_to_prose.Document(
                         $
                     ),
                     $s['serialization parameters']
