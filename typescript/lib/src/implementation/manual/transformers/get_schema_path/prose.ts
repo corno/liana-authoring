@@ -6,7 +6,7 @@ import * as d_in from "../../../../interface/data/get_schema_path"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
 
 //dependencies
-import * as t_stat_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/stat_possible_node/fountain_pen"
+import * as t_stat_to_prose from "pareto-resources/dist/implementation/manual/transformers/stat_possible_node/fountain_pen"
 
 export namespace signatures {
     export type Error = p_i.Transformer<
@@ -21,7 +21,7 @@ export const Error: signatures.Error = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'not found': return p_.option($, ($) => sh.ph.literal("schema not found"))
-            case 'stat error': return p_.option($, ($) => t_stat_to_fountain_pen.Error($))
+            case 'stat error': return p_.option($, ($) => t_stat_to_prose.Error($))
             default: return p_.au($[0])
         }
     })

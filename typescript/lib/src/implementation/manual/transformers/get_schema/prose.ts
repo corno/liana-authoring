@@ -7,7 +7,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 
 //dependencies
 import * as t_deserialize_resolved_to_fp from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
-import * as t_read_file_to_fountain_pen from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
+import * as t_read_file_to_prose from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
 
 export namespace signatures {
     export type Error = p_i.Transformer<
@@ -19,7 +19,7 @@ export const Error: signatures.Error = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'deserialize': return p_.option($, ($) => t_deserialize_resolved_to_fp.Error($))
-            case 'read file': return p_.option($, ($) => t_read_file_to_fountain_pen.Error($))
+            case 'read file': return p_.option($, ($) => t_read_file_to_prose.Error($))
             default: return p_.au($[0])
         }
     })
