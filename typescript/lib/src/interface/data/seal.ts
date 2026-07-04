@@ -1,6 +1,6 @@
 
 import * as d_function_seal from "../../interface/data/sealed_target_from_parse_tree"
-import * as d_function_unmarshall from "../../interface/data/unmarshall_result_from_loc"
+import * as d_function_unmarshall from "./unmarshall_result_from_list_of_characters"
 
 
 export type Parameters = {

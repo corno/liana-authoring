@@ -3,7 +3,7 @@ import * as p_i from 'pareto-core/dist/interface/refiner'
 //data types
 // import * as d_in from "pareto-liana/dist/interface/to_be_generated/unmashall_result"
 import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
-import * as d_function_unmarshall from "../../../../interface/data/unmarshall_result_from_loc"
+import * as d_function_unmarshall from "../../../../interface/data/unmarshall_result_from_list_of_characters"
 import * as d_function_seal from "../../../../interface/data/seal"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
