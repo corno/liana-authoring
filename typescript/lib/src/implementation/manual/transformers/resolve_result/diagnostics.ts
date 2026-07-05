@@ -7,7 +7,7 @@ import * as d_out from "../../../../interface/generated/liana/schemas/diagnostic
 
 //dependencies
 import * as t_to_resolve_result_to_errors from "../resolve_result/resolve_errors"
-import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
+import * as t_prose_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_resolve_errors_to_prose from "../resolve_errors/prose"
 
 
@@ -21,7 +21,7 @@ export const Document: Document = ($) => p_.from.list(t_to_resolve_result_to_err
         'severity': $.severity,
         'range': p_.literal.set(['range', $.range]),
         'related information': p_.literal.not_set(),
-        'message': t_fp_to_text.Phrase(
+        'message': t_prose_to_text.Phrase(
             t_resolve_errors_to_prose.Error($),
             {
                 'indentation': "    ",

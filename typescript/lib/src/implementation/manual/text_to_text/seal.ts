@@ -6,7 +6,10 @@ import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schema
 import * as d_function from "../../../interface/data/seal"
 
 type Signature = p_ri.Refiner_With_Parameter<
-d_out.Text, d_function.Error, d_in.Text, d_function.Parameters
+    d_out.Text,
+    d_function.Error,
+    d_in.Text,
+    d_function.Parameters
 >
 
 //dependencies

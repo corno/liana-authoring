@@ -7,10 +7,16 @@ import * as d_function from "../../../../interface/data/unmarshall_result_from_l
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 export type Value = p_i.Refiner_With_Parameter<
-d_out.Value, d_function.Error, d_in.List_of_Characters, d_function.Parameters
+    d_out.Value,
+    d_function.Error,
+    d_in.List_of_Characters,
+    d_function.Parameters
 >
 export type Document = p_i.Refiner_With_Parameter<
-d_out.Document, d_function.Error, d_in.List_of_Characters, d_function.Parameters
+    d_out.Document,
+    d_function.Error,
+    d_in.List_of_Characters,
+    d_function.Parameters
 >
 
 //depencencies

@@ -12,10 +12,16 @@ import * as d_function from "../../../../interface/data/sealed_target_from_parse
 
 //signatures
 export type Document = p_i.Refiner_With_Parameter<
-d_out.Document, d_function.Error, d_in.Document, d_function.Parameters
+    d_out.Document,
+    d_function.Error,
+    d_in.Document,
+    d_function.Parameters
 >
 export type Value = p_i.Refiner_With_Parameter<
-d_out.Value, d_function.Error, d_in.Value, d_function.Parameters
+    d_out.Value,
+    d_function.Error,
+    d_in.Value,
+    d_function.Parameters
 >
 
 // export const Document: Document = ($, abort, $p) => r_from_unmarshall_result.Document(

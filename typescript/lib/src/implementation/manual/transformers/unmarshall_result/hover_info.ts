@@ -8,7 +8,7 @@ import * as d_out from "../../../../interface/generated/liana/schemas/hover_info
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found"
-import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
+import * as t_prose_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
@@ -21,7 +21,7 @@ export type Document = p_i.Transformer_With_Parameter<
     }
 >
 
-const Property_Path = ($: d_in.Property_Path): string => t_fp_to_text.Phrase(
+const Property_Path = ($: d_in.Property_Path): string => t_prose_to_text.Phrase(
     sh.ph.rich(
         p_.from.list($).map(
             ($) => p_.from.state($).decide(

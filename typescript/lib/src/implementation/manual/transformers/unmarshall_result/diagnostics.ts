@@ -8,7 +8,7 @@ import * as d_out from "../../../../interface/generated/liana/schemas/diagnostic
 //dependencies
 import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors"
 import * as t_to_unmarshall_result_to_warnings from "../unmarshall_result/unmarshall_warnings"
-import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
+import * as t_prose_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/prose"
 import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/prose"
 
@@ -25,7 +25,7 @@ export const Document: Document = ($) => p_.literal.segmented_list([
                 'severity': ['error', null],
                 'range': p_.literal.set(['range', $.range]),
                 'related information': p_.literal.not_set(),
-                'message': t_fp_to_text.Phrases(
+                'message': t_prose_to_text.Phrases(
                     t_unmarshall_errors_to_prose.Error($),
                     {
                         'indentation': "    ",
@@ -42,7 +42,7 @@ export const Document: Document = ($) => p_.literal.segmented_list([
                 'severity': ['warning', null],
                 'range': p_.literal.set(['range', $.range]),
                 'related information': p_.literal.not_set(),
-                'message': t_fp_to_text.Phrases(
+                'message': t_prose_to_text.Phrases(
                     t_unmarshall_warnings_to_prose.Warning($),
                     {
                         'indentation': "    ",

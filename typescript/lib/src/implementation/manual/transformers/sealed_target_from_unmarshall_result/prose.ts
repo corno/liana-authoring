@@ -5,16 +5,24 @@ import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as d_in from "../../../../interface/data/sealed_target_from_unmarshall_result"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
 
+export namespace interface_ {
+    export type Found = p_i.Transformer<
+        d_in.Found,
+        d_out.Phrase
+    >
+    export type Error = p_i.Transformer<
+        d_in.Error,
+        d_out.Phrase
+    >
+}
+
 //dependencies
 
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 
 
-export const Found: p_i.Transformer<
-    d_in.Found,
-    d_out.Phrase
-> = ($) => p_.from.state($).decide(
+export const Found: interface_.Found = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'dictionary': return p_.option($, ($) => sh.ph.literal("dictionary"))
@@ -34,11 +42,7 @@ export const Found: p_i.Transformer<
         }
     })
 
-export const Error: p_i.Transformer<
-    d_in.Error, d_out.Phrase
-> = (
-    $,
-) => {
+export const Error: interface_.Error = ($) => {
         return sh.ph.composed([
             p_.from.state($.type).decide(
                 ($) => {
