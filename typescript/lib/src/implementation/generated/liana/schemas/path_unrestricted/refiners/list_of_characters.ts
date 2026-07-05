@@ -1,11 +1,11 @@
 
-import * as p_ from 'pareto-core/dist/implementation/refiner'
+import * as p_ from 'pareto-core/implementation/refiner'
 
-import * as t_signatures from "../../../../../../interface/generated/liana/schemas/path_unrestricted/signatures/refiners/list_of_characters"
+import * as t_signatures from "../../../../../../interface/generated/liana/schemas/path_unrestricted/signatures/refiners/list_of_characters.js"
 
-import * as v_deserialize from "astn-core/dist/implementation/manual/refiners/parse_tree/list_of_characters"
+import * as v_deserialize from "astn-core/implementation/manual/refiners/parse_tree/list_of_characters"
 
-import * as v_unmarshall from "./astn_parse_tree"
+import * as v_unmarshall from "./astn_parse_tree.js"
 
 export const Node_Path: t_signatures.Node_Path = ($, abort, $p) => v_unmarshall.Node_Path(
     v_deserialize.Document(

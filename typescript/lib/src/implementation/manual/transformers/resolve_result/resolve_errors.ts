@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/resolve_result"
-import * as d_out from "../../../../interface/data/resolve_errors"
+import * as d_in from "../../../../interface/data/resolve_result.js"
+import * as d_out from "../../../../interface/data/resolve_errors.js"
 
 export type Document = p_i.Transformer<
     d_in.Document,

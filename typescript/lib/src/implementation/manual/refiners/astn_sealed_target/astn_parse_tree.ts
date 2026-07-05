@@ -1,13 +1,13 @@
-import * as p_i from 'pareto-core/dist/interface/refiner'
+import * as p_i from 'pareto-core/interface/refiner'
 
 //data types
-import * as d_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
-import * as d_function from "../../../../interface/data/sealed_target_from_parse_tree"
+import * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
+import * as d_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
+import * as d_function from "../../../../interface/data/sealed_target_from_parse_tree.js"
 
 //dependencies
-// import * as r_from_unmarshall_result from "./unmarshall_result"
-// import * as r_unmarshall_result_from_parse_tree from "../../transformers/astn_parse_tree/unmarshall_result"
+// import * as r_from_unmarshall_result from "./unmarshall_result.js"
+// import * as r_unmarshall_result_from_parse_tree from "../../transformers/astn_parse_tree/unmarshall_result.js"
 
 
 //signatures

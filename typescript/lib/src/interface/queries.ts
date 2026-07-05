@@ -1,15 +1,15 @@
-import * as p_ from 'pareto-core/dist/interface/query'
+import * as p_ from 'pareto-core/interface/query'
 
 //query interfaces
-import * as queries_pareto from "pareto-resources/dist/interface/resources"
-import * as queries_common from "pareto-common/dist/interface/queries"
+import * as queries_pareto from "pareto-resources/interface/resources"
+import * as queries_common from "pareto-common/interface/queries"
 
 //data types
-import * as d_serialize_prose from "pareto-fountain-pen/dist/interface/data/prose_serialize"
-import * as d_get_unmarshalled_file from "./data/get_unmarshalled_file"
-import * as d_deserialize from "./data/deserialize"
-import * as d_get_schema_path from "./data/get_schema_path"
-import * as d_get_schema from "./data/get_schema"
+import * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
+import * as d_get_unmarshalled_file from "./data/get_unmarshalled_file.js"
+import * as d_deserialize from "./data/deserialize.js"
+import * as d_get_schema_path from "./data/get_schema_path.js"
+import * as d_get_schema from "./data/get_schema.js"
 
 
 export namespace queries {

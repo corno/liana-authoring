@@ -1,15 +1,15 @@
 
-import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
 
-import p_change_context from 'pareto-core/dist/implementation/refiner/specials/change_context'
+import p_change_context from 'pareto-core/implementation/refiner/specials/change_context'
 
-import * as t_signatures from "../../../../../../interface/generated/liana/schemas/format/signatures/transformers/boilerplate_for_migrate"
+import * as t_signatures from "../../../../../../interface/generated/liana/schemas/format/signatures/transformers/boilerplate_for_migrate.js"
 
-import * as t_out from "../../../../../../interface/generated/liana/schemas/format/data"
+import * as t_out from "../../../../../../interface/generated/liana/schemas/format/data.js"
 
-import * as v_location from "../../location/transformers/boilerplate_for_migrate"
+import * as v_location from "../../location/transformers/boilerplate_for_migrate.js"
 
-import * as v_text_edits from "../../text_edits/transformers/boilerplate_for_migrate"
+import * as v_text_edits from "../../text_edits/transformers/boilerplate_for_migrate.js"
 
 export const Result: t_signatures.Result = ($) => v_text_edits.Text_Edits(
     $,

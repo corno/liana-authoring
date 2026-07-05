@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_imports_location from "../location/data"
+import * as i_imports_location from "../location/data.js"
 
-import * as i_imports_text_edits from "../text_edits/data"
+import * as i_imports_text_edits from "../text_edits/data.js"
 
 export type Result_ = i_imports_text_edits.Text_Edits
 
@@ -47,7 +47,7 @@ export type Parameters_ = {
     readonly 'options': Parameters_.options
 }
 
-export { 
+export type { 
     Result_ as Result, 
     Error_ as Error, 
     Parameters_ as Parameters, 

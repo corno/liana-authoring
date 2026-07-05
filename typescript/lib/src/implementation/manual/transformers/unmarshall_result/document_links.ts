@@ -1,10 +1,10 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result"
-import * as d_out from "../../../../interface/data/document_links"
-import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
+import * as d_in from "../../../../interface/data/unmarshall_result.js"
+import * as d_out from "../../../../interface/data/document_links.js"
+import * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
 export type Document = p_i.Transformer<
     d_in.Document,

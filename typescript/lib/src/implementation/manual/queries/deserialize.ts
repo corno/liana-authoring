@@ -1,19 +1,19 @@
-import * as p_ from 'pareto-core/dist/implementation/query'
-import * as p_r from 'pareto-core/dist/implementation/refiner'
-import * as p_t from 'pareto-core/dist/implementation/transformer'
-import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/list_from_text'
-import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
-import p_temp_dictionary from 'pareto-core/dist/temp/Generic_Dictionary'
-import p_select_lookup from 'pareto-core/dist/implementation/transformer/specials/lookup'
+import * as p_ from 'pareto-core/implementation/query'
+import * as p_r from 'pareto-core/implementation/refiner'
+import * as p_t from 'pareto-core/implementation/transformer'
+import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
+import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
+import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
+import * as p_select_lookup from 'pareto-core/implementation/transformer/specials/lookup'
 
-import * as interface_ from "../../../interface/queries"
+import * as interface_ from "../../../interface/queries.js"
 
 //data types
-import * as d from "../../../interface/data/deserialize"
+import * as d from "../../../interface/data/deserialize.js"
 
 //depencencies
-import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters"
-import * as r_resolve_result_from_unmarshall_result from "../transformers/unmarshall_result/resolve_result"
+import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters.js"
+import * as r_resolve_result_from_unmarshall_result from "../transformers/unmarshall_result/resolve_result.js"
 
 export const $$: interface_.query_functions.deserialize = p_.query_function(
     ($d, $s, $q) => p_super_query_result($q['get schema path'](

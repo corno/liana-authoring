@@ -1,24 +1,24 @@
-import * as p_ from 'pareto-core/dist/implementation/query'
-import * as p_temp from 'pareto-core/dist/implementation/transformer'
-import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/list_from_text'
-import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
+import * as p_ from 'pareto-core/implementation/query'
+import * as p_temp from 'pareto-core/implementation/transformer'
+import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
+import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import * as interface_ from "../../../interface/queries"
+import * as interface_ from "../../../interface/queries.js"
 
 //data  types
-import * as d_process_file_data from "pareto-common/dist/interface/data/process_file_data"
+import * as d_process_file_data from "pareto-common/interface/data/process_file_data"
 
 //dependencies
-import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file"
-import * as t_load_file_to_prose from "../transformers/load_file/prose"
-import * as t_unrestricted_path_to_text from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/text"
-import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result"
-import * as t_auth_targ_from_unmarshall_result_to_prose from "../transformers/sealed_target_from_unmarshall_result/prose"
-import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
-import * as t_astn_sealed_target_to_prose from "astn-core/dist/implementation/manual/transformers/sealed_target/prose"
+import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file.js"
+import * as t_load_file_to_prose from "../transformers/load_file/prose.js"
+import * as t_unrestricted_path_to_text from "pareto-resources/implementation/manual/transformers/unrestricted_path/text"
+import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result.js"
+import * as t_auth_targ_from_unmarshall_result_to_prose from "../transformers/sealed_target_from_unmarshall_result/prose.js"
+import * as t_fp_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"
+import * as t_astn_sealed_target_to_prose from "astn-core/implementation/manual/transformers/sealed_target/prose"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 export const $$: interface_.query_functions.seal = p_.query_function(
     ($d, $s, $q) => p_super_query_result(

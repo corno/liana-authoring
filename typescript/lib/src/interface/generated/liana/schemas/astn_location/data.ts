@@ -1,5 +1,5 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
 export namespace Range_ {
     
@@ -60,7 +60,7 @@ export type Relative_Location_ = {
     readonly 'column': Relative_Location_.column
 }
 
-export { 
+export type { 
     Range_ as Range, 
     Possible_Range_ as Possible_Range, 
     Location_ as Location, 

@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_out from "../../data"
+import * as i_out from "../../data.js"
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
 export namespace Result_ {
     
@@ -53,7 +53,7 @@ export type Parameters_ = (
     context: Parameters_.I,
 ) => Parameters_.O
 
-export { 
+export type { 
     Result_ as Result, 
     Error_ as Error, 
     Parameters_ as Parameters, 

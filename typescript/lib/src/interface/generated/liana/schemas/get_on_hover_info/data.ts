@@ -1,11 +1,11 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_imports_hover_info from "../hover_info/data"
+import * as i_imports_hover_info from "../hover_info/data.js"
 
-import * as i_imports_location from "../location/data"
+import * as i_imports_location from "../location/data.js"
 
-import * as i_imports_path_unrestricted from "../path_unrestricted/data"
+import * as i_imports_path_unrestricted from "../path_unrestricted/data.js"
 
 export namespace Result_ {
     
@@ -52,7 +52,7 @@ export type Parameters_ = {
     readonly 'position': Parameters_.position
 }
 
-export { 
+export type { 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }

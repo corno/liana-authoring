@@ -1,5 +1,5 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
 export namespace Parameters_ {
     
@@ -36,6 +36,6 @@ export type Parameters_ = {
     readonly 'target': Parameters_.target
 }
 
-export { 
+export type { 
     Parameters_ as Parameters, 
 }

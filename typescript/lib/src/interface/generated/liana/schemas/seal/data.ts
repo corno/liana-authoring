@@ -1,7 +1,7 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_imports_path_unrestricted from "../path_unrestricted/data"
+import * as i_imports_path_unrestricted from "../path_unrestricted/data.js"
 
 export type Result_ = string
 
@@ -43,7 +43,7 @@ export type Parameters_ = {
     readonly 'target': Parameters_.target
 }
 
-export { 
+export type { 
     Result_ as Result, 
     Parameters_ as Parameters, 
 }

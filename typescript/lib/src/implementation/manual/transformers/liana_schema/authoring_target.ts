@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
-import * as d_in from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
+import * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
+import * as d_in from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
 export namespace d_function {
     export type Parameters = {

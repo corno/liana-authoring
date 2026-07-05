@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/interface/data'
 
-import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
+import * as d_location from "astn-core/interface/generated/liana/schemas/location/data"
 
 export type Error = {
     'range': d_location.Range

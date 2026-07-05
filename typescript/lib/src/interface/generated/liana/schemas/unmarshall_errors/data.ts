@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
+import * as p_di from 'pareto-core/interface/data'
 
 
-import * as i_imports_location from "../astn_location/data"
+import * as i_imports_location from "../astn_location/data.js"
 
 export namespace Errors_ {
     
@@ -235,7 +235,7 @@ export namespace Warnings_ {
 
 export type Warnings_ = p_di.List<Warnings_.L>
 
-export { 
+export type { 
     Errors_ as Errors, 
     Warnings_ as Warnings, 
 }

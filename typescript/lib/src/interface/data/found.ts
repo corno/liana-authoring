@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/interface/data'
 
-import * as d_out from "./unmarshall_result"
+import * as d_out from "./unmarshall_result.js"
 
 export type Found =
     | ['value', d_out.Value]

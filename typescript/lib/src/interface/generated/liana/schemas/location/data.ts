@@ -1,5 +1,5 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
 export namespace Position_ {
     
@@ -27,7 +27,7 @@ export type Range_FE_ = {
     readonly 'end': Range_FE_.end
 }
 
-export { 
+export type { 
     Position_ as Position, 
     Range_FE_ as Range_FE, 
 }

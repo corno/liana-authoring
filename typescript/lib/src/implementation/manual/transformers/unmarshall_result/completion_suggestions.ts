@@ -1,20 +1,20 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_di from 'pareto-core/dist/interface/data'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_di from 'pareto-core/interface/data'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result"
-import * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data"
+import * as d_in from "../../../../interface/data/unmarshall_result.js"
+import * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data.js"
 
-import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
-import * as d_ast_target from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_outx from "../../../../interface/data/found"
+import * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
+import * as d_ast_target from "astn/interface/generated/liana/schemas/authoring_target/data"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import * as d_outx from "../../../../interface/data/found.js"
 
 //dependencies
-import * as t_to_unmarshall_result_value_at_position from "./found"
-import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target"
-import * as t_authoring_target_to_text from "astn/dist/implementation/manual/transformers/authoring_target/text"
+import * as t_to_unmarshall_result_value_at_position from "./found.js"
+import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target.js"
+import * as t_authoring_target_to_text from "astn/implementation/manual/transformers/authoring_target/text"
 
 export type Parameters = {
     'position': d_location.Position

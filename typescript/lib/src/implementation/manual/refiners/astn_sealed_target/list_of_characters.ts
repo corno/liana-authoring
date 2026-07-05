@@ -1,15 +1,15 @@
-import * as p_i from 'pareto-core/dist/interface/refiner'
+import * as p_i from 'pareto-core/interface/refiner'
 
 //data types
-// import * as d_in from "pareto-liana/dist/interface/to_be_generated/unmashall_result"
-import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
-import * as d_function_unmarshall from "../../../../interface/data/unmarshall_result_from_list_of_characters"
-import * as d_function_seal from "../../../../interface/data/seal"
-import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+// import * as d_in from "pareto-liana/interface/to_be_generated/unmashall_result"
+import * as d_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
+import * as d_function_unmarshall from "../../../../interface/data/unmarshall_result_from_list_of_characters.js"
+import * as d_function_seal from "../../../../interface/data/seal.js"
+import * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
-import * as r_unmarshall_result_from_list_of_characters from "../unmarshall_result/list_of_characters"
-import * as r_sealed_target_from_unmarshall_result from "./unmarshall_result"
+import * as r_unmarshall_result_from_list_of_characters from "../unmarshall_result/list_of_characters.js"
+import * as r_sealed_target_from_unmarshall_result from "./unmarshall_result.js"
 
 
 export type Document = p_i.Refiner_With_Parameter<

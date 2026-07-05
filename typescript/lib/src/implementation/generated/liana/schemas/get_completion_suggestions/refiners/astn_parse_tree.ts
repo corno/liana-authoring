@@ -1,25 +1,25 @@
 
-import * as p_ from 'pareto-core/dist/implementation/refiner'
+import * as p_ from 'pareto-core/implementation/refiner'
 
-import p_change_context from 'pareto-core/dist/implementation/refiner/specials/change_context'
+import p_change_context from 'pareto-core/implementation/refiner/specials/change_context'
 
-import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/list_from_text'
+import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
-import p_variables from 'pareto-core/dist/implementation/refiner/specials/variables'
+import p_variables from 'pareto-core/implementation/refiner/specials/variables'
 
-import * as t_signatures from "../../../../../../interface/generated/liana/schemas/get_completion_suggestions/signatures/refiners/astn_parse_tree"
+import * as t_signatures from "../../../../../../interface/generated/liana/schemas/get_completion_suggestions/signatures/refiners/astn_parse_tree.js"
 
-import * as t_out from "../../../../../../interface/generated/liana/schemas/get_completion_suggestions/data"
+import * as t_out from "../../../../../../interface/generated/liana/schemas/get_completion_suggestions/data.js"
 
-import * as v_unmarshalled_from_parse_tree from "liana-core/dist/implementation/manual/refiners/unmarshalled/astn_parse_tree"
+import * as v_unmarshalled_from_parse_tree from "liana-core/implementation/manual/refiners/unmarshalled/astn_parse_tree"
 
-import * as v_parse_tree_to_location from "liana-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as v_parse_tree_to_location from "liana-core/implementation/manual/transformers/parse_tree/start_token_range"
 
-import * as v_external_completion_suggestions from "../../completion_suggestions/refiners/astn_parse_tree"
+import * as v_external_completion_suggestions from "../../completion_suggestions/refiners/astn_parse_tree.js"
 
-import * as v_external_location from "../../location/refiners/astn_parse_tree"
+import * as v_external_location from "../../location/refiners/astn_parse_tree.js"
 
-import * as v_external_path_unrestricted from "../../path_unrestricted/refiners/astn_parse_tree"
+import * as v_external_path_unrestricted from "../../path_unrestricted/refiners/astn_parse_tree.js"
 
 export const Result: t_signatures.Result = ($, abort) => p_change_context(
     v_unmarshalled_from_parse_tree.Verbose_Group(

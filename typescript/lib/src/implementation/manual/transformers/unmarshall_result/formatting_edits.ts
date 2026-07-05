@@ -1,18 +1,18 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result"
-import * as d_out from "../../../../interface/data/formatting_edits"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_outx from "../../../../interface/data/found"
-import * as d_function_parameters from "../../../../interface/data/unmarshall_result_to_authoring_target"
+import * as d_in from "../../../../interface/data/unmarshall_result.js"
+import * as d_out from "../../../../interface/data/formatting_edits.js"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import * as d_outx from "../../../../interface/data/found.js"
+import * as d_function_parameters from "../../../../interface/data/unmarshall_result_to_authoring_target.js"
 
 //dependencies
-import * as t_to_unmarshall_result_value_at_position from "./found"
-import * as t_authoring_target_to_text from "astn/dist/implementation/manual/transformers/authoring_target/text"
-import * as t_parse_tree_to_full_range from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
-import * as t_unmarshall_result_to_authoring_target from "./authoring_target"
+import * as t_to_unmarshall_result_value_at_position from "./found.js"
+import * as t_authoring_target_to_text from "astn/implementation/manual/transformers/authoring_target/text"
+import * as t_parse_tree_to_full_range from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
+import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 
 export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,

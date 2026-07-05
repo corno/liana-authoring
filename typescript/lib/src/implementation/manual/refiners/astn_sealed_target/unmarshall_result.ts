@@ -1,15 +1,15 @@
-import * as p_ from 'pareto-core/dist/implementation/refiner'
-import * as p_i from 'pareto-core/dist/interface/refiner'
-import * as p_ti from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/refiner'
+import * as p_i from 'pareto-core/interface/refiner'
+import * as p_ti from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result"
-import * as d_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
-import * as d_in_astn_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-import * as d_function from "../../../../interface/data/sealed_target_from_unmarshall_result"
+import * as d_in from "../../../../interface/data/unmarshall_result.js"
+import * as d_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
+import * as d_in_astn_parse_tree from "astn-core/interface/generated/liana/schemas/parse_tree/data"
+import * as d_function from "../../../../interface/data/sealed_target_from_unmarshall_result.js"
 
 //dependencies
-import * as t_astn_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/start_token_range"
+import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
 
 //signatures
 // export type Document = p_i.Refiner<

@@ -1,15 +1,15 @@
-import * as p_ from 'pareto-core/dist/implementation/query'
-import * as p_temp from 'pareto-core/dist/implementation/refiner'
-import p_variables from 'pareto-core/dist/implementation/query/specials/variables'
-import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
+import * as p_ from 'pareto-core/implementation/query'
+import * as p_temp from 'pareto-core/implementation/refiner'
+import p_variables from 'pareto-core/implementation/query/specials/variables'
+import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import * as interface_ from "../../../interface/queries"
+import * as interface_ from "../../../interface/queries.js"
 
 //data types
-import * as d from "../../../interface/data/get_schema_path"
+import * as d from "../../../interface/data/get_schema_path.js"
 
 //depencencies
-import * as t_path_to_path from "pareto-resources/dist/implementation/manual/transformers/unrestricted_path/unrestricted_path"
+import * as t_path_to_path from "pareto-resources/implementation/manual/transformers/unrestricted_path/unrestricted_path"
 
 
 export const $$: interface_.query_functions.get_schema_path = p_.query_function(

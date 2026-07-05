@@ -1,14 +1,14 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result"
-import * as d_in_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "astn/dist/interface/generated/liana/schemas/authoring_target/data"
-import * as d_function from "../../../../interface/data/unmarshall_result_to_authoring_target"
+import * as d_in from "../../../../interface/data/unmarshall_result.js"
+import * as d_in_parse_tree from "astn-core/interface/generated/liana/schemas/parse_tree/data"
+import * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
+import * as d_function from "../../../../interface/data/unmarshall_result_to_authoring_target.js"
 
 //dependencies
-import * as t_parse_tree_to_authoring_target from "astn/dist/implementation/manual/transformers/parse_tree/authoring_target"
+import * as t_parse_tree_to_authoring_target from "astn/implementation/manual/transformers/parse_tree/authoring_target"
 
 //FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 

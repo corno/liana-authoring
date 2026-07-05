@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
-import * as i_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
+import * as i_out from "pareto-fountain-pen/interface/generated/liana/schemas/prose/data"
 
 export namespace Errors_ {
     
@@ -37,7 +37,7 @@ export type Warnings_ = (
     context: Warnings_.I,
 ) => Warnings_.O
 
-export { 
+export type { 
     Errors_ as Errors, 
     Warnings_ as Warnings, 
 }

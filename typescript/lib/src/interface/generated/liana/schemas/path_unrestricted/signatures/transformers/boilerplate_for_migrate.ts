@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_out from "../../data"
+import * as i_out from "../../data.js"
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
 export namespace Node_Path_ {
     
@@ -85,7 +85,7 @@ export type Up_Steps_ = (
     context: Up_Steps_.I,
 ) => Up_Steps_.O
 
-export { 
+export type { 
     Node_Path_ as Node_Path, 
     Context_Path_ as Context_Path, 
     Context_Subpath_ as Context_Subpath, 

@@ -1,15 +1,15 @@
 
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_di from 'pareto-core/interface/data'
 const p_decide_state = <State, B>($: State,  assign: ($: State) => B) => assign($)
 const p_decide_optional = <OV extends p_di.Value, B extends p_di.Value>($: p_di.Optional_Value<OV>,  assign: ($: OV) => B,  otherwise: () => B) => p_.from.optional($).decide(assign, otherwise)
 const p_decide_text = <B>($: string,  assign: ($: string) => B) => assign($)
 
-import p_change_context from 'pareto-core/dist/implementation/refiner/specials/change_context'
+import p_change_context from 'pareto-core/implementation/refiner/specials/change_context'
 
-import * as t_signatures from "../../../../../../interface/generated/liana/schemas/astn_location/signatures/transformers/boilerplate_for_migrate"
+import * as t_signatures from "../../../../../../interface/generated/liana/schemas/astn_location/signatures/transformers/boilerplate_for_migrate.js"
 
-import * as t_out from "../../../../../../interface/generated/liana/schemas/astn_location/data"
+import * as t_out from "../../../../../../interface/generated/liana/schemas/astn_location/data.js"
 
 export const Range: t_signatures.Range = ($) => ({
     'start': p_change_context(

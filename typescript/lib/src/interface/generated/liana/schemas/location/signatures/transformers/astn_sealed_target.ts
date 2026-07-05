@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
+import * as i_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
 export namespace Position_ {
     
@@ -37,7 +37,7 @@ export type Range_FE_ = (
     context: Range_FE_.I,
 ) => Range_FE_.O
 
-export { 
+export type { 
     Position_ as Position, 
     Range_FE_ as Range_FE, 
 }

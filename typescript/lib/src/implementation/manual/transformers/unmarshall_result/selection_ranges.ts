@@ -1,15 +1,15 @@
-import * as p_di from 'pareto-core/dist/interface/data'
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_di from 'pareto-core/interface/data'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result"
-import * as d_out from "../../../../interface/data/unmarshall_result"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
+import * as d_in from "../../../../interface/data/unmarshall_result.js"
+import * as d_out from "../../../../interface/data/unmarshall_result.js"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
 //dependencies
-import * as t_to_unmarshall_result_value_at_position from "./found"
-import * as t_parse_tree_to_location from "astn-core/dist/implementation/manual/transformers/parse_tree/full_value_range"
+import * as t_to_unmarshall_result_value_at_position from "./found.js"
+import * as t_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
 
 export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,

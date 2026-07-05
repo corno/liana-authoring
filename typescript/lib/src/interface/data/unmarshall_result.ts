@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/interface/data'
 
 //data types
-import * as d_astn_parse_tree from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
-import * as d_schema from "pareto-liana/dist/interface/generated/liana/schemas/schema/data/resolved"
-import * as d_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
+import * as d_astn_parse_tree from "astn-core/interface/generated/liana/schemas/parse_tree/data"
+import * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
+import * as d_location from "astn-core/interface/generated/liana/schemas/location/data"
 
 export type Range_Stack = {
     'range': d_location.Range

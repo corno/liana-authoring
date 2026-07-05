@@ -1,8 +1,8 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
+import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_location from "../astn_location/data"
+import * as i_imports_location from "../astn_location/data.js"
 
 export namespace Text_Edits_ {
     
@@ -55,6 +55,6 @@ export namespace Text_Edits_ {
 
 export type Text_Edits_ = p_di.List<Text_Edits_.L>
 
-export { 
+export type { 
     Text_Edits_ as Text_Edits, 
 }

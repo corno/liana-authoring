@@ -1,6 +1,6 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
+import * as p_di from 'pareto-core/interface/data'
 
 export namespace Node_Path_ {
     
@@ -58,7 +58,7 @@ export type Start_ =
 
 export type Up_Steps_ = number
 
-export { 
+export type { 
     Node_Path_ as Node_Path, 
     Context_Path_ as Context_Path, 
     Context_Subpath_ as Context_Subpath, 

@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_out from "../../data"
+import * as i_out from "../../data.js"
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
 export namespace Sort_Parameters_ {
     
@@ -21,6 +21,6 @@ export type Sort_Parameters_ = (
     context: Sort_Parameters_.I,
 ) => Sort_Parameters_.O
 
-export { 
+export type { 
     Sort_Parameters_ as Sort_Parameters, 
 }

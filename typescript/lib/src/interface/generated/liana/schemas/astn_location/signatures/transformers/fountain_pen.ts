@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
-import * as i_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
+import * as i_out from "pareto-fountain-pen/interface/generated/liana/schemas/prose/data"
 
 export namespace Range_ {
     
@@ -69,7 +69,7 @@ export type Relative_Location_ = (
     context: Relative_Location_.I,
 ) => Relative_Location_.O
 
-export { 
+export type { 
     Range_ as Range, 
     Possible_Range_ as Possible_Range, 
     Location_ as Location, 

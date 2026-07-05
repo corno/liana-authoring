@@ -1,16 +1,16 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result"
-import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data"
+import * as d_in from "../../../../interface/data/unmarshall_result.js"
+import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
 
 //dependencies
-import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors"
-import * as t_to_unmarshall_result_to_warnings from "../unmarshall_result/unmarshall_warnings"
-import * as t_prose_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
-import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/prose"
-import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/prose"
+import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors.js"
+import * as t_to_unmarshall_result_to_warnings from "../unmarshall_result/unmarshall_warnings.js"
+import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"
+import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/prose.js"
+import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/prose.js"
 
 
 export type Document = p_i.Transformer<

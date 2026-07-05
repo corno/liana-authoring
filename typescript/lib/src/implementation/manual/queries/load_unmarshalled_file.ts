@@ -1,17 +1,17 @@
-import * as p_ from 'pareto-core/dist/implementation/query'
-import p_text_from_list from 'pareto-core/dist/implementation/transformer/specials/text_from_list'
-import p_variables from 'pareto-core/dist/implementation/query/specials/variables'
-import p_super_query_result from 'pareto-core/dist/implementation/query/super_query_result'
+import * as p_ from 'pareto-core/implementation/query'
+import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
+import p_variables from 'pareto-core/implementation/query/specials/variables'
+import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import * as interface_ from "../../../interface/queries"
+import * as interface_ from "../../../interface/queries.js"
 
 //data types
-import * as d from "../../../interface/data/get_unmarshalled_file"
+import * as d from "../../../interface/data/get_unmarshalled_file.js"
 
 //depencencies
-import { $$ as q_deserialize } from "./deserialize"
-import { $$ as q_get_schema } from "./get_schema"
-import { $$ as q_get_schema_path } from "./get_schema_path"
+import { $$ as q_deserialize } from "./deserialize.js"
+import { $$ as q_get_schema } from "./get_schema.js"
+import { $$ as q_get_schema_path } from "./get_schema_path.js"
 
 export const $$: interface_.query_functions.load_unmarshalled_file = p_.query_function(
     ($d, $s, $q) => p_super_query_result($q['read file'](

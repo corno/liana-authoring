@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_out from "../../data"
+import * as i_out from "../../data.js"
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
 export namespace Completion_Suggestions_ {
     
@@ -21,6 +21,6 @@ export type Completion_Suggestions_ = (
     context: Completion_Suggestions_.I,
 ) => Completion_Suggestions_.O
 
-export { 
+export type { 
     Completion_Suggestions_ as Completion_Suggestions, 
 }

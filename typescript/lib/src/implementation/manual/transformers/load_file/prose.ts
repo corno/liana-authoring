@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/get_unmarshalled_file"
-import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
+import * as d_in from "../../../../interface/data/get_unmarshalled_file.js"
+import * as d_out from "pareto-fountain-pen/interface/generated/liana/schemas/prose/data"
 
 export namespace signatures {
     export type Error = p_i.Transformer<
@@ -13,8 +13,8 @@ export namespace signatures {
 }
 
 //dependencies
-import * as t_read_file_to_prose from "pareto-resources/dist/implementation/manual/transformers/read_file/prose"
-import * as t_deserialize_to_prose from "../deserialize/prose"
+import * as t_read_file_to_prose from "pareto-resources/implementation/manual/transformers/read_file/prose"
+import * as t_deserialize_to_prose from "../deserialize/prose.js"
 
 export const Error: signatures.Error = ($) => p_.from.state($).decide(
     ($) => {

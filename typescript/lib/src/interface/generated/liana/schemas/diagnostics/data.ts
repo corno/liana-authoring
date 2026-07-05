@@ -1,10 +1,10 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
+import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_location from "../astn_location/data"
+import * as i_imports_location from "../astn_location/data.js"
 
-import * as i_imports_path_unrestricted from "../path_unrestricted/data"
+import * as i_imports_path_unrestricted from "../path_unrestricted/data.js"
 
 export namespace Diagnostics_ {
     
@@ -131,7 +131,7 @@ export type Parameters_ = {
     readonly 'tab size': Parameters_.tab_size
 }
 
-export { 
+export type { 
     Diagnostics_ as Diagnostics, 
     Diagnostic_ as Diagnostic, 
     Result_ as Result, 

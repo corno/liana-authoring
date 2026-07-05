@@ -1,11 +1,11 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_generic from "liana-core/dist/interface/data/deserialize"
+import * as i_generic from "liana-core/interface/data/deserialize"
 
-import * as i_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+import * as i_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
-import * as i_out from "../../data"
+import * as i_out from "../../data.js"
 
 export namespace Node_Path_ {
     
@@ -127,7 +127,7 @@ export type Up_Steps_ = (
     },
 ) => Up_Steps_.O
 
-export { 
+export type { 
     Node_Path_ as Node_Path, 
     Context_Path_ as Context_Path, 
     Context_Subpath_ as Context_Subpath, 

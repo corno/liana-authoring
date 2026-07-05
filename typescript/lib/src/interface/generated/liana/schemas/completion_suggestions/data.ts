@@ -1,10 +1,10 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
+import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_location from "../location/data"
+import * as i_imports_location from "../location/data.js"
 
-import * as i_imports_text_edits from "../text_edits/data"
+import * as i_imports_text_edits from "../text_edits/data.js"
 
 export namespace Completion_Suggestions_ {
     
@@ -64,6 +64,6 @@ export namespace Completion_Suggestions_ {
 
 export type Completion_Suggestions_ = p_di.Optional_Value<Completion_Suggestions_.O>
 
-export { 
+export type { 
     Completion_Suggestions_ as Completion_Suggestions, 
 }

@@ -1,6 +1,6 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
+import * as p_di from 'pareto-core/interface/data'
 
 export namespace Hover_Texts_ {
     
@@ -10,6 +10,6 @@ export namespace Hover_Texts_ {
 
 export type Hover_Texts_ = p_di.List<Hover_Texts_.L>
 
-export { 
+export type { 
     Hover_Texts_ as Hover_Texts, 
 }

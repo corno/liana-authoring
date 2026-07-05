@@ -1,11 +1,11 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_generic from "liana-core/dist/interface/data/unmarshall"
+import * as i_generic from "liana-core/interface/data/unmarshall"
 
-import * as i_out from "../../data"
+import * as i_out from "../../data.js"
 
-import * as i_in from "astn-core/dist/interface/generated/liana/schemas/parse_tree/data"
+import * as i_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
 
 export namespace Sort_Parameters_ {
     
@@ -26,6 +26,6 @@ export type Sort_Parameters_ = (
     abort: p_i.Abort<Sort_Parameters_.E>,
 ) => Sort_Parameters_.O
 
-export { 
+export type { 
     Sort_Parameters_ as Sort_Parameters, 
 }

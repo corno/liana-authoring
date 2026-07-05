@@ -1,9 +1,9 @@
-import * as p_i from 'pareto-core/dist/interface/refiner'
+import * as p_i from 'pareto-core/interface/refiner'
 
-import * as d_function from "../../../interface/generated/liana/schemas/convert_to_json/data"
-import * as d_function_deserialize_parse_tree from "astn-core/dist/interface/generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
-import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
+import * as d_function from "../../../interface/generated/liana/schemas/convert_to_json/data.js"
+import * as d_function_deserialize_parse_tree from "astn-core/interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_out from "pareto-fountain-pen/interface/generated/liana/schemas/text/data"
+import * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/text/data"
 
 type Signature = p_i.Refiner_With_Parameter<
     d_out.Text,
@@ -13,9 +13,9 @@ type Signature = p_i.Refiner_With_Parameter<
 >
 
 //dependencies
-import * as t_ast_2_json from "astn/dist/implementation/manual/transformers/parse_tree/json_target"
-import * as t_json_to_text from "pareto-json/dist/implementation/manual/transformers/json_without_guaranteed_unique_keys/text"
-import * as r_astn_parse_tree_from_text from "astn-core/dist/implementation/manual/refiners/parse_tree/text"
+import * as t_ast_2_json from "astn/implementation/manual/transformers/parse_tree/json_target"
+import * as t_json_to_text from "pareto-json/implementation/manual/transformers/json_without_guaranteed_unique_keys/text"
+import * as r_astn_parse_tree_from_text from "astn-core/implementation/manual/refiners/parse_tree/text"
 
 
 export const $$: Signature = ($, abort, $p,) => t_json_to_text.Value(

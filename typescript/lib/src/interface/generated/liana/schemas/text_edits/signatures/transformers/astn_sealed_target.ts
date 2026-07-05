@@ -1,9 +1,9 @@
 
-import * as p_i from 'pareto-core/dist/interface/__internal/Abort'
+import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_out from "astn-core/dist/interface/generated/liana/schemas/sealed_target/data"
+import * as i_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
 
-import * as i_in from "../../data"
+import * as i_in from "../../data.js"
 
 export namespace Text_Edits_ {
     
@@ -21,6 +21,6 @@ export type Text_Edits_ = (
     context: Text_Edits_.I,
 ) => Text_Edits_.O
 
-export { 
+export type { 
     Text_Edits_ as Text_Edits, 
 }
