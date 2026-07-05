@@ -15,7 +15,7 @@ export namespace interface_ {
 //depencencies
 import * as t_get_schema from "../get_schema/diagnostics"
 import * as t_deserialize_to_location from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/location"
-import * as t_deserialize_to_prose from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/fountain_pen"
+import * as t_deserialize_to_prose from "astn-core/dist/implementation/manual/transformers/deserialize_parse_tree/prose"
 import * as t_prose_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
 export const Error: interface_.Error = ($) => p_.from.state($).decide(

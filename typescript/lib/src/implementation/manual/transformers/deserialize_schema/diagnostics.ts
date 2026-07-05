@@ -40,7 +40,7 @@ export namespace interface_ {
 //dependencies
 import * as t_prose_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 import * as t_deserialize_resolved_to_location from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/location"
-import * as t_deserialize_resolved_to_prose from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/fountain_pen"
+import * as t_deserialize_resolved_to_prose from "liana-core/dist/implementation/manual/transformers/deserialize_resolved/prose"
 
 
 export const Error: interface_.Error = ($, $p) => ({

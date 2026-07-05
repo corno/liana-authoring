@@ -13,7 +13,7 @@ export namespace signatures {
 }
 
 //dependencies
-import * as t_read_file_to_prose from "pareto-resources/dist/implementation/manual/transformers/read_file/fountain_pen"
+import * as t_read_file_to_prose from "pareto-resources/dist/implementation/manual/transformers/read_file/prose"
 import * as t_deserialize_to_prose from "../deserialize/prose"
 
 export const Error: signatures.Error = ($) => p_.from.state($).decide(

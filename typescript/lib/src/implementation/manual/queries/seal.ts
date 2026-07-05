@@ -15,7 +15,7 @@ import * as t_unrestricted_path_to_text from "pareto-resources/dist/implementati
 import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result"
 import * as t_auth_targ_from_unmarshall_result_to_prose from "../transformers/sealed_target_from_unmarshall_result/prose"
 import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
-import * as t_astn_sealed_target_to_prose from "astn-core/dist/implementation/manual/transformers/sealed_target/fountain_pen"
+import * as t_astn_sealed_target_to_prose from "astn-core/dist/implementation/manual/transformers/sealed_target/prose"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
