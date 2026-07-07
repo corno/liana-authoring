@@ -1,27 +1,26 @@
 import * as p_ from 'pareto-core/interface/command'
 
-import * as resources_pareto from "pareto-resources/interface/resources"
-import * as resources_pareto_stream from "pareto-stream-api/interface/commands"
-import * as commands_pareto_application_api from "pareto-application-api/interface/resources"
+import * as command_actions_pareto_resources from "pareto-resources/interface/command_actions"
+import * as command_actions_pareto_stream_api from "pareto-stream-api/interface/command_actions"
+import * as command_actions_pareto_application_api from "pareto-application-api/interface/command_actions"
+import * as command_actions_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/command_actions"
+import * as query_actions_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/query_actions"
 
 import * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 
-export namespace procedures {
 
-    export type seal = p_.Command_Procedure<
-        commands_pareto_application_api.resources.commands.main,
-        {
-            'tab size': number,
-            'serialization parameters': d_serialize_prose.Parameters,
-        },
-        {
-            'read file': resources_pareto.filesystem_unrestricted.queries.read_file
-            'stat': resources_pareto.filesystem_unrestricted.queries.stat_possible_node
-        },
-        {
-            'write file': resources_pareto.filesystem_unrestricted.commands.write_file,
-            'log error': resources_pareto_stream.commands.log_error,
-        }
-    >
-
-}
+export type seal = p_.Command_Procedure<
+    command_actions_pareto_application_api.main,
+    {
+        'tab size': number,
+        'serialization parameters': d_serialize_prose.Parameters,
+    },
+    {
+        'read file': query_actions_pareto_filesystem_unrestricted_api.read_file
+        'stat': query_actions_pareto_filesystem_unrestricted_api.stat_possible_node
+    },
+    {
+        'write file': command_actions_pareto_filesystem_unrestricted_api.write_file,
+        'log error': command_actions_pareto_stream_api.log_error,
+    }
+>

@@ -7,7 +7,7 @@ import * as d_out from "pareto-fountain-pen/interface/generated/liana/schemas/pr
 
 //dependencies
 import * as t_deserialize_resolved_to_prose from "liana-core/implementation/manual/transformers/deserialize_resolved/prose"
-import * as t_read_file_to_prose from "pareto-resources/implementation/manual/transformers/read_file/prose"
+import * as t_read_file_to_prose from "pareto-filesystem-unrestricted-api/implementation/manual/transformers/read_file/prose"
 
 export namespace signatures {
     export type Error = p_i.Transformer<

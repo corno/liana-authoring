@@ -13,7 +13,7 @@ import { $$ as q_deserialize } from "./deserialize.js"
 import { $$ as q_get_schema } from "./get_schema.js"
 import { $$ as q_get_schema_path } from "./get_schema_path.js"
 
-export const $$: interface_.query_functions.load_unmarshalled_file = p_.query_function(
+export const $$: interface_.load_unmarshalled_file = p_.query(
     ($d, $s, $q) => p_super_query_result($q['read file'](
         $d['file path'],
         ($): d.Error => ['read file', $]

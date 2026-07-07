@@ -12,7 +12,7 @@ import * as d from "../../../interface/data/get_schema_path.js"
 import * as t_path_to_path from "pareto-resources/implementation/manual/transformers/unrestricted_path/unrestricted_path"
 
 
-export const $$: interface_.query_functions.get_schema_path = p_.query_function(
+export const $$: interface_.get_schema_path = p_.query(
     ($d, $s, $q) => p_variables(
         () => {
             const schema_path = t_path_to_path.create_node_path(

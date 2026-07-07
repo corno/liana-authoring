@@ -1,5 +1,5 @@
 import * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
-import * as d_stat from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_stat_possible_node/data"
+import * as d_stat from "pareto-filesystem-unrestricted-api/interface/generated/liana/schemas/fs_unrestricted_stat_possible_node/data"
 
 export type Result = d_path.Node_Path
 

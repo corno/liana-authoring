@@ -20,7 +20,7 @@ import * as t_astn_sealed_target_to_prose from "astn-core/implementation/manual/
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-export const $$: interface_.query_functions.seal = p_.query_function(
+export const $$: interface_.seal = p_.query(
     ($d, $s, $q) => p_super_query_result(
         q_get_unmarshalled_file(
             null,
