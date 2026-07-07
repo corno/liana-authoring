@@ -2,10 +2,13 @@
 
 import * as p_h from 'pareto-host-nodejs/index'
 
+import * as rs_filesystem_unrestricted from "pareto-host-nodejs/file_system_unrestricted/index"
+import * as rs_stream from "pareto-host-nodejs/stream/index"
+
 import { $$ as procedure } from "lib/implementation/manual/commands/seal"
 
 p_h.run_main_command(
-    ($r) => procedure(
+    () => procedure(
         {
             'serialization parameters': {
                 'indentation': "    ",
@@ -14,12 +17,12 @@ p_h.run_main_command(
             'tab size': 4,
         },
         {
-            'read file': $r['filesystem unrestricted'].queries['read file'],
-            'stat': $r['filesystem unrestricted'].queries['stat possible node']
+            'read file': rs_filesystem_unrestricted.$.queries['read file'],
+            'stat': rs_filesystem_unrestricted.$.queries['stat possible node']
         },
         {
-            'write file': $r['filesystem unrestricted'].commands['write file'],
-            'log error': $r.stream.commands['log error'],
+            'write file': rs_filesystem_unrestricted.$.commands['write file'],
+            'log error': rs_stream.$.commands['log error'],
         },
     ),
 )
