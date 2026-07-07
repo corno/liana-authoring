@@ -2,13 +2,14 @@ import * as p_ from 'pareto-core/interface/command'
 
 import * as resources_pareto from "pareto-resources/interface/resources"
 import * as resources_pareto_stream from "pareto-stream-api/interface/commands"
+import * as commands_pareto_application_api from "pareto-application-api/interface/resources"
 
 import * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 
 export namespace procedures {
 
     export type seal = p_.Command_Procedure<
-        resources_pareto.resources.commands.main,
+        commands_pareto_application_api.resources.commands.main,
         {
             'tab size': number,
             'serialization parameters': d_serialize_prose.Parameters,
