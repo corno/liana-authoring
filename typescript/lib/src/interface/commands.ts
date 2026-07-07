@@ -9,7 +9,7 @@ import * as query_actions_pareto_filesystem_unrestricted_api from "pareto-filesy
 import * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 
 
-export type seal = p_.Command_Procedure<
+export type seal = p_.Command<
     command_actions_pareto_application_api.main,
     {
         'tab size': number,

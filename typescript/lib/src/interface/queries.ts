@@ -9,7 +9,7 @@ import * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_ser
 
 
 
-export type get_schema = p_.Query_Function<
+export type get_schema = p_.Query<
     query_actions.get_schema,
     null,
     {
@@ -17,7 +17,7 @@ export type get_schema = p_.Query_Function<
     }
 >
 
-export type get_schema_path = p_.Query_Function<
+export type get_schema_path = p_.Query<
     query_actions.get_schema_path,
     null,
     {
@@ -26,7 +26,7 @@ export type get_schema_path = p_.Query_Function<
 >
 
 
-export type deserialize = p_.Query_Function<
+export type deserialize = p_.Query<
     query_actions.deserialize,
     null,
     {
@@ -35,7 +35,7 @@ export type deserialize = p_.Query_Function<
     }
 >
 
-export type load_unmarshalled_file = p_.Query_Function<
+export type load_unmarshalled_file = p_.Query<
     query_actions.load_unmarshalled_file,
     null,
     {
@@ -45,7 +45,7 @@ export type load_unmarshalled_file = p_.Query_Function<
     }
 >
 
-export type seal = p_.Query_Function<
+export type seal = p_.Query<
     query_actions_pareto_common.process_file_data,
     {
         'tab size': number,
