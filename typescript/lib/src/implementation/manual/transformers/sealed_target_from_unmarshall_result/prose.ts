@@ -38,7 +38,7 @@ export const Found: interface_.Found = ($) => p_.from.state($).decide(
             ]))
             case 'include': return p_.option($, ($) => sh.ph.literal("include"))
             case 'missing data': return p_.option($, ($) => sh.ph.literal("missing data"))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })
 
@@ -51,7 +51,7 @@ export const Error: interface_.Error = ($) => {
                             ($) => {
                                 switch ($[0]) {
                                     case 'wrong type': return p_.option($, ($) => sh.ph.literal("wrong type, expected boolean"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'dictionary': return p_.option($, ($) => p_.from.state($).decide(
@@ -63,7 +63,7 @@ export const Error: interface_.Error = ($) => {
                                         sh.ph.literal("'")
                                     ]))
                                     case 'foo': return p_.option($, ($) => sh.ph.literal("foo"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'group': return p_.option($, ($) => p_.from.state($).decide(
@@ -90,21 +90,21 @@ export const Error: interface_.Error = ($) => {
                                         sh.ph.literal("'")
                                     ]))
                                     case 'wrong type': return p_.option($, ($) => sh.ph.literal("wrong type, expected group"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'list': return p_.option($, ($) => p_.from.state($).decide(
                             ($) => {
                                 switch ($[0]) {
                                     case 'wrong type': return p_.option($, ($) => sh.ph.literal("wrong type, expected list"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'number': return p_.option($, ($) => p_.from.state($).decide(
                             ($) => {
                                 switch ($[0]) {
                                     case 'wrong type': return p_.option($, ($) => sh.ph.literal("wrong type, expected number"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'optional': return p_.option($, ($) => p_.from.state($).decide(
@@ -112,14 +112,14 @@ export const Error: interface_.Error = ($) => {
                                 switch ($[0]) {
                                     case 'wrong type': return p_.option($, ($) => sh.ph.literal("wrong type, expected optional"))
                                     case 'foo': return p_.option($, ($) => sh.ph.literal("foo"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'reference': return p_.option($, ($) => p_.from.state($).decide(
                             ($) => {
                                 switch ($[0]) {
                                     case 'wrong type': return p_.option($, ($) => sh.ph.literal("wrong type, expected reference"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'state': return p_.option($, ($) => p_.from.state($).decide(
@@ -136,17 +136,17 @@ export const Error: interface_.Error = ($) => {
                                     case 'missing option item': return p_.option($, ($) => sh.ph.literal("missing option item"))
                                     case 'option item is not a text': return p_.option($, ($) => sh.ph.literal("option item is not a text"))
                                     case 'missing value item': return p_.option($, ($) => sh.ph.literal("missing value item"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'text': return p_.option($, ($) => p_.from.state($).decide(
                             ($) => {
                                 switch ($[0]) {
                                     case 'wrong type': return p_.option($, ($) => sh.ph.literal("wrong type, expected text"))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 })
         ])

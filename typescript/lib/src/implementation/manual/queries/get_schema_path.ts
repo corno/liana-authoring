@@ -32,7 +32,7 @@ export const $$: interface_.get_schema_path = p_.query(
                             case 'does not exist': return p_temp.ss($, ($) => abort(['not found', null]))
                             case 'file': return p_temp.ss($, ($) => schema_path)
                             case 'directory': return p_temp.ss($, ($) => abort(['not found', null]))
-                            default: return p_temp.au($[0])
+                            default: return p_temp.exhaustive($[0])
                         }
                     })
             )

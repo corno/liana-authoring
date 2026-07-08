@@ -40,12 +40,12 @@ export const Found: p_ti.Transformer<
                             case 'text': return p_.option($, ($) => ['text', {
                                 'value': $.token.value
                             }])
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'include': return p_.option($, ($) => ['include', null])
                 case 'missing': return p_.option($, ($) => ['missing data', null])
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }
@@ -91,7 +91,7 @@ export const Value: Value = ($, abort) => {
                                                             'type': ['state', ['too many items', null]],
                                                             'range': start_token.range
                                                         }))
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 })
                                         })
@@ -99,7 +99,7 @@ export const Value: Value = ($, abort) => {
                                             'type': ['state', ['unknown option', null]],
                                             'range': $['option token'].range
                                         }))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'missing': return p_.option($, ($) => abort({
@@ -107,7 +107,7 @@ export const Value: Value = ($, abort) => {
                                 'range': start_token_range
                             }))
 
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
@@ -133,7 +133,7 @@ export const Value: Value = ($, abort) => {
                                                                     'range': intermediate['id value pair'].id.range
                                                                 }))
                                                                 case 'set': return p_.option($, ($) => Value($, abort))
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         })
                                                 })
@@ -144,10 +144,10 @@ export const Value: Value = ($, abort) => {
                                                                 'type': ['dictionary', ['foo', null]],
                                                                 'range': dictionary_range
                                                             }))
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     }))
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         }))]
                             })
@@ -172,10 +172,10 @@ export const Value: Value = ($, abort) => {
                                                                 }]],
                                                                 'range': start_token_range
                                                             }))
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     }))
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         })
                                 )]]
@@ -193,7 +193,7 @@ export const Value: Value = ($, abort) => {
                                     switch ($[0]) {
                                         case 'set': return p_.option($, ($) => ['set', Value($['child value'], abort)])
                                         case 'not set': return p_.option($, ($) => ['not set', null])
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 })])
                             case 'reference': return p_.option($, ($): d_out.Value => p_.from.state($.type).decide(
@@ -205,7 +205,7 @@ export const Value: Value = ($, abort) => {
                                             'delimiter': ['apostrophe', null],
 
                                         }])
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'state': return p_.option($, ($): d_out.Value => {
@@ -220,7 +220,7 @@ export const Value: Value = ($, abort) => {
                                                 'option': $.option,
                                                 'value': Value($.value, abort)
                                             }])
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     })
                             })
@@ -229,10 +229,10 @@ export const Value: Value = ($, abort) => {
                                 'delimiter': ['quote', null],
 
                             }])
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }

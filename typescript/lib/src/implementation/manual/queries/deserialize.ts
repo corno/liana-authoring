@@ -100,7 +100,7 @@ export const $$: interface_.deserialize = p_.query(
                             'tab size': $d['tab size'],
                         }
                     )])
-                    default: return p_r.au($[0])
+                    default: return p_r.exhaustive($[0])
                 }
             })
     )

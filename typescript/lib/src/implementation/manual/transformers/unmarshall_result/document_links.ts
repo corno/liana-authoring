@@ -35,11 +35,11 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                                 switch ($[0]) {
                                                     case 'set': return p_.option($, ($) => Value($))
                                                     case 'not set': return p_.option($, ($) => p_.literal.list([]))
-                                                    default: return p_.au($[0])
+                                                    default: return p_.exhaustive($[0])
                                                 }
                                             }))
                                         case 'error': return p_.option($, ($) => p_.literal.list([]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 })
                         ))
@@ -55,7 +55,7 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                                         (): d_out.Links => p_.literal.list([])
                                                     ))
                                                     case 'no': return p_.option($, ($) => p_.literal.list([]))
-                                                    default: return p_.au($[0])
+                                                    default: return p_.exhaustive($[0])
                                                 }
                                             })))
                                     case 'concise': return p_.option($, ($) => p_.from.list($.properties).flatten(
@@ -64,10 +64,10 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                                 switch ($[0]) {
                                                     case 'no': return p_.option($, ($): d_out.Links => p_.literal.list([]))
                                                     case 'yes': return p_.option($, ($): d_out.Links => Value($['value']))
-                                                    default: return p_.au($[0])
+                                                    default: return p_.exhaustive($[0])
                                                 }
                                             })))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'list': return p_.option($, ($): d_out.Links => p_.from.list($.derived.items).flatten(
@@ -79,7 +79,7 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                 switch ($[0]) {
                                     case 'set': return p_.option($, ($) => Value($['child value']))
                                     case 'not set': return p_.option($, ($) => p_.literal.list([]))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'reference': return p_.option($, ($) => p_.literal.list([]))
@@ -92,10 +92,10 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                                 case 'number': return p_.option($, ($) => p_.literal.list([]))
                                                 case 'boolean': return p_.option($, ($) => p_.literal.list([]))
                                                 case 'date': return p_.option($, ($) => p_.literal.list([]))
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         }))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'state': return p_.option($, ($) => p_.from.state($.derived['option status']).decide(
@@ -103,7 +103,7 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                 switch ($[0]) {
                                     case 'set': return p_.option($, ($) => Value($.value))
                                     case 'missing data': return p_.option($, ($) => p_.literal.list([]))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'text': return p_.option($, ($) => {
@@ -113,7 +113,7 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                     switch ($[0]) {
                                         case 'global': return p_.option($, ($) => $['l entry'])
                                         case 'local': return p_.option($, ($) => $)
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 })
                             return p_.from.state($v_type.link).decide(
@@ -127,13 +127,13 @@ export const Value: Value = ($) => p_.from.state($['unmarshall result']).decide(
                                                 'tooltip': p_.literal.not_set()
                                             }
                                         ]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 })
                         })
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 }))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })

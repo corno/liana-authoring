@@ -106,7 +106,7 @@ export const Value: Value = ($, $p) => {
                                                         switch ($[0]) {
                                                             case 'set': return p_.option($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
                                                             case 'not set': return p_.option($, ($) => entry.intermediate['id value pair'].id.range.end)
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     }),
                                             },
@@ -120,7 +120,7 @@ export const Value: Value = ($, $p) => {
                                                 switch ($[0]) {
                                                     case 'set': return p_.option($, ($) => Value_possibly_found($, $p))
                                                     case 'not set': return p_.option($, ($) => p_.literal.set(['entry', entry]))
-                                                    default: return p_.au($[0])
+                                                    default: return p_.exhaustive($[0])
                                                 }
                                             }),
                                         () => p_.literal.not_set()
@@ -159,7 +159,7 @@ export const Value: Value = ($, $p) => {
 
                                                                     return p_.literal.set(['property', { 'style': ['verbose', prop] }])
                                                                 })
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         }),
                                                     () => p_.literal.not_set(),
@@ -183,7 +183,7 @@ export const Value: Value = ($, $p) => {
                                                             switch ($[0]) {
                                                                 case 'yes': return p_.option($, ($) => Value($['value'], $p))
                                                                 case 'no': return p_.option($, ($) => ['property', { 'style': ['unknown concise', prop] }])
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         })),
                                                     () => p_.literal.not_set(),
@@ -191,7 +191,7 @@ export const Value: Value = ($, $p) => {
                                             },
                                             () => this_value()
                                         ))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'list': return p_.option($, ($) => p_.from.list($.derived.items).on_has_match(
@@ -207,7 +207,7 @@ export const Value: Value = ($, $p) => {
                                             (): d_out.Found => this_value()
                                         ))
                                         case 'not set': return p_.option($, ($) => this_value())
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'reference': return p_.option($, ($) => this_value())
@@ -221,15 +221,15 @@ export const Value: Value = ($, $p) => {
                                                 (): d_out.Found => ['state', valid_state]
                                             ))
                                             case 'missing data': return p_.option($, ($) => ['state', valid_state])
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     })
                             })
                             case 'text': return p_.option($, ($) => this_value())
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }

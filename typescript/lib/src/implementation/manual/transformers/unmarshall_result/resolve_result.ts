@@ -108,7 +108,7 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //         case 'acyclic siblings': return p_.option($, ($) => p_implement_me("!!!!!!!"))
 //         case 'cyclic siblings': return p_.option($, ($) => p_implement_me("!!!!!!!"))
 //         case 'parameter': return p_.option($, ($) => p_implement_me("!!!!!!!"))
-//         default: return p_.au($[0])
+//         default: return p_.exhaustive($[0])
 //     }
 // })
 
@@ -132,7 +132,7 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //     //                     () => p_unreachable_code_path("acyclic siblings should have been provided for this definition")
 //     //                 ))
 //     //                 case 'resolved dictionary': return p_.option($, ($) => p_implement_me("!!!!!!!"))
-//     //                 default: return p_.au($[0])
+//     //                 default: return p_.exhaustive($[0])
 //     //             }
 //     //         }))
 //     //         case 'cyclic': return p_.option($, ($) => p_.from.state($).decide(
@@ -142,14 +142,14 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //     //                     ($) => ['cyclic siblings', $],
 //     //                     () => p_unreachable_code_path("cyclic siblings should have been provided for this definition")
 //     //                 ))
-//     //                 default: return p_.au($[0])
+//     //                 default: return p_.exhaustive($[0])
 //     //             }
 //     //         }))
 //     //         case 'parameter': return p_.option($, ($) => $p['module parameters'].__ decide(
 //     //             ($) => ['parameter', $p['module parameters']],
 //     //             () => p_unreachable_code_path("module parameters should have been provided for this definition")
 //     //         ))
-//     //         default: return p_.au($[0])
+//     //         default: return p_.exhaustive($[0])
 //     //     }
 //     // })
 // }
@@ -204,7 +204,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                         ($) => $,
                                                                         () => p_unreachable_code_path("the resolver should have been provided with a module parameter for this definition")
                                                                     ))
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
                                                             })
                                                         return {
@@ -255,7 +255,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                                 () => p_unreachable_code_path("for every parameter, there must be a module parameter provided")
                                                                                             ))
                                                                                             case 'required': return p_.option($, ($) => Resolver_Guaranteed_Value_Selection($))
-                                                                                            default: return p_.au($[0])
+                                                                                            default: return p_.exhaustive($[0])
                                                                                         }
                                                                                     })
                                                                             ),
@@ -298,13 +298,13 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                     //                                 )
                                                                     //                                 return null
                                                                     //                             })
-                                                                    //                             default: return p_.au($[0])
+                                                                    //                             default: return p_.exhaustive($[0])
                                                                     //                         }
                                                                     //                     }))
                                                                     //                     case 'acyclic': return p_.option($, ($) => p_implement_me("!!!!!!!"))
                                                                     //                     case 'cyclic': return p_.option($, ($) => p_implement_me("!!!!!!!"))
                                                                     //                     case 'selection': return p_.option($, ($) => p_implement_me("!!!!!!!"))
-                                                                    //                     default: return p_.au($[0])
+                                                                    //                     default: return p_.exhaustive($[0])
                                                                     //                 }
                                                                     //             }))
 
@@ -317,7 +317,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                     //                     case 'optional': return p_.option($, ($) => p_implement_me("!!!!!!!"))
                                                                     //                     case 'required': return p_.option($, ($) => p_implement_me("!!!!!!!"))
                                                                     //                     case 'parameter': return p_.option($, ($) => p_implement_me("!!!!!!!"))
-                                                                    //                     default: return p_.au($[0])
+                                                                    //                     default: return p_.exhaustive($[0])
                                                                     //                 }
                                                                     //             }))
                                                                     //         )
@@ -368,11 +368,11 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                         case 'not set': return p_.option($, ($) => ['success', {
                                                                                             'value': ['not set', null]
                                                                                         }])
-                                                                                        default: return p_.au($[0])
+                                                                                        default: return p_.exhaustive($[0])
                                                                                     }
                                                                                 }))
                                                                             case 'error': return p_.option($, ($) => ['error', null])
-                                                                            default: return p_.au($[0])
+                                                                            default: return p_.exhaustive($[0])
                                                                         }
                                                                     })
                                                             }))
@@ -422,7 +422,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                 case 'error': return p_.option($, ($): d_out.Property => ({
                                                                                     'unmarshall result': ['error', $]
                                                                                 }))
-                                                                                default: return p_.au($[0])
+                                                                                default: return p_.exhaustive($[0])
                                                                             }
                                                                         }),
                                                                     () => p_unreachable_code_path("both dictionaries are driven by the definitions in the schema")
@@ -492,7 +492,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                         )
                                                                     }])
                                                                     case 'not set': return p_.option($, ($) => ['not set', null])
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
 
                                                             }),
@@ -541,7 +541,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                             'resolve status': ['to be implemented', null]
                                                         }]
                                                     })
-                                                    default: return p_.au($[0])
+                                                    default: return p_.exhaustive($[0])
                                                 }
                                             })]
                                     })
@@ -569,7 +569,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                         }
                                                                     )))
                                                                     case 'missing data': return p_.option($, ($) => p_.literal.not_set())
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
                                                             })
                                                     }))
@@ -584,11 +584,11 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                 default: return p_unreachable_code_path("unmarshalled value should match the definition")
                                             }
                                         })])
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             })]
                     })
-                    default: return p_.au($[0])
+                    default: return p_.exhaustive($[0])
                 }
             })
     }

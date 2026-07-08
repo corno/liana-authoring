@@ -29,7 +29,7 @@ export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
                             sh.ph.literal("\"")
                         ]))
 
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 }))
             case 'value': return p_.option($, ($) => p_.from.state($).decide(
@@ -55,7 +55,7 @@ export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
                             sh.ph.literal("missing value")
                         ]))
 
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 }))
             case 'group': return p_.option($, ($) => p_.from.state($).decide(
@@ -90,7 +90,7 @@ export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
                             )
                         ]))
 
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 }))
             case 'state': return p_.option($, ($) => p_.from.state($).decide(
@@ -125,9 +125,9 @@ export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
                                 ])
                             )
                         ]))
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 }))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })

@@ -46,10 +46,10 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
                                             case 'number': return p_.option($, ($) => "0")
                                             case 'boolean': return p_.option($, ($) => "false")
                                             case 'date': return p_.option($, ($) => "yyyy-mm-dd")
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     }))
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         }),
                     'trivia': {
@@ -95,7 +95,7 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
                         case 'external': return p_.option($, ($) => Value_data($.module['l entry']['root value'], $p))
                         case 'internal': return p_.option($, ($) => Value_data($['l entry'].get_circular_dependent()['root value'], $p))
                         case 'internal acyclic': return p_.option($, ($) => Value_data($['l entry']['root value'], $p))
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 })
             )
@@ -147,7 +147,7 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
                                         'comments': p_.literal.list([])
                                     },
                                 }])
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         })]
                 }]
@@ -171,7 +171,7 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
                     }]
                 }]
             }])
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })
 
@@ -222,7 +222,7 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
 //                     switch ($[0]) {
 //                         case 'external': return p_.option($, ($) => p_implement_me("xx"))
 //                         case 'internal': return p_.option($, ($) => p_implement_me("xx"))
-//                         default: return p_.au($[0])
+//                         default: return p_.exhaustive($[0])
 //                     }
 //                 }))
 //                 case 'dictionary': return p_.option($, ($) => ['dictionary', {
@@ -264,7 +264,7 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
 //                         }
 //                     }]
 //                 }])
-//                 default: return p_.au($[0])
+//                 default: return p_.exhaustive($[0])
 //             }
 //         })
 //     }]

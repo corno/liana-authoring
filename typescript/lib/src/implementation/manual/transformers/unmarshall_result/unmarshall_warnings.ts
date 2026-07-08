@@ -48,7 +48,7 @@ export const Value: Value = ($) => {
                                             switch ($[0]) {
                                                 case 'set': return p_.option($, ($) => Value($))
                                                 case 'not set': return p_.option($, ($) => p_.literal.list<d_out.Warnings.L>([]))
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         })
                             ))
@@ -69,7 +69,7 @@ export const Value: Value = ($) => {
                                                             switch ($[0]) {
                                                                 case 'no': return p_.option($, ($) => p_.literal.list([]))
                                                                 case 'yes': return p_.option($, ($) => Value($['value']))
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         })
                                                 }
@@ -91,11 +91,11 @@ export const Value: Value = ($) => {
                                                                 ))
                                                                 case 'no': return p_.option($, ($) => p_.literal.list([
                                                                 ]))
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         })
                                             ))
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     }))
                             case 'simple': return p_.option($, ($) => p_.from.state($.instance.token.type).decide(
@@ -105,7 +105,7 @@ export const Value: Value = ($) => {
                                         case 'apostrophed': return true
                                         case 'undelimited': return false
                                         case 'backticked': return true
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 })
                                 ? p_.literal.list<d_out.Warnings.L>([{
@@ -129,7 +129,7 @@ export const Value: Value = ($) => {
                                                 'type': ['expected apostrophed text', null]
                                             }])
                                             : p_.literal.list([]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'component': return p_.option($, ($) => Value($.value))
@@ -138,7 +138,7 @@ export const Value: Value = ($) => {
                                     switch ($[0]) {
                                         case 'set': return p_.option($, ($) => Value($['child value']))
                                         case 'not set': return p_.option($, ($) => p_.literal.list([]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'state': return p_.option($, ($): d_out.Warnings => {
@@ -154,7 +154,7 @@ export const Value: Value = ($) => {
                                                     }
                                                 ])
                                                 : Value($.value))
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     })
                             })
@@ -167,10 +167,10 @@ export const Value: Value = ($) => {
 
                                 ])
                                 : p_.literal.list([]))
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }

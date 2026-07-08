@@ -53,7 +53,7 @@ export const Document: Document = ($, $p) => {
                                     'parent': p_.literal.set($['parent range stack'])
                                 }))
 
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         }))
                     case 'state': return p_.option($, ($) => ({
@@ -62,12 +62,12 @@ export const Document: Document = ($, $p) => {
                                 switch ($[0]) {
                                     case 'state': return p_.option($, ($) => t_parse_tree_to_location.State($.xxx))
                                     case 'list': return p_.option($, ($) => t_parse_tree_to_location.List($.xxx))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }),
                         'parent': p_.literal.set($['parent range stack'])
                     }))
-                    default: return p_.au($[0])
+                    default: return p_.exhaustive($[0])
                 }
             }
         ))

@@ -52,7 +52,7 @@ export const Error: interface_.Error = ($, $p) => {
 					'type': ['schema', null]
 
 				}))
-				default: return p_.au($[0])
+				default: return p_.exhaustive($[0])
 			}
 		})
 }

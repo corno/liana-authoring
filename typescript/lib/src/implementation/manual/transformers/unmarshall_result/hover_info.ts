@@ -30,7 +30,7 @@ const Property_Path = ($: d_in.Property_Path): string => t_prose_to_text.Phrase(
                         case 'group': return p_.option($, ($) => sh.ph.literal($))
                         case 'optional': return p_.option($, ($) => sh.ph.literal("O"))
                         case 'state': return p_.option($, ($) => sh.ph.literal($))
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 })),
         sh.ph.nothing(),
@@ -73,11 +73,11 @@ export const Document: Document = ($, $p) => {
                                                             case 'reference': return p_.option($, ($) => "reference")
                                                             case 'state': return p_.option($, ($) => "state")
                                                             case 'text': return p_.option($, ($) => "text")
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     }))
                                                 case 'missing': return p_.option($, ($) => "use ctrl+d to get suggestions")
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         }))
                                     case 'success': return p_.option($, ($) => p_.from.state($).decide(
@@ -94,16 +94,16 @@ export const Document: Document = ($, $p) => {
                                                         switch ($[0]) {
                                                             case 'set': return p_.option($, ($) => "optional")
                                                             case 'not set': return p_.option($, ($) => "not set optional")
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     }))
                                                 case 'reference': return p_.option($, ($) => "reference")
                                                 case 'state': return p_.option($, ($) => "state")
                                                 case 'text': return p_.option($, ($) => "text")
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         }))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }),
                     ])
@@ -124,7 +124,7 @@ export const Document: Document = ($, $p) => {
                                                 () => ""
                                             ))
                                             case 'no': return p_.option($, ($) => "")
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     }),
                             ]))
@@ -132,7 +132,7 @@ export const Document: Document = ($, $p) => {
                                 "unknown property",
                             ]))
 
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'state': return p_.option($, ($) => {
@@ -151,11 +151,11 @@ export const Document: Document = ($, $p) => {
                                     "property: " + prop_path,
                                     "use ctrl+d to get suggestions for options",
                                 ]))
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         })
                 })
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         }
     )

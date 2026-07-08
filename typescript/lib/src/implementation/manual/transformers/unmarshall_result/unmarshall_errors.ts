@@ -58,11 +58,11 @@ export const Value: Value = ($) => {
                                                                         switch ($[0]) {
                                                                             case 'derived': return p_.option($, ($) => p_.literal.list([['nothing', null]]))
                                                                             case 'selected': return p_.option($, ($) => p_.literal.list([['text', null]]))
-                                                                            default: return p_.au($[0])
+                                                                            default: return p_.exhaustive($[0])
                                                                         }
                                                                     }))
                                                                 case 'text': return p_.option($, ($) => p_.literal.list([['text', null]]))
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         })
                                                 }]]
@@ -97,7 +97,7 @@ export const Value: Value = ($) => {
                                                                 'type': ['state', ['more than 2 items in list', null]] //FIXME wrong error
                                                             }
                                                         ]))
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 })
                                         })
@@ -111,7 +111,7 @@ export const Value: Value = ($) => {
                                                 }]]
                                             }
                                         ]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'missing': return p_.option($, ($): d_out.Errors => p_.literal.list([
@@ -122,7 +122,7 @@ export const Value: Value = ($) => {
                                 }
                             ]))
 
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
@@ -148,10 +148,10 @@ export const Value: Value = ($) => {
                                                                                 name: id
                                                                             }]]
                                                                         })))
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
                                                             }))
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 })
                                         }
@@ -172,7 +172,7 @@ export const Value: Value = ($) => {
                                                                 }]]
                                                             }
                                                         ]))
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 })
                                         }
@@ -200,7 +200,7 @@ export const Value: Value = ($) => {
                                                                         }
                                                                     ]))
                                                                     case 'yes': return p_.option($, ($) => Value($['value']))
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
                                                             })
                                                     }
@@ -226,12 +226,12 @@ export const Value: Value = ($) => {
                                                                             }]]
                                                                         }
                                                                     ]))
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
                                                             })
                                                     }
                                                 ))
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         }),
                                     p_.from.dictionary($.derived.properties   ).flatten_to_list(
@@ -258,10 +258,10 @@ export const Value: Value = ($) => {
                                                                                 'name': $.intermediate['id value pair'].id.token.value
                                                                             }]]
                                                                         })))
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
                                                             }))
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 })
                                         }
@@ -280,7 +280,7 @@ export const Value: Value = ($) => {
                                         ]))
                                         case 'selected': return p_.option($, ($) => p_.literal.list([
                                         ]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'component': return p_.option($, ($) => {
@@ -291,7 +291,7 @@ export const Value: Value = ($) => {
                                     switch ($[0]) {
                                         case 'set': return p_.option($, ($) => Value($['child value']))
                                         case 'not set': return p_.option($, ($) => p_.literal.list([]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'state': return p_.option($, ($): d_out.Errors => {
@@ -305,15 +305,15 @@ export const Value: Value = ($) => {
                                                 }
                                             ]))
                                             case 'set': return p_.option($, ($) => Value($.value))
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     })
                             })
                             case 'text': return p_.option($, ($) => p_.literal.list([]))
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }

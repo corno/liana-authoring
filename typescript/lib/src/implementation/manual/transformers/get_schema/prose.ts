@@ -21,6 +21,6 @@ export const Error: signatures.Error = ($) => p_.from.state($.type).decide(
         switch ($[0]) {
             case 'deserialize': return p_.option($, ($) => t_deserialize_resolved_to_prose.Error($))
             case 'read file': return p_.option($, ($) => t_read_file_to_prose.Error($))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })

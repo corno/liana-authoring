@@ -42,7 +42,7 @@ export const Error: interface_.Error = ($) => p_.from.state($).decide(
 				'related information': p_.literal.not_set(),
 				'type': ['deserialize', null]
 			}))
-			default: return p_.au($[0])
+			default: return p_.exhaustive($[0])
 		}
 	}
 )

@@ -68,7 +68,7 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
                 switch ($[0]) {
                     case 'set': return p_.option($, ($) => Value($, $p))
                     case 'not set': return p_.option($, ($) => p_.literal.not_set())
-                    default: return p_.au($[0])
+                    default: return p_.exhaustive($[0])
                 }
             }))
         case 'property': return p_.option($, ($) => p_.from.state($.style).decide(
@@ -82,13 +82,13 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
                                     () => p_.literal.not_set()
                                 ))
                                 case 'no': return p_.option($, ($) => p_.literal.not_set())
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         }))
                     case 'unknown concise': return p_.option($, ($) => {
                         return p_.literal.not_set()
                     })
-                    default: return p_.au($[0])
+                    default: return p_.exhaustive($[0])
                 }
             }))
         case 'state': return p_.option($, ($): d_out.Optional_Formatting_Edit => p_.from.state($.derived['option status']).decide(
@@ -96,10 +96,10 @@ export const Found: Found = ($, $p): d_out.Optional_Formatting_Edit => {
                 switch ($[0]) {
                     case 'set': return p_.option($, ($) => Value($.value, $p))
                     case 'missing data': return p_.option($, ($) => p_.literal.not_set())
-                    default: return p_.au($[0])
+                    default: return p_.exhaustive($[0])
                 }
             }))
-        default: return p_.au($[0])
+        default: return p_.exhaustive($[0])
     }
 }
 

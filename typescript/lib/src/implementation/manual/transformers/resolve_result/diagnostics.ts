@@ -29,4 +29,5 @@ export const Document: Document = ($) => p_.from.list(t_to_resolve_result_to_err
             }
         ),
         'type': ['semantic', null],
-    }))
+    })
+)

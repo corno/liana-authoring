@@ -49,7 +49,7 @@ export const Value: Value = ($) => {
                                                         'kind': ['null', null],
                                                         'children': p_.literal.list([]),
                                                     }))
-                                                    default: return p_.au($[0])
+                                                    default: return p_.exhaustive($[0])
                                                 }
                                             }),
                                         'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
@@ -79,7 +79,7 @@ export const Value: Value = ($) => {
                                                                     'kind': ['null', null],
                                                                     'children': p_.literal.list([]),
                                                                 }))
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         }),
                                                     'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
@@ -107,10 +107,10 @@ export const Value: Value = ($) => {
                                                                 'range': t_parse_tree_to_location.Value($['value'].instance),
                                                                 'selection range': t_parse_tree_to_location.Value($['value'].instance),
                                                             }))
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     })))
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     }),
                             }))
@@ -138,7 +138,7 @@ export const Value: Value = ($) => {
                                             'kind': ['null', null],
                                             'children': p_.literal.list([]),
                                         }))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'reference': return p_.option($, ($) => ({
@@ -163,10 +163,10 @@ export const Value: Value = ($) => {
                                                         'kind': ['string', null],
                                                         'children': p_.literal.list([]),
                                                     }))
-                                                    default: return p_.au($[0])
+                                                    default: return p_.exhaustive($[0])
                                                 }
                                             }))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'state': return p_.option($, ($) => p_.from.state($.derived['option status']).decide(
@@ -188,17 +188,17 @@ export const Value: Value = ($) => {
                                             'kind': ['null', null],
                                             'children': p_.literal.list([]),
                                         }))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'text': return p_.option($, ($) => ({
                                 'kind': ['string', null],
                                 'children': p_.literal.list([]),
                             }))
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }

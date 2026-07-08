@@ -76,7 +76,7 @@ export const Value: Value = ($, $p) => {
                                                                 case 'external': return p_.option($, ($) => $.module['l entry']['root value'])
                                                                 case 'internal acyclic': return p_.option($, ($) => $['l entry']['root value'])
                                                                 case 'internal': return p_.option($, ($) => $['l entry'].get_circular_dependent()['root value'])
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         }),
                                                     'property path': $p['property path'],
@@ -248,7 +248,7 @@ export const Value: Value = ($, $p) => {
                                                                                 case 'verbose': return p_.option($, ($) => ['verbose', {
                                                                                     'properties': Verbose_Properties($.properties)
                                                                                 }])
-                                                                                default: return p_.au($[0])
+                                                                                default: return p_.exhaustive($[0])
                                                                             }
                                                                         })
                                                                 }])
@@ -303,7 +303,7 @@ export const Value: Value = ($, $p) => {
                                                                                                             }]]
                                                                                                         ))
                                                                                                         case 'no': return p_.option($, () => p_unreachable_code_path("we are iterating over the definitions"))
-                                                                                                        default: return p_.au($[0])
+                                                                                                        default: return p_.exhaustive($[0])
                                                                                                     }
                                                                                                 }),
                                                                                             ($): d_out.Property['result'] => {
@@ -330,7 +330,7 @@ export const Value: Value = ($, $p) => {
                                                                                             switch ($[0]) {
                                                                                                 case 'no': return p_.option($, ($) => p_.literal.not_set())
                                                                                                 case 'yes': return p_.option($, ($) => p_.literal.set($))
-                                                                                                default: return p_.au($[0])
+                                                                                                default: return p_.exhaustive($[0])
                                                                                             }
                                                                                         }))
                                                                             ).group(
@@ -355,7 +355,7 @@ export const Value: Value = ($, $p) => {
                                                                                     )
                                                                                 }))
                                                                         })
-                                                                        default: return p_.au($[0])
+                                                                        default: return p_.exhaustive($[0])
                                                                     }
                                                                 }),
                                                         }
@@ -474,7 +474,7 @@ export const Value: Value = ($, $p) => {
                                                                         )
                                                                     }])
                                                                     case 'not set': return p_.option($, ($) => ['not set', $])
-                                                                    default: return p_.au($[0])
+                                                                    default: return p_.exhaustive($[0])
                                                                 }
                                                             })])
                                                         default: return abort(['incorrect', ['wrong type', null]])
@@ -502,13 +502,13 @@ export const Value: Value = ($, $p) => {
                                                                         case 'not set': return p_.option($, ($) => ({
                                                                             'status': ['not set', null]
                                                                         }))
-                                                                        default: return p_.au($[0])
+                                                                        default: return p_.exhaustive($[0])
                                                                     }
                                                                 }))
                                                             case 'null literal': return p_.option($, ($) => ({
                                                                 'status': ['not set', null]
                                                             }))
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     })
                                             }]
@@ -552,7 +552,7 @@ export const Value: Value = ($, $p) => {
                                                                         }
                                                                     })]
                                                             })
-                                                            default: return p_.au($[0])
+                                                            default: return p_.exhaustive($[0])
                                                         }
                                                     })
                                             }]
@@ -683,7 +683,7 @@ export const Value: Value = ($, $p) => {
                                                                                     }]])
                                                                                 )]
                                                                             })
-                                                                            default: return p_.au($[0])
+                                                                            default: return p_.exhaustive($[0])
                                                                         }
                                                                     })
                                                             }])
@@ -702,7 +702,7 @@ export const Value: Value = ($, $p) => {
                                                             switch ($[0]) {
                                                                 case 'list': return p_.option($, ($) => $['option status'])
                                                                 case 'state': return p_.option($, ($) => $['option status'])
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         })
                                                 }
@@ -722,7 +722,7 @@ export const Value: Value = ($, $p) => {
                                                     }
                                                 })]
                                         })
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 })
                         ).__decide<d_out.Value['unmarshall result']>(
@@ -742,7 +742,7 @@ export const Value: Value = ($, $p) => {
                         'optional parent range stack': $p['parent range stack'],
                     }
                 }) //TODO
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }

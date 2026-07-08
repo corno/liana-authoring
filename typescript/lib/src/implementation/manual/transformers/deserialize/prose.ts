@@ -18,11 +18,12 @@ export namespace signatures {
 }
 
 export const Error: signatures.Error = ($) => p_.from.state($).decide(
-    ($) => {
+    ($) => {   
         switch ($[0]) {
             case 'deserialize parse tree': return p_.option($, ($) => t_deserialize_to_prose.Error($))
             case 'schema': return p_.option($, ($) => t_get_schema_to_prose.Error($.error))
             case 'schema path': return p_.option($, ($) => t_get_schema_path_to_prose.Error($))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
-    })
+    }
+)

@@ -63,7 +63,7 @@ const d_schema_Value = (
                                 case 'external': return p_.option($, ($) => $.module['l entry']['root value'])
                                 case 'internal': return p_.option($, ($) => $['l entry'].get_circular_dependent()['root value'])
                                 case 'internal acyclic': return p_.option($, ($) => $['l entry']['root value'])
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         }),
                     $p,
@@ -131,7 +131,7 @@ const d_schema_Value = (
                                         },
 
                                     }))
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }),
 
@@ -191,7 +191,7 @@ export const Found: Found = ($, $p) => {
                             )
 
                         }))
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 })
 
@@ -248,15 +248,15 @@ export const Found: Found = ($, $p) => {
                                         })
                                     })
                                     case 'set': return p_.option($, ($) => p_.literal.not_set()) //check if this is in the actual option name, if so, give suggestions
-                                    default: return p_.au($[0])
+                                    default: return p_.exhaustive($[0])
                                 }
                             }))
                         case 'list': return p_.option($, ($) => p_.literal.not_set())
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 })
         })
-        default: return p_.au($[0])
+        default: return p_.exhaustive($[0])
     }
 }
 

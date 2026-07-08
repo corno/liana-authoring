@@ -67,7 +67,7 @@ export const Non_Entity: Non_Entity = ($, $p): d_out.Value => {
                         case 'shallow with entities': return p_.option($, ($) => ['shallow without entities', null])
                         case 'shallow without entities': return p_.option($, ($) => x['impact'])
                         case 'deep': return p_.option($, ($) => x['impact'])
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 }),
         }
@@ -89,7 +89,7 @@ export const Entity: Entity = ($, $p): d_out.Value => {
                 ))
                 case 'shallow without entities': return p_.option($, ($) => t_parse_tree_to_authoring_target.Value(value.instance))
                 case 'deep': return p_.option($, ($) => Any_Value(value, $p))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }
@@ -108,7 +108,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                     'comments': p_.literal.list([])
                                 }
                             }]))
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
@@ -126,7 +126,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                     switch ($[0]) {
                                                         case 'set': return p_.option($, ($) => p_.literal.set(Entity($, $p)))
                                                         case 'not set': return p_.option($, ($) => p_.literal.not_set())
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 }),
                                         })),
@@ -155,7 +155,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                                 switch ($[0]) {
                                                                                     case 'no': return p_.option($, ($) => t_parse_tree_to_authoring_target.Value(item.value))
                                                                                     case 'yes': return p_.option($, ($) => Non_Entity($['value'], $p))
-                                                                                    default: return p_.au($[0])
+                                                                                    default: return p_.exhaustive($[0])
                                                                                 }
                                                                             })
                                                                     }))
@@ -195,11 +195,11 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                                             }]
                                                                                         }])
                                                                                     ))
-                                                                                    default: return p_.au($[0])
+                                                                                    default: return p_.exhaustive($[0])
                                                                                 }
                                                                             })
                                                                     }))
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         }),
                                                     '>': {
@@ -223,7 +223,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                                     'id': $.id,
                                                                                     'value': p_.literal.set(Non_Entity($['value'], $p))
                                                                                 }))
-                                                                                default: return p_.au($[0])
+                                                                                default: return p_.exhaustive($[0])
                                                                             }
                                                                         }
                                                                     )))
@@ -257,19 +257,19 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                                                                 }]
                                                                                             }]))
                                                                                         ))
-                                                                                        default: return p_.au($[0])
+                                                                                        default: return p_.exhaustive($[0])
                                                                                     }
                                                                                 })
                                                                         }
                                                                     }))
-                                                                default: return p_.au($[0])
+                                                                default: return p_.exhaustive($[0])
                                                             }
                                                         }),
                                                     ')': {
                                                         'comments': p_.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                                     },
                                                 }])
-                                                default: return p_.au($[0])
+                                                default: return p_.exhaustive($[0])
                                             }
                                         })]
                                 }])
@@ -328,10 +328,10 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                             }
                                                         }])
 
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 }))
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     })]
                             }]))
@@ -351,7 +351,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                     'comments': p_.literal.list([])
                                                 }
                                             }])
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     })
                             }]))
@@ -381,7 +381,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                                 }]
                                             }]
                                         }]))
-                                        default: return p_.au($[0])
+                                        default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'text': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
@@ -393,10 +393,10 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                     }
                                 }]
                             }]))
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 }

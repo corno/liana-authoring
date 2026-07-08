@@ -36,6 +36,6 @@ export const Warning: interface_.Warning = ($) => p_.from.state($.type).decide(
             case 'expected a group': return p_.option($, ($) => p_.literal.list([
                 sh.ph.literal("Expected a group")
             ]))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })

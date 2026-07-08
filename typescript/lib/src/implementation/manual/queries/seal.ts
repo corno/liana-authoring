@@ -48,7 +48,7 @@ export const $$: interface_.seal = p_.query(
                     switch ($[0]) {
                         case 'unconstrained': return p_temp.ss($, ($) => $.content)
                         case 'constrained': return p_temp.ss($, ($) => $.content.unmarshalled)
-                        default: return p_temp.au($[0])
+                        default: return p_temp.exhaustive($[0])
                     }
                 }),
             ($) => abort(
