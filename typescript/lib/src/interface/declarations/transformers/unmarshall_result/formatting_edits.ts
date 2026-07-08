@@ -1,5 +1,5 @@
 
-import type * as p_i from 'pareto-core/interface/transformer'
+import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../data/unmarshall_result.js"
@@ -15,7 +15,7 @@ import * as t_parse_tree_to_full_range from "astn-core/implementation/manual/tra
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 
 
-    export type Document = p_i.Transformer_With_Parameter<
+    export type Document = p_.Transformer_With_Parameter<
         d_in.Document,
         d_out.Optional_Formatting_Edit,
         {
@@ -25,7 +25,7 @@ import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
         }
     >
 
-    export type Found = p_i.Transformer_With_Parameter<
+    export type Found = p_.Transformer_With_Parameter<
         d_outx.Found,
         d_out.Optional_Formatting_Edit,
         {
@@ -34,7 +34,7 @@ import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
         }
     >
 
-    export type Value = p_i.Transformer_With_Parameter<
+    export type Value = p_.Transformer_With_Parameter<
         d_in.Value,
         d_out.Optional_Formatting_Edit,
         {

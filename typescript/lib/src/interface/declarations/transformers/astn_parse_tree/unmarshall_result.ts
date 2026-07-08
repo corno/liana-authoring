@@ -1,5 +1,5 @@
 
-import type * as p_i from 'pareto-core/interface/transformer'
+import type * as p_ from 'pareto-core/interface/transformer'
 import type * as p_di from 'pareto-core/interface/data'
 import p_implement_me from 'pareto-core-dev/implement_me'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
@@ -13,13 +13,13 @@ import type * as d_in_definition from "pareto-liana/interface/generated/liana/sc
 
 
 
-    export type Document = p_i.Transformer_With_Parameter<
+    export type Document = p_.Transformer_With_Parameter<
         d_in.Document,
         d_out.Document,
         d_function.Parameters
     >
 
-    export type Value = p_i.Transformer_With_Parameter<
+    export type Value = p_.Transformer_With_Parameter<
         d_in.Value,
         d_out.Value,
         {

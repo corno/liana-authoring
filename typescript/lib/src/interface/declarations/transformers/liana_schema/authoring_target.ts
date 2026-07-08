@@ -1,5 +1,5 @@
 
-import type * as p_i from 'pareto-core/interface/transformer'
+import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
@@ -14,12 +14,12 @@ export namespace d_function {
 }
 
 
-export type Value = p_i.Transformer_With_Parameter<
+export type Value = p_.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value,
     d_function.Parameters
 >
-export type Value_data = p_i.Transformer_With_Parameter<
+export type Value_data = p_.Transformer_With_Parameter<
     d_in.Value,
     d_out.Value.data,
     d_function.Parameters

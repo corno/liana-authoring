@@ -1,6 +1,6 @@
 import type * as p_di from 'pareto-core/interface/data'
 
-import type * as p_i from 'pareto-core/interface/transformer'
+import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../data/unmarshall_result.js"
@@ -9,7 +9,7 @@ import type * as d_astn_location from "astn-core/interface/generated/liana/schem
 import type * as d_out from "../../../data/found.js"
 
 
-    export type Document = p_i.Transformer_With_Parameter<
+    export type Document = p_.Transformer_With_Parameter<
         d_in.Document,
         d_out.Found,
         {
@@ -17,7 +17,7 @@ import type * as d_out from "../../../data/found.js"
         }
     >
 
-    // export type Items = p_i.Transformer_With_Parameter<
+    // export type Items = p_.Transformer_With_Parameter<
     //     d_in.Items,
     //     Found,
     //     {
@@ -25,7 +25,7 @@ import type * as d_out from "../../../data/found.js"
     //     }
     // >
 
-    export type Value = p_i.Transformer_With_Parameter<
+    export type Value = p_.Transformer_With_Parameter<
         d_in.Value,
         d_out.Found,
         {
@@ -33,7 +33,7 @@ import type * as d_out from "../../../data/found.js"
         }
     >
 
-    export type Value_possibly_found = p_i.Transformer_With_Parameter<
+    export type Value_possibly_found = p_.Transformer_With_Parameter<
         d_in.Value,
         p_di.Optional_Value<d_out.Found>,
         {

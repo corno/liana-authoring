@@ -1,5 +1,5 @@
 
-import type * as p_i from 'pareto-core/interface/refiner'
+import type * as p_ from 'pareto-core/interface/refiner'
 import type * as p_ti from 'pareto-core/interface/transformer'
 
 //data types
@@ -12,11 +12,11 @@ import type * as d_function from "../../../data/sealed_target_from_unmarshall_re
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
 
 //signatures
-// export type Document = p_i.Refiner<
+// export type Document = p_.Refiner<
 // d_out.Document, d_function.Error, d_in.Document
 // >
 
-    export type Value = p_i.Refiner<
+    export type Value = p_.Refiner<
         d_out.Value,
         d_function.Error,
         d_in.Value
