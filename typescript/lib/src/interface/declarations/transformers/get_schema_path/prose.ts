@@ -9,8 +9,8 @@ import type * as d_out from "pareto-fountain-pen/interface/generated/liana/schem
 import * as t_stat_to_prose from "pareto-filesystem-unrestricted-api/implementation/manual/transformers/stat_possible_node/prose"
 
 
-    export type Error = p_.Transformer<
-        d_in.Error,
-        d_out.Phrase
-    >
+export type Error = p_.Transformer<
+    d_in.Error,
+    d_out.Phrase
+>
 

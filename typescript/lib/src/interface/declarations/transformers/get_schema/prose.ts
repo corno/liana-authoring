@@ -10,8 +10,8 @@ import * as t_deserialize_resolved_to_prose from "liana-core/implementation/manu
 import * as t_read_file_to_prose from "pareto-filesystem-unrestricted-api/implementation/manual/transformers/read_file/prose"
 
 
-    export type Error = p_.Transformer<
-        d_in.Error,
-        d_out.Phrase
-    >
+export type Error = p_.Transformer<
+    d_in.Error,
+    d_out.Phrase
+>
 

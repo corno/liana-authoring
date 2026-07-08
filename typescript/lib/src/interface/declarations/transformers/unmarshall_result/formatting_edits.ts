@@ -15,31 +15,31 @@ import * as t_parse_tree_to_full_range from "astn-core/implementation/manual/tra
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 
 
-    export type Document = p_.Transformer_With_Parameter<
-        d_in.Document,
-        d_out.Optional_Formatting_Edit,
-        {
-            'position': d_location.Position
-            'indent': string
-            'conversion': d_function_parameters.Parameters
-        }
-    >
+export type Document = p_.Transformer_With_Parameter<
+    d_in.Document,
+    d_out.Optional_Formatting_Edit,
+    {
+        'position': d_location.Position
+        'indent': string
+        'conversion': d_function_parameters.Parameters
+    }
+>
 
-    export type Found = p_.Transformer_With_Parameter<
-        d_outx.Found,
-        d_out.Optional_Formatting_Edit,
-        {
-            'indent': string
-            'conversion': d_function_parameters.Parameters
-        }
-    >
+export type Found = p_.Transformer_With_Parameter<
+    d_outx.Found,
+    d_out.Optional_Formatting_Edit,
+    {
+        'indent': string
+        'conversion': d_function_parameters.Parameters
+    }
+>
 
-    export type Value = p_.Transformer_With_Parameter<
-        d_in.Value,
-        d_out.Optional_Formatting_Edit,
-        {
-            'indent': string
-            'conversion': d_function_parameters.Parameters
-        }
-    >
+export type Value = p_.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Optional_Formatting_Edit,
+    {
+        'indent': string
+        'conversion': d_function_parameters.Parameters
+    }
+>
 

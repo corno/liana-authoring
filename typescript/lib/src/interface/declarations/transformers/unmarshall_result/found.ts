@@ -9,36 +9,36 @@ import type * as d_astn_location from "astn-core/interface/generated/liana/schem
 import type * as d_out from "../../../data/found.js"
 
 
-    export type Document = p_.Transformer_With_Parameter<
-        d_in.Document,
-        d_out.Found,
-        {
-            'position': d_location.Position
-        }
-    >
+export type Document = p_.Transformer_With_Parameter<
+    d_in.Document,
+    d_out.Found,
+    {
+        'position': d_location.Position
+    }
+>
 
-    // export type Items = p_.Transformer_With_Parameter<
-    //     d_in.Items,
-    //     Found,
-    //     {
-    //         'position': d_location.Position
-    //     }
-    // >
+// export type Items = p_.Transformer_With_Parameter<
+//     d_in.Items,
+//     Found,
+//     {
+//         'position': d_location.Position
+//     }
+// >
 
-    export type Value = p_.Transformer_With_Parameter<
-        d_in.Value,
-        d_out.Found,
-        {
-            'position': d_location.Position
-        }
-    >
+export type Value = p_.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Found,
+    {
+        'position': d_location.Position
+    }
+>
 
-    export type Value_possibly_found = p_.Transformer_With_Parameter<
-        d_in.Value,
-        p_di.Optional_Value<d_out.Found>,
-        {
-            'position': d_location.Position
-        }
-    >
+export type Value_possibly_found = p_.Transformer_With_Parameter<
+    d_in.Value,
+    p_di.Optional_Value<d_out.Found>,
+    {
+        'position': d_location.Position
+    }
+>
 
 

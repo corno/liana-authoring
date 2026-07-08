@@ -9,13 +9,13 @@ import type * as d_out from "../../../data/document_symbols.js"
 import * as t_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
 
 
-    export type Document = p_.Transformer<
-        d_in.Document,
-        d_out.Value
-    >
+export type Document = p_.Transformer<
+    d_in.Document,
+    d_out.Value
+>
 
-    export type Value = p_.Transformer<
-        d_in.Value,
-        d_out.Value
-    >
+export type Value = p_.Transformer<
+    d_in.Value,
+    d_out.Value
+>
 

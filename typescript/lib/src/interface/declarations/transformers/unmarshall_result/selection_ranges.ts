@@ -8,11 +8,11 @@ import type * as d_out from "../../../data/unmarshall_result.js"
 import type * as d_location from "../../../generated/liana/schemas/location/data.js"
 
 
-    export type Document = p_.Transformer_With_Parameter<
-        d_in.Document,
-        p_di.List<d_out.Range_Stack>,
-        {
-            'positions': p_di.List<d_location.Position_>
-        }
-    >
+export type Document = p_.Transformer_With_Parameter<
+    d_in.Document,
+    p_di.List<d_out.Range_Stack>,
+    {
+        'positions': p_di.List<d_location.Position_>
+    }
+>
 

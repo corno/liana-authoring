@@ -7,11 +7,11 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
 import type * as d_out from "../../../generated/liana/schemas/hover_info/data.js"
 
 
-    export type Document = p_.Transformer_With_Parameter<
-        d_in.Document,
-        d_out.Hover_Texts,
-        {
-            'position': d_location.Position_
-        }
-    >
+export type Document = p_.Transformer_With_Parameter<
+    d_in.Document,
+    d_out.Hover_Texts,
+    {
+        'position': d_location.Position_
+    }
+>
 

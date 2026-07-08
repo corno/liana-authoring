@@ -16,13 +16,13 @@ import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/
 // d_out.Document, d_function.Error, d_in.Document
 // >
 
-    export type Value = p_.Refiner<
-        d_out.Value,
-        d_function.Error,
-        d_in.Value
-    >
-    export type Found = p_ti.Transformer< //FIXME; this one shouldn't be here
-        d_in_astn_parse_tree.Value,
-        d_function.Found
-    >
+export type Value = p_.Refiner<
+    d_out.Value,
+    d_function.Error,
+    d_in.Value
+>
+export type Found = p_ti.Transformer< //FIXME; this one shouldn't be here
+    d_in_astn_parse_tree.Value,
+    d_function.Found
+>
 

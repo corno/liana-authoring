@@ -11,8 +11,8 @@ import * as t_get_schema_to_prose from "../get_schema/prose.js"
 import * as t_get_schema_path_to_prose from "../get_schema_path/prose.js"
 
 
-    export type Error = p_.Transformer<
-        d_in.Error,
-        d_out.Phrase
-    >
+export type Error = p_.Transformer<
+    d_in.Error,
+    d_out.Phrase
+>
 

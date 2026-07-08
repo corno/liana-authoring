@@ -10,19 +10,19 @@ import type * as d_in_definition from "pareto-liana/interface/generated/liana/sc
 
 
 
-    export type Document = p_.Transformer_With_Parameter<
-        d_in.Document,
-        d_out.Document,
-        d_function.Parameters
-    >
+export type Document = p_.Transformer_With_Parameter<
+    d_in.Document,
+    d_out.Document,
+    d_function.Parameters
+>
 
-    export type Value = p_.Transformer_With_Parameter<
-        d_in.Value,
-        d_out.Value,
-        {
-            'definition': d_in_definition.Value
-            'property path': d_out.Property_Path
-            'parent range stack': p_di.Optional_Value<d_out.Range_Stack>
-        }
-    >
+export type Value = p_.Transformer_With_Parameter<
+    d_in.Value,
+    d_out.Value,
+    {
+        'definition': d_in_definition.Value
+        'property path': d_out.Property_Path
+        'parent range stack': p_di.Optional_Value<d_out.Range_Stack>
+    }
+>
 

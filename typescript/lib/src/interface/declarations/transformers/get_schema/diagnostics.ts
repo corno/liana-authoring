@@ -6,15 +6,15 @@ import type * as d_out from "../../../generated/liana/schemas/diagnostics/data.j
 import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
 
 export namespace d_function {
-	export type Parameters = {
-		'schema path': d_path.Node_Path
-	}
+    export type Parameters = {
+        'schema path': d_path.Node_Path
+    }
 }
 
 
 export type Error = p_.Transformer_With_Parameter<
-	d_in.Error,
-	d_out.Diagnostics.L,
-	d_function.Parameters
+    d_in.Error,
+    d_out.Diagnostics.L,
+    d_function.Parameters
 >
 

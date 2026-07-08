@@ -13,9 +13,9 @@ import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
 
-    export type Error = p_.Transformer<
-        d_in.Error,
-        d_out.Phrase
-    >
+export type Error = p_.Transformer<
+    d_in.Error,
+    d_out.Phrase
+>
 
 
