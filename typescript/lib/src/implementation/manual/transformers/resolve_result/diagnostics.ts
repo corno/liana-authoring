@@ -11,6 +11,7 @@ export namespace interface_ {
         d_out.Diagnostics
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/resolve_result/diagnostics.js"
 
 //dependencies
 import * as t_to_resolve_result_to_errors from "../resolve_result/resolve_errors.js"

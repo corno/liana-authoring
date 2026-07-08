@@ -19,6 +19,7 @@ export namespace interface_ {
 		d_function.Parameters
 	>
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/get_schema/diagnostics.js"
 
 //dependencies
 import * as t_deserialize_resolved_to_prose from "liana-core/implementation/manual/transformers/deserialize_resolved/prose"

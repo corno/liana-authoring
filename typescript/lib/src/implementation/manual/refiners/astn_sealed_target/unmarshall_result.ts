@@ -26,6 +26,7 @@ export namespace interface_ {
         d_function.Found
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/refiners/astn_sealed_target/unmarshall_result.js"
 
 export const Found: interface_.Found = ($) => {
     return p_.from.state($.type).decide(

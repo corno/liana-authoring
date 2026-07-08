@@ -11,6 +11,7 @@ export namespace interface_ {
 		d_out.Diagnostics.L
 	>
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/deserialize/diagnostics.js"
 
 //depencencies
 import * as t_get_schema from "../get_schema/diagnostics.js"

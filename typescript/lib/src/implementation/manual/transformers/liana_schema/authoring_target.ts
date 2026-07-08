@@ -25,6 +25,7 @@ export namespace interface_ {
         d_function.Parameters
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/liana_schema/authoring_target.js"
 
 export const Value: interface_.Value = ($, $p) => ({
 

@@ -15,6 +15,7 @@ export namespace interface_ {
         }
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/hover_info.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"

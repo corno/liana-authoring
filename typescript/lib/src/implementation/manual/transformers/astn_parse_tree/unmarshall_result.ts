@@ -29,6 +29,7 @@ export namespace interface_ {
         }
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/astn_parse_tree/unmarshall_result.js"
 
 //dependencies
 import * as t_parse_tree_to_full_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"

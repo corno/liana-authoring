@@ -11,6 +11,7 @@ export namespace interface_ {
         d_out.Range
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/sealed_target_from_unmarshall_result/location.js"
 
 //dependencies
 

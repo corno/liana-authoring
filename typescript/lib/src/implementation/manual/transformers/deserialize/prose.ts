@@ -16,6 +16,7 @@ export namespace interface_ {
         d_out.Phrase
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/deserialize/prose.js"
 
 export const Error: interface_.Error = ($) => p_.from.state($).decide(
     ($) => {   

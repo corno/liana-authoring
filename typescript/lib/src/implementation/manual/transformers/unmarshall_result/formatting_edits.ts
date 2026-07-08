@@ -43,6 +43,7 @@ export namespace interface_ {
         }
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/formatting_edits.js"
 
 
 const Value: interface_.Value = (value, $p) => {

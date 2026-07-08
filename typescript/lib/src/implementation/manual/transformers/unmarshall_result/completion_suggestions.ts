@@ -40,6 +40,7 @@ export namespace interface_ {
     >
 
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/completion_suggestions.js"
 
 type Minimal_Completion_Suggestion = {
     'label': string,

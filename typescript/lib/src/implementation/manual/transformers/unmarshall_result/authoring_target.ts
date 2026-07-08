@@ -42,6 +42,7 @@ export namespace interface_ {
         d_out.Token_Trivia
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/authoring_target.js"
 
 const temp_value = ($: d_out.Value.data): d_out.Value => ({
     'data': $

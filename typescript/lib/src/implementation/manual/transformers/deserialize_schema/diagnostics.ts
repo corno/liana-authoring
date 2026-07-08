@@ -36,6 +36,7 @@ export namespace interface_ {
         d_function.Parameters
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/deserialize_schema/diagnostics.js"
 
 //dependencies
 import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"

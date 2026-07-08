@@ -19,6 +19,7 @@ export namespace interface_ {
         d_out.Value
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/document_symbols.js"
 
 export const Document: interface_.Document = ($) => Value($.content)
 

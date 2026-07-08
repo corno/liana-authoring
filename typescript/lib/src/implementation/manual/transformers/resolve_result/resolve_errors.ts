@@ -18,6 +18,7 @@ export namespace interface_ {
     >
 
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/resolve_result/resolve_errors.js"
 
 export const Document: interface_.Document = ($) => {
     return Value(

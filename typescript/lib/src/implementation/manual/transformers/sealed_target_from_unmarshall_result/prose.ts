@@ -15,6 +15,7 @@ export namespace interface_ {
         d_out.Phrase
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/sealed_target_from_unmarshall_result/prose.js"
 
 //dependencies
 

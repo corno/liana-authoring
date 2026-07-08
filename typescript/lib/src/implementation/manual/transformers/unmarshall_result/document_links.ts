@@ -17,6 +17,7 @@ export namespace interface_ {
         d_out.Links
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/document_links.js"
 
 export const Document: interface_.Document = ($) => Value($.content)
 

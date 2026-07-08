@@ -17,6 +17,7 @@ export namespace interface_ {
         d_out.Errors
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/unmarshall_errors.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"

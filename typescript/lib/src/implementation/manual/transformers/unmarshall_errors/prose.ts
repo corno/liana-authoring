@@ -11,6 +11,7 @@ export namespace interface_ {
         d_out.Phrase.composed
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_errors/prose.js"
 
 //dependencies
 
