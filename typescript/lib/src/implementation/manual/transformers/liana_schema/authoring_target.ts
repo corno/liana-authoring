@@ -5,7 +5,7 @@ import type * as interface_ from "../../../../interface/declarations/transformer
 //data types
 import type * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
 
-export namespace d_function {
+namespace d_function {
     export type Parameters = {
         'style':
         | ['concise', null]

@@ -7,12 +7,12 @@ import type * as interface_ from "../../../../interface/declarations/transformer
 import type * as d_loc from "../../../../interface/generated/liana/schemas/location/data.js"
 import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
 import type * as d_out_2 from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
-export namespace d_function {
+namespace d_function {
     export type Parameters = {
         'schema path': d_path.Node_Path
     }
 }
-export namespace d_out {
+namespace d_out {
 
     export type Error = {
         'type':

@@ -42,28 +42,28 @@ namespace p_i_temp {
 
 }
 
-export type Acyclic_Parameter_Resolve_Status =
+type Acyclic_Parameter_Resolve_Status =
     | ['to be implemented', null]
     | ['resolved', p_i.lookup.Acyclic<d_out.Entry>]
     | ['not found because of root', null]
 
-export type Cyclic_Parameter_Resolve_Status =
+type Cyclic_Parameter_Resolve_Status =
     | ['to be implemented', null]
     | ['resolved', p_i.lookup.Cyclic<d_out.Entry>]
     | ['not found because of root', null]
 
-export type Stack_Parameter_Resolve_Status =
+type Stack_Parameter_Resolve_Status =
     | ['to be implemented', null]
     | ['resolved', p_i.lookup.Stack<d_out.Entry>]
     | ['not found because of root', null]
 
-export type Lookup_Parameters = {
+type Lookup_Parameters = {
     'acyclic': p_temp_dictionary.Generic_Dictionary<Acyclic_Parameter_Resolve_Status>
     'cyclic': p_temp_dictionary.Generic_Dictionary<Cyclic_Parameter_Resolve_Status>
     'stack': p_temp_dictionary.Generic_Dictionary<Stack_Parameter_Resolve_Status>
 }
 
-export type Lookups = {
+type Lookups = {
     'parameters': Lookup_Parameters
     'siblings': {
         'acyclic': p_i.lookup.Acyclic<d_out.Entry>
@@ -71,7 +71,7 @@ export type Lookups = {
     }
 }
 
-export type Module_Parameter_Resolve_Status =
+type Module_Parameter_Resolve_Status =
     | ['not found because of root', null]
     | ['to be implemented', null]
 

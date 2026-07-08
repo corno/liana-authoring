@@ -5,7 +5,7 @@ import type * as interface_ from "../../../../interface/declarations/transformer
 //data types
 import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
 
-export namespace d_function {
+namespace d_function {
 	export type Parameters = {
 		'schema path': d_path.Node_Path
 	}
