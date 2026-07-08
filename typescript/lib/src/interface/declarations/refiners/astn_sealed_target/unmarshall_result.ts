@@ -8,14 +8,6 @@ import type * as d_out from "astn-core/interface/generated/liana/schemas/sealed_
 import type * as d_in_astn_parse_tree from "astn-core/interface/generated/liana/schemas/parse_tree/data"
 import type * as d_function from "../../../data/sealed_target_from_unmarshall_result.js"
 
-//dependencies
-import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
-
-//signatures
-// export type Document = p_.Refiner<
-// d_out.Document, d_function.Error, d_in.Document
-// >
-
 export type Value = p_.Refiner<
     d_out.Value,
     d_function.Error,

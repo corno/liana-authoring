@@ -7,12 +7,6 @@ import type * as d_in_parse_tree from "astn-core/interface/generated/liana/schem
 import type * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
 import type * as d_function from "../../../data/unmarshall_result_to_authoring_target.js"
 
-//dependencies
-import * as t_parse_tree_to_authoring_target from "astn/implementation/manual/transformers/parse_tree/authoring_target"
-
-//FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
-
-
 export type Document = p_.Transformer_With_Parameter<
     d_in.Document,
     d_out.Document,
