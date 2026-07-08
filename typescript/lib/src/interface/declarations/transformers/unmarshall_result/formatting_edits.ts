@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+
 import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
@@ -14,7 +14,7 @@ import * as t_authoring_target_to_text from "astn/implementation/manual/transfor
 import * as t_parse_tree_to_full_range from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 
-export namespace interface_ {
+
     export type Document = p_i.Transformer_With_Parameter<
         d_in.Document,
         d_out.Optional_Formatting_Edit,
@@ -42,4 +42,4 @@ export namespace interface_ {
             'conversion': d_function_parameters.Parameters
         }
     >
-}
+

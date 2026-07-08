@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+
 import type * as p_i from 'pareto-core/interface/transformer'
 import type * as p_di from 'pareto-core/interface/data'
 import p_implement_me from 'pareto-core-dev/implement_me'
@@ -11,7 +11,7 @@ import type * as d_out from "../../../data/unmarshall_result.js"
 import type * as d_function from "../../../data/unmarshall_result_from_astn_parse_tree.js"
 import type * as d_in_definition from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
-export namespace interface_ {
+
 
     export type Document = p_i.Transformer_With_Parameter<
         d_in.Document,
@@ -28,4 +28,4 @@ export namespace interface_ {
             'parent range stack': p_di.Optional_Value<d_out.Range_Stack>
         }
     >
-}
+

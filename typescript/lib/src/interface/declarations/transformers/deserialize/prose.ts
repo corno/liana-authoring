@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+
 import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
@@ -10,9 +10,9 @@ import * as t_deserialize_to_prose from "astn-core/implementation/manual/transfo
 import * as t_get_schema_to_prose from "../get_schema/prose.js"
 import * as t_get_schema_path_to_prose from "../get_schema_path/prose.js"
 
-export namespace interface_ {
+
     export type Error = p_i.Transformer<
         d_in.Error,
         d_out.Phrase
     >
-}
+

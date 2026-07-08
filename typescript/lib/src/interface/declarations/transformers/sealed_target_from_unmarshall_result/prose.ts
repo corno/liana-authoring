@@ -1,11 +1,11 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+
 import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../data/sealed_target_from_unmarshall_result.js"
 import type * as d_out from "pareto-fountain-pen/interface/generated/liana/schemas/prose/data"
 
-export namespace interface_ {
+
     export type Found = p_i.Transformer<
         d_in.Found,
         d_out.Phrase
@@ -14,4 +14,4 @@ export namespace interface_ {
         d_in.Error,
         d_out.Phrase
     >
-}
+

@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+
 import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
@@ -12,7 +12,7 @@ import * as t_parse_tree_to_authoring_target from "astn/implementation/manual/tr
 
 //FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 
-export namespace interface_ {
+
     export type Document = p_i.Transformer_With_Parameter<
         d_in.Document,
         d_out.Document,
@@ -41,4 +41,4 @@ export namespace interface_ {
         d_in_parse_tree.Structural_Token,
         d_out.Token_Trivia
     >
-}
+

@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+
 import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
@@ -8,7 +8,7 @@ import type * as d_out from "../../../data/document_symbols.js"
 //dependencies
 import * as t_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
 
-export namespace interface_ {
+
     export type Document = p_i.Transformer<
         d_in.Document,
         d_out.Value
@@ -18,4 +18,4 @@ export namespace interface_ {
         d_in.Value,
         d_out.Value
     >
-}
+

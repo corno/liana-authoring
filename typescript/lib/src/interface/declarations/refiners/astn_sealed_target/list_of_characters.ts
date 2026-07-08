@@ -6,7 +6,7 @@ import type * as d_function_unmarshall from "../../../data/unmarshall_result_fro
 import type * as d_function_seal from "../../../data/seal.js"
 import type * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
-export namespace interface_ {
+
     export type Document = p_i.Refiner_With_Parameter<
         d_out.Document,
         d_function_seal.Error,
@@ -15,4 +15,4 @@ export namespace interface_ {
             'unmarshall': d_function_unmarshall.Parameters
         }
     >
-}
+

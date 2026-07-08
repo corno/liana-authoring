@@ -1,4 +1,3 @@
-import * as p_ from 'pareto-core/implementation/transformer'
 import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
@@ -12,10 +11,10 @@ export namespace d_function {
 	}
 }
 
-export namespace interface_ {
-	export type Error = p_i.Transformer_With_Parameter<
-		d_in.Error,
-		d_out.Diagnostics.L,
-		d_function.Parameters
-	>
-}
+
+export type Error = p_i.Transformer_With_Parameter<
+	d_in.Error,
+	d_out.Diagnostics.L,
+	d_function.Parameters
+>
+
