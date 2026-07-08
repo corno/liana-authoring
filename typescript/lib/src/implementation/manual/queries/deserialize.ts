@@ -6,7 +6,7 @@ import p_super_query_result from 'pareto-core/implementation/query/super_query_r
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
 import * as p_select_lookup from 'pareto-core/implementation/transformer/specials/lookup'
 
-import * as interface_ from "../../../interface/queries.js"
+import * as interface_ from "../../../interface/declarations/queries.js"
 
 //data types
 import * as d from "../../../interface/data/deserialize.js"
