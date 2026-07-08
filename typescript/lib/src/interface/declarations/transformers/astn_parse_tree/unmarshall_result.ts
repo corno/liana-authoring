@@ -7,8 +7,8 @@ import p_create_refinement_context from 'pareto-core/implementation/__internal/s
 
 //data types
 import type * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
-import type * as d_out from "../../../../interface/data/unmarshall_result.js"
-import type * as d_function from "../../../../interface/data/unmarshall_result_from_astn_parse_tree.js"
+import type * as d_out from "../../../data/unmarshall_result.js"
+import type * as d_function from "../../../data/unmarshall_result_from_astn_parse_tree.js"
 import type * as d_in_definition from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
 export namespace interface_ {

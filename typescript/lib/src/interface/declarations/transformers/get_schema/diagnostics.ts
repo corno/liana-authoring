@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import type * as d_in from "../../../../interface/data/get_schema.js"
-import type * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
+import type * as d_in from "../../../data/get_schema.js"
+import type * as d_out from "../../../generated/liana/schemas/diagnostics/data.js"
 import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
 
 export namespace d_function {
