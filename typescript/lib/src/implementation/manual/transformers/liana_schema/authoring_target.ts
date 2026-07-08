@@ -1,9 +1,9 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import type * as p_i from 'pareto-core/interface/transformer'
+
+import type * as interface_ from "../../../../interface/declarations/transformers/liana_schema/authoring_target.js"
 
 //data types
 import type * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
-import type * as d_in from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
 export namespace d_function {
     export type Parameters = {
@@ -12,20 +12,6 @@ export namespace d_function {
         | ['verbose', null]
     }
 }
-
-export namespace interface_ {
-    export type Value = p_i.Transformer_With_Parameter<
-        d_in.Value,
-        d_out.Value,
-        d_function.Parameters
-    >
-    export type Value_data = p_i.Transformer_With_Parameter<
-        d_in.Value,
-        d_out.Value.data,
-        d_function.Parameters
-    >
-}
-import * as temp_interface_ from "../../../../interface/declarations/transformers/liana_schema/authoring_target.js"
 
 export const Value: interface_.Value = ($, $p) => ({
 

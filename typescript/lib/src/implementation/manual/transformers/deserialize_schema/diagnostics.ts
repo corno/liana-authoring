@@ -1,19 +1,17 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import type * as p_i from 'pareto-core/interface/transformer'
 
-import type * as d_out_2 from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
-import type * as d_in from "liana-core/interface/data/deserialize_resolved"
+import type * as interface_ from "../../../../interface/declarations/transformers/deserialize_schema/diagnostics.js"
+
 
 //data types
 import type * as d_loc from "../../../../interface/generated/liana/schemas/location/data.js"
 import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
-
+import type * as d_out_2 from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
 export namespace d_function {
     export type Parameters = {
         'schema path': d_path.Node_Path
     }
 }
-
 export namespace d_out {
 
     export type Error = {
@@ -28,15 +26,6 @@ export namespace d_out {
         'related information': d_out_2.Diagnostic.related_information
     }
 }
-
-export namespace interface_ {
-    export type Error = p_i.Transformer_With_Parameter<
-        d_in.Error,
-        d_out.Error,
-        d_function.Parameters
-    >
-}
-import * as temp_interface_ from "../../../../interface/declarations/transformers/deserialize_schema/diagnostics.js"
 
 //dependencies
 import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"

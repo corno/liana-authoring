@@ -1,22 +1,9 @@
-import type * as p_di from 'pareto-core/interface/data'
 import * as p_ from 'pareto-core/implementation/transformer'
-import type * as p_i from 'pareto-core/interface/transformer'
+
+import type * as interface_ from "../../../../interface/declarations/transformers/unmarshall_result/selection_ranges.js"
 
 //data types
 import type * as d_in from "../../../../interface/data/unmarshall_result.js"
-import type * as d_out from "../../../../interface/data/unmarshall_result.js"
-import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
-
-export namespace interface_ {
-    export type Document = p_i.Transformer_With_Parameter<
-        d_in.Document,
-        p_di.List<d_out.Range_Stack>,
-        {
-            'positions': p_di.List<d_location.Position_>
-        }
-    >
-}
-import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/selection_ranges.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"

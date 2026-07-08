@@ -1,22 +1,9 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import type * as p_i from 'pareto-core/interface/transformer'
+
+import type * as interface_ from "../../../../interface/declarations/transformers/unmarshall_result/unmarshall_warnings.js"
 
 //data types
-import type * as d_in from "../../../../interface/data/unmarshall_result.js"
 import type * as d_out from "../../../../interface/generated/liana/schemas/unmarshall_errors/data.js"
-
-export namespace interface_ {
-    export type Document = p_i.Transformer<
-        d_in.Document,
-        d_out.Warnings
-    >
-
-    export type Value = p_i.Transformer<
-        d_in.Value,
-        d_out.Warnings
-    >
-}
-import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall_result/unmarshall_warnings.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
