@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result.js"
-import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
+import type * as d_in from "../../../../interface/data/unmarshall_result.js"
+import type * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
 
 //dependencies
 import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors.js"

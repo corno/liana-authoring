@@ -6,7 +6,7 @@ import p_super_query_result from 'pareto-core/implementation/query/super_query_r
 import * as interface_ from "../../../interface/declarations/queries.js"
 
 //data  types
-import * as d_process_file_data from "pareto-common/interface/data/process_file_data"
+import type * as d_process_file_data from "pareto-common/interface/data/process_file_data"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file.js"

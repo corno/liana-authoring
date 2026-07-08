@@ -6,10 +6,10 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import p_create_refinement_context from 'pareto-core/implementation/__internal/sync/create_refinement_context'
 
 //data types
-import * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "../../../../interface/data/unmarshall_result.js"
-import * as d_function from "../../../../interface/data/unmarshall_result_from_astn_parse_tree.js"
-import * as d_in_definition from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
+import type * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
+import type * as d_out from "../../../../interface/data/unmarshall_result.js"
+import type * as d_function from "../../../../interface/data/unmarshall_result_from_astn_parse_tree.js"
+import type * as d_in_definition from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
 //dependencies
 import * as t_parse_tree_to_full_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"

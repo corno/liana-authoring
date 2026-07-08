@@ -2,9 +2,9 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result.js"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
-import * as d_out from "../../../../interface/generated/liana/schemas/hover_info/data.js"
+import type * as d_in from "../../../../interface/data/unmarshall_result.js"
+import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_out from "../../../../interface/generated/liana/schemas/hover_info/data.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"

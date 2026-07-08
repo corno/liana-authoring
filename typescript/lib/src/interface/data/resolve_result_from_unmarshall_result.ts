@@ -1,6 +1,6 @@
 // import * as p_ti from 'pareto-core/interface/transformer'
 
-// import * as d_resolve_result from "./resolve_result.js"
+// import type * as d_resolve_result from "./resolve_result.js"
 
 
 // export type Parameters = {

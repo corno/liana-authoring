@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result.js"
-import * as d_out from "../../../../interface/data/document_symbols.js"
+import type * as d_in from "../../../../interface/data/unmarshall_result.js"
+import type * as d_out from "../../../../interface/data/document_symbols.js"
 
 //dependencies
 import * as t_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"

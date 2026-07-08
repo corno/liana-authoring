@@ -1,7 +1,7 @@
-import * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
-import * as d_read_file from "pareto-filesystem-unrestricted-api/interface/generated/liana/schemas/fs_unrestricted_read_file/data"
-import * as d_deserialize_resolved from "liana-core/interface/data/deserialize_resolved"
-import * as d_module_specfier from "pareto-liana/interface/data/temp_module_specifier"
+import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
+import type * as d_read_file from "pareto-filesystem-unrestricted-api/interface/generated/liana/schemas/fs_unrestricted_read_file/data"
+import type * as d_deserialize_resolved from "liana-core/interface/data/deserialize_resolved"
+import type * as d_module_specfier from "pareto-liana/interface/data/temp_module_specifier"
 
 export type Result = d_module_specfier.Temp_Module_Specifier
 

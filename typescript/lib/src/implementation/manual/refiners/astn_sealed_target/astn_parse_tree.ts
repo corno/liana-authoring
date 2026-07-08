@@ -1,9 +1,9 @@
 import * as p_i from 'pareto-core/interface/refiner'
 
 //data types
-import * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
-import * as d_function from "../../../../interface/data/sealed_target_from_parse_tree.js"
+import type * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
+import type * as d_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
+import type * as d_function from "../../../../interface/data/sealed_target_from_parse_tree.js"
 
 //dependencies
 // import * as r_from_unmarshall_result from "./unmarshall_result.js"

@@ -1,11 +1,11 @@
 import * as p_i from 'pareto-core/interface/refiner'
 
 //data types
-// import * as d_in from "pareto-liana/interface/to_be_generated/unmashall_result"
-import * as d_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
-import * as d_function_unmarshall from "../../../../interface/data/unmarshall_result_from_list_of_characters.js"
-import * as d_function_seal from "../../../../interface/data/seal.js"
-import * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
+// import type * as d_in from "pareto-liana/interface/to_be_generated/unmashall_result"
+import type * as d_out from "astn-core/interface/generated/liana/schemas/sealed_target/data"
+import type * as d_function_unmarshall from "../../../../interface/data/unmarshall_result_from_list_of_characters.js"
+import type * as d_function_seal from "../../../../interface/data/seal.js"
+import type * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
 import * as r_unmarshall_result_from_list_of_characters from "../unmarshall_result/list_of_characters.js"

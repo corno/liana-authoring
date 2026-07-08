@@ -5,7 +5,7 @@ import * as actions_queries_pareto_common from "pareto-common/interface/query_ac
 import * as actions_queries_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/query_actions"
 import * as query_actions from "../actions/queries.js"
 //data types
-import * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
+import type * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 
 
 

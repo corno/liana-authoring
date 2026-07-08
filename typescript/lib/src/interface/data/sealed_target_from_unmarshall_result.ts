@@ -1,4 +1,4 @@
-import * as d_location from "astn-core/interface/generated/liana/schemas/location/data"
+import type * as d_location from "astn-core/interface/generated/liana/schemas/location/data"
 
 export type Error = {
     'type': Error_Type

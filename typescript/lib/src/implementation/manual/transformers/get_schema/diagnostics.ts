@@ -2,9 +2,9 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/get_schema.js"
-import * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
-import * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
+import type * as d_in from "../../../../interface/data/get_schema.js"
+import type * as d_out from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
+import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
 
 export namespace d_function {
 	export type Parameters = {

@@ -3,8 +3,8 @@ import * as p_i from 'pareto-core/interface/transformer'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
 //data types
-import * as d_in from "../../../../interface/data/unmarshall_result.js"
-import * as d_out from "../../../../interface/generated/liana/schemas/unmarshall_errors/data.js"
+import type * as d_in from "../../../../interface/data/unmarshall_result.js"
+import type * as d_out from "../../../../interface/generated/liana/schemas/unmarshall_errors/data.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"

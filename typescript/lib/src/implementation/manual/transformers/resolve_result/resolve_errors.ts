@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/data/resolve_result.js"
-import * as d_out from "../../../../interface/data/resolve_errors.js"
+import type * as d_in from "../../../../interface/data/resolve_result.js"
+import type * as d_out from "../../../../interface/data/resolve_errors.js"
 
 export namespace interface_ {
 

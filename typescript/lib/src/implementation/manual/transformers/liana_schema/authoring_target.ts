@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
-import * as d_in from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
+import type * as d_out from "astn/interface/generated/liana/schemas/authoring_target/data"
+import type * as d_in from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
 export namespace d_function {
     export type Parameters = {

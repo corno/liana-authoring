@@ -1,6 +1,6 @@
-import * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
-import * as d_read_file from "pareto-filesystem-unrestricted-api/interface/generated/liana/schemas/fs_unrestricted_read_file/data"
-import * as d_deserialize from "./deserialize.js"
+import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
+import type * as d_read_file from "pareto-filesystem-unrestricted-api/interface/generated/liana/schemas/fs_unrestricted_read_file/data"
+import type * as d_deserialize from "./deserialize.js"
 
 export type Result = d_deserialize.Result
 

@@ -1,8 +1,8 @@
 import * as p_ from 'pareto-core/interface/data'
 
-import * as d_unmarshall_result from "./unmarshall_result.js"
+import type * as d_unmarshall_result from "./unmarshall_result.js"
 
-import * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
+import type * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
 
 export type Document = {
     'unmarshalled': d_unmarshall_result.Document
