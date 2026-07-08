@@ -10,14 +10,14 @@ import * as t_deserialize_to_prose from "astn-core/implementation/manual/transfo
 import * as t_get_schema_to_prose from "../get_schema/prose.js"
 import * as t_get_schema_path_to_prose from "../get_schema_path/prose.js"
 
-export namespace signatures {
+export namespace interface_ {
     export type Error = p_i.Transformer<
         d_in.Error,
         d_out.Phrase
     >
 }
 
-export const Error: signatures.Error = ($) => p_.from.state($).decide(
+export const Error: interface_.Error = ($) => p_.from.state($).decide(
     ($) => {   
         switch ($[0]) {
             case 'deserialize parse tree': return p_.option($, ($) => t_deserialize_to_prose.Error($))

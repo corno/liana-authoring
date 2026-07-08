@@ -8,7 +8,7 @@ import type * as d_out from "pareto-fountain-pen/interface/generated/liana/schem
 //dependencies
 import * as t_stat_to_prose from "pareto-filesystem-unrestricted-api/implementation/manual/transformers/stat_possible_node/prose"
 
-export namespace signatures {
+export namespace interface_ {
     export type Error = p_i.Transformer<
         d_in.Error,
         d_out.Phrase
@@ -18,7 +18,7 @@ export namespace signatures {
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-export const Error: signatures.Error = ($) => p_.from.state($).decide(
+export const Error: interface_.Error = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'not found': return p_.option($, ($) => sh.ph.literal("schema not found"))

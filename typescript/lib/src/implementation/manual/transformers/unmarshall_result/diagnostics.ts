@@ -12,13 +12,14 @@ import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/tran
 import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/prose.js"
 import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/prose.js"
 
-
+export namespace interface_ {
 export type Document = p_i.Transformer<
     d_in.Document,
     d_out.Diagnostics
 >
+}
 
-export const Document: Document = ($) => p_.literal.segmented_list([
+export const Document: interface_.Document = ($) => p_.literal.segmented_list([
     p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(
         ($) => {
             return ({

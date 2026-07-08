@@ -12,41 +12,42 @@ import * as t_parse_tree_to_authoring_target from "astn/implementation/manual/tr
 
 //FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 
+export namespace interface_ {
+    export type Document = p_i.Transformer_With_Parameter<
+        d_in.Document,
+        d_out.Document,
+        d_function.Parameters
+    >
 
-export type Document = p_i.Transformer_With_Parameter<
-    d_in.Document,
-    d_out.Document,
-    d_function.Parameters
->
+    export type Any_Value = p_i.Transformer_With_Parameter<
+        d_in.Value,
+        d_out.Value,
+        d_function.Parameters
+    >
 
-export type Any_Value = p_i.Transformer_With_Parameter<
-    d_in.Value,
-    d_out.Value,
-    d_function.Parameters
->
+    export type Non_Entity = p_i.Transformer_With_Parameter<
+        d_in.Value,
+        d_out.Value,
+        d_function.Parameters
+    >
 
-export type Non_Entity = p_i.Transformer_With_Parameter<
-    d_in.Value,
-    d_out.Value,
-    d_function.Parameters
->
+    export type Entity = p_i.Transformer_With_Parameter<
+        d_in.Value,
+        d_out.Value,
+        d_function.Parameters
+    >
 
-export type Entity = p_i.Transformer_With_Parameter<
-    d_in.Value,
-    d_out.Value,
-    d_function.Parameters
->
-
-export type Structural_Token = p_i.Transformer<
-    d_in_parse_tree.Structural_Token,
-    d_out.Token_Trivia
->
+    export type Structural_Token = p_i.Transformer<
+        d_in_parse_tree.Structural_Token,
+        d_out.Token_Trivia
+    >
+}
 
 const temp_value = ($: d_out.Value.data): d_out.Value => ({
     'data': $
 })
 
-export const Document: Document = ($, $p): d_out.Document => {
+export const Document: interface_.Document = ($, $p): d_out.Document => {
     return {
         'header': p_.from.optional($['header']).map(
             ($) => t_parse_tree_to_authoring_target.Value($)),
@@ -56,7 +57,7 @@ export const Document: Document = ($, $p): d_out.Document => {
 
 
 
-export const Non_Entity: Non_Entity = ($, $p): d_out.Value => {
+export const Non_Entity: interface_.Non_Entity = ($, $p) => {
     const temp_dont_restyle_entities = ($: d_function.Parameters): d_function.Parameters => {
         const x = $
         return {
@@ -75,7 +76,7 @@ export const Non_Entity: Non_Entity = ($, $p): d_out.Value => {
     return Any_Value($, temp_dont_restyle_entities($p))
 }
 
-export const Entity: Entity = ($, $p): d_out.Value => {
+export const Entity: interface_.Entity = ($, $p) => {
     const value = $
     return p_.from.state($p.impact).decide(
         ($) => {
@@ -94,7 +95,7 @@ export const Entity: Entity = ($, $p): d_out.Value => {
         })
 }
 
-export const Any_Value: Any_Value = ($, $p): d_out.Value => {
+export const Any_Value: interface_.Any_Value = ($, $p) => {
     const instance = $['instance']
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
@@ -103,7 +104,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                     ($) => {
                         switch ($[0]) {
                             case 'incorrect': return p_.option($, ($) => t_parse_tree_to_authoring_target.Value(instance))
-                            case 'missing': return p_.option($, ($): d_out.Value => temp_value(['missing', {
+                            case 'missing': return p_.option($, ($) => temp_value(['missing', {
                                 '#': {
                                     'comments': p_.literal.list([])
                                 }
@@ -112,10 +113,10 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                         }
                     }))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
-                    ($): d_out.Value => {
+                    ($) => {
                         switch ($[0]) {
-                            case 'component': return p_.option($, ($): d_out.Value => Any_Value($.value, $p))
-                            case 'dictionary': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                            case 'component': return p_.option($, ($) => Any_Value($.value, $p))
+                            case 'dictionary': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': ['dictionary', {
                                     '{': Structural_Token($.intermediate.instance['{']),
                                     'entries': p_.from.list($.intermediate['entries as list']).map(
@@ -133,7 +134,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                     '}': Structural_Token($.intermediate.instance['}']),
                                 }]
                             }]))
-                            case 'group': return p_.option($, ($): d_out.Value => {
+                            case 'group': return p_.option($, ($) => {
                                 const $v_unmarsalled_group = $
                                 return temp_value(['concrete', {
                                     'type': ['group', p_.from.state($p.style).decide(
@@ -274,7 +275,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                         })]
                                 }])
                             })
-                            case 'list': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                            case 'list': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': ['list', {
                                     '[': Structural_Token($.instance['[']),
                                     'items': p_.from.list($.derived.items).map(
@@ -282,14 +283,14 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                     ']': Structural_Token($.instance[']']),
                                 }]
                             }]))
-                            case 'nothing': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                            case 'nothing': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': ['nothing', {
                                     '~': {
                                         'comments': p_.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                     }
                                 }]
                             }]))
-                            case 'simple': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                            case 'simple': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': ['text', {
                                     'value': $.instance.token.value,
                                     'delimiter': ['none', null],
@@ -298,7 +299,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                     }
                                 }]
                             }]))
-                            case 'optional': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                            case 'optional': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': ['optional', p_.from.state($.instance).decide(
                                     ($): d_out.Value.data.concrete.type_.optional => {
                                         switch ($[0]) {
@@ -335,7 +336,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                         }
                                     })]
                             }]))
-                            case 'reference': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                            case 'reference': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': p_.from.state($.type).decide(
                                     ($) => {
                                         switch ($[0]) {
@@ -356,9 +357,9 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                     })
                             }]))
                             case 'state': return p_.option($, ($) => p_.from.state($.derived['option status']).decide(
-                                ($): d_out.Value => {
+                                ($) => {
                                     switch ($[0]) {
-                                        case 'set': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                                        case 'set': return p_.option($, ($) => temp_value(['concrete', {
                                             'type': ['state', {
                                                 '|': {
                                                     'comments': p_.literal.list([])
@@ -384,7 +385,7 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
                                         default: return p_.exhaustive($[0])
                                     }
                                 }))
-                            case 'text': return p_.option($, ($): d_out.Value => temp_value(['concrete', {
+                            case 'text': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': ['text', {
                                     'value': $.instance.token.value,
                                     'delimiter': ['quote', null],
@@ -400,6 +401,6 @@ export const Any_Value: Any_Value = ($, $p): d_out.Value => {
             }
         })
 }
-export const Structural_Token: Structural_Token = ($) => ({
+export const Structural_Token: interface_.Structural_Token = ($) => ({
     'comments': $['trailing trivia'].comments
 })

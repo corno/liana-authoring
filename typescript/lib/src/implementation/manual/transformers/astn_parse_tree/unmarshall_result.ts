@@ -15,6 +15,8 @@ import type * as d_in_definition from "pareto-liana/interface/generated/liana/sc
 import * as t_parse_tree_to_full_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
 import * as t_parse_tree_to_start_token_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
 
+export namespace interface_ {
+
 export type Document = p_i.Transformer_With_Parameter<
     d_in.Document,
     d_out.Document,
@@ -30,8 +32,9 @@ export type Value = p_i.Transformer_With_Parameter<
         'parent range stack': p_di.Optional_Value<d_out.Range_Stack>
     }
 >
+}
 
-export const Document: Document = ($, $p) => ({
+export const Document: interface_.Document = ($, $p) => ({
     'header': p_.from.optional($['header']).map(
         ($) => $.value),
     'content': Value(
@@ -44,7 +47,7 @@ export const Document: Document = ($, $p) => ({
     )
 })
 
-export const Value: Value = ($, $p) => {
+export const Value: interface_.Value = ($, $p) => {
     const value = $
     const value_range_stack: d_out.Range_Stack = {
         'range': t_parse_tree_to_full_location.Value($),
@@ -53,9 +56,9 @@ export const Value: Value = ($, $p) => {
     const start_token_range = t_parse_tree_to_start_token_location.Value($)
     const optional_value_range_stack = p_.literal.set(value_range_stack)
     return p_.from.state($.type).decide(
-        ($): d_out.Value => {
+        ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.option($, ($): d_out.Value => {
+                case 'concrete': return p_.option($, ($) => {
                     const $v_concrete_value = $
                     return {
                         'definition': $p.definition,
@@ -63,9 +66,9 @@ export const Value: Value = ($, $p) => {
                         'instance': value,
                         'unmarshall result': p_create_refinement_context<d_out.Unmarshalled_Value, d_out.Value_Unmarshall_Error>(
                             (abort) => p_.from.state($p.definition).decide(
-                                ($): d_out.Unmarshalled_Value => {
+                                ($) => {
                                     switch ($[0]) {
-                                        case 'component': return p_.option($, ($): d_out.Unmarshalled_Value => ['component', {
+                                        case 'component': return p_.option($, ($) => ['component', {
                                             'definition': $,
                                             'value': Value(
                                                 value,

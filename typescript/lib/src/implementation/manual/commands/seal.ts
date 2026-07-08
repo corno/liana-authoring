@@ -2,9 +2,6 @@ import * as p_ from 'pareto-core/implementation/command'
 
 import type * as interface_ from "../../../interface/declarations/commands.js"
 
-//data types
-import type * as d_main from "pareto-application-api/interface/data/main"
-
 //dependencies
 import * as c_file_to_file from "pareto-common/implementation/manual/commands/file_to_file"
 import * as q_seal from "../queries/seal.js"
@@ -31,7 +28,7 @@ export const $$: interface_.seal = p_.command(
             {
                 'arguments': $d.arguments
             },
-            ($): d_main.Error => $
+            ($) => $
         ),
     ]
 )

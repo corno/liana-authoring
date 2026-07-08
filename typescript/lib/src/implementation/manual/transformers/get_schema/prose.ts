@@ -9,14 +9,14 @@ import type * as d_out from "pareto-fountain-pen/interface/generated/liana/schem
 import * as t_deserialize_resolved_to_prose from "liana-core/implementation/manual/transformers/deserialize_resolved/prose"
 import * as t_read_file_to_prose from "pareto-filesystem-unrestricted-api/implementation/manual/transformers/read_file/prose"
 
-export namespace signatures {
+export namespace interface_ {
     export type Error = p_i.Transformer<
         d_in.Error,
         d_out.Phrase
     >
 }
 
-export const Error: signatures.Error = ($) => p_.from.state($.type).decide(
+export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'deserialize': return p_.option($, ($) => t_deserialize_resolved_to_prose.Error($))
