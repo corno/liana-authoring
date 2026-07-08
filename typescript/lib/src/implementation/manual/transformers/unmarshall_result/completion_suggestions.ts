@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_di from 'pareto-core/interface/data'
-import * as p_i from 'pareto-core/interface/transformer'
+import type * as p_di from 'pareto-core/interface/data'
+import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../../interface/data/unmarshall_result.js"
@@ -24,18 +24,22 @@ export type Parameters = {
     | ['concise', null]
 }
 
-export type Document = p_i.Transformer_With_Parameter<
-    d_in.Document,
-    d_out.Completion_Suggestions,
-    Parameters
+export namespace interface_ {
 
->
+    export type Document = p_i.Transformer_With_Parameter<
+        d_in.Document,
+        d_out.Completion_Suggestions,
+        Parameters
 
-export type Found = p_i.Transformer_With_Parameter<
-    d_outx.Found,
-    d_out.Completion_Suggestions,
-    Parameters
->
+    >
+
+    export type Found = p_i.Transformer_With_Parameter<
+        d_outx.Found,
+        d_out.Completion_Suggestions,
+        Parameters
+    >
+
+}
 
 type Minimal_Completion_Suggestion = {
     'label': string,
@@ -153,7 +157,7 @@ const d_schema_Value = (
 
 }
 
-export const Found: Found = ($, $p) => {
+export const Found: interface_.Found = ($, $p) => {
     switch ($[0]) {
         case 'value': return p_.option($, ($): d_out.Completion_Suggestions => {
             const definition = $.definition
@@ -260,7 +264,7 @@ export const Found: Found = ($, $p) => {
     }
 }
 
-export const Document: Document = ($, $p) => {
+export const Document: interface_.Document = ($, $p) => {
     return Found(
         t_to_unmarshall_result_value_at_position.Document(
             $,

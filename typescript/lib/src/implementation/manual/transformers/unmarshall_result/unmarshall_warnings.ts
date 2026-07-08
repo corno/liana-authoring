@@ -1,31 +1,31 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_i from 'pareto-core/interface/transformer'
+import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../../interface/data/unmarshall_result.js"
 import type * as d_out from "../../../../interface/generated/liana/schemas/unmarshall_errors/data.js"
 
+export namespace interface_ {
+    export type Document = p_i.Transformer<
+        d_in.Document,
+        d_out.Warnings
+    >
+
+    export type Value = p_i.Transformer<
+        d_in.Value,
+        d_out.Warnings
+    >
+}
+
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
 
-export type Document = p_i.Transformer<
-    d_in.Document,
-    d_out.Warnings
->
 
-export type Value = p_i.Transformer<
-    d_in.Value,
-    d_out.Warnings
->
+export const Document: interface_.Document = ($) => Value(
+    $.content,
+)
 
-
-export const Document: Document = ($) => {
-    return Value(
-        $.content,
-    )
-}
-
-export const Value: Value = ($) => {
+export const Value: interface_.Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
@@ -114,7 +114,7 @@ export const Value: Value = ($) => {
                                 }])
                                 : p_.literal.list([])
                             )
-                            case 'list': return p_.option($, ($) => p_.from.list($.derived.items    ).flatten(
+                            case 'list': return p_.option($, ($) => p_.from.list($.derived.items).flatten(
                                 ($) => Value($)
                             ))
                             case 'nothing': return p_.option($, ($) => p_.literal.list([]))

@@ -1,4 +1,4 @@
-import * as p_i from 'pareto-core/interface/refiner'
+import type * as p_i from 'pareto-core/interface/refiner'
 
 //data types
 import type * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
@@ -11,18 +11,18 @@ import type * as d_function from "../../../../interface/data/sealed_target_from_
 
 
 //signatures
-export type Document = p_i.Refiner_With_Parameter<
-    d_out.Document,
-    d_function.Error,
-    d_in.Document,
-    d_function.Parameters
->
-export type Value = p_i.Refiner_With_Parameter<
-    d_out.Value,
-    d_function.Error,
-    d_in.Value,
-    d_function.Parameters
->
+// export type Document = p_i.Refiner_With_Parameter<
+//     d_out.Document,
+//     d_function.Error,
+//     d_in.Document,
+//     d_function.Parameters
+// >
+// export type Value = p_i.Refiner_With_Parameter<
+//     d_out.Value,
+//     d_function.Error,
+//     d_in.Value,
+//     d_function.Parameters
+// >
 
 // export const Document: Document = ($, abort, $p) => r_from_unmarshall_result.Document(
 //     r_unmarshall_result_from_parse_tree.Document($, $p),

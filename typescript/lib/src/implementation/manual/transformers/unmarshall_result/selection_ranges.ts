@@ -1,25 +1,27 @@
-import * as p_di from 'pareto-core/interface/data'
+import type * as p_di from 'pareto-core/interface/data'
 import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_i from 'pareto-core/interface/transformer'
+import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../../interface/data/unmarshall_result.js"
 import type * as d_out from "../../../../interface/data/unmarshall_result.js"
 import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
+export namespace interface_ {
+    export type Document = p_i.Transformer_With_Parameter<
+        d_in.Document,
+        p_di.List<d_out.Range_Stack>,
+        {
+            'positions': p_di.List<d_location.Position_>
+        }
+    >
+}
+
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
 import * as t_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
 
-export type Document = p_i.Transformer_With_Parameter<
-    d_in.Document,
-    p_di.List<d_out.Range_Stack>,
-    {
-        'positions': p_di.List<d_location.Position_>
-    }
->
-
-export const Document: Document = ($, $p) => {
+export const Document: interface_.Document = ($, $p) => {
     const doc = $
     return p_.from.list($p.positions).map(
         ($): d_in.Range_Stack => p_.from.state(t_to_unmarshall_result_value_at_position.Document(

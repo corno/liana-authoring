@@ -1,10 +1,20 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_i from 'pareto-core/interface/transformer'
+import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../../interface/data/unmarshall_result.js"
 import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 import type * as d_out from "../../../../interface/generated/liana/schemas/hover_info/data.js"
+
+export namespace interface_ {
+    export type Document = p_i.Transformer_With_Parameter<
+        d_in.Document,
+        d_out.Hover_Texts,
+        {
+            'position': d_location.Position_
+        }
+    >
+}
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
@@ -12,14 +22,6 @@ import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/tran
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
-
-export type Document = p_i.Transformer_With_Parameter<
-    d_in.Document,
-    d_out.Hover_Texts,
-    {
-        'position': d_location.Position_
-    }
->
 
 const Property_Path = ($: d_in.Property_Path): string => t_prose_to_text.Phrase(
     sh.ph.rich(
@@ -44,7 +46,7 @@ const Property_Path = ($: d_in.Property_Path): string => t_prose_to_text.Phrase(
     }
 )
 
-export const Document: Document = ($, $p) => {
+export const Document: interface_.Document = ($, $p) => {
     return p_.from.state(
         t_to_unmarshall_result_value_at_position.Document($, $p)
     ).decide(

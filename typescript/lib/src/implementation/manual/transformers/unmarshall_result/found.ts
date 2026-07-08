@@ -1,12 +1,47 @@
-import * as p_di from 'pareto-core/interface/data'
+import type * as p_di from 'pareto-core/interface/data'
 import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_i from 'pareto-core/interface/transformer'
+import type * as p_i from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../../interface/data/unmarshall_result.js"
 import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 import type * as d_astn_location from "astn-core/interface/generated/liana/schemas/location/data"
 import type * as d_out from "../../../../interface/data/found.js"
+
+export namespace interface_ {
+    export type Document = p_i.Transformer_With_Parameter<
+        d_in.Document,
+        d_out.Found,
+        {
+            'position': d_location.Position
+        }
+    >
+
+    // export type Items = p_i.Transformer_With_Parameter<
+    //     d_in.Items,
+    //     Found,
+    //     {
+    //         'position': d_location.Position
+    //     }
+    // >
+
+    export type Value = p_i.Transformer_With_Parameter<
+        d_in.Value,
+        d_out.Found,
+        {
+            'position': d_location.Position
+        }
+    >
+
+    export type Value_possibly_found = p_i.Transformer_With_Parameter<
+        d_in.Value,
+        p_di.Optional_Value<d_out.Found>,
+        {
+            'position': d_location.Position
+        }
+    >
+
+}
 
 //dependencies
 import * as t_parse_tree_to_full_value_range from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
@@ -32,41 +67,9 @@ export const range_overlaps_position = (
     )
 
 
-export type Document = p_i.Transformer_With_Parameter<
-    d_in.Document,
-    d_out.Found,
-    {
-        'position': d_location.Position
-    }
->
+export const Document: interface_.Document = ($, $p) => Value($.content, $p)
 
-// export type Items = p_i.Transformer_With_Parameter<
-//     d_in.Items,
-//     Found,
-//     {
-//         'position': d_location.Position
-//     }
-// >
-
-export type Value = p_i.Transformer_With_Parameter<
-    d_in.Value,
-    d_out.Found,
-    {
-        'position': d_location.Position
-    }
->
-
-export type Value_possibly_found = p_i.Transformer_With_Parameter<
-    d_in.Value,
-    p_di.Optional_Value<d_out.Found>,
-    {
-        'position': d_location.Position
-    }
->
-
-export const Document: Document = ($, $p) => Value($.content, $p)
-
-export const Value_possibly_found: Value_possibly_found = ($, $p) => {
+export const Value_possibly_found: interface_.Value_possibly_found = ($, $p) => {
     return range_overlaps_position(
         t_parse_tree_to_full_value_range.Value($.instance),
         {
@@ -77,7 +80,7 @@ export const Value_possibly_found: Value_possibly_found = ($, $p) => {
         : p_.literal.not_set()
 }
 
-export const Value: Value = ($, $p) => {
+export const Value: interface_.Value = ($, $p) => {
 
 
 

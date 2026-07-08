@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/refiner'
-import * as p_i from 'pareto-core/interface/refiner'
-import * as p_ti from 'pareto-core/interface/transformer'
+import type * as p_i from 'pareto-core/interface/refiner'
+import type * as p_ti from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../../interface/data/unmarshall_result.js"
@@ -15,16 +15,19 @@ import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/
 // export type Document = p_i.Refiner<
 // d_out.Document, d_function.Error, d_in.Document
 // >
-export type Value = p_i.Refiner<
-    d_out.Value,
-    d_function.Error,
-    d_in.Value
->
+export namespace interface_ {
+    export type Value = p_i.Refiner<
+        d_out.Value,
+        d_function.Error,
+        d_in.Value
+    >
+    export type Found = p_ti.Transformer< //FIXME; this one shouldn't be here
+        d_in_astn_parse_tree.Value,
+        d_function.Found
+    >
+}
 
-export const Found: p_ti.Transformer<
-    d_in_astn_parse_tree.Value,
-    d_function.Found
-> = ($) => {
+export const Found: interface_.Found = ($) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
@@ -55,7 +58,7 @@ export const Found: p_ti.Transformer<
 //     return Value($.content, abort)
 // }
 
-export const Value: Value = ($, abort) => {
+export const Value: interface_.Value = ($, abort) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {

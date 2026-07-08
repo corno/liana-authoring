@@ -1,5 +1,5 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_i from 'pareto-core/interface/transformer'
+import type * as p_i from 'pareto-core/interface/transformer'
 
 import type * as d_out_2 from "../../../../interface/generated/liana/schemas/diagnostics/data.js"
 import type * as d_in from "liana-core/interface/data/deserialize_resolved"
