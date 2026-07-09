@@ -12,9 +12,9 @@ namespace d_function {
 }
 
 //dependencies
-import * as t_deserialize_resolved_to_prose from "liana-core/implementation/manual/transformers/deserialize_resolved/prose"
-import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"
-import * as t_deserialize_resolved_to_location from "liana-core/implementation/manual/transformers/deserialize_resolved/location"
+import * as t_deserialize_resolved_to_prose from "liana-core/implementation/transformers/deserialize_resolved/prose"
+import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
+import * as t_deserialize_resolved_to_location from "liana-core/implementation/transformers/deserialize_resolved/location"
 
 export const Error: interface_.Error = ($, $p) => {
 	return p_.from.state($.type).decide(

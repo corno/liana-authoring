@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/deserialize/prose.js"
 
 //dependencies
-import * as t_deserialize_to_prose from "astn-core/implementation/manual/transformers/deserialize_parse_tree/prose"
+import * as t_deserialize_to_prose from "astn-core/implementation/transformers/deserialize_parse_tree/prose"
 import * as t_get_schema_to_prose from "../get_schema/prose.js"
 import * as t_get_schema_path_to_prose from "../get_schema_path/prose.js"
 

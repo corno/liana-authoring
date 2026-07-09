@@ -5,7 +5,7 @@ import type * as d_out from "astn-core/interface/generated/liana/schemas/sealed_
 import type * as d_function from "../../../interface/data/sealed_target_from_unmarshall_result.js"
 
 //dependencies
-import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
+import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
 
 import type * as interface_ from "../../../declarations/refiners/astn_sealed_target/unmarshall_result.js"
 

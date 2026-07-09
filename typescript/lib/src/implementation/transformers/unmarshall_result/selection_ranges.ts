@@ -7,7 +7,7 @@ import type * as d_in from "../../../interface/data/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
 
 export const Document: interface_.Document = ($, $p) => {
     const doc = $

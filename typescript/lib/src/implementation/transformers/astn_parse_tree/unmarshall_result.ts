@@ -11,8 +11,8 @@ import type * as d_out from "../../../interface/data/unmarshall_result.js"
 import type * as interface_ from "../../../declarations/transformers/astn_parse_tree/unmarshall_result.js"
 
 //dependencies
-import * as t_parse_tree_to_full_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
-import * as t_parse_tree_to_start_token_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
+import * as t_parse_tree_to_full_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_start_token_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
 
 export const Document: interface_.Document = ($, $p) => ({
     'header': p_.from.optional($['header']).map(

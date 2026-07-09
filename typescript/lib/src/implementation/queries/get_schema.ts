@@ -7,7 +7,7 @@ import type * as interface_ from "../../declarations/queries.js"
 import * as d from "../../interface/data/get_schema.js"
 
 //depencencies
-import * as r_temp_module_specifier_from_loc from "pareto-liana/implementation/manual/refiners/temp_module_specifier/list_of_characters"
+import * as r_temp_module_specifier_from_loc from "pareto-liana/implementation/refiners/temp_module_specifier/list_of_characters"
 
 export const $$: interface_.get_schema = p_.query(
     ($d, $s, $q) => p_super_query_result($q['read file'](

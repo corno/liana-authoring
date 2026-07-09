@@ -9,7 +9,7 @@ import type * as interface_ from "../../declarations/queries.js"
 import * as d from "../../interface/data/get_schema_path.js"
 
 //depencencies
-import * as t_path_to_path from "pareto-resources/implementation/manual/transformers/unrestricted_path/unrestricted_path"
+import * as t_path_to_path from "pareto-resources/implementation/transformers/unrestricted_path/unrestricted_path"
 
 
 export const $$: interface_.get_schema_path = p_.query(

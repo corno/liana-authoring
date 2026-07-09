@@ -7,7 +7,7 @@ import type * as d_in from "../../../interface/data/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"
+import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"

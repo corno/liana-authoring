@@ -4,7 +4,7 @@ import type * as interface_ from "../../../declarations/refiners/unmarshall_resu
 
 //depencencies
 import * as t_parse_tree_to_unmarshall_result from "../../transformers/astn_parse_tree/unmarshall_result.js"
-import * as r_parse_tree_from_list_of_characters from "astn-core/implementation/manual/refiners/parse_tree/list_of_characters"
+import * as r_parse_tree_from_list_of_characters from "astn-core/implementation/refiners/parse_tree/list_of_characters"
 
 export const Document: interface_.Document = ($, abort, $p) => {
 

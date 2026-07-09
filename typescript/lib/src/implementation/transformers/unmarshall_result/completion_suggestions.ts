@@ -12,7 +12,7 @@ import type * as d_ast_target from "astn/interface/generated/liana/schemas/autho
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
 import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target.js"
-import * as t_authoring_target_to_text from "astn/implementation/manual/transformers/authoring_target/text"
+import * as t_authoring_target_to_text from "astn/implementation/transformers/authoring_target/text"
 
 
 type Minimal_Completion_Suggestion = {

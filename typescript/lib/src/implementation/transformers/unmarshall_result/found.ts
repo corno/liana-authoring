@@ -8,7 +8,7 @@ import type * as d_astn_location from "astn-core/interface/generated/liana/schem
 import type * as d_out from "../../../interface/data/found.js"
 
 //dependencies
-import * as t_parse_tree_to_full_value_range from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_full_value_range from "astn-core/implementation/transformers/parse_tree/full_value_range"
 
 
 export const range_overlaps_position = (

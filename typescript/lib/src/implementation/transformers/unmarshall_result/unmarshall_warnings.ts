@@ -6,7 +6,7 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 import type * as d_out from "../../../interface/generated/liana/schemas/unmarshall_errors/data.js"
 
 //dependencies
-import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
+import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
 
 
 export const Document: interface_.Document = ($) => Value(

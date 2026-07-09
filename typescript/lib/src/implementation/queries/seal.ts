@@ -11,11 +11,11 @@ import type * as d_process_file_data from "pareto-common/interface/data/process_
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file.js"
 import * as t_load_file_to_prose from "../transformers/load_file/prose.js"
-import * as t_unrestricted_path_to_text from "pareto-resources/implementation/manual/transformers/unrestricted_path/text"
+import * as t_unrestricted_path_to_text from "pareto-resources/implementation/transformers/unrestricted_path/text"
 import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result.js"
 import * as t_auth_targ_from_unmarshall_result_to_prose from "../transformers/sealed_target_from_unmarshall_result/prose.js"
-import * as t_fp_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"
-import * as t_astn_sealed_target_to_prose from "astn-core/implementation/manual/transformers/sealed_target/prose"
+import * as t_fp_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
+import * as t_astn_sealed_target_to_prose from "astn-core/implementation/transformers/sealed_target/prose"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
