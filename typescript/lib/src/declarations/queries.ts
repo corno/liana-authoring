@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/interface/query_implementation'
 //query interfaces
 import type * as query_interfaces_pareto_common from "pareto-common/interface/queries"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
-import * as query_interfaces from "../interface/queries.js"
+import type * as query_interfaces from "../interface/queries.js"
 
 //data types
 import type * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
