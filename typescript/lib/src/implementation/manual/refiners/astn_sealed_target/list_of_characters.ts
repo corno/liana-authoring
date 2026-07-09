@@ -1,5 +1,5 @@
 
-import type * as interface_ from "../../../../interface/declarations/refiners/astn_sealed_target/list_of_characters.js"
+import type * as interface_ from "../../../../declarations/refiners/astn_sealed_target/list_of_characters.js"
 
 //dependencies
 import * as r_unmarshall_result_from_list_of_characters from "../unmarshall_result/list_of_characters.js"

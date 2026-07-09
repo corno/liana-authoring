@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/resolve_errors/prose.js"
+import type * as interface_ from "../../../../declarations/transformers/resolve_errors/prose.js"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"

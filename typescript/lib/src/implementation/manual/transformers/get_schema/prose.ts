@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/get_schema/prose.js"
+import type * as interface_ from "../../../../declarations/transformers/get_schema/prose.js"
 
 //dependencies
 import * as t_deserialize_resolved_to_prose from "liana-core/implementation/manual/transformers/deserialize_resolved/prose"

@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/unmarshall_result/document_links.js"
+import type * as interface_ from "../../../../declarations/transformers/unmarshall_result/document_links.js"
 
 //data types
 import type * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"

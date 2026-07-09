@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/unmarshall_result/found.js"
+import type * as interface_ from "../../../../declarations/transformers/unmarshall_result/found.js"
 
 //data types
 import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"

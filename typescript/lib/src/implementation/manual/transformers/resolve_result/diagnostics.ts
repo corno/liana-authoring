@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/resolve_result/diagnostics.js"
+import type * as interface_ from "../../../../declarations/transformers/resolve_result/diagnostics.js"
 
 //dependencies
 import * as t_to_resolve_result_to_errors from "../resolve_result/resolve_errors.js"

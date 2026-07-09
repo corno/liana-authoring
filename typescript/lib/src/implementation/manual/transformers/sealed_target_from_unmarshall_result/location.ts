@@ -1,5 +1,5 @@
 
-import type * as interface_ from "../../../../interface/declarations/transformers/sealed_target_from_unmarshall_result/location.js"
+import type * as interface_ from "../../../../declarations/transformers/sealed_target_from_unmarshall_result/location.js"
 
 //dependencies
 

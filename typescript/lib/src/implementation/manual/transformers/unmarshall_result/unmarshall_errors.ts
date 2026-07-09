@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/unmarshall_result/unmarshall_errors.js"
+import type * as interface_ from "../../../../declarations/transformers/unmarshall_result/unmarshall_errors.js"
 
 //data types
 import type * as d_out from "../../../../interface/generated/liana/schemas/unmarshall_errors/data.js"

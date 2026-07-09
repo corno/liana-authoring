@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/deserialize_schema/diagnostics.js"
+import type * as interface_ from "../../../../declarations/transformers/deserialize_schema/diagnostics.js"
 
 
 //data types

@@ -8,7 +8,7 @@ import p_create_refinement_context from 'pareto-core/implementation/__internal/s
 import type * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
 import type * as d_out from "../../../../interface/data/unmarshall_result.js"
 
-import type * as interface_ from "../../../../interface/declarations/transformers/astn_parse_tree/unmarshall_result.js"
+import type * as interface_ from "../../../../declarations/transformers/astn_parse_tree/unmarshall_result.js"
 
 //dependencies
 import * as t_parse_tree_to_full_location from "astn-core/implementation/manual/transformers/parse_tree/full_value_range"

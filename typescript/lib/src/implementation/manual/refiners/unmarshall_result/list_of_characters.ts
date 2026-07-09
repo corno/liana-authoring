@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
-import type * as interface_ from "../../../../interface/declarations/refiners/unmarshall_result/list_of_characters.js"
+import type * as interface_ from "../../../../declarations/refiners/unmarshall_result/list_of_characters.js"
 
 //depencencies
 import * as t_parse_tree_to_unmarshall_result from "../../transformers/astn_parse_tree/unmarshall_result.js"

@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/unmarshall_result/formatting_edits.js"
+import type * as interface_ from "../../../../declarations/transformers/unmarshall_result/formatting_edits.js"
 
 //data types
 import type * as d_out from "../../../../interface/data/formatting_edits.js"

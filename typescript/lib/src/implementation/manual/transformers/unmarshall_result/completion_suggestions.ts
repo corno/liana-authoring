@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 import type * as p_di from 'pareto-core/interface/data'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/unmarshall_result/completion_suggestions.js"
+import type * as interface_ from "../../../../declarations/transformers/unmarshall_result/completion_suggestions.js"
 
 //data types
 import type * as d_out from "../../../../interface/generated/liana/schemas/completion_suggestions/data.js"

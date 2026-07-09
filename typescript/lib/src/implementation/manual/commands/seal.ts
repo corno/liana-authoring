@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/command'
 
-import type * as interface_ from "../../../interface/declarations/commands.js"
+import type * as interface_ from "../../../declarations/commands.js"
 
 //dependencies
 import * as c_file_to_file from "pareto-common/implementation/manual/commands/file_to_file"

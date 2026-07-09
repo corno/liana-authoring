@@ -5,10 +5,10 @@ import * as p_h from 'pareto-host-nodejs/index'
 import * as rs_filesystem_unrestricted from "pareto-resource-filesystem-unrestricted/index"
 import * as rs_stream from "pareto-resource-stream/index"
 
-import { $$ as procedure } from "lib/implementation/manual/commands/seal"
+import { $$ as c_command } from "lib/implementation/manual/commands/seal"
 
 p_h.run_main_command(
-    () => procedure(
+    () => c_command(
         {
             'serialization parameters': {
                 'indentation': "    ",

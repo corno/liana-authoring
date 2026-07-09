@@ -7,7 +7,7 @@ import type * as d_function from "../../../../interface/data/sealed_target_from_
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/manual/transformers/parse_tree/start_token_range"
 
-import type * as interface_ from "../../../../interface/declarations/refiners/astn_sealed_target/unmarshall_result.js"
+import type * as interface_ from "../../../../declarations/refiners/astn_sealed_target/unmarshall_result.js"
 
 export const Found: interface_.Found = ($) => {
     return p_.from.state($.type).decide(
