@@ -1,5 +1,5 @@
-import type * as d_parse_result from "astn-core/interface/generated/liana/schemas/deserialize_parse_tree/data"
-import type * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
+import type * as d_parse_result from "astn-core/interface/data/deserialize_parse_tree"
+import type * as d_schema from "pareto-liana/modules/schema/interface/data/resolved"
 
 export type Parameters = {
     'tab size': number

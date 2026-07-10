@@ -4,7 +4,7 @@ import type * as p_ from 'pareto-core/interface/refiner'
 //data types
 import type * as d_out from "../../../interface/data/unmarshall_result.js"
 import type * as d_function from "../../../interface/data/unmarshall_result_from_list_of_characters.js"
-import type * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
+import type * as d_in from "pareto-fountain-pen/interface/data/list_of_characters"
 
 
 // export type Value = p_.Refiner_With_Parameter<

@@ -6,8 +6,8 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 //data types
 import type * as d_out from "../../../interface/data/completion_suggestions.js"
 
-import type * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
-import type * as d_ast_target from "astn/interface/generated/liana/schemas/authoring_target/data"
+import type * as d_schema from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as d_ast_target from "astn/interface/data/authoring_target"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"

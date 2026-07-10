@@ -5,7 +5,7 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import p_create_refinement_context from 'pareto-core/implementation/__internal/sync/create_refinement_context'
 
 //data types
-import type * as d_in from "astn-core/interface/generated/liana/schemas/parse_tree/data"
+import type * as d_in from "astn-core/interface/data/parse_tree"
 import type * as d_out from "../../../interface/data/unmarshall_result.js"
 
 import type * as interface_ from "../../../declarations/transformers/astn_parse_tree/unmarshall_result.js"

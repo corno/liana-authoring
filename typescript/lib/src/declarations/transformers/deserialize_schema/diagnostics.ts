@@ -6,7 +6,7 @@ import type * as d_in from "liana-core/interface/data/deserialize_resolved"
 
 //data types
 import type * as d_loc from "../../../interface/data/location.js"
-import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
+import type * as d_path from "pareto-resources/interface/data/fs_unrestricted_path"
 
 export namespace d_function {
     export type Parameters = {

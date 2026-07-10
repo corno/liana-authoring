@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/interface/data'
 
 //data types
-import type * as d_location from "astn-core/interface/generated/liana/schemas/location/data"
+import type * as d_location from "astn-core/interface/data/location"
 
 export type Selection_Range = {
     'range': d_location.Range

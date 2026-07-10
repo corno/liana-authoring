@@ -1,9 +1,9 @@
 import * as p_ from 'pareto-core/interface/data'
 
 //data types
-import type * as d_astn_parse_tree from "astn-core/interface/generated/liana/schemas/parse_tree/data"
-import type * as d_schema from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
-import type * as d_location from "astn-core/interface/generated/liana/schemas/location/data"
+import type * as d_astn_parse_tree from "astn-core/interface/data/parse_tree"
+import type * as d_schema from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as d_location from "astn-core/interface/data/location"
 
 export type Range_Stack = {
     'range': d_location.Range

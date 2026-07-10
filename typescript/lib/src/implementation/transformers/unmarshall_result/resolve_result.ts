@@ -6,7 +6,7 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
 
 import type * as d_in from "../../../interface/data/unmarshall_result.js"
-import type * as d_in_definition from "pareto-liana/interface/generated/liana/schemas/schema/data/resolved"
+import type * as d_in_definition from "pareto-liana/modules/schema/interface/data/resolved"
 import type * as d_out from "../../../interface/data/resolve_result.js"
 
 namespace p_i_temp {
