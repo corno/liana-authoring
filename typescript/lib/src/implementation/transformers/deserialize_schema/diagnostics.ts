@@ -4,9 +4,9 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 
 
 //data types
-import type * as d_loc from "../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_loc from "../../../interface/data/location.js"
 import type * as d_path from "pareto-resources/interface/generated/liana/schemas/fs_unrestricted_path/data"
-import type * as d_out_2 from "../../../interface/generated/liana/schemas/diagnostics/data.js"
+import type * as d_out_2 from "../../../interface/data/diagnostics.js"
 namespace d_function {
     export type Parameters = {
         'schema path': d_path.Node_Path

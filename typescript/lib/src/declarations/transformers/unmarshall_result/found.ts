@@ -4,7 +4,7 @@ import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
 import type * as d_in from "../../../interface/data/unmarshall_result.js"
-import type * as d_location from "../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_location from "../../../interface/data/location.js"
 import type * as d_astn_location from "astn-core/interface/generated/liana/schemas/location/data"
 import type * as d_out from "../../../interface/data/found.js"
 
