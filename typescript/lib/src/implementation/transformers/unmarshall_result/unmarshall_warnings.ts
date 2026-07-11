@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_warnings.js"
 
 //data types
-import type * as d_out from "../../../interface/data/unmarshall_errors.js"
+import type * as d_out from "../../../interface/schemas/unmarshall_errors.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"

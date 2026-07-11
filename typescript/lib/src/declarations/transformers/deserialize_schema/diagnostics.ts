@@ -1,11 +1,11 @@
 
 import type * as p_ from 'pareto-core/interface/transformer'
 
-import type * as d_out_2 from "../../../interface/data/diagnostics.js"
+import type * as d_out_2 from "../../../interface/schemas/diagnostics.js"
 import type * as d_in from "liana-core/interface/data/deserialize_resolved"
 
 //data types
-import type * as d_loc from "../../../interface/data/location.js"
+import type * as d_loc from "../../../interface/schemas/location.js"
 import type * as d_path from "pareto-resources/interface/data/fs_unrestricted_path"
 
 export namespace d_function {

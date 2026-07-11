@@ -2,7 +2,7 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
-import type * as d_in from "../../../interface/data/get_unmarshalled_file.js"
+import type * as d_in from "../../../interface/schemas/get_unmarshalled_file.js"
 import type * as d_out from "pareto-fountain-pen/interface/data/prose"
 
 

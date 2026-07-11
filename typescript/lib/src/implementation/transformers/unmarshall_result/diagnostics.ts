@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/diagnostics.js"
 
 //data types
-import type * as d_out from "../../../interface/data/diagnostics.js"
+import type * as d_out from "../../../interface/schemas/diagnostics.js"
 
 
 //dependencies

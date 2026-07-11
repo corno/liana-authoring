@@ -7,7 +7,7 @@ import type * as query_interfaces from "../interface/queries.js"
 
 //data types
 import type * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
-import type * as d_get_unmarshalled_file from "../interface/data/get_unmarshalled_file.js"
+import type * as d_get_unmarshalled_file from "../interface/schemas/get_unmarshalled_file.js"
 
 
 

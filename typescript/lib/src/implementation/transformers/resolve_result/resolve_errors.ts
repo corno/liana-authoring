@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/resolve_result/resolve_errors.js"
 
 //data types
-import type * as d_out from "../../../interface/data/resolve_errors.js"
+import type * as d_out from "../../../interface/schemas/resolve_errors.js"
 
 export const Document: interface_.Document = ($) => {
     return Value(

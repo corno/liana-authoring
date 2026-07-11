@@ -6,7 +6,7 @@ import p_create_refinement_context from 'pareto-core/implementation/__internal/s
 
 //data types
 import type * as d_in from "astn-core/interface/data/parse_tree"
-import type * as d_out from "../../../interface/data/unmarshall_result.js"
+import type * as d_out from "../../../interface/schemas/unmarshall_result.js"
 
 import type * as interface_ from "../../../declarations/transformers/astn_parse_tree/unmarshall_result.js"
 

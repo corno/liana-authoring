@@ -3,9 +3,9 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/found.js"
 
 //data types
-import type * as d_location from "../../../interface/data/location.js"
+import type * as d_location from "../../../interface/schemas/location.js"
 import type * as d_astn_location from "astn-core/interface/data/location"
-import type * as d_out from "../../../interface/data/found.js"
+import type * as d_out from "../../../interface/schemas/found.js"
 
 //dependencies
 import * as t_parse_tree_to_full_value_range from "astn-core/implementation/transformers/parse_tree/full_value_range"

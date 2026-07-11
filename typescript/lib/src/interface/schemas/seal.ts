@@ -1,5 +1,5 @@
 
-import type * as d_function_seal from "../../interface/data/sealed_target_from_parse_tree.js"
+import type * as d_function_seal from "../../interface/schemas/sealed_target_from_parse_tree.js"
 import type * as d_function_unmarshall from "./unmarshall_result_from_list_of_characters.js"
 
 

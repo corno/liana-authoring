@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/refiner'
 
 //data types
 import type * as d_out from "astn-core/interface/data/sealed_target"
-import type * as d_function from "../../../interface/data/sealed_target_from_unmarshall_result.js"
+import type * as d_function from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
