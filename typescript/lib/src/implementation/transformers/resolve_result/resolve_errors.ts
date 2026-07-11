@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/resolve_result/resolve_errors.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/resolve_errors.js"
+import type * as s_out from "../../../interface/schemas/resolve_errors.js"
 
 export const Document: interface_.Document = ($) => {
     return Value(
@@ -59,7 +59,7 @@ export const Value: interface_.Value = ($) => p_.from.state($['unmarshall result
                                     case 'selected': return p_.option($, ($) => p_.from.state($['resolve status']).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'to be implemented': return p_.option($, ($) => p_.literal.list<d_out.Error>([
+                                                case 'to be implemented': return p_.option($, ($) => p_.literal.list<s_out.Error>([
                                                     // {
                                                     //     'severity': ['hint', null],
                                                     //     'range': range,

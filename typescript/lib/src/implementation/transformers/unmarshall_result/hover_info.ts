@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/hover_info.js"
 
 //data types
-import type * as d_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
@@ -12,7 +12,7 @@ import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformer
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-const Property_Path = ($: d_in.Property_Path): string => t_prose_to_text.Phrase(
+const Property_Path = ($: s_in.Property_Path): string => t_prose_to_text.Phrase(
     sh.ph.rich(
         p_.from.list($).map(
             ($) => p_.from.state($).decide(

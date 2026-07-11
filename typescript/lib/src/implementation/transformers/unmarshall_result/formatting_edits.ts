@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/formatting_edits.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/formatting_edits.js"
+import type * as s_out from "../../../interface/schemas/formatting_edits.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
@@ -26,10 +26,10 @@ const Value: interface_.Value = (value, $p) => {
     })
 }
 
-export const Found: interface_.Found = ($, $p): d_out.Optional_Formatting_Edit => {
+export const Found: interface_.Found = ($, $p): s_out.Optional_Formatting_Edit => {
 
     switch ($[0]) {
-        case 'value': return p_.option($, ($): d_out.Optional_Formatting_Edit => {
+        case 'value': return p_.option($, ($): s_out.Optional_Formatting_Edit => {
             return Value($, $p)
         })
         case 'entry': return p_.option($, ($) => p_.from.state($.value).decide(
@@ -60,7 +60,7 @@ export const Found: interface_.Found = ($, $p): d_out.Optional_Formatting_Edit =
                     default: return p_.exhaustive($[0])
                 }
             }))
-        case 'state': return p_.option($, ($): d_out.Optional_Formatting_Edit => p_.from.state($.derived['option status']).decide(
+        case 'state': return p_.option($, ($): s_out.Optional_Formatting_Edit => p_.from.state($.derived['option status']).decide(
             ($) => {
                 switch ($[0]) {
                     case 'set': return p_.option($, ($) => Value($.value, $p))

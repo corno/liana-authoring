@@ -1,9 +1,9 @@
 import type * as p_i from 'pareto-core/interface/refiner'
 
 //data types
-import type * as d_in from "astn-core/interface/data/parse_tree"
-import type * as d_out from "astn-core/interface/data/sealed_target"
-import type * as d_function from "../../../interface/schemas/sealed_target_from_parse_tree.js"
+import type * as s_in from "astn-core/interface/data/parse_tree"
+import type * as s_out from "astn-core/interface/data/sealed_target"
+import type * as s_function from "../../../interface/schemas/sealed_target_from_parse_tree.js"
 
 //dependencies
 // import * as r_from_unmarshall_result from "./unmarshall_result.js"
@@ -12,16 +12,16 @@ import type * as d_function from "../../../interface/schemas/sealed_target_from_
 
 //signatures
 // export type Document = p_i.Refiner_With_Parameter<
-//     d_out.Document,
-//     d_function.Error,
-//     d_in.Document,
-//     d_function.Parameters
+//     s_out.Document,
+//     s_function.Error,
+//     s_in.Document,
+//     s_function.Parameters
 // >
 // export type Value = p_i.Refiner_With_Parameter<
-//     d_out.Value,
-//     d_function.Error,
-//     d_in.Value,
-//     d_function.Parameters
+//     s_out.Value,
+//     s_function.Error,
+//     s_in.Value,
+//     s_function.Parameters
 // >
 
 // export const Document: Document = ($, abort, $p) => r_from_unmarshall_result.Document(

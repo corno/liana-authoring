@@ -1,12 +1,12 @@
 import * as p_ from 'pareto-core/interface/data'
 
-import type * as d_location from "astn-core/interface/data/location"
+import type * as s_location from "astn-core/interface/data/location"
 
 export type Symbol = {
     'name': string
     'detail': string
-    'range': d_location.Range
-    'selection range': d_location.Range
+    'range': s_location.Range
+    'selection range': s_location.Range
     'value': Value
 }
 

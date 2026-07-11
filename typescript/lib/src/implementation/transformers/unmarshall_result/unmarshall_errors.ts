@@ -4,7 +4,7 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_errors.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/unmarshall_errors.js"
+import type * as s_out from "../../../interface/schemas/unmarshall_errors.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
@@ -20,20 +20,20 @@ export const Value: interface_.Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     const $v_def = $.definition
     return p_.from.state($['unmarshall result']).decide(
-        ($): d_out.Errors => {
+        ($): s_out.Errors => {
             switch ($[0]) {
                 case 'error': return p_.option($, ($) => p_.from.state($).decide(
-                    ($): d_out.Errors => {
+                    ($): s_out.Errors => {
                         switch ($[0]) {
                             case 'incorrect': return p_.option($, ($) => p_.from.state($).decide(
-                                ($): d_out.Errors => {
+                                ($): s_out.Errors => {
                                     switch ($[0]) {
                                         case 'wrong type': return p_.option($, ($) => p_.literal.list([
                                             {
                                                 'range': start_token_range,
                                                 'type': ['value', ['invalid type', {
                                                     'expected': p_.from.state($v_def).decide(
-                                                        ($): d_out.Errors.L.type_.value.invalid_type.expected => {
+                                                        ($): s_out.Errors.L.type_.value.invalid_type.expected => {
                                                             switch ($[0]) {
                                                                 case 'state': return p_.option($, ($) => p_.literal.list([['state', null]]))
                                                                 case 'component': return p_.option($, ($) => p_unreachable_code_path("a component cannot be incorrect by itself"))
@@ -61,9 +61,9 @@ export const Value: interface_.Value = ($) => {
                                         case 'list as state format error': return p_.option($, ($) => {
                                             const start_token = $.list['[']
                                             return p_.from.state($.type).decide(
-                                                ($): d_out.Errors => {
+                                                ($): s_out.Errors => {
                                                     switch ($[0]) {
-                                                        case 'missing option item': return p_.option($, ($): d_out.Errors => p_.literal.list([
+                                                        case 'missing option item': return p_.option($, ($): s_out.Errors => p_.literal.list([
                                                             {
                                                                 'range': start_token.range,
                                                                 'type': ['state', ['missing option name', null]] //FIXME wrong error
@@ -81,7 +81,7 @@ export const Value: interface_.Value = ($) => {
                                                                 'type': ['state', ['missing value', null]] //FIXME wrong error
                                                             }
                                                         ]))
-                                                        case 'too many items': return p_.option($, ($) => p_.literal.list<d_out.Errors.L>([
+                                                        case 'too many items': return p_.option($, ($) => p_.literal.list<s_out.Errors.L>([
                                                             {
                                                                 'range': start_token.range,
                                                                 'type': ['state', ['more than 2 items in list', null]] //FIXME wrong error
@@ -104,7 +104,7 @@ export const Value: interface_.Value = ($) => {
                                         default: return p_.exhaustive($[0])
                                     }
                                 }))
-                            case 'missing': return p_.option($, ($): d_out.Errors => p_.literal.list([
+                            case 'missing': return p_.option($, ($): s_out.Errors => p_.literal.list([
                                 {
                                     'range': start_token_range,
                                     'type': ['value', ['missing', null]],
@@ -116,23 +116,23 @@ export const Value: interface_.Value = ($) => {
                         }
                     }))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
-                    ($): d_out.Errors => {
+                    ($): s_out.Errors => {
                         switch ($[0]) {
                             case 'dictionary': return p_.option($, ($) => {
 
                                 return p_.literal.segmented_list([
                                     //duplicate id's
                                     p_.from.dictionary($.derived.entries).flatten_to_list(
-                                        ($, id): d_out.Errors => {
+                                        ($, id): s_out.Errors => {
                                             return p_.from.state($.result).decide(
-                                                ($): d_out.Errors => {
+                                                ($): s_out.Errors => {
                                                     switch ($[0]) {
                                                         case 'success': return p_.option($, ($) => p_.literal.list([]))
                                                         case 'error': return p_.option($, ($) => p_.from.state($).decide(
                                                             ($) => {
                                                                 switch ($[0]) {
                                                                     case 'duplicate': return p_.option($, ($) => p_.from.list($.instances).map(
-                                                                        ($): d_out.Errors.L => ({
+                                                                        ($): s_out.Errors.L => ({
                                                                             'range': $.intermediate['id value pair'].id.range,
                                                                             'type': ['dictionary', ['duplicate entry', {
                                                                                 name: id
@@ -154,7 +154,7 @@ export const Value: interface_.Value = ($) => {
                                                 ($) => {
                                                     switch ($[0]) {
                                                         case 'set': return p_.option($, ($) => Value($))
-                                                        case 'not set': return p_.option($, ($) => p_.literal.list<d_out.Errors.L>([
+                                                        case 'not set': return p_.option($, ($) => p_.literal.list<s_out.Errors.L>([
                                                             {
                                                                 'range': intermediate['id value pair'].id.range,
                                                                 'type': ['group', ['missing property value', { //missing property value
@@ -179,7 +179,7 @@ export const Value: interface_.Value = ($) => {
                                                     ($) => {
                                                         const item = $.item
                                                         return p_.from.state($['definition found']).decide(
-                                                            ($): d_out.Errors => {
+                                                            ($): s_out.Errors => {
                                                                 switch ($[0]) {
                                                                     case 'no': return p_.option($, ($) => p_.literal.list([
                                                                         {
@@ -195,16 +195,16 @@ export const Value: interface_.Value = ($) => {
                                                             })
                                                     }
                                                 ))
-                                                case 'verbose': return p_.option($, ($) => p_.from.list($.properties,).flatten<d_out.Errors.L>(
+                                                case 'verbose': return p_.option($, ($) => p_.from.list($.properties,).flatten<s_out.Errors.L>(
                                                     ($) => {
                                                         const id_value_pair = $.intermediate['id value pair']
 
                                                         return p_.from.state($['definition found']).decide(
-                                                            ($): d_out.Errors => {
+                                                            ($): s_out.Errors => {
                                                                 switch ($[0]) {
                                                                     case 'yes': return p_.option($, ($) => p_.from.optional($['value']).decide(
                                                                         ($) => Value($),
-                                                                        (): d_out.Errors => p_.literal.list([
+                                                                        (): s_out.Errors => p_.literal.list([
                                                                             //the property is missing, it is reported at another place (where the concise and verbose properties are merged)
                                                                         ])
                                                                     ))
@@ -225,15 +225,15 @@ export const Value: interface_.Value = ($) => {
                                             }
                                         }),
                                     p_.from.dictionary($.derived.properties).flatten_to_list(
-                                        ($, id): d_out.Errors => {
+                                        ($, id): s_out.Errors => {
                                             return p_.from.state($.result).decide(
                                                 ($) => {
                                                     switch ($[0]) {
                                                         case 'success': return p_.option($, ($) => p_.literal.list([]))
-                                                        case 'error': return p_.option($, ($): d_out.Errors => p_.from.state($).decide(
-                                                            ($): d_out.Errors => {
+                                                        case 'error': return p_.option($, ($): s_out.Errors => p_.from.state($).decide(
+                                                            ($): s_out.Errors => {
                                                                 switch ($[0]) {
-                                                                    case 'missing': return p_.option($, ($): d_out.Errors => p_.literal.list<d_out.Errors.L>([
+                                                                    case 'missing': return p_.option($, ($): s_out.Errors => p_.literal.list<s_out.Errors.L>([
                                                                         {
                                                                             'range': $['start token range'],
                                                                             'type': ['group', ['missing property', {
@@ -242,7 +242,7 @@ export const Value: interface_.Value = ($) => {
                                                                         }
                                                                     ]))
                                                                     case 'multiple': return p_.option($, ($) => p_.from.list($.instances).map(
-                                                                        ($): d_out.Errors.L => ({
+                                                                        ($): s_out.Errors.L => ({
                                                                             'range': $.intermediate['id value pair'].id.range,
                                                                             'type': ['group', ['duplicate property', {
                                                                                 'name': $.intermediate['id value pair'].id.token.value
@@ -264,7 +264,7 @@ export const Value: interface_.Value = ($) => {
                             ))
                             case 'nothing': return p_.option($, ($) => p_.literal.list([]))
                             case 'reference': return p_.option($, ($) => p_.from.state($.type).decide(
-                                ($): d_out.Errors => {
+                                ($): s_out.Errors => {
                                     switch ($[0]) {
                                         case 'derived': return p_.option($, ($) => p_.literal.list([
                                         ]))
@@ -284,9 +284,9 @@ export const Value: interface_.Value = ($) => {
                                         default: return p_.exhaustive($[0])
                                     }
                                 }))
-                            case 'state': return p_.option($, ($): d_out.Errors => {
+                            case 'state': return p_.option($, ($): s_out.Errors => {
                                 return p_.from.state($.derived['option status']).decide(
-                                    ($): d_out.Errors => {
+                                    ($): s_out.Errors => {
                                         switch ($[0]) {
                                             case 'missing data': return p_.option($, ($) => p_.literal.list([
                                                 {

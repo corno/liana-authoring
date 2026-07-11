@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/document_symbols.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/document_symbols.js"
+import type * as s_out from "../../../interface/schemas/document_symbols.js"
 
 //dependencies
 import * as t_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
@@ -15,20 +15,20 @@ export const Value: interface_.Value = ($) => {
     const instance = $.instance
 
     return p_.from.state($['unmarshall result']).decide(
-        ($): d_out.Value => {
+        ($): s_out.Value => {
             switch ($[0]) {
                 case 'error': return p_.option($, ($) => ({
                     'kind': ['null', null],
                     'children': p_.literal.list([]),
                 }))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
-                    ($): d_out.Value => {
+                    ($): s_out.Value => {
                         switch ($[0]) {
                             case 'component': return p_.option($, ($) => Value($.value))
-                            case 'dictionary': return p_.option($, ($): d_out.Value => ({
+                            case 'dictionary': return p_.option($, ($): s_out.Value => ({
                                 'kind': ['object', null],
                                 'children': p_.from.list($.intermediate['entries as list']).map(
-                                    ($): d_out.Symbol => ({
+                                    ($): s_out.Symbol => ({
                                         'name': $.intermediate['id value pair'].id.token.value,
                                         'detail': "entry",
                                         'value': p_.from.state($.value).decide(
@@ -52,15 +52,15 @@ export const Value: interface_.Value = ($) => {
                                     ($) => {
                                         switch ($[0]) {
                                             case 'verbose': return p_.option($, ($) => p_.from.list($.properties).map(
-                                                ($): d_out.Symbol => ({
+                                                ($): s_out.Symbol => ({
                                                     'name': $.id,
                                                     'detail': "property",
                                                     'value': p_.from.state($['definition found']).decide(
                                                         ($) => {
                                                             switch ($[0]) {
                                                                 case 'yes': return p_.option($, ($) => p_.from.optional($['value']).decide(
-                                                                    ($): d_out.Value => Value($),
-                                                                    (): d_out.Value => ({
+                                                                    ($): s_out.Value => Value($),
+                                                                    (): s_out.Value => ({
                                                                         'kind': ['null', null],
                                                                         'children': p_.literal.list([]),
                                                                     })
@@ -76,10 +76,10 @@ export const Value: interface_.Value = ($) => {
                                                     'selection range': $.intermediate['id value pair'].id.range,
                                                 })))
                                             case 'concise': return p_.option($, ($) => p_.from.list($.properties).map(
-                                                ($): d_out.Symbol => p_.from.state($['definition found']).decide(
+                                                ($): s_out.Symbol => p_.from.state($['definition found']).decide(
                                                     ($) => {
                                                         switch ($[0]) {
-                                                            case 'no': return p_.option($, ($): d_out.Symbol => ({
+                                                            case 'no': return p_.option($, ($): s_out.Symbol => ({
                                                                 'value': {
 
                                                                     'kind': ['null', null],
@@ -90,7 +90,7 @@ export const Value: interface_.Value = ($) => {
                                                                 'range': t_parse_tree_to_location.Value($.item.value),
                                                                 'selection range': t_parse_tree_to_location.Value($.item.value),
                                                             }))
-                                                            case 'yes': return p_.option($, ($): d_out.Symbol => ({
+                                                            case 'yes': return p_.option($, ($): s_out.Symbol => ({
                                                                 'value': Value($['value']),
                                                                 'detail': "property",
                                                                 'name': $.id,
@@ -107,7 +107,7 @@ export const Value: interface_.Value = ($) => {
                             case 'list': return p_.option($, ($) => ({
                                 'kind': ['array', null],
                                 'children': p_.from.list($.derived.items).map_with_index(
-                                    ($, index): d_out.Symbol => ({
+                                    ($, index): s_out.Symbol => ({
                                         'name': `[${index}]`,
                                         'detail': "item",
                                         'value': Value($),
@@ -160,7 +160,7 @@ export const Value: interface_.Value = ($) => {
                                     }
                                 }))
                             case 'state': return p_.option($, ($) => p_.from.state($.derived['option status']).decide(
-                                ($): d_out.Value => {
+                                ($): s_out.Value => {
                                     switch ($[0]) {
                                         case 'set': return p_.option($, ($) => ({
                                             'kind': ['enum member', null],

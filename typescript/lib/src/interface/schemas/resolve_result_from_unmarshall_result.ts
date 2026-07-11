@@ -1,6 +1,6 @@
 // import * as p_ti from 'pareto-core/interface/transformer'
 
-// import type * as d_resolve_result from "./resolve_result.js"
+// import type * as s_resolve_result from "./resolve_result.js"
 
 
 // export type Parameters = {
@@ -19,6 +19,6 @@
 
 // export type xModule = null
 
-// export type xAcyclic_Siblings = p_ti.lookup.Acyclic<d_resolve_result.Entry>
+// export type xAcyclic_Siblings = p_ti.lookup.Acyclic<s_resolve_result.Entry>
 
-// export type xCyclic_Siblings = p_ti.lookup.Cyclic<d_resolve_result.Entry>
+// export type xCyclic_Siblings = p_ti.lookup.Cyclic<s_resolve_result.Entry>

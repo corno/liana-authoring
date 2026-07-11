@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/document_links.js"
 
 //data types
-import type * as d_schema from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as s_schema from "pareto-liana/modules/schema/interface/data/resolved"
 
 export const Document: interface_.Document = ($) => Value($.content)
 
@@ -106,7 +106,7 @@ export const Value: interface_.Value = ($) => p_.from.state($['unmarshall result
                         ))
                         case 'text': return p_.option($, ($) => {
                             const $v_instance = $.instance
-                            const $p_type: d_schema.Text_Type = p_.from.state($.definition).decide(
+                            const $p_type: s_schema.Text_Type = p_.from.state($.definition).decide(
                                 ($) => {
                                     switch ($[0]) {
                                         case 'global': return p_.option($, ($) => $['l entry'])

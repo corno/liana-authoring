@@ -3,18 +3,18 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/found.js"
 
 //data types
-import type * as d_location from "../../../interface/schemas/location.js"
-import type * as d_astn_location from "astn-core/interface/data/location"
-import type * as d_out from "../../../interface/schemas/found.js"
+import type * as s_location from "../../../interface/schemas/location.js"
+import type * as s_astn_location from "astn-core/interface/data/location"
+import type * as s_out from "../../../interface/schemas/found.js"
 
 //dependencies
 import * as t_parse_tree_to_full_value_range from "astn-core/implementation/transformers/parse_tree/full_value_range"
 
 
 export const range_overlaps_position = (
-    $: d_astn_location.Range,
+    $: s_astn_location.Range,
     $p: {
-        'position': d_location.Position
+        'position': s_location.Position
 
     }
 ): boolean =>
@@ -49,7 +49,7 @@ export const Value: interface_.Value = ($, $p) => {
 
 
     const this_value = (
-    ): d_out.Found => ['value', $]
+    ): s_out.Found => ['value', $]
 
 
     return p_.from.state($['unmarshall result']).decide(
@@ -62,7 +62,7 @@ export const Value: interface_.Value = ($, $p) => {
                             case 'simple': return p_.option($, ($) => this_value())
                             case 'component': return p_.option($, ($) => Value($.value, $p))
                             case 'dictionary': return p_.option($, ($) => p_.from.list($.intermediate['entries as list']).on_has_match(
-                                ($): d_out.Possibly_Found => {
+                                ($): s_out.Possibly_Found => {
                                     const entry = $
                                     return p_.from.boolean(
                                         range_overlaps_position(
@@ -82,8 +82,8 @@ export const Value: interface_.Value = ($, $p) => {
                                             }
                                         ),
                                     ).decide(
-                                        (): d_out.Possibly_Found => p_.from.state($.value).decide(
-                                            ($): d_out.Possibly_Found => {
+                                        (): s_out.Possibly_Found => p_.from.state($.value).decide(
+                                            ($): s_out.Possibly_Found => {
                                                 switch ($[0]) {
                                                     case 'set': return p_.option($, ($) => Value_possibly_found($, $p))
                                                     case 'not set': return p_.option($, ($) => p_.literal.set(['entry', entry]))
@@ -99,7 +99,7 @@ export const Value: interface_.Value = ($, $p) => {
                                 ($) => {
                                     switch ($[0]) {
                                         case 'verbose': return p_.option($, ($) => p_.from.list($.properties).on_has_match(
-                                            ($): d_out.Possibly_Found => {
+                                            ($): s_out.Possibly_Found => {
                                                 const prop = $
                                                 return p_.from.boolean(
                                                     range_overlaps_position(
@@ -110,13 +110,13 @@ export const Value: interface_.Value = ($, $p) => {
                                                     ),
                                                 ).decide(
                                                     () => p_.from.state($['definition found']).decide(
-                                                        ($): d_out.Possibly_Found => {
+                                                        ($): s_out.Possibly_Found => {
 
                                                             switch ($[0]) {
                                                                 case 'yes': return p_.option($, ($) => p_.from.optional($['value']).decide(
-                                                                    ($): d_out.Possibly_Found => p_.literal.set(p_.from.optional(Value_possibly_found($, $p)).decide(
+                                                                    ($): s_out.Possibly_Found => p_.literal.set(p_.from.optional(Value_possibly_found($, $p)).decide(
                                                                         ($) => $,
-                                                                        (): d_out.Found => ['property', { 'style': ['verbose', prop] }]
+                                                                        (): s_out.Found => ['property', { 'style': ['verbose', prop] }]
                                                                     )),
                                                                     () => {
                                                                         return p_.literal.set(['property', { 'style': ['verbose', prop] }])
@@ -146,7 +146,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                     ),
                                                 ).decide(
                                                     () => p_.literal.set(p_.from.state($['definition found']).decide(
-                                                        ($): d_out.Found => {
+                                                        ($): s_out.Found => {
                                                             switch ($[0]) {
                                                                 case 'yes': return p_.option($, ($) => Value($['value'], $p))
                                                                 case 'no': return p_.option($, ($) => ['property', { 'style': ['unknown concise', prop] }])
@@ -170,22 +170,22 @@ export const Value: interface_.Value = ($, $p) => {
                                 ($) => {
                                     switch ($[0]) {
                                         case 'set': return p_.option($, ($) => p_.from.optional(Value_possibly_found($['child value'], $p)).decide(
-                                            ($): d_out.Found => $,
-                                            (): d_out.Found => this_value()
+                                            ($): s_out.Found => $,
+                                            (): s_out.Found => this_value()
                                         ))
                                         case 'not set': return p_.option($, ($) => this_value())
                                         default: return p_.exhaustive($[0])
                                     }
                                 }))
                             case 'reference': return p_.option($, ($) => this_value())
-                            case 'state': return p_.option($, ($): d_out.Found => {
+                            case 'state': return p_.option($, ($): s_out.Found => {
                                 const valid_state = $
                                 return p_.from.state($.derived['option status']).decide(
                                     ($) => {
                                         switch ($[0]) {
-                                            case 'set': return p_.option($, ($): d_out.Found => p_.from.optional(Value_possibly_found($.value, $p)).decide(
-                                                ($): d_out.Found => $,
-                                                (): d_out.Found => ['state', valid_state]
+                                            case 'set': return p_.option($, ($): s_out.Found => p_.from.optional(Value_possibly_found($.value, $p)).decide(
+                                                ($): s_out.Found => $,
+                                                (): s_out.Found => ['state', valid_state]
                                             ))
                                             case 'missing data': return p_.option($, ($) => ['state', valid_state])
                                             default: return p_.exhaustive($[0])

@@ -2,12 +2,12 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
-import type * as d_in from "../../../interface/schemas/unmarshall_result.js"
-import type * as d_out from "../../../interface/schemas/diagnostics.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_out from "../../../interface/schemas/diagnostics.js"
 
 
 export type Document = p_.Transformer<
-    d_in.Document,
-    d_out.Diagnostics
+    s_in.Document,
+    s_out.Diagnostics
 >
 

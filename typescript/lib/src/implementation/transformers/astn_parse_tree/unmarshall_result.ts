@@ -5,8 +5,8 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import p_create_refinement_context from 'pareto-core/implementation/__internal/sync/create_refinement_context'
 
 //data types
-import type * as d_in from "astn-core/interface/data/parse_tree"
-import type * as d_out from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in from "astn-core/interface/data/parse_tree"
+import type * as s_out from "../../../interface/schemas/unmarshall_result.js"
 
 import type * as interface_ from "../../../declarations/transformers/astn_parse_tree/unmarshall_result.js"
 
@@ -29,7 +29,7 @@ export const Document: interface_.Document = ($, $p) => ({
 
 export const Value: interface_.Value = ($, $p) => {
     const value = $
-    const value_range_stack: d_out.Range_Stack = {
+    const value_range_stack: s_out.Range_Stack = {
         'range': t_parse_tree_to_full_location.Value($),
         'parent': $p['parent range stack']
     }
@@ -44,7 +44,7 @@ export const Value: interface_.Value = ($, $p) => {
                         'definition': $p.definition,
                         'property path': $p['property path'],
                         'instance': value,
-                        'unmarshall result': p_create_refinement_context<d_out.Unmarshalled_Value, d_out.Value_Unmarshall_Error>(
+                        'unmarshall result': p_create_refinement_context<s_out.Unmarshalled_Value, s_out.Value_Unmarshall_Error>(
                             (abort) => p_.from.state($p.definition).decide(
                                 ($) => {
                                     switch ($[0]) {
@@ -67,22 +67,22 @@ export const Value: interface_.Value = ($, $p) => {
                                                 }
                                             )
                                         }])
-                                        case 'dictionary': return p_.option($, ($): d_out.Unmarshalled_Value => {
+                                        case 'dictionary': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             const dict_def = $
                                             return ['dictionary', p_.from.state($v_concrete_value).decide(
-                                                ($): d_out.Dictionary => {
+                                                ($): s_out.Dictionary => {
                                                     switch ($[0]) {
-                                                        case 'dictionary': return p_.option($, ($): d_out.Dictionary => {
+                                                        case 'dictionary': return p_.option($, ($): s_out.Dictionary => {
                                                             const $_entries = p_.from.list($.entries).map(
-                                                                ($): d_out.Entry => {
+                                                                ($): s_out.Entry => {
                                                                     const entry = $
                                                                     return {
                                                                         'definition': dict_def,
                                                                         'property path': $p['property path'],
                                                                         'id': $.id.token.value,
                                                                         'value': p_.from.optional($.assignment).decide(
-                                                                            ($): d_out.Entry['value'] => p_.from.optional($.value).decide(
-                                                                                ($): d_out.Entry['value'] => ['set', Value(
+                                                                            ($): s_out.Entry['value'] => p_.from.optional($.value).decide(
+                                                                                ($): s_out.Entry['value'] => ['set', Value(
                                                                                     $,
                                                                                     {
                                                                                         'definition': dict_def.value,
@@ -115,11 +115,11 @@ export const Value: interface_.Value = ($, $p) => {
                                                                         ($) => $.intermediate['id value pair'].id.token.value,
                                                                         ($) => ({
                                                                             'result': p_.from.list($).on_has_single_item(
-                                                                                ($): d_out.Entry_Unmarshall_Result => ['success', $],
-                                                                                ($): d_out.Entry_Unmarshall_Result => ['error', ['duplicate', {
+                                                                                ($): s_out.Entry_Unmarshall_Result => ['success', $],
+                                                                                ($): s_out.Entry_Unmarshall_Result => ['error', ['duplicate', {
                                                                                     'instances': $
                                                                                 }]],
-                                                                                (): d_out.Entry_Unmarshall_Result => p_unreachable_code_path("we are grouping by id, so there cannot be no entries having this id")
+                                                                                (): s_out.Entry_Unmarshall_Result => p_unreachable_code_path("we are grouping by id, so there cannot be no entries having this id")
                                                                             )
                                                                         })
                                                                     )
@@ -130,23 +130,23 @@ export const Value: interface_.Value = ($, $p) => {
                                                     }
                                                 })]
                                         })
-                                        case 'group': return p_.option($, ($): d_out.Unmarshalled_Value => {
+                                        case 'group': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             const $_group_def = $
                                             const Concise_Properties = (
-                                                $: d_in.Items
-                                            ): d_out.Concise_Properties => p_.from.list($).join(
+                                                $: s_in.Items
+                                            ): s_out.Concise_Properties => p_.from.list($).join(
                                                 p_.from.dictionary($_group_def).convert_to_list(
                                                     ($, id) => ({
                                                         'id': id,
                                                         'definition': $
                                                     })
                                                 ),
-                                                ($, $o): d_out.Concise_Property => {
+                                                ($, $o): s_out.Concise_Property => {
                                                     const instance = $
                                                     return {
                                                         'item': $,
                                                         'definition found': p_.from.optional($o).decide(
-                                                            ($): d_out.Concise_Property_Definition_Found => ['yes', {
+                                                            ($): s_out.Concise_Property_Definition_Found => ['yes', {
                                                                 'definition': $.definition,
                                                                 'id': $.id,
                                                                 'value': Value(
@@ -161,7 +161,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                                     }
                                                                 )
                                                             }],
-                                                            (): d_out.Concise_Property_Definition_Found => ['no', {
+                                                            (): s_out.Concise_Property_Definition_Found => ['no', {
                                                                 'item': instance
                                                             }]
                                                         ),
@@ -169,7 +169,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                     }
                                                 }
                                             )
-                                            const Verbose_Properties = ($: d_in.ID_Value_Pairs): d_out.Verbose_Properties => {
+                                            const Verbose_Properties = ($: s_in.ID_Value_Pairs): s_out.Verbose_Properties => {
                                                 return p_.from.list($).map(
                                                     ($) => {
                                                         const id_value_pair = $
@@ -180,7 +180,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                             },
                                                             'definition found': p_.from.dictionary($_group_def).get_possible_entry(
                                                                 $.id.token.value,
-                                                                ($): d_out.Verbose_Property_Definition_Found => {
+                                                                ($): s_out.Verbose_Property_Definition_Found => {
                                                                     const prop_def = $
                                                                     return ['yes', {
                                                                         'definition': $,
@@ -212,8 +212,8 @@ export const Value: interface_.Value = ($, $p) => {
                                                     })
                                             }
                                             return ['group', p_.from.state($v_concrete_value).decide(
-                                                ($): d_out.Group => {
-                                                    const instance: d_out.Group['intermediate']['instance'] = p_.from.state($).decide(
+                                                ($): s_out.Group => {
+                                                    const instance: s_out.Group['intermediate']['instance'] = p_.from.state($).decide(
                                                         ($) => {
                                                             switch ($[0]) {
                                                                 case 'dictionary': return p_.option($, ($) => ['dictionary', {
@@ -223,7 +223,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                                 case 'group': return p_.option($, ($) => ['group', {
                                                                     'dummy': null,
                                                                     'type': p_.from.state($).decide(
-                                                                        ($): d_out.Group_Type => {
+                                                                        ($): s_out.Group_Type => {
                                                                             switch ($[0]) {
                                                                                 case 'concise': return p_.option($, ($) => ['concise', {
                                                                                     'properties': Concise_Properties($.properties)
@@ -242,8 +242,8 @@ export const Value: interface_.Value = ($, $p) => {
                                                                 default: return abort(['incorrect', ['wrong type', null]])
                                                             }
                                                         })
-                                                    const group_type: d_out.Group_Type = p_.from.state(instance).decide(
-                                                        ($): d_out.Group_Type => {
+                                                    const group_type: s_out.Group_Type = p_.from.state(instance).decide(
+                                                        ($): s_out.Group_Type => {
                                                             switch ($[0]) {
                                                                 case 'dictionary': return p_.option($, ($) => ['verbose', {
                                                                     'properties': $.properties
@@ -263,7 +263,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                         'derived': {
                                                             'style': group_type,
                                                             'properties': p_.from.state(group_type).decide(
-                                                                ($): d_out.Group['derived']['properties'] => {
+                                                                ($): s_out.Group['derived']['properties'] => {
                                                                     switch ($[0]) {
                                                                         case 'verbose': return p_.option($, ($) => {
                                                                             const $v_instance_lookup = p_.from.list($.properties).group(
@@ -275,13 +275,13 @@ export const Value: interface_.Value = ($, $p) => {
                                                                                     'definition': $,
                                                                                     'result': p_.from.dictionary($v_instance_lookup).get_possible_entry(
                                                                                         id,
-                                                                                        ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
-                                                                                            ($): d_out.Property['result'] => p_.from.state($['definition found']).decide(
+                                                                                        ($): s_out.Property['result'] => p_.from.list($).on_has_single_item(
+                                                                                            ($): s_out.Property['result'] => p_.from.state($['definition found']).decide(
                                                                                                 ($) => {
                                                                                                     switch ($[0]) {
-                                                                                                        case 'yes': return p_.option($, ($): d_out.Property['result'] => p_.from.optional($['value']).decide(
-                                                                                                            ($): d_out.Property['result'] => ['success', $],
-                                                                                                            (): d_out.Property['result'] => ['error', ['missing', {
+                                                                                                        case 'yes': return p_.option($, ($): s_out.Property['result'] => p_.from.optional($['value']).decide(
+                                                                                                            ($): s_out.Property['result'] => ['success', $],
+                                                                                                            (): s_out.Property['result'] => ['error', ['missing', {
                                                                                                                 'start token range': start_token_range
                                                                                                             }]]
                                                                                                         ))
@@ -289,17 +289,17 @@ export const Value: interface_.Value = ($, $p) => {
                                                                                                         default: return p_.exhaustive($[0])
                                                                                                     }
                                                                                                 }),
-                                                                                            ($): d_out.Property['result'] => {
-                                                                                                const x: d_out.Property_Unmarshall_Error = ['multiple', {
+                                                                                            ($): s_out.Property['result'] => {
+                                                                                                const x: s_out.Property_Unmarshall_Error = ['multiple', {
                                                                                                     'instances': $
                                                                                                 }]
                                                                                                 return ['error', x]
                                                                                             },
-                                                                                            (): d_out.Property['result'] => ['error', ['missing', {
+                                                                                            (): s_out.Property['result'] => ['error', ['missing', {
                                                                                                 'start token range': start_token_range
                                                                                             }]]
                                                                                         ),
-                                                                                        (): d_out.Property['result'] => ['error', ['missing', {
+                                                                                        (): s_out.Property['result'] => ['error', ['missing', {
                                                                                             'start token range': start_token_range
                                                                                         }]]
                                                                                     )
@@ -309,7 +309,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                                             const $_instance_lookup = p_.from.list(
                                                                                 p_.from.list($.properties).map_optionally(
                                                                                     ($) => p_.from.state($['definition found']).decide(
-                                                                                        ($): p_di.Optional_Value<d_out.Concise_Property_Definition_Found__yes> => {
+                                                                                        ($): p_di.Optional_Value<s_out.Concise_Property_Definition_Found__yes> => {
                                                                                             switch ($[0]) {
                                                                                                 case 'no': return p_.option($, ($) => p_.literal.not_set())
                                                                                                 case 'yes': return p_.option($, ($) => p_.literal.set($))
@@ -325,14 +325,14 @@ export const Value: interface_.Value = ($, $p) => {
                                                                                     'definition': $,
                                                                                     'result': p_.from.dictionary($_instance_lookup).get_possible_entry(
                                                                                         id,
-                                                                                        ($): d_out.Property['result'] => p_.from.list($).on_has_single_item(
-                                                                                            ($): d_out.Property['result'] => ['success', $['value']],
+                                                                                        ($): s_out.Property['result'] => p_.from.list($).on_has_single_item(
+                                                                                            ($): s_out.Property['result'] => ['success', $['value']],
                                                                                             () => p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
-                                                                                            (): d_out.Property['result'] => ['error', ['missing', {
+                                                                                            (): s_out.Property['result'] => ['error', ['missing', {
                                                                                                 'start token range': start_token_range
                                                                                             }]]
                                                                                         ),
-                                                                                        (): d_out.Property['result'] => ['error', ['missing', {
+                                                                                        (): s_out.Property['result'] => ['error', ['missing', {
                                                                                             'start token range': start_token_range
                                                                                         }]]
                                                                                     )
@@ -373,7 +373,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                     }
                                                 })]
                                         })
-                                        case 'nothing': return p_.option($, ($): d_out.Unmarshalled_Value => {
+                                        case 'nothing': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             const def = $
                                             return ['nothing', {
                                                 'definition': def,
@@ -390,7 +390,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                     })
                                             }]
                                         })
-                                        case 'simple': return p_.option($, ($): d_out.Unmarshalled_Value => {
+                                        case 'simple': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             const def = $
                                             return ['simple', p_.from.state($v_concrete_value).decide(
                                                 ($) => {
@@ -404,10 +404,10 @@ export const Value: interface_.Value = ($, $p) => {
                                                     }
                                                 })]
                                         })
-                                        case 'optional': return p_.option($, ($): d_out.Unmarshalled_Value => {
+                                        case 'optional': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             const def = $
                                             const instance = p_.from.state($v_concrete_value).decide(
-                                                ($): d_out.Optional_Instance => {
+                                                ($): s_out.Optional_Instance => {
                                                     switch ($[0]) {
                                                         case 'text': return p_.option($, ($) => $.token.value === "null"
                                                             ? ['null literal', $]
@@ -439,8 +439,8 @@ export const Value: interface_.Value = ($, $p) => {
                                                                 () => abort(['incorrect', ['wrong type', null]]) // Error: empty list
                                                             )]
                                                         })
-                                                        case 'optional': return p_.option($, ($): d_out.Optional_Instance => ['optional', p_.from.state($).decide(
-                                                            ($): d_out.Optional_Instance_Optional => {
+                                                        case 'optional': return p_.option($, ($): s_out.Optional_Instance => ['optional', p_.from.state($).decide(
+                                                            ($): s_out.Optional_Instance_Optional => {
                                                                 switch ($[0]) {
                                                                     case 'set': return p_.option($, ($) => ['set', {
                                                                         'xxx': $,
@@ -467,7 +467,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                 'definition': def,
                                                 'instance': instance,
                                                 'derived': p_.from.state(instance).decide(
-                                                    ($): d_out.Optional['derived'] => {
+                                                    ($): s_out.Optional['derived'] => {
                                                         switch ($[0]) {
                                                             case 'list': return p_.option($, ($) => ({
                                                                 'status': ['set', {
@@ -496,7 +496,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                     })
                                             }]
                                         })
-                                        case 'reference': return p_.option($, ($): d_out.Unmarshalled_Value => {
+                                        case 'reference': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             return ['reference', {
                                                 'type': p_.from.state($.type).decide(
                                                     ($) => {
@@ -540,9 +540,9 @@ export const Value: interface_.Value = ($, $p) => {
                                                     })
                                             }]
                                         })
-                                        case 'state': return p_.option($, ($): d_out.Unmarshalled_Value => {
+                                        case 'state': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             const $v_def = $
-                                            const intermediate: d_out.State['intermediate'] = {
+                                            const intermediate: s_out.State['intermediate'] = {
                                                 'instance': p_.from.state($v_concrete_value).decide(
                                                     ($) => {
                                                         switch ($[0]) {
@@ -573,7 +573,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                                                                                     'xxx': list,
                                                                                                                     'option status': ['set', p_.from.dictionary($v_def.options).get_possible_entry(
                                                                                                                         option_name,
-                                                                                                                        ($): d_out.State_Set => {
+                                                                                                                        ($): s_out.State_Set => {
                                                                                                                             const option_def = $
                                                                                                                             return {
                                                                                                                                 'option': option_name,
@@ -633,16 +633,16 @@ export const Value: interface_.Value = ($, $p) => {
                                                             case 'state': return p_.option($, ($) => ['state', {
                                                                 'xxx': $,
                                                                 'option status': p_.from.state($.status).decide(
-                                                                    ($): d_out.State_Option => {
+                                                                    ($): s_out.State_Option => {
                                                                         switch ($[0]) {
                                                                             case 'missing': return p_.option($, ($) => ['missing data', { 'intermediate': $['#'] }])
-                                                                            case 'set': return p_.option($, ($): d_out.State_Option => {
+                                                                            case 'set': return p_.option($, ($): s_out.State_Option => {
                                                                                 const value = $.value
                                                                                 const option_name = $.option.token.value
                                                                                 const option_token = $.option
                                                                                 return ['set', p_.from.dictionary($v_def.options).get_possible_entry(
                                                                                     option_name,
-                                                                                    ($): d_out.State_Set => ({
+                                                                                    ($): s_out.State_Set => ({
                                                                                         'intermediate': {
                                                                                             'option token': option_token,
                                                                                         },
@@ -708,7 +708,7 @@ export const Value: interface_.Value = ($, $p) => {
                                         default: return p_.exhaustive($[0])
                                     }
                                 })
-                        ).__decide<d_out.Value['unmarshall result']>(
+                        ).__decide<s_out.Value['unmarshall result']>(
                             ($) => ['success', $],
                             ($) => ['error', ['incorrect', ['wrong type', null]]],
                         ),
@@ -716,7 +716,7 @@ export const Value: interface_.Value = ($, $p) => {
                     }
                 })
                 case 'include': return p_.option($, ($) => p_implement_me("include node deserialization")) //TODO
-                case 'missing': return p_.option($, ($): d_out.Value => {
+                case 'missing': return p_.option($, ($): s_out.Value => {
                     return {
                         'definition': $p.definition,
                         'property path': $p['property path'],

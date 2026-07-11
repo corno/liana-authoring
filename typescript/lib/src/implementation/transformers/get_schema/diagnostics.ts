@@ -3,11 +3,11 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/get_schema/diagnostics.js"
 
 //data types
-import type * as d_path from "pareto-resources/interface/data/fs_unrestricted_path"
+import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
 
-namespace d_function {
+namespace s_function {
 	export type Parameters = {
-		'schema path': d_path.Node_Path
+		'schema path': s_path.Node_Path
 	}
 }
 

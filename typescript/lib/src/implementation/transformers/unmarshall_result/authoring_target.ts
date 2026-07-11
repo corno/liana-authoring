@@ -3,19 +3,19 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/authoring_target.js"
 
 //data types
-import type * as d_out from "astn/interface/data/authoring_target"
-import type * as d_function from "../../../interface/schemas/unmarshall_result_to_authoring_target.js"
+import type * as s_out from "astn/interface/data/authoring_target"
+import type * as s_function from "../../../interface/schemas/unmarshall_result_to_authoring_target.js"
 
 //dependencies
 import * as t_parse_tree_to_authoring_target from "astn/implementation/transformers/parse_tree/authoring_target"
 
 //FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 
-const temp_value = ($: d_out.Value.data): d_out.Value => ({
+const temp_value = ($: s_out.Value.data): s_out.Value => ({
     'data': $
 })
 
-export const Document: interface_.Document = ($, $p): d_out.Document => {
+export const Document: interface_.Document = ($, $p): s_out.Document => {
     return {
         'header': p_.from.optional($['header']).map(
             ($) => t_parse_tree_to_authoring_target.Value($)),
@@ -26,7 +26,7 @@ export const Document: interface_.Document = ($, $p): d_out.Document => {
 
 
 export const Non_Entity: interface_.Non_Entity = ($, $p) => {
-    const temp_dont_restyle_entities = ($: d_function.Parameters): d_function.Parameters => {
+    const temp_dont_restyle_entities = ($: s_function.Parameters): s_function.Parameters => {
         const x = $
         return {
             'style': $['style'],
@@ -88,7 +88,7 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                 'type': ['dictionary', {
                                     '{': Structural_Token($.intermediate.instance['{']),
                                     'entries': p_.from.list($.intermediate['entries as list']).map(
-                                        ($): d_out.ID_Value_Pairs.L => ({
+                                        ($): s_out.ID_Value_Pairs.L => ({
                                             'id': $.intermediate['id value pair'].id.token.value,
                                             'value': p_.from.state($.value).decide(
                                                 ($) => {
@@ -106,14 +106,14 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                 const $v_unmarsalled_group = $
                                 return temp_value(['concrete', {
                                     'type': ['group', p_.from.state($p.style).decide(
-                                        ($): d_out.Value.data.concrete.type_.group => {
+                                        ($): s_out.Value.data.concrete.type_.group => {
                                             switch ($[0]) {
                                                 case 'concise': return p_.option($, ($) => ['concise', {
                                                     '<': {
                                                         'comments': p_.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                                     },
                                                     'properties': p_.from.state($v_unmarsalled_group.derived.style).decide(
-                                                        ($): d_out.Items => {
+                                                        ($): s_out.Items => {
                                                             switch ($[0]) {
                                                                 //convert concise to concise
                                                                 case 'concise': return p_.option($, ($) => p_.from.list($.properties).map(
@@ -130,12 +130,12 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                                                     }))
                                                                 //convert verbose to concise
                                                                 case 'verbose': return p_.option($, ($) => p_.from.list($.properties).map(
-                                                                    ($): d_out.Items.L => {
+                                                                    ($): s_out.Items.L => {
                                                                         const item = $
                                                                         return p_.from.state($['definition found']).decide(
                                                                             ($) => {
                                                                                 switch ($[0]) {
-                                                                                    case 'yes': return p_.option($, ($): d_out.Items.L => p_.from.optional($['value']).decide(
+                                                                                    case 'yes': return p_.option($, ($): s_out.Items.L => p_.from.optional($['value']).decide(
                                                                                         ($) => Non_Entity($, $p),
                                                                                         () => temp_value(['concrete', {
                                                                                             'type': ['nothing', {
@@ -145,8 +145,8 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                                                                             }]
                                                                                         }])
                                                                                     ))
-                                                                                    case 'no': return p_.option($, ($): d_out.Items.L => p_.from.optional(item.intermediate['id value pair'].assignment).decide(
-                                                                                        ($): d_out.Items.L => p_.from.optional($.value).decide(
+                                                                                    case 'no': return p_.option($, ($): s_out.Items.L => p_.from.optional(item.intermediate['id value pair'].assignment).decide(
+                                                                                        ($): s_out.Items.L => p_.from.optional($.value).decide(
                                                                                             ($) => t_parse_tree_to_authoring_target.Value($),
                                                                                             () => temp_value(['concrete', {
                                                                                                 'type': ['nothing', {
@@ -156,7 +156,7 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                                                                                 }]
                                                                                             }])
                                                                                         ),
-                                                                                        (): d_out.Items.L => temp_value(['concrete', {
+                                                                                        (): s_out.Items.L => temp_value(['concrete', {
                                                                                             'type': ['nothing', {
                                                                                                 '~': {
                                                                                                     'comments': p_.literal.list([])
@@ -180,10 +180,10 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                                         'comments': p_.literal.list([]) //FIXME: we are losing comments here, we need to add them to the unmarshalled result
                                                     },
                                                     'properties': p_.from.state($v_unmarsalled_group.derived.style).decide(
-                                                        ($): d_out.ID_Value_Pairs => {
+                                                        ($): s_out.ID_Value_Pairs => {
                                                             switch ($[0]) {
                                                                 //convert concise to verbose
-                                                                case 'concise': return p_.option($, ($): d_out.ID_Value_Pairs => p_.from.list($.properties).map_optionally(
+                                                                case 'concise': return p_.option($, ($): s_out.ID_Value_Pairs => p_.from.list($.properties).map_optionally(
                                                                     ($) => p_.from.state($['definition found']).decide(
                                                                         ($) => {
                                                                             switch ($[0]) {
@@ -198,17 +198,17 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                                                     )))
                                                                 //convert verbose to verbose
                                                                 case 'verbose': return p_.option($, ($) => p_.from.list($.properties).map(
-                                                                    ($): d_out.ID_Value_Pairs.L => {
+                                                                    ($): s_out.ID_Value_Pairs.L => {
                                                                         const item = $
                                                                         return {
                                                                             'id': $.intermediate['id value pair'].id.token.value,
                                                                             'value': p_.from.state($['definition found']).decide(
-                                                                                ($): d_out.ID_Value_Pairs.L.value => {
+                                                                                ($): s_out.ID_Value_Pairs.L.value => {
                                                                                     switch ($[0]) {
                                                                                         case 'yes': return p_.option($, ($) => p_.from.optional($['value']).map(
                                                                                             ($) => Non_Entity($, $p)))
                                                                                         case 'no': return p_.option($, ($) => p_.from.optional(item.intermediate['id value pair'].assignment).decide(
-                                                                                            ($): d_out.ID_Value_Pairs.L.value => p_.from.optional($.value).decide(
+                                                                                            ($): s_out.ID_Value_Pairs.L.value => p_.from.optional($.value).decide(
                                                                                                 ($) => p_.literal.set(t_parse_tree_to_authoring_target.Value($)),
                                                                                                 () => p_.literal.set(temp_value(['concrete', {
                                                                                                     'type': ['nothing', {
@@ -218,7 +218,7 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                                                                                                     }]
                                                                                                 }]))
                                                                                             ),
-                                                                                            (): d_out.ID_Value_Pairs.L.value => p_.literal.set(temp_value(['concrete', {
+                                                                                            (): s_out.ID_Value_Pairs.L.value => p_.literal.set(temp_value(['concrete', {
                                                                                                 'type': ['nothing', {
                                                                                                     '~': {
                                                                                                         'comments': p_.literal.list([])
@@ -269,7 +269,7 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
                             }]))
                             case 'optional': return p_.option($, ($) => temp_value(['concrete', {
                                 'type': ['optional', p_.from.state($.instance).decide(
-                                    ($): d_out.Value.data.concrete.type_.optional => {
+                                    ($): s_out.Value.data.concrete.type_.optional => {
                                         switch ($[0]) {
                                             case 'list': return p_.option($, ($) => ['set', {
                                                 '*': {

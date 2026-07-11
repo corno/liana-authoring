@@ -4,26 +4,26 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 
 
 //data types
-import type * as d_loc from "../../../interface/schemas/location.js"
-import type * as d_path from "pareto-resources/interface/data/fs_unrestricted_path"
-import type * as d_out_2 from "../../../interface/schemas/diagnostics.js"
-namespace d_function {
+import type * as s_loc from "../../../interface/schemas/location.js"
+import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
+import type * as s_out_2 from "../../../interface/schemas/diagnostics.js"
+namespace s_function {
     export type Parameters = {
-        'schema path': d_path.Node_Path
+        'schema path': s_path.Node_Path
     }
 }
-namespace d_out {
+namespace s_out {
 
     export type Error = {
         'type':
         | ['schema', null]
         | ['deserialize', null]
-        'range': d_loc.Range_FE,
+        'range': s_loc.Range_FE,
         'message': string,
         'severity':
         | ['error', null]
         | ['warning', null]
-        'related information': d_out_2.Diagnostic.related_information
+        'related information': s_out_2.Diagnostic.related_information
     }
 }
 
@@ -52,7 +52,7 @@ export const Error: interface_.Error = ($, $p) => ({
             'character': 0,
         }
     }),
-    'related information': p_.literal.set(p_.literal.list<d_out_2.Diagnostic.related_information.O.L>([
+    'related information': p_.literal.set(p_.literal.list<s_out_2.Diagnostic.related_information.O.L>([
         {
             'message': "The schema is not valid",
             'location': {

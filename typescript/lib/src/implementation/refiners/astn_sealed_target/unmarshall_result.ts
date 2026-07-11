@@ -1,8 +1,8 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
 //data types
-import type * as d_out from "astn-core/interface/data/sealed_target"
-import type * as d_function from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
+import type * as s_out from "astn-core/interface/data/sealed_target"
+import type * as s_function from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
@@ -13,7 +13,7 @@ export const Found: interface_.Found = ($) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.option($, ($): d_function.Found => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($): s_function.Found => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
                             case 'dictionary': return p_.option($, ($) => ['dictionary', null])
@@ -96,7 +96,7 @@ export const Value: interface_.Value = ($, abort) => {
                         }
                     }))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
-                    ($): d_out.Value => {
+                    ($): s_out.Value => {
                         switch ($[0]) {
                             case 'component': return p_.option($, ($) => Value($.value, abort))
                             case 'dictionary': return p_.option($, ($) => {
@@ -105,7 +105,7 @@ export const Value: interface_.Value = ($, abort) => {
 
                                 const grouped = $.derived.entries
                                 return ['dictionary', p_.from.dictionary(grouped).map(
-                                    ($, id): d_out.Value => p_.from.state($.result).decide(
+                                    ($, id): s_out.Value => p_.from.state($.result).decide(
                                         ($) => {
                                             switch ($[0]) {
                                                 case 'success': return p_.option($, ($) => {
@@ -167,21 +167,21 @@ export const Value: interface_.Value = ($, abort) => {
                             })
                             case 'list': return p_.option($, ($) => ['list', p_.from.list($.derived.items).map(
                                 ($) => Value($, abort))])
-                            case 'nothing': return p_.option($, ($): d_out.Value => ['nothing', null])
-                            case 'simple': return p_.option($, ($): d_out.Value => ['text', {
+                            case 'nothing': return p_.option($, ($): s_out.Value => ['nothing', null])
+                            case 'simple': return p_.option($, ($): s_out.Value => ['text', {
                                 'value': $.instance.token.value,
                                 'delimiter': ['none', null],
 
                             }])
-                            case 'optional': return p_.option($, ($): d_out.Value => ['optional', p_.from.state($.derived.status).decide(
-                                ($): d_out.Value.optional => {
+                            case 'optional': return p_.option($, ($): s_out.Value => ['optional', p_.from.state($.derived.status).decide(
+                                ($): s_out.Value.optional => {
                                     switch ($[0]) {
                                         case 'set': return p_.option($, ($) => ['set', Value($['child value'], abort)])
                                         case 'not set': return p_.option($, ($) => ['not set', null])
                                         default: return p_.exhaustive($[0])
                                     }
                                 })])
-                            case 'reference': return p_.option($, ($): d_out.Value => p_.from.state($.type).decide(
+                            case 'reference': return p_.option($, ($): s_out.Value => p_.from.state($.type).decide(
                                 ($) => {
                                     switch ($[0]) {
                                         case 'derived': return p_.option($, ($) => ['nothing', null])
@@ -193,15 +193,15 @@ export const Value: interface_.Value = ($, abort) => {
                                         default: return p_.exhaustive($[0])
                                     }
                                 }))
-                            case 'state': return p_.option($, ($): d_out.Value => {
+                            case 'state': return p_.option($, ($): s_out.Value => {
                                 return p_.from.state($.derived['option status']).decide(
-                                    ($): d_out.Value => {
+                                    ($): s_out.Value => {
                                         switch ($[0]) {
                                             case 'missing data': return p_.option($, ($) => abort({
                                                 'type': ['state', ['missing data', null]],
                                                 'range': $.intermediate.range
                                             }))
-                                            case 'set': return p_.option($, ($): d_out.Value => ['state', {
+                                            case 'set': return p_.option($, ($): s_out.Value => ['state', {
                                                 'option': $.option,
                                                 'value': Value($.value, abort)
                                             }])
@@ -209,7 +209,7 @@ export const Value: interface_.Value = ($, abort) => {
                                         }
                                     })
                             })
-                            case 'text': return p_.option($, ($): d_out.Value => ['text', {
+                            case 'text': return p_.option($, ($): s_out.Value => ['text', {
                                 'value': $.instance.token.value,
                                 'delimiter': ['quote', null],
 

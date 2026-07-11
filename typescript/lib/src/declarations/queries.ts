@@ -6,8 +6,8 @@ import type * as query_interfaces_pareto_filesystem_unrestricted_api from "paret
 import type * as query_interfaces from "../interface/queries.js"
 
 //data types
-import type * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
-import type * as d_get_unmarshalled_file from "../interface/schemas/get_unmarshalled_file.js"
+import type * as s_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
+import type * as s_get_unmarshalled_file from "../interface/schemas/get_unmarshalled_file.js"
 
 
 
@@ -39,9 +39,9 @@ export type deserialize = p_.Query_Implementation<
 
 export type load_unmarshalled_file = p_.Query_Implementation<
     p_.Query_Interface<
-        d_get_unmarshalled_file.Result,
-        d_get_unmarshalled_file.Error,
-        d_get_unmarshalled_file.Parameters
+        s_get_unmarshalled_file.Result,
+        s_get_unmarshalled_file.Error,
+        s_get_unmarshalled_file.Parameters
     >,
     null,
     {
@@ -55,7 +55,7 @@ export type seal = p_.Query_Implementation<
     query_interfaces_pareto_common.process_file_data,
     {
         'tab size': number,
-        'serialization parameters': d_serialize_prose.Parameters,
+        'serialization parameters': s_serialize_prose.Parameters,
     },
     {
         'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file

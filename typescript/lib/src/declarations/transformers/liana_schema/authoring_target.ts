@@ -2,10 +2,10 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
-import type * as d_out from "astn/interface/data/authoring_target"
-import type * as d_in from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as s_out from "astn/interface/data/authoring_target"
+import type * as s_in from "pareto-liana/modules/schema/interface/data/resolved"
 
-export namespace d_function {
+export namespace s_function {
     export type Parameters = {
         'style':
         | ['concise', null]
@@ -15,13 +15,13 @@ export namespace d_function {
 
 
 export type Value = p_.Transformer_With_Parameter<
-    d_in.Value,
-    d_out.Value,
-    d_function.Parameters
+    s_in.Value,
+    s_out.Value,
+    s_function.Parameters
 >
 export type Value_data = p_.Transformer_With_Parameter<
-    d_in.Value,
-    d_out.Value.data,
-    d_function.Parameters
+    s_in.Value,
+    s_out.Value.data,
+    s_function.Parameters
 >
 

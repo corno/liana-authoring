@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_warnings.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/unmarshall_errors.js"
+import type * as s_out from "../../../interface/schemas/unmarshall_errors.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
@@ -21,7 +21,7 @@ export const Value: interface_.Value = ($) => {
                 case 'error': return p_.option($, ($) => p_.literal.list([
                 ]))
                 case 'success': return p_.option($, ($) => p_.from.state($).decide(
-                    ($): d_out.Warnings => {
+                    ($): s_out.Warnings => {
                         switch ($[0]) {
                             case 'dictionary': return p_.option($, ($) => p_.from.list($.intermediate['entries as list']).flatten(
                                 ($) => $.intermediate['id value pair'].id.token.type[0] !== 'apostrophed'
@@ -35,7 +35,7 @@ export const Value: interface_.Value = ($) => {
                                         ($) => {
                                             switch ($[0]) {
                                                 case 'set': return p_.option($, ($) => Value($))
-                                                case 'not set': return p_.option($, ($) => p_.literal.list<d_out.Warnings.L>([]))
+                                                case 'not set': return p_.option($, ($) => p_.literal.list<s_out.Warnings.L>([]))
                                                 default: return p_.exhaustive($[0])
                                             }
                                         })
@@ -62,7 +62,7 @@ export const Value: interface_.Value = ($) => {
                                                         })
                                                 }
                                             ))
-                                            case 'verbose': return p_.option($, ($) => p_.from.list($.properties).flatten<d_out.Warnings.L>(
+                                            case 'verbose': return p_.option($, ($) => p_.from.list($.properties).flatten<s_out.Warnings.L>(
                                                 ($) => $.intermediate['id value pair'].id.token.type[0] !== 'backticked'
                                                     ? p_.literal.list([
                                                         {
@@ -75,7 +75,7 @@ export const Value: interface_.Value = ($) => {
                                                             switch ($[0]) {
                                                                 case 'yes': return p_.option($, ($) => p_.from.optional($['value']).decide(
                                                                     ($) => Value($),
-                                                                    (): d_out.Warnings => p_.literal.list([])
+                                                                    (): s_out.Warnings => p_.literal.list([])
                                                                 ))
                                                                 case 'no': return p_.option($, ($) => p_.literal.list([
                                                                 ]))
@@ -96,7 +96,7 @@ export const Value: interface_.Value = ($) => {
                                         default: return p_.exhaustive($[0])
                                     }
                                 })
-                                ? p_.literal.list<d_out.Warnings.L>([{
+                                ? p_.literal.list<s_out.Warnings.L>([{
                                     'range': $.instance.range,
                                     'type': ['expected undelimited text', null]
                                 }])
@@ -107,7 +107,7 @@ export const Value: interface_.Value = ($) => {
                             ))
                             case 'nothing': return p_.option($, ($) => p_.literal.list([]))
                             case 'reference': return p_.option($, ($) => p_.from.state($.type).decide(
-                                ($): d_out.Warnings => {
+                                ($): s_out.Warnings => {
                                     switch ($[0]) {
                                         case 'derived': return p_.option($, ($) => p_.literal.list([
                                         ]))
@@ -129,9 +129,9 @@ export const Value: interface_.Value = ($) => {
                                         default: return p_.exhaustive($[0])
                                     }
                                 }))
-                            case 'state': return p_.option($, ($): d_out.Warnings => {
+                            case 'state': return p_.option($, ($): s_out.Warnings => {
                                 return p_.from.state($.derived['option status']).decide(
-                                    ($): d_out.Warnings => {
+                                    ($): s_out.Warnings => {
                                         switch ($[0]) {
                                             case 'missing data': return p_.option($, ($) => p_.literal.list([]))
                                             case 'set': return p_.option($, ($) => $.intermediate['option token'].token.type[0] !== 'backticked'

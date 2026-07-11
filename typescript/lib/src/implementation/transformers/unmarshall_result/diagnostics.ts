@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/diagnostics.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/diagnostics.js"
+import type * as s_out from "../../../interface/schemas/diagnostics.js"
 
 
 //dependencies
@@ -32,7 +32,7 @@ export const Document: interface_.Document = ($) => p_.literal.segmented_list([
         }
     ),
     p_.from.list(t_to_unmarshall_result_to_warnings.Document($)).map(
-        ($): d_out.Diagnostics.L => {
+        ($): s_out.Diagnostics.L => {
             return ({
                 'severity': ['warning', null],
                 'range': p_.literal.set(['range', $.range]),

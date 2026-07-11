@@ -4,10 +4,10 @@ import type * as p_di from 'pareto-core/interface/data'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/completion_suggestions.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/completion_suggestions.js"
+import type * as s_out from "../../../interface/schemas/completion_suggestions.js"
 
-import type * as d_schema from "pareto-liana/modules/schema/interface/data/resolved"
-import type * as d_ast_target from "astn/interface/data/authoring_target"
+import type * as s_schema from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as s_ast_target from "astn/interface/data/authoring_target"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
@@ -17,14 +17,14 @@ import * as t_authoring_target_to_text from "astn/implementation/transformers/au
 
 type Minimal_Completion_Suggestion = {
     'label': string,
-    'insert value': d_ast_target.Value,
+    'insert value': s_ast_target.Value,
 }
 
 type Minimal_Completion_Suggestions = p_di.List<Minimal_Completion_Suggestion>
 
 
-const d_schema_Value = (
-    $: d_schema.Value,
+const s_schema_Value = (
+    $: s_schema.Value,
     $p: {
         'style':
         | ['verbose', null]
@@ -34,9 +34,9 @@ const d_schema_Value = (
     return p_.from.state($).decide(
         ($): Minimal_Completion_Suggestions => {
             switch ($[0]) {
-                case 'component': return p_.option($, ($) => d_schema_Value(
+                case 'component': return p_.option($, ($) => s_schema_Value(
                     p_.from.state($.type).decide(
-                        ($): d_schema.Value => {
+                        ($): s_schema.Value => {
                             switch ($[0]) {
                                 case 'external': return p_.option($, ($) => $.module['l entry']['root value'])
                                 case 'internal': return p_.option($, ($) => $['l entry'].get_circular_dependent()['root value'])
@@ -133,7 +133,7 @@ const d_schema_Value = (
 
 export const Found: interface_.Found = ($, $p) => {
     switch ($[0]) {
-        case 'value': return p_.option($, ($): d_out.Completion_Suggestions => {
+        case 'value': return p_.option($, ($): s_out.Completion_Suggestions => {
             const definition = $.definition
 
             return p_.from.state($.instance.type).decide(
@@ -149,12 +149,12 @@ export const Found: interface_.Found = ($, $p) => {
                         case 'include': return p_.option($, ($) => p_.literal.not_set())
                         case 'missing': return p_.option($, ($) => p_.literal.set({
                             'type': ['missing value', null],
-                            'suggestions': p_.from.list(d_schema_Value(
+                            'suggestions': p_.from.list(s_schema_Value(
                                 definition,
                                 $p,
                             ),
                             ).map(
-                                ($): d_out.Completion_Suggestions.O.suggestions.L => ({
+                                ($): s_out.Completion_Suggestions.O.suggestions.L => ({
                                     'label': "value" + $.label,
                                     'documentation': "value completion",
                                     'insert text': t_authoring_target_to_text.Value(
@@ -176,13 +176,13 @@ export const Found: interface_.Found = ($, $p) => {
         })
         case 'entry': return p_.option($, ($) => p_.literal.not_set())
         case 'property': return p_.option($, ($) => p_.literal.not_set())
-        case 'state': return p_.option($, ($): d_out.Completion_Suggestions => {
+        case 'state': return p_.option($, ($): s_out.Completion_Suggestions => {
             const definition = $.definition
             return p_.from.state($.intermediate.instance).decide(
-                ($): d_out.Completion_Suggestions => {
+                ($): s_out.Completion_Suggestions => {
                     switch ($[0]) {
                         case 'state': return p_.option($, ($) => p_.from.state($.xxx.status).decide(
-                            ($): d_out.Completion_Suggestions => {
+                            ($): s_out.Completion_Suggestions => {
                                 switch ($[0]) {
                                     case 'missing': return p_.option($, ($) => {
                                         return p_.literal.set({
@@ -190,11 +190,11 @@ export const Found: interface_.Found = ($, $p) => {
                                             'suggestions': p_.from.dictionary(definition.options).flatten_to_list(
                                                 ($, id) => {
                                                     const desc = $.description
-                                                    return p_.from.list(d_schema_Value(
+                                                    return p_.from.list(s_schema_Value(
                                                         $.value,
                                                         $p,
                                                     )).map(
-                                                        ($): d_out.Completion_Suggestions.O.suggestions.L => ({
+                                                        ($): s_out.Completion_Suggestions.O.suggestions.L => ({
                                                             'label': id + $.label,
                                                             'documentation': p_.from.optional(desc).decide<string>(
                                                                 ($) => $,

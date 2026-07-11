@@ -3,9 +3,9 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/liana_schema/authoring_target.js"
 
 //data types
-import type * as d_out from "astn/interface/data/authoring_target"
+import type * as s_out from "astn/interface/data/authoring_target"
 
-namespace d_function {
+namespace s_function {
     export type Parameters = {
         'style':
         | ['concise', null]
@@ -19,7 +19,7 @@ export const Value: interface_.Value = ($, $p) => ({
 })
 
 export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).decide(
-    ($): d_out.Value.data => {
+    ($): s_out.Value.data => {
         switch ($[0]) {
             case 'simple': return p_.option($, ($) => ['concrete', {
                 'type': ['text', {
@@ -97,18 +97,18 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
                     },
                 }]
             }])
-            case 'group': return p_.option($, ($): d_out.Value.data => {
+            case 'group': return p_.option($, ($): s_out.Value.data => {
                 const $v_xx = $
                 return ['concrete', {
                     'type': ['group', p_.from.state($p.style).decide(
-                        ($): d_out.Value.data.concrete.type_.group => {
+                        ($): s_out.Value.data.concrete.type_.group => {
                             switch ($[0]) {
                                 case 'concise': return p_.option($, ($) => ['concise', {
                                     '<': {
                                         'comments': p_.literal.list([])
                                     },
                                     'properties': p_.from.dictionary($v_xx).convert_to_list(
-                                        ($, id): d_out.Items.L => Value(
+                                        ($, id): s_out.Items.L => Value(
                                             $.value,
                                             $p
                                         )
@@ -122,7 +122,7 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
                                         'comments': p_.literal.list([])
                                     },
                                     'properties': p_.from.dictionary($v_xx).convert_to_list(
-                                        ($, id): d_out.ID_Value_Pairs.L => ({
+                                        ($, id): s_out.ID_Value_Pairs.L => ({
                                             'id': id,
                                             'value': p_.literal.set(Value(
                                                 $.value,
@@ -163,11 +163,11 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
     })
 
 // export const Resolver_Value = (
-//     $: d_in.Resolver_Value,
-// ): d_out.Value => ({
+//     $: s_in.Resolver_Value,
+// ): s_out.Value => ({
 //     'data': ['concrete', {
 //         'type': p_.from.state($).decide(
-//($): d_out.Value.data.concrete.type_ => {
+//($): s_out.Value.data.concrete.type_ => {
 //             switch ($[0]) {
 //                 case 'simple': return p_.option($, ($) => ['text', {
 //                     'delimiter': ['none', null],
@@ -221,13 +221,13 @@ export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).dec
 //                         'comments': p_.literal.list([])
 //                     },
 //                 }])
-//                 case 'group': return p_.option($, ($): d_out.Value.data.concrete.type_ => ['group', ['verbose', {
+//                 case 'group': return p_.option($, ($): s_out.Value.data.concrete.type_ => ['group', ['verbose', {
 //                     '(': {
 //                         'comments': p_.literal.list([])
 //                     },
 //                     'properties': p_.from.dictionary(//                         $
 //                     ).convert(
-//                         ($, id): d_out.ID_Value_Pairs.L => ({
+//                         ($, id): s_out.ID_Value_Pairs.L => ({
 //                             'id': id,
 //                             'value': p_.literal.set(Resolver_Value($.resolver))
 //                         })

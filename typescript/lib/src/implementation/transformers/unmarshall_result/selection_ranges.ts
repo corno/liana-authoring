@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/selection_ranges.js"
 
 //data types
-import type * as d_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
@@ -12,16 +12,16 @@ import * as t_parse_tree_to_location from "astn-core/implementation/transformers
 export const Document: interface_.Document = ($, $p) => {
     const doc = $
     return p_.from.list($p.positions).map(
-        ($): d_in.Range_Stack => p_.from.state(t_to_unmarshall_result_value_at_position.Document(
+        ($): s_in.Range_Stack => p_.from.state(t_to_unmarshall_result_value_at_position.Document(
             doc,
             {
                 'position': $,
             }
         ),
         ).decide(
-            ($): d_in.Range_Stack => {
+            ($): s_in.Range_Stack => {
                 switch ($[0]) {
-                    case 'value': return p_.option($, ($): d_in.Range_Stack => {
+                    case 'value': return p_.option($, ($): s_in.Range_Stack => {
                         return {
                             'range': t_parse_tree_to_location.Value($.instance),
                             'parent': $['optional parent range stack']

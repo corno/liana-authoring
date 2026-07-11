@@ -6,7 +6,7 @@ import p_super_query_result from 'pareto-core/implementation/query/super_query_r
 import type * as interface_ from "../../declarations/queries.js"
 
 //data  types
-import type * as d_process_file_data from "pareto-common/interface/data/process_file_data"
+import type * as s_process_file_data from "pareto-common/interface/data/process_file_data"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file.js"
@@ -33,7 +33,7 @@ export const $$: interface_.seal = p_.query(
                 'file path': $d.path, //to determine the schema path
                 'tab size': $s['tab size'],
             },
-            ($): d_process_file_data.Error => sh.ph.composed([
+            ($): s_process_file_data.Error => sh.ph.composed([
                 sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
                 sh.ph.literal("FIX location: "),
                 t_load_file_to_prose.Error(
@@ -60,7 +60,7 @@ export const $$: interface_.seal = p_.query(
                 ]))
         ),
     ).transform(
-        ($): d_process_file_data.Result => ({
+        ($): s_process_file_data.Result => ({
             'data': p_list_from_text(
                 t_fp_to_text.Paragraph(
                     t_astn_sealed_target_to_prose.Document(

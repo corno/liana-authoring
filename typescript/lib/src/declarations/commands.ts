@@ -5,14 +5,14 @@ import type * as command_interfaces_pareto_application_api from "pareto-applicat
 import type * as command_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/commands"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
 
-import type * as d_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
+import type * as s_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 
 
 export type seal = p_.Command_Implementation<
     command_interfaces_pareto_application_api.main,
     {
         'tab size': number
-        'serialization parameters': d_serialize_prose.Parameters
+        'serialization parameters': s_serialize_prose.Parameters
     },
     {
         'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file
