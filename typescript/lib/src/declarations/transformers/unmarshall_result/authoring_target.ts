@@ -1,7 +1,7 @@
 
 import type * as p_ from 'pareto-core/interface/transformer'
 
-//data types
+//schemas
 import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 import type * as s_in_parse_tree from "astn-core/interface/data/parse_tree"
 import type * as s_out from "astn/interface/data/authoring_target"

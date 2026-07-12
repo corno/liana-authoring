@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 import type * as interface_ from "../../../declarations/transformers/get_schema/diagnostics.js"
 
-//data types
+//schemas
 import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
 
 namespace s_function {

@@ -1,7 +1,7 @@
 
 import type * as p_ from 'pareto-core/interface/refiner'
 
-//data types
+//schemas
 import type * as s_out from "../../../interface/schemas/unmarshall_result.js"
 import type * as s_function from "../../../interface/schemas/unmarshall_result_from_list_of_characters.js"
 import type * as s_in from "pareto-fountain-pen/interface/data/list_of_characters"

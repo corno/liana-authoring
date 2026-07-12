@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 import type * as interface_ from "../../../declarations/transformers/resolve_result/resolve_errors.js"
 
-//data types
+//schemas
 import type * as s_out from "../../../interface/schemas/resolve_errors.js"
 
 export const Document: interface_.Document = ($) => {

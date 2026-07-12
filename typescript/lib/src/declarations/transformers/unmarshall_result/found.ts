@@ -2,7 +2,7 @@ import type * as p_di from 'pareto-core/interface/data'
 
 import type * as p_ from 'pareto-core/interface/transformer'
 
-//data types
+//schemas
 import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 import type * as s_location from "../../../interface/schemas/location.js"
 import type * as s_astn_location from "astn-core/interface/data/location"

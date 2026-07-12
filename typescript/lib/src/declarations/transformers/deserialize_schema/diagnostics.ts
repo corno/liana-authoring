@@ -4,7 +4,7 @@ import type * as p_ from 'pareto-core/interface/transformer'
 import type * as s_out_2 from "../../../interface/schemas/diagnostics.js"
 import type * as s_in from "liana-core/interface/data/deserialize_resolved"
 
-//data types
+//schemas
 import type * as s_loc from "../../../interface/schemas/location.js"
 import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
 

@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/data'
 
-//data types
+//schemas
 import type * as s_location from "astn-core/interface/data/location"
 
 export type Selection_Range = {

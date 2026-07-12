@@ -2,7 +2,7 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 import type * as p_di from 'pareto-core/interface/data'
 
-//data types
+//schemas
 import type * as s_in from "astn-core/interface/data/parse_tree"
 import type * as s_out from "../../../interface/schemas/unmarshall_result.js"
 import type * as s_function from "../../../interface/schemas/unmarshall_result_from_astn_parse_tree.js"

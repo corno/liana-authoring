@@ -8,7 +8,7 @@ import * as p_select_lookup from 'pareto-core/implementation/transformer/special
 
 import type * as interface_ from "../../declarations/queries.js"
 
-//data types
+//schemas
 import * as d from "../../interface/schemas/deserialize.js"
 
 //depencencies

@@ -5,7 +5,7 @@ import type * as query_interfaces_pareto_common from "pareto-common/interface/qu
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
 import type * as query_interfaces from "../interface/queries.js"
 
-//data types
+//schemas
 import type * as s_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 import type * as s_get_unmarshalled_file from "../interface/schemas/get_unmarshalled_file.js"
 

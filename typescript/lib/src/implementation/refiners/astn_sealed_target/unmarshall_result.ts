@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
-//data types
+//schemas
 import type * as s_out from "astn-core/interface/data/sealed_target"
 import type * as s_function from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
 

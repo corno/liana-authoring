@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/query_interface'
 
-//data types
+//schemas
 import type * as s_deserialize from "./schemas/deserialize.js"
 import type * as s_get_schema_path from "./schemas/get_schema_path.js"
 import type * as s_get_schema from "./schemas/get_schema.js"

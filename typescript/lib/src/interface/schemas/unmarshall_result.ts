@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/data'
 
-//data types
+//schemas
 import type * as s_astn_parse_tree from "astn-core/interface/data/parse_tree"
 import type * as s_schema from "pareto-liana/modules/schema/interface/data/resolved"
 import type * as s_location from "astn-core/interface/data/location"

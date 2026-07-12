@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/authoring_target.js"
 
-//data types
+//schemas
 import type * as s_out from "astn/interface/data/authoring_target"
 import type * as s_function from "../../../interface/schemas/unmarshall_result_to_authoring_target.js"
 

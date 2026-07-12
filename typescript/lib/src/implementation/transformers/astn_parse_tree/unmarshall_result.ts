@@ -4,7 +4,7 @@ import p_implement_me from 'pareto-core-dev/implement_me'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 import p_create_refinement_context from 'pareto-core/implementation/__internal/sync/create_refinement_context'
 
-//data types
+//schemas
 import type * as s_in from "astn-core/interface/data/parse_tree"
 import type * as s_out from "../../../interface/schemas/unmarshall_result.js"
 

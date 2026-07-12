@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/deserialize_schema/diagnostics.js"
 
 
-//data types
+//schemas
 import type * as s_loc from "../../../interface/schemas/location.js"
 import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
 import type * as s_out_2 from "../../../interface/schemas/diagnostics.js"

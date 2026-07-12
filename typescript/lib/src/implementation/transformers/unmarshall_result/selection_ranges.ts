@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/selection_ranges.js"
 
-//data types
+//schemas
 import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 
 //dependencies

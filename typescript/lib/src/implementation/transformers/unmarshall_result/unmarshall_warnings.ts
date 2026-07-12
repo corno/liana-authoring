@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_warnings.js"
 
-//data types
+//schemas
 import type * as s_out from "../../../interface/schemas/unmarshall_errors.js"
 
 //dependencies
