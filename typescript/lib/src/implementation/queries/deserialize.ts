@@ -6,7 +6,7 @@ import p_super_query_result from 'pareto-core/implementation/query/super_query_r
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
 import * as p_select_lookup from 'pareto-core/implementation/transformer/specials/lookup'
 
-import type * as interface_ from "../../declarations/queries.js"
+import type * as query_interfaces from "../../interface/queries.js"
 
 //schemas
 import * as d from "../../interface/schemas/deserialize.js"
@@ -15,7 +15,14 @@ import * as d from "../../interface/schemas/deserialize.js"
 import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters.js"
 import * as r_resolve_result_from_unmarshall_result from "../transformers/unmarshall_result/resolve_result.js"
 
-export const $$: interface_.deserialize = p_.query(
+export const $$: p_.Query_Implementation<
+    query_interfaces.deserialize,
+    null,
+    {
+        'get schema': query_interfaces.get_schema
+        'get schema path': query_interfaces.get_schema_path
+    }
+> = p_.query(
     ($d, $s, $q) => p_super_query_result($q['get schema path'](
         {
             'context path': $d['file path'].context,

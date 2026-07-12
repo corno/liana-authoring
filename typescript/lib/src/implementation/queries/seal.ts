@@ -3,7 +3,9 @@ import * as p_temp from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import type * as interface_ from "../../declarations/queries.js"
+import type * as query_interfaces_pareto_common from "pareto-common/interface/queries"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
+import type * as s_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 
 //data  types
 import type * as s_process_file_data from "pareto-common/interface/data/process_file_data"
@@ -20,7 +22,17 @@ import * as t_astn_sealed_target_to_prose from "astn-core/implementation/transfo
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-export const $$: interface_.seal = p_.query(
+export const $$: p_.Query_Implementation<
+    query_interfaces_pareto_common.process_file_data,
+    {
+        'tab size': number,
+        'serialization parameters': s_serialize_prose.Parameters,
+    },
+    {
+        'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file
+        'stat': query_interfaces_pareto_filesystem_unrestricted_api.stat_possible_node
+    }
+> = p_.query(
     ($d, $s, $q) => p_super_query_result(
         q_get_unmarshalled_file(
             null,

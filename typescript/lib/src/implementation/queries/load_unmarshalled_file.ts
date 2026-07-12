@@ -3,7 +3,7 @@ import p_text_from_list from 'pareto-core/implementation/transformer/specials/te
 import p_variables from 'pareto-core/implementation/query/specials/variables'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import type * as interface_ from "../../declarations/queries.js"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
 
 //schemas
 import * as d from "../../interface/schemas/get_unmarshalled_file.js"
@@ -13,7 +13,18 @@ import { $$ as q_deserialize } from "./deserialize.js"
 import { $$ as q_get_schema } from "./get_schema.js"
 import { $$ as q_get_schema_path } from "./get_schema_path.js"
 
-export const $$: interface_.load_unmarshalled_file = p_.query(
+export const $$: p_.Query_Implementation<
+    p_.Query_Interface<
+        d.Result,
+        d.Error,
+        d.Parameters
+    >,
+    null,
+    {
+        'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file
+        'stat': query_interfaces_pareto_filesystem_unrestricted_api.stat_possible_node
+    }
+> = p_.query(
     ($d, $s, $q) => p_super_query_result($q['read file'](
         $d['file path'],
         ($): d.Error => ['read file', $]
