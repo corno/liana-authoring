@@ -1,10 +1,36 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/authoring_target.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in_parse_tree from "../../../interface/schemas/parse_tree.js"
+namespace declarations {
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Document,
+        s_parameters.Parameters
+    >
+    export type Any_Value = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        s_parameters.Parameters
+    >
+    export type Non_Entity = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        s_parameters.Parameters
+    >
+    export type Entity = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        s_parameters.Parameters
+    >
+    export type Structural_Token = p_.Transformer<
+        s_in_parse_tree.Structural_Token,
+        s_out.Token_Trivia
+    >
+}
 
 //schemas
-import type * as s_out from "astn/interface/data/authoring_target"
-import type * as s_function from "../../../interface/schemas/unmarshall_result_to_authoring_target.js"
+import type * as s_parameters from "../../../interface/schemas/unmarshall_result_to_authoring_target.js"
 
 //dependencies
 import * as t_parse_tree_to_authoring_target from "astn/implementation/transformers/parse_tree/authoring_target"
@@ -15,7 +41,7 @@ const temp_value = ($: s_out.Value.data): s_out.Value => ({
     'data': $
 })
 
-export const Document: interface_.Document = ($, $p): s_out.Document => {
+export const Document: declarations.Document = ($, $p): s_out.Document => {
     return {
         'header': p_.from.optional($['header']).map(
             ($) => t_parse_tree_to_authoring_target.Value($)),
@@ -25,8 +51,8 @@ export const Document: interface_.Document = ($, $p): s_out.Document => {
 
 
 
-export const Non_Entity: interface_.Non_Entity = ($, $p) => {
-    const temp_dont_restyle_entities = ($: s_function.Parameters): s_function.Parameters => {
+export const Non_Entity: declarations.Non_Entity = ($, $p) => {
+    const temp_dont_restyle_entities = ($: s_parameters.Parameters): s_parameters.Parameters => {
         const x = $
         return {
             'style': $['style'],
@@ -44,7 +70,7 @@ export const Non_Entity: interface_.Non_Entity = ($, $p) => {
     return Any_Value($, temp_dont_restyle_entities($p))
 }
 
-export const Entity: interface_.Entity = ($, $p) => {
+export const Entity: declarations.Entity = ($, $p) => {
     const value = $
     return p_.from.state($p.impact).decide(
         ($) => {
@@ -63,7 +89,7 @@ export const Entity: interface_.Entity = ($, $p) => {
         })
 }
 
-export const Any_Value: interface_.Any_Value = ($, $p) => {
+export const Any_Value: declarations.Any_Value = ($, $p) => {
     const instance = $['instance']
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
@@ -369,6 +395,6 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
             }
         })
 }
-export const Structural_Token: interface_.Structural_Token = ($) => ({
+export const Structural_Token: declarations.Structural_Token = ($) => ({
     'comments': $['trailing trivia'].comments
 })

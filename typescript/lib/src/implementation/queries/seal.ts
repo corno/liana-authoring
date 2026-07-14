@@ -5,10 +5,10 @@ import p_super_query_result from 'pareto-core/implementation/query/super_query_r
 
 import type * as query_interfaces_pareto_common from "pareto-common/interface/queries"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
-import type * as s_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
+import type * as s_serialize_prose from "../../../interface/schemas/prose_serialize.js"
 
 //data  types
-import type * as s_process_file_data from "pareto-common/interface/data/process_file_data"
+import type * as s_process_file_data from "./process_file_data.js"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file.js"

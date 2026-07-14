@@ -1,11 +1,42 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/found.js"
+import type * as p_di from 'pareto-core/interface/schema'
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+namespace declarations {
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Found,
+        {
+        'position': s_location.Position
+    }
+    >
+    export type Items = p_.Transformer_With_Parameter<
+        //     s_in.Items,
+        //     Found,
+        //     {
+//         'position': s_location.Position
+//     }
+//
+    >
+    export type Value = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Found,
+        {
+        'position': s_location.Position
+    }
+    >
+    export type Value_possibly_found = p_.Transformer_With_Parameter<
+        s_in.Value,
+        p_di.Optional_Value<s_out.Found>,
+        {
+        'position': s_location.Position
+    }
+    >
+}
 
 //schemas
 import type * as s_location from "../../../interface/schemas/location.js"
-import type * as s_astn_location from "astn-core/interface/data/location"
-import type * as s_out from "../../../interface/schemas/found.js"
+import type * as s_astn_location from "../../../interface/schemas/location.js"
 
 //dependencies
 import * as t_parse_tree_to_full_value_range from "astn-core/implementation/transformers/parse_tree/full_value_range"
@@ -31,9 +62,9 @@ export const range_overlaps_position = (
     )
 
 
-export const Document: interface_.Document = ($, $p) => Value($.content, $p)
+export const Document: declarations.Document = ($, $p) => Value($.content, $p)
 
-export const Value_possibly_found: interface_.Value_possibly_found = ($, $p) => {
+export const Value_possibly_found: declarations.Value_possibly_found = ($, $p) => {
     return range_overlaps_position(
         t_parse_tree_to_full_value_range.Value($.instance),
         {
@@ -44,7 +75,7 @@ export const Value_possibly_found: interface_.Value_possibly_found = ($, $p) => 
         : p_.literal.not_set()
 }
 
-export const Value: interface_.Value = ($, $p) => {
+export const Value: declarations.Value = ($, $p) => {
 
 
 

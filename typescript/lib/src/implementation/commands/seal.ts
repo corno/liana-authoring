@@ -4,10 +4,10 @@ import type * as command_interfaces_pareto_application_api from "pareto-applicat
 import type * as command_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/commands"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
 import type * as command_interfaces_pareto_stream_api from "pareto-stream-api/interface/commands"
-import type * as s_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
+import type * as s_serialize_prose from "../../../interface/schemas/prose_serialize.js"
 
 //dependencies
-import * as c_file_to_file from "pareto-common/implementation/commands/file_to_file"
+import * as c_file_to_file from "pareto-common/implementation/commands/file_in_file_out"
 import * as q_seal from "../queries/seal.js"
 
 export const $$: p_.Command_Implementation<

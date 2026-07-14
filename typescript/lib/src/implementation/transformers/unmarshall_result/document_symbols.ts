@@ -1,16 +1,25 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/document_symbols.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+namespace declarations {
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Value
+    >
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Value
+    >
+}
 
 //schemas
-import type * as s_out from "../../../interface/schemas/document_symbols.js"
 
 //dependencies
 import * as t_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
 
-export const Document: interface_.Document = ($) => Value($.content)
+export const Document: declarations.Document = ($) => Value($.content)
 
-export const Value: interface_.Value = ($) => {
+export const Value: declarations.Value = ($) => {
 
     const instance = $.instance
 

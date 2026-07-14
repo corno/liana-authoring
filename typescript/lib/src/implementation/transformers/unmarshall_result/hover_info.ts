@@ -1,6 +1,15 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/hover_info.js"
+import type * as s_location from "../../../interface/schemas/location.js"
+namespace declarations {
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Hover_Texts,
+        {
+        'position': s_location.Position_
+    }
+    >
+}
 
 //schemas
 import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
@@ -13,7 +22,7 @@ import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformer
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 const Property_Path = ($: s_in.Property_Path): string => t_prose_to_text.Phrase(
-    sh.ph.rich(
+    sh.ph.rich_phrase(
         p_.from.list($).map(
             ($) => p_.from.state($).decide(
                 ($) => {
@@ -35,7 +44,7 @@ const Property_Path = ($: s_in.Property_Path): string => t_prose_to_text.Phrase(
     }
 )
 
-export const Document: interface_.Document = ($, $p) => {
+export const Document: declarations.Document = ($, $p) => {
     return p_.from.state(
         t_to_unmarshall_result_value_at_position.Document($, $p)
     ).decide(

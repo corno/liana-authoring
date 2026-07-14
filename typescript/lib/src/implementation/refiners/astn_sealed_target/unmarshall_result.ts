@@ -1,15 +1,28 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
 //schemas
-import type * as s_out from "astn-core/interface/data/sealed_target"
 import type * as s_function from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in_astn_parse_tree from "../../../interface/schemas/parse_tree.js"
+
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
 
-import type * as interface_ from "../../../declarations/refiners/astn_sealed_target/unmarshall_result.js"
+namespace declarations {
+    export type Value = p_.Refiner<
+        s_out.Value,
+        s_function.Error,
+        s_in.Value
+    >
+    export type Found = p_ti.Transformer< //FIXME; this one shouldn't be here
+        s_in_astn_parse_tree.Value,
+        s_function.Found
+    >
 
-export const Found: interface_.Found = ($) => {
+
+}
+export const Found: declarations.Found = ($) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
@@ -40,7 +53,7 @@ export const Found: interface_.Found = ($) => {
 //     return Value($.content, abort)
 // }
 
-export const Value: interface_.Value = ($, abort) => {
+export const Value: declarations.Value = ($, abort) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {

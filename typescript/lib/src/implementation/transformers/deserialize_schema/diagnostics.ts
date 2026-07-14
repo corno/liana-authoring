@@ -1,13 +1,20 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/deserialize_schema/diagnostics.js"
+import type * as s_in from "./deserialize_resolved.js"
+namespace declarations {
+    export type Error = p_.Transformer_With_Parameter<
+        s_in.Error,
+        s_out.Error,
+        s_parameters.Parameters
+    >
+}
 
 
 //schemas
 import type * as s_loc from "../../../interface/schemas/location.js"
-import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
+import type * as s_path from "../../../interface/schemas/fs_unrestricted_path"
 import type * as s_out_2 from "../../../interface/schemas/diagnostics.js"
-namespace s_function {
+namespace s_parameters {
     export type Parameters = {
         'schema path': s_path.Node_Path
     }
@@ -33,7 +40,7 @@ import * as t_deserialize_resolved_to_location from "liana-core/implementation/t
 import * as t_deserialize_resolved_to_prose from "liana-core/implementation/transformers/deserialize_resolved/prose"
 
 
-export const Error: interface_.Error = ($, $p) => ({
+export const Error: declarations.Error = ($, $p) => ({
     'type': ['deserialize', null],
     'message': t_prose_to_text.Phrase(
         t_deserialize_resolved_to_prose.Error($),

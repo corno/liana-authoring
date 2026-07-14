@@ -1,19 +1,28 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_warnings.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+namespace declarations {
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Warnings
+    >
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Warnings
+    >
+}
 
 //schemas
-import type * as s_out from "../../../interface/schemas/unmarshall_errors.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
 
 
-export const Document: interface_.Document = ($) => Value(
+export const Document: declarations.Document = ($) => Value(
     $.content,
 )
 
-export const Value: interface_.Value = ($) => {
+export const Value: declarations.Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {

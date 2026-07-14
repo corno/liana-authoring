@@ -1,12 +1,18 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_warnings/prose.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_errors.js"
+namespace declarations {
+    export type Warning = p_.Transformer<
+        s_in.Warnings.L,
+        s_out.Phrase.composed
+    >
+}
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
-export const Warning: interface_.Warning = ($) => p_.from.state($.type).decide(
+export const Warning: declarations.Warning = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'expected apostrophed text': return p_.option($, ($) => p_.literal.list([

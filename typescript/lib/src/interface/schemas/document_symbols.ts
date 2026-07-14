@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/interface/data'
+import * as p_ from 'pareto-core/interface/schema'
 
-import type * as s_location from "astn-core/interface/data/location"
+import type * as s_location from "./location.js"
 
 export type Symbol = {
     'name': string

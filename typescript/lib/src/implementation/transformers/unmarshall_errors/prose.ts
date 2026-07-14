@@ -1,13 +1,19 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_errors/prose.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_errors.js"
+namespace declarations {
+    export type Error = p_.Transformer<
+        s_in.Errors.L,
+        s_out.Phrase.composed
+    >
+}
 
 //dependencies
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
+export const Error: declarations.Error = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'dictionary': return p_.option($, ($) => p_.from.state($).decide(
@@ -27,7 +33,7 @@ export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
                     switch ($[0]) {
                         case 'invalid type': return p_.option($, ($) => p_.literal.list([
                             sh.ph.literal("invalid value type, expected "),
-                            sh.ph.rich(
+                            sh.ph.rich_phrase(
                                 p_.from.list($.expected).flatten(
                                     ($) => p_.literal.list([
                                         sh.ph.literal("'"),

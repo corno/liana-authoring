@@ -1,8 +1,14 @@
 
-import type * as interface_ from "../../../declarations/transformers/sealed_target_from_unmarshall_result/location.js"
+import type * as s_in from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
+namespace declarations {
+    export type Error = p_.Transformer<
+        s_in.Error,
+        s_out.Range
+    >
+}
 
 //dependencies
 
-export const Error: interface_.Error = (
+export const Error: declarations.Error = (
     $,
 ) => $.range

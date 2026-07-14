@@ -1,9 +1,14 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/diagnostics.js"
+import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+namespace declarations {
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Diagnostics
+    >
+}
 
 //schemas
-import type * as s_out from "../../../interface/schemas/diagnostics.js"
 
 
 //dependencies
@@ -13,7 +18,7 @@ import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformer
 import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/prose.js"
 import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/prose.js"
 
-export const Document: interface_.Document = ($) => p_.literal.segmented_list([
+export const Document: declarations.Document = ($) => p_.literal.segmented_list([
     p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(
         ($) => {
             return ({

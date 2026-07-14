@@ -1,6 +1,24 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
-import type * as interface_ from "../../../declarations/refiners/unmarshall_result/list_of_characters.js"
+//schemas
+import type * as s_function from "../../../interface/schemas/unmarshall_result_from_list_of_characters.js"
+import type * as s_in from "../../../interface/schemas/list_of_characters.js"
+
+
+// export type Value = p_.Refiner_With_Parameter<
+//     s_out.Value,
+//     s_function.Error,
+//     s_in.List_Of_Characters,
+//     s_function.Parameters
+// >
+export type Document = p_.Refiner_With_Parameter<
+    s_out.Document,
+    s_function.Error,
+    s_in.List_Of_Characters,
+    s_function.Parameters
+>
+
+
 
 //depencencies
 import * as t_parse_tree_to_unmarshall_result from "../../transformers/astn_parse_tree/unmarshall_result.js"

@@ -1,6 +1,6 @@
 
 import * as p_i from 'pareto-core/interface/__internal/Abort'
-import * as p_di from 'pareto-core/interface/data'
+import * as p_di from 'pareto-core/interface/schema'
 
 import * as i_imports_location from "./location.js"
 

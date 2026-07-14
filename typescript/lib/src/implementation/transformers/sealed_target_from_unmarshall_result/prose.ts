@@ -1,6 +1,16 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/sealed_target_from_unmarshall_result/prose.js"
+import type * as s_in from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
+namespace declarations {
+    export type Found = p_.Transformer<
+        s_in.Found,
+        s_out.Phrase
+    >
+    export type Error = p_.Transformer<
+        s_in.Error,
+        s_out.Phrase
+    >
+}
 
 //dependencies
 
@@ -8,7 +18,7 @@ import type * as interface_ from "../../../declarations/transformers/sealed_targ
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
-export const Found: interface_.Found = ($) => p_.from.state($).decide(
+export const Found: declarations.Found = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'dictionary': return p_.option($, ($) => sh.ph.literal("dictionary"))
@@ -28,7 +38,7 @@ export const Found: interface_.Found = ($) => p_.from.state($).decide(
         }
     })
 
-export const Error: interface_.Error = ($) => {
+export const Error: declarations.Error = ($) => {
         return sh.ph.composed([
             p_.from.state($.type).decide(
                 ($) => {
