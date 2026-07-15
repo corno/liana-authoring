@@ -19,7 +19,7 @@ import * as t_to_unmarshall_result_value_at_position from "./found.js"
 import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose_simple/deprecated"
 
 const Property_Path = ($: s_in.Property_Path): string => t_prose_to_text.Phrase(
     sh.ph.rich_phrase(
@@ -27,15 +27,15 @@ const Property_Path = ($: s_in.Property_Path): string => t_prose_to_text.Phrase(
             ($) => p_.from.state($).decide(
                 ($) => {
                     switch ($[0]) {
-                        case 'group': return p_.option($, ($) => sh.ph.literal($))
-                        case 'optional': return p_.option($, ($) => sh.ph.literal("O"))
-                        case 'state': return p_.option($, ($) => sh.ph.literal($))
+                        case 'group': return p_.option($, ($) => sh.ph.text($))
+                        case 'optional': return p_.option($, ($) => sh.ph.text("O"))
+                        case 'state': return p_.option($, ($) => sh.ph.text($))
                         default: return p_.exhaustive($[0])
                     }
                 })),
         sh.ph.nothing(),
         sh.ph.nothing(),
-        sh.ph.literal(" > "),
+        sh.ph.text(" > "),
         sh.ph.nothing(),
     ),
     {

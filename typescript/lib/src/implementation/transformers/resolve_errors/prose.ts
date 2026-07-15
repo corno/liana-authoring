@@ -9,13 +9,13 @@ namespace declarations {
 }
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose_simple/deprecated"
 
 export const Error: declarations.Error = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'to be implemented': return p_.option($, ($) => sh.ph.composed([
-                sh.ph.literal("this error type is not yet implemented, please report it to the developers")
+                sh.ph.text("this error type is not yet implemented, please report it to the developers")
             ]))
             default: return p_.exhaustive($[0])
         }

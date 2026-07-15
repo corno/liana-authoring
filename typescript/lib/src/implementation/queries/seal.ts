@@ -20,7 +20,7 @@ import * as t_fp_to_text from "pareto-fountain-pen/implementation/transformers/p
 import * as t_astn_sealed_target_to_prose from "astn-core/implementation/transformers/sealed_target/prose"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose_simple/deprecated"
 
 export const $$: p_.Query_Implementation<
     query_interfaces_pareto_common.process_file_data,
@@ -46,8 +46,8 @@ export const $$: p_.Query_Implementation<
                 'tab size': $s['tab size'],
             },
             ($): s_process_file_data.Error => sh.ph.composed([
-                sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
-                sh.ph.literal("FIX location: "),
+                sh.ph.text(t_unrestricted_path_to_text.Node_Path($d.path)),
+                sh.ph.text("FIX location: "),
                 t_load_file_to_prose.Error(
                     $,
                 )
@@ -65,7 +65,7 @@ export const $$: p_.Query_Implementation<
                 }),
             ($) => abort(
                 sh.ph.composed([
-                    sh.ph.literal("FIX location: "),
+                    sh.ph.text("FIX location: "),
                     t_auth_targ_from_unmarshall_result_to_prose.Error(
                         $,
                     )
