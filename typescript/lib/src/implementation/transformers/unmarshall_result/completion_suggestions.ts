@@ -1,26 +1,13 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import type * as p_di from 'pareto-core/interface/schema'
+import type * as p_di from 'pareto-core/interface/data'
 
-import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
-import type * as s_location from "../../../interface/schemas/location.js"
-import type * as s_outx from "../../../interface/schemas/found.js"
-namespace declarations {
-    export type Document = p_.Transformer_With_Parameter<
-        s_in.Document,
-        s_out.Completion_Suggestions,
-        Parameters
-    >
-    export type Found = p_.Transformer_With_Parameter<
-        s_outx.Found,
-        s_out.Completion_Suggestions,
-        Parameters
-    >
-}
+import type * as interface_ from "../../../declarations/transformers/unmarshall_result/completion_suggestions.js"
 
 //schemas
+import type * as s_out from "../../../interface/schemas/completion_suggestions.js"
 
-import type * as s_schema from "./resolved.js"
-import type * as s_ast_target from "./authoring_target.js"
+import type * as s_schema from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as s_ast_target from "astn/interface/data/authoring_target"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
@@ -144,7 +131,7 @@ const s_schema_Value = (
 
 }
 
-export const Found: declarations.Found = ($, $p) => {
+export const Found: interface_.Found = ($, $p) => {
     switch ($[0]) {
         case 'value': return p_.option($, ($): s_out.Completion_Suggestions => {
             const definition = $.definition
@@ -251,7 +238,7 @@ export const Found: declarations.Found = ($, $p) => {
     }
 }
 
-export const Document: declarations.Document = ($, $p) => {
+export const Document: interface_.Document = ($, $p) => {
     return Found(
         t_to_unmarshall_result_value_at_position.Document(
             $,

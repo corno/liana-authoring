@@ -1,38 +1,9 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
-import type * as s_location from "../../../interface/schemas/location.js"
-import type * as s_outx from "../../../interface/schemas/found.js"
-import type * as s_function_parameters from "../../../interface/schemas/unmarshall_result_to_authoring_target.js"
-namespace declarations {
-    export type Document = p_.Transformer_With_Parameter<
-        s_in.Document,
-        s_out.Optional_Formatting_Edit,
-        {
-        'position': s_location.Position
-        'indent': string
-        'conversion': s_function_parameters.Parameters
-    }
-    >
-    export type Found = p_.Transformer_With_Parameter<
-        s_outx.Found,
-        s_out.Optional_Formatting_Edit,
-        {
-        'indent': string
-        'conversion': s_function_parameters.Parameters
-    }
-    >
-    export type Value = p_.Transformer_With_Parameter<
-        s_in.Value,
-        s_out.Optional_Formatting_Edit,
-        {
-        'indent': string
-        'conversion': s_function_parameters.Parameters
-    }
-    >
-}
+import type * as interface_ from "../../../declarations/transformers/unmarshall_result/formatting_edits.js"
 
 //schemas
+import type * as s_out from "../../../interface/schemas/formatting_edits.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
@@ -41,7 +12,7 @@ import * as t_parse_tree_to_full_range from "astn-core/implementation/transforme
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 
 
-const Value: declarations.Value = (value, $p) => {
+const Value: interface_.Value = (value, $p) => {
     return p_.literal.set({
         'range': t_parse_tree_to_full_range.Value(value.instance),
         'text': t_authoring_target_to_text.Value(
@@ -55,7 +26,7 @@ const Value: declarations.Value = (value, $p) => {
     })
 }
 
-export const Found: declarations.Found = ($, $p): s_out.Optional_Formatting_Edit => {
+export const Found: interface_.Found = ($, $p): s_out.Optional_Formatting_Edit => {
 
     switch ($[0]) {
         case 'value': return p_.option($, ($): s_out.Optional_Formatting_Edit => {
@@ -101,7 +72,7 @@ export const Found: declarations.Found = ($, $p): s_out.Optional_Formatting_Edit
     }
 }
 
-export const Document: declarations.Document = ($, $p) => {
+export const Document: interface_.Document = ($, $p) => {
     return p_.from.state(
         t_to_unmarshall_result_value_at_position.Document($, $p),
     ).decide(

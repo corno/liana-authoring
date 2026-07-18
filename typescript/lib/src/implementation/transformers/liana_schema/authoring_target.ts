@@ -1,22 +1,11 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as s_in from "./resolved.js"
-namespace declarations {
-    export type Value = p_.Transformer_With_Parameter<
-        s_in.Value,
-        s_out.Value,
-        s_parameters.Parameters
-    >
-    export type Value_data = p_.Transformer_With_Parameter<
-        s_in.Value,
-        s_out.Value.data,
-        s_parameters.Parameters
-    >
-}
+import type * as interface_ from "../../../declarations/transformers/liana_schema/authoring_target.js"
 
 //schemas
+import type * as s_out from "astn/interface/data/authoring_target"
 
-namespace s_parameters {
+namespace s_function {
     export type Parameters = {
         'style':
         | ['concise', null]
@@ -24,12 +13,12 @@ namespace s_parameters {
     }
 }
 
-export const Value: declarations.Value = ($, $p) => ({
+export const Value: interface_.Value = ($, $p) => ({
 
     'data': Value_data($, $p)
 })
 
-export const Value_data: declarations.Value_data = ($, $p) => p_.from.state($).decide(
+export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).decide(
     ($): s_out.Value.data => {
         switch ($[0]) {
             case 'simple': return p_.option($, ($) => ['concrete', {

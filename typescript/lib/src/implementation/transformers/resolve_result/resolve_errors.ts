@@ -1,26 +1,17 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as s_in from "../../../interface/schemas/resolve_result.js"
-namespace declarations {
-    export type Document = p_.Transformer<
-        s_in.Document,
-        s_out.Errors
-    >
-    export type Value = p_.Transformer<
-        s_in.Value,
-        s_out.Errors
-    >
-}
+import type * as interface_ from "../../../declarations/transformers/resolve_result/resolve_errors.js"
 
 //schemas
+import type * as s_out from "../../../interface/schemas/resolve_errors.js"
 
-export const Document: declarations.Document = ($) => {
+export const Document: interface_.Document = ($) => {
     return Value(
         $.content
     )
 }
 
-export const Value: declarations.Value = ($) => p_.from.state($['unmarshall result']).decide(
+export const Value: interface_.Value = ($) => p_.from.state($['unmarshall result']).decide(
     ($) => {
         switch ($[0]) {
             case 'error': return p_.option($, ($) => p_.literal.list([])) //reported by the unmarshaller, it is not the responsibility of this transformer to report them

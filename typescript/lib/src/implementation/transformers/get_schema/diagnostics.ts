@@ -1,18 +1,11 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as s_in from "../../../interface/schemas/get_schema.js"
-namespace declarations {
-    export type Error = p_.Transformer_With_Parameter<
-        s_in.Error,
-        s_out.Diagnostics.L,
-        s_parameters.Parameters
-    >
-}
+import type * as interface_ from "../../../declarations/transformers/get_schema/diagnostics.js"
 
 //schemas
-import type * as s_path from "../../../interface/schemas/fs_unrestricted_path"
+import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
 
-namespace s_parameters {
+namespace s_function {
 	export type Parameters = {
 		'schema path': s_path.Node_Path
 	}
@@ -23,7 +16,7 @@ import * as t_deserialize_resolved_to_prose from "liana-core/implementation/tran
 import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
 import * as t_deserialize_resolved_to_location from "liana-core/implementation/transformers/deserialize_resolved/location"
 
-export const Error: declarations.Error = ($, $p) => {
+export const Error: interface_.Error = ($, $p) => {
 	return p_.from.state($.type).decide(
 		($) => {
 			switch ($[0]) {

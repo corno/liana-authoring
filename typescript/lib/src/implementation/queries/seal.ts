@@ -4,11 +4,11 @@ import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_f
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
 import type * as query_interfaces_pareto_common from "pareto-common/interface/queries"
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
-import type * as s_serialize_prose from "../../../interface/schemas/prose_serialize.js"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
+import type * as s_serialize_prose from "pareto-fountain-pen/interface/data/prose_serialize"
 
 //data  types
-import type * as s_process_file_data from "./process_file_data.js"
+import type * as s_process_file_data from "pareto-common/interface/data/process_file_data"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file.js"
@@ -20,7 +20,7 @@ import * as t_fp_to_text from "pareto-fountain-pen/implementation/transformers/p
 import * as t_astn_sealed_target_to_prose from "astn-core/implementation/transformers/sealed_target/prose"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose_simple/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 export const $$: p_.Query_Implementation<
     query_interfaces_pareto_common.process_file_data,
@@ -46,8 +46,8 @@ export const $$: p_.Query_Implementation<
                 'tab size': $s['tab size'],
             },
             ($): s_process_file_data.Error => sh.ph.composed([
-                sh.ph.text(t_unrestricted_path_to_text.Node_Path($d.path)),
-                sh.ph.text("FIX location: "),
+                sh.ph.literal(t_unrestricted_path_to_text.Node_Path($d.path)),
+                sh.ph.literal("FIX location: "),
                 t_load_file_to_prose.Error(
                     $,
                 )
@@ -65,7 +65,7 @@ export const $$: p_.Query_Implementation<
                 }),
             ($) => abort(
                 sh.ph.composed([
-                    sh.ph.text("FIX location: "),
+                    sh.ph.literal("FIX location: "),
                     t_auth_targ_from_unmarshall_result_to_prose.Error(
                         $,
                     )

@@ -1,7 +1,8 @@
 import type * as p_i from 'pareto-core/interface/refiner'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/parse_tree.js"
+import type * as s_in from "astn-core/interface/data/parse_tree"
+import type * as s_out from "astn-core/interface/data/sealed_target"
 import type * as s_function from "../../../interface/schemas/sealed_target_from_parse_tree.js"
 
 //dependencies

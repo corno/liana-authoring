@@ -3,7 +3,7 @@ import p_text_from_list from 'pareto-core/implementation/transformer/specials/te
 import p_variables from 'pareto-core/implementation/query/specials/variables'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
 
 //schemas
 import * as d from "../../interface/schemas/get_unmarshalled_file.js"

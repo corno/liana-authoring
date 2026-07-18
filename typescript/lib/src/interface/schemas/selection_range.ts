@@ -1,7 +1,7 @@
-import * as p_ from 'pareto-core/interface/schema'
+import * as p_ from 'pareto-core/interface/data'
 
 //schemas
-import type * as s_location from "./location.js"
+import type * as s_location from "astn-core/interface/data/location"
 
 export type Selection_Range = {
     'range': s_location.Range

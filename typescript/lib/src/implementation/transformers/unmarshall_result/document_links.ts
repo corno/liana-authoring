@@ -1,23 +1,13 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
-namespace declarations {
-    export type Document = p_.Transformer<
-        s_in.Document,
-        s_out.Links
-    >
-    export type Value = p_.Transformer<
-        s_in.Value,
-        s_out.Links
-    >
-}
+import type * as interface_ from "../../../declarations/transformers/unmarshall_result/document_links.js"
 
 //schemas
-import type * as s_schema from "./resolved.js"
+import type * as s_schema from "pareto-liana/modules/schema/interface/data/resolved"
 
-export const Document: declarations.Document = ($) => Value($.content)
+export const Document: interface_.Document = ($) => Value($.content)
 
-export const Value: declarations.Value = ($) => p_.from.state($['unmarshall result']).decide(
+export const Value: interface_.Value = ($) => p_.from.state($['unmarshall result']).decide(
     ($) => {
         switch ($[0]) {
             case 'error': return p_.option($, ($) => p_.literal.list([]))

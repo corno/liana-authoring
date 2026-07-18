@@ -1,12 +1,13 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 import type * as p_i from 'pareto-core/interface/transformer'
-import type * as p_di from 'pareto-core/interface/schema'
+import type * as p_di from 'pareto-core/interface/data'
 import p_implement_me from 'pareto-core-dev/implement_me'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
 
 import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
-import type * as s_in_definition from "./resolved.js"
+import type * as s_in_definition from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as s_out from "../../../interface/schemas/resolve_result.js"
 
 namespace p_i_temp {
 
@@ -97,7 +98,7 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 })
 
 // export const Get_Entry = (
-//     $: s_parameters.Lookup,
+//     $: s_function.Lookup,
 //     $p: {
 //         'id': string
 //     }
@@ -115,13 +116,13 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 //     $: null,
 //     $p: {
 //         definition: s_in_definition.Resolver_Lookup_Selection
-//         'acyclic siblings': p_di.Optional_Value<s_parameters.Acyclic_Siblings>
-//         'cyclic siblings': p_di.Optional_Value<s_parameters.Cyclic_Siblings>
-//         'lookup parameters': p_di.Optional_Value<s_parameters.Lookup_Parameters>
+//         'acyclic siblings': p_di.Optional_Value<s_function.Acyclic_Siblings>
+//         'cyclic siblings': p_di.Optional_Value<s_function.Cyclic_Siblings>
+//         'lookup parameters': p_di.Optional_Value<s_function.Lookup_Parameters>
 //     }
-// ): s_parameters.Lookup => {
+// ): s_function.Lookup => {
 //     return p_implement_me("!!!!!!!")
-//     // return p_.decide.state($p.definition.type, ($): s_parameters.Lookup => {
+//     // return p_.decide.state($p.definition.type, ($): s_function.Lookup => {
 //     //     switch ($[0]) {
 //     //         case 'acyclic': return p_.option($, ($) => p_.from.state($).decide(
 //($) => {

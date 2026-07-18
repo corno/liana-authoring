@@ -1,16 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as p_di from 'pareto-core/interface/schema'
-import type * as s_location from "../../../interface/schemas/location.js"
-namespace declarations {
-    export type Document = p_.Transformer_With_Parameter<
-        s_in.Document,
-        p_di.List<s_out.Range_Stack>,
-        {
-        'positions': p_di.List<s_location.Position_>
-    }
-    >
-}
+import type * as interface_ from "../../../declarations/transformers/unmarshall_result/selection_ranges.js"
 
 //schemas
 import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
@@ -19,7 +9,7 @@ import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
 import * as t_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
 
-export const Document: declarations.Document = ($, $p) => {
+export const Document: interface_.Document = ($, $p) => {
     const doc = $
     return p_.from.list($p.positions).map(
         ($): s_in.Range_Stack => p_.from.state(t_to_unmarshall_result_value_at_position.Document(

@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/interface/schema'
+import * as p_ from 'pareto-core/interface/data'
 
-import type * as s_location from "./location.js"
+import type * as s_location from "astn-core/interface/data/location"
 
 export type Link = {
     'range': s_location.Range

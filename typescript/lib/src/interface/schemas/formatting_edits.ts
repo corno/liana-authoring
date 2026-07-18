@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/interface/schema'
+import * as p_ from 'pareto-core/interface/data'
 
 import type * as s_text_edits from "./text_edits.js"
 

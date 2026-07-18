@@ -1,4 +1,4 @@
-import type * as s_location from "./location.js"
+import type * as s_location from "astn-core/interface/data/location"
 
 export type Error = {
     'type': Error_Type
