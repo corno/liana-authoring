@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/command'
 
 import type * as command_interfaces_pareto_application_api from "pareto-application-api/interface/commands"
 import type * as command_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/commands"
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
 import type * as command_interfaces_pareto_stream_api from "pareto-stream-api/interface/commands"
 import type * as s_serialize_prose from "../../../interface/schemas/prose_serialize.js"
 

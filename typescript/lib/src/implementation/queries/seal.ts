@@ -4,7 +4,7 @@ import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_f
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
 import type * as query_interfaces_pareto_common from "pareto-common/interface/queries"
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
 import type * as s_serialize_prose from "../../../interface/schemas/prose_serialize.js"
 
 //data  types
