@@ -19,14 +19,11 @@ export namespace Parameters_ {
     export namespace target {
         
         export type indentation = string
-        
-        export type newline = string
-        
+                
     }
     
     export type target = {
         readonly 'indentation': target.indentation
-        readonly 'newline': target.newline
     }
     
 }
