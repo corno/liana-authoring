@@ -7,7 +7,8 @@ import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
+
 
 export const Document: interface_.Document = ($, $p) => {
     const doc = $
@@ -23,23 +24,23 @@ export const Document: interface_.Document = ($, $p) => {
                 switch ($[0]) {
                     case 'value': return p_.option($, ($): s_in.Range_Stack => {
                         return {
-                            'range': t_parse_tree_to_location.Value($.instance),
+                            'range': t_parse_tree_to_full_value_location.Value($.instance),
                             'parent': $['optional parent range stack']
                         }
                     })
                     case 'entry': return p_.option($, ($) => ({
-                        'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                        'range': t_parse_tree_to_full_value_location.ID_Value_Pair($.intermediate['id value pair']),
                         'parent': p_.literal.set($['parent range stack'])
                     }))
                     case 'property': return p_.option($, ($) => p_.from.state($.style).decide(
                         ($) => {
                             switch ($[0]) {
                                 case 'verbose': return p_.option($, ($) => ({
-                                    'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                                    'range': t_parse_tree_to_full_value_location.ID_Value_Pair($.intermediate['id value pair']),
                                     'parent': p_.literal.set($['parent range stack'])
                                 }))
                                 case 'unknown concise': return p_.option($, ($) => ({
-                                    'range': t_parse_tree_to_location.Value($.item.value),
+                                    'range': t_parse_tree_to_full_value_location.Value($.item.value),
                                     'parent': p_.literal.set($['parent range stack'])
                                 }))
 
@@ -50,8 +51,8 @@ export const Document: interface_.Document = ($, $p) => {
                         'range': p_.from.state($.intermediate.instance).decide(
                             ($) => {
                                 switch ($[0]) {
-                                    case 'state': return p_.option($, ($) => t_parse_tree_to_location.State($.xxx))
-                                    case 'list': return p_.option($, ($) => t_parse_tree_to_location.List($.xxx))
+                                    case 'state': return p_.option($, ($) => t_parse_tree_to_full_value_location.State($.xxx))
+                                    case 'list': return p_.option($, ($) => t_parse_tree_to_full_value_location.List($.xxx))
                                     default: return p_.exhaustive($[0])
                                 }
                             }),

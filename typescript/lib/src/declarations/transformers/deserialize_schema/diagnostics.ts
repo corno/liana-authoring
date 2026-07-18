@@ -2,11 +2,11 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 import type * as s_out_2 from "../../../interface/schemas/diagnostics.js"
-import type * as s_in from "liana-core/interface/data/deserialize_resolved"
+import type * as s_in from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization"
 
 //schemas
 import type * as s_loc from "../../../interface/schemas/location.js"
-import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
+import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/path"
 
 export namespace s_function {
     export type Parameters = {

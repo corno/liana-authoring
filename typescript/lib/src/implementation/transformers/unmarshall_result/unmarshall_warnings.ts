@@ -6,7 +6,7 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 import type * as s_out from "../../../interface/schemas/unmarshall_errors.js"
 
 //dependencies
-import * as t_astn_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
+import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/start_token_range"
 
 
 export const Document: interface_.Document = ($) => Value(
@@ -14,7 +14,7 @@ export const Document: interface_.Document = ($) => Value(
 )
 
 export const Value: interface_.Value = ($) => {
-    const start_token_range = t_astn_parse_tree_to_location.Value($.instance)
+    const start_token_range = t_astn_parse_tree_to_start_token_location.Value($.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
             switch ($[0]) {

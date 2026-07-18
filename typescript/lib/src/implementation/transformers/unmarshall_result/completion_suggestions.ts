@@ -6,13 +6,13 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 //schemas
 import type * as s_out from "../../../interface/schemas/completion_suggestions.js"
 
-import type * as s_schema from "pareto-liana/modules/schema/interface/data/resolved"
-import type * as s_ast_target from "astn/interface/data/authoring_target"
+import type * as s_schema from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
+import type * as s_ast_target from "astn/modules/authoring_target/schemas/authoring_target"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
 import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target.js"
-import * as t_authoring_target_to_text from "astn/implementation/transformers/authoring_target/text"
+import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/implementation/transformers/authoring_target/serialized"
 
 
 type Minimal_Completion_Suggestion = {
@@ -157,12 +157,15 @@ export const Found: interface_.Found = ($, $p) => {
                                 ($): s_out.Completion_Suggestions.O.suggestions.L => ({
                                     'label': "value" + $.label,
                                     'documentation': "value completion",
-                                    'insert text': t_authoring_target_to_text.Value(
+                                    'insert lines': t_authoring_target_to_serialized.Value(
                                         $['insert value'],
                                         {
-                                            'indentation': $p.indent,
-                                            'newline': "\n",
-                                            'write delimiters': true,
+                                            'paragraph': {
+                                                'indentation': $p.indent,
+                                            },
+                                            'value': {
+                                                'write delimiters': true,
+                                            }
                                         }
                                     ),
                                 })
@@ -200,7 +203,7 @@ export const Found: interface_.Found = ($, $p) => {
                                                                 ($) => $,
                                                                 () => ""
                                                             ),
-                                                            'insert text': t_authoring_target_to_text.Value(
+                                                            'insert lines': t_authoring_target_to_serialized.Value(
                                                                 {
                                                                     'data': ['concrete', {
                                                                         'type': ['state', {
@@ -215,9 +218,12 @@ export const Found: interface_.Found = ($, $p) => {
                                                                     }]
                                                                 },
                                                                 {
-                                                                    'indentation': $p.indent,
-                                                                    'newline': "\n",
-                                                                    'write delimiters': false, //skip the pipe
+                                                                    'paragraph': {
+                                                                        'indentation': $p.indent,
+                                                                    },
+                                                                    'value': {
+                                                                        'write delimiters': false, //skip the pipe
+                                                                    }
                                                                 }
                                                             ),
                                                         })

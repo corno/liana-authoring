@@ -12,13 +12,13 @@ export namespace Text_Edits_ {
             
             export type range = i_imports_location.Range
             
-            export type text = string
+            export type lines = p_di.List<string>
             
         }
         
         export type replace = {
             readonly 'range': replace.range
-            readonly 'text': replace.text
+            readonly 'lines': replace.lines
         }
         
         export namespace delete_ {

@@ -5,16 +5,38 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import p_create_refinement_context from 'pareto-core/implementation/__internal/sync/create_refinement_context'
 
 //schemas
-import type * as s_in from "astn-core/interface/data/parse_tree"
+import type * as s_in from "astn-core/modules/deserialization/schemas/parse_tree"
 import type * as s_out from "../../../interface/schemas/unmarshall_result.js"
 
-import type * as interface_ from "../../../declarations/transformers/astn_parse_tree/unmarshall_result.js"
+import type * as s_function from "../../../interface/schemas/unmarshall_result_from_astn_parse_tree.js"
+import type * as s_in_definition from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
+
+
+
+export type Document = p_.Transformer_With_Parameter<
+    s_in.Document,
+    s_out.Document,
+    s_function.Parameters
+>
+
+export type Value = p_.Transformer_With_Parameter<
+    s_in.Value,
+    s_out.Value,
+    {
+        'definition': s_in_definition.Value
+        'property path': s_out.Property_Path
+        'parent range stack': p_di.Optional_Value<s_out.Range_Stack>
+    }
+>
+
+
 
 //dependencies
-import * as t_parse_tree_to_full_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
-import * as t_parse_tree_to_start_token_location from "astn-core/implementation/transformers/parse_tree/start_token_range"
+import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
 
-export const Document: interface_.Document = ($, $p) => ({
+import * as t_parse_tree_to_start_token_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/start_token_range"
+
+export const Document: Document = ($, $p) => ({
     'header': p_.from.optional($['header']).map(
         ($) => $.value),
     'content': Value(
@@ -27,10 +49,10 @@ export const Document: interface_.Document = ($, $p) => ({
     )
 })
 
-export const Value: interface_.Value = ($, $p) => {
+export const Value: Value = ($, $p) => {
     const value = $
     const value_range_stack: s_out.Range_Stack = {
-        'range': t_parse_tree_to_full_location.Value($),
+        'range': t_parse_tree_to_full_value_location.Value($),
         'parent': $p['parent range stack']
     }
     const start_token_range = t_parse_tree_to_start_token_location.Value($)
@@ -88,7 +110,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                                                         'definition': dict_def.value,
                                                                                         'property path': p_.literal.list([]),
                                                                                         'parent range stack': p_.literal.set({
-                                                                                            'range': t_parse_tree_to_full_location.ID_Value_Pair(entry),
+                                                                                            'range': t_parse_tree_to_full_value_location.ID_Value_Pair(entry),
                                                                                             'parent': optional_value_range_stack,
                                                                                         }),
                                                                                     }
@@ -195,7 +217,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                                                             ['group', id_value_pair.id.token.value]
                                                                                         ),
                                                                                         'parent range stack': p_.literal.set({
-                                                                                            'range': t_parse_tree_to_full_location.ID_Value_Pair(id_value_pair),
+                                                                                            'range': t_parse_tree_to_full_value_location.ID_Value_Pair(id_value_pair),
                                                                                             'parent': optional_value_range_stack,
                                                                                         }),
                                                                                     }

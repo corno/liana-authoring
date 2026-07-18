@@ -4,9 +4,8 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 
 //depencencies
 import * as t_get_schema from "../get_schema/diagnostics.js"
-import * as t_deserialize_to_location from "astn-core/implementation/transformers/deserialize_parse_tree/location"
-import * as t_deserialize_to_prose from "astn-core/implementation/transformers/deserialize_parse_tree/prose"
-import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
+import * as t_deserialize_to_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree_deserialization/location"
+import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/implementation/serializers/parse_tree_deserialization"
 
 export const Error: interface_.Error = ($) => p_.from.state($).decide(
 	($) => {
@@ -21,13 +20,7 @@ export const Error: interface_.Error = ($) => p_.from.state($).decide(
 			case 'schema': return p_.option($, ($) => t_get_schema.Error($.error, { 'schema path': $['schema path'] }))
 			case 'deserialize parse tree': return p_.option($, ($) => ({
 				'severity': ['error', null],
-				'message': t_prose_to_text.Phrase(
-					t_deserialize_to_prose.Error($),
-					{
-						'indentation': "    ",
-						'newline': "\n",
-					}
-				),
+				'message': ser_parse_tree_deserialization.Error($),
 				'range': p_.literal.set(t_deserialize_to_location.Error($)),
 				'related information': p_.literal.not_set(),
 				'type': ['deserialize', null]

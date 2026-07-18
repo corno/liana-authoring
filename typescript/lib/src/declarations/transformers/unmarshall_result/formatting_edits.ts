@@ -13,7 +13,7 @@ export type Document = p_.Transformer_With_Parameter<
     s_out.Optional_Formatting_Edit,
     {
         'position': s_location.Position
-        'indent': string
+        'indentation': string
         'conversion': s_function_parameters.Parameters
     }
 >
@@ -22,7 +22,7 @@ export type Found = p_.Transformer_With_Parameter<
     s_outx.Found,
     s_out.Optional_Formatting_Edit,
     {
-        'indent': string
+        'indentation': string
         'conversion': s_function_parameters.Parameters
     }
 >
@@ -31,7 +31,7 @@ export type Value = p_.Transformer_With_Parameter<
     s_in.Value,
     s_out.Optional_Formatting_Edit,
     {
-        'indent': string
+        'indentation': string
         'conversion': s_function_parameters.Parameters
     }
 >

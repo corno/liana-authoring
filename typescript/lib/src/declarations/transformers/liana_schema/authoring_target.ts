@@ -2,8 +2,8 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //schemas
-import type * as s_out from "astn/interface/data/authoring_target"
-import type * as s_in from "pareto-liana/modules/schema/interface/data/resolved"
+import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target"
+import type * as s_in from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
 
 export namespace s_function {
     export type Parameters = {

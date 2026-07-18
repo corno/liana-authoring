@@ -7,20 +7,24 @@ import type * as s_out from "../../../interface/schemas/formatting_edits.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_authoring_target_to_text from "astn/implementation/transformers/authoring_target/text"
-import * as t_parse_tree_to_full_range from "astn-core/implementation/transformers/parse_tree/full_value_range"
+import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/implementation/transformers/authoring_target/serialized"
+import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
+
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 
 
 const Value: interface_.Value = (value, $p) => {
     return p_.literal.set({
-        'range': t_parse_tree_to_full_range.Value(value.instance),
-        'text': t_authoring_target_to_text.Value(
+        'range': t_parse_tree_to_full_value_location.Value(value.instance),
+        'lines': t_authoring_target_to_serialized.Value(
             t_unmarshall_result_to_authoring_target.Any_Value(value, $p.conversion),
             {
-                'indentation': $p.indent,
-                'newline': "\n",
-                'write delimiters': true,
+                'paragraph': {
+                    'indentation': $p.indentation,
+                },
+                'value': {
+                    'write delimiters': true,
+                }
             }
         )
     })

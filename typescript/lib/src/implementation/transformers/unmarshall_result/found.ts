@@ -4,11 +4,12 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 
 //schemas
 import type * as s_location from "../../../interface/schemas/location.js"
-import type * as s_astn_location from "astn-core/interface/data/location"
+import type * as s_astn_location from "astn-core/modules/deserialization/schemas/location"
 import type * as s_out from "../../../interface/schemas/found.js"
 
 //dependencies
-import * as t_parse_tree_to_full_value_range from "astn-core/implementation/transformers/parse_tree/full_value_range"
+ import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
+
 
 
 export const range_overlaps_position = (
@@ -35,7 +36,7 @@ export const Document: interface_.Document = ($, $p) => Value($.content, $p)
 
 export const Value_possibly_found: interface_.Value_possibly_found = ($, $p) => {
     return range_overlaps_position(
-        t_parse_tree_to_full_value_range.Value($.instance),
+        t_parse_tree_to_full_value_location.Value($.instance),
         {
             'position': $p.position,
         }
@@ -71,7 +72,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                 'end': p_.from.state($.value).decide(
                                                     ($) => {
                                                         switch ($[0]) {
-                                                            case 'set': return p_.option($, ($) => t_parse_tree_to_full_value_range.Value($.instance).end)
+                                                            case 'set': return p_.option($, ($) => t_parse_tree_to_full_value_location.Value($.instance).end)
                                                             case 'not set': return p_.option($, ($) => entry.intermediate['id value pair'].id.range.end)
                                                             default: return p_.exhaustive($[0])
                                                         }
@@ -103,7 +104,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                 const prop = $
                                                 return p_.from.boolean(
                                                     range_overlaps_position(
-                                                        t_parse_tree_to_full_value_range.ID_Value_Pair(prop.intermediate['id value pair']),
+                                                        t_parse_tree_to_full_value_location.ID_Value_Pair(prop.intermediate['id value pair']),
                                                         {
                                                             'position': $p.position,
                                                         }
@@ -139,7 +140,7 @@ export const Value: interface_.Value = ($, $p) => {
                                                 const prop = $
                                                 return p_.from.boolean(
                                                     range_overlaps_position(
-                                                        t_parse_tree_to_full_value_range.Value(prop.item.value),
+                                                        t_parse_tree_to_full_value_location.Value(prop.item.value),
                                                         {
                                                             'position': $p.position,
                                                         }

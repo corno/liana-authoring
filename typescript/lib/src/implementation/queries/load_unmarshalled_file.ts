@@ -3,7 +3,7 @@ import p_text_from_list from 'pareto-core/implementation/transformer/specials/te
 import p_variables from 'pareto-core/implementation/query/specials/variables'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
 
 //schemas
 import * as d from "../../interface/schemas/get_unmarshalled_file.js"
@@ -30,35 +30,33 @@ export const $$: p_.Query_Implementation<
         ($): d.Error => ['read file', $]
     )).query(
         ($) => p_variables(
-            () => {
-                const instance = $
-                return q_deserialize(
-                    null,
-                    {
-                        'get schema': q_get_schema(
-                            null,
-                            {
-                                'read file': $q['read file']
-                            },
-                        ),
-                        'get schema path': q_get_schema_path(
-                            null,
-                            {
-                                'stat': $q['stat'],
-                            },
-                        )
-                    },
-                )(
-                    {
-                        'content': p_text_from_list(
-                            instance,
-                            ($) => $
-                        ),
-                        'file path': $d['file path'],
-                        'tab size': $d['tab size'],
-                    },
-                    ($): d.Error => ['deserialize', $]
-                )
-            })
+            () => q_deserialize(
+                null,
+                {
+                    'get schema': q_get_schema(
+                        null,
+                        {
+                            'read file': $q['read file']
+                        },
+                    ),
+                    'get schema path': q_get_schema_path(
+                        null,
+                        {
+                            'stat': $q['stat'],
+                        },
+                    )
+                },
+            )(
+                {
+                    'content': p_text_from_list(
+                        $.data,
+                        ($) => $
+                    ),
+                    'file path': $d['file path'],
+                    'tab size': $d['tab size'],
+                },
+                ($): d.Error => ['deserialize', $]
+            )
+        )
     )
 )

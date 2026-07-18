@@ -37,7 +37,7 @@ export namespace Completion_Suggestions_ {
                 
                 export type label = string
                 
-                export type insert_text = string
+                export type insert_lines = p_di.List<string>
                 
                 export type documentation = string
                 
@@ -45,7 +45,7 @@ export namespace Completion_Suggestions_ {
             
             export type L = {
                 readonly 'label': L.label
-                readonly 'insert text': L.insert_text
+                readonly 'insert lines': L.insert_lines
                 readonly 'documentation': L.documentation
             }
             

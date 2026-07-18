@@ -7,32 +7,28 @@ import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
+import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/rich_phrase/deprecated"
 
-const Property_Path = ($: s_in.Property_Path): string => t_prose_to_text.Phrase(
-    sh.ph.rich(
+const Property_Path = ($: s_in.Property_Path): string => ser_rich_phrase.Phrase(
+    sh.ph.rich_phrase(
         p_.from.list($).map(
             ($) => p_.from.state($).decide(
                 ($) => {
                     switch ($[0]) {
-                        case 'group': return p_.option($, ($) => sh.ph.literal($))
-                        case 'optional': return p_.option($, ($) => sh.ph.literal("O"))
-                        case 'state': return p_.option($, ($) => sh.ph.literal($))
+                        case 'group': return p_.option($, ($) => sh.ph.text($))
+                        case 'optional': return p_.option($, ($) => sh.ph.text("O"))
+                        case 'state': return p_.option($, ($) => sh.ph.text($))
                         default: return p_.exhaustive($[0])
                     }
                 })),
-        sh.ph.nothing(),
-        sh.ph.nothing(),
-        sh.ph.literal(" > "),
-        sh.ph.nothing(),
+        null,
+        null,
+        sh.ph.text(" > "),
+        null,
     ),
-    {
-        'indentation': "",
-        'newline': "",
-    }
 )
 
 export const Document: interface_.Document = ($, $p) => {

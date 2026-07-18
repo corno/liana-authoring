@@ -6,7 +6,7 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 import type * as s_out from "../../../interface/schemas/document_symbols.js"
 
 //dependencies
-import * as t_parse_tree_to_location from "astn-core/implementation/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
 
 export const Document: interface_.Document = ($) => Value($.content)
 
@@ -42,7 +42,7 @@ export const Value: interface_.Value = ($) => {
                                                     default: return p_.exhaustive($[0])
                                                 }
                                             }),
-                                        'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                                        'range': t_parse_tree_to_full_value_location.ID_Value_Pair($.intermediate['id value pair']),
                                         'selection range': $.intermediate['id value pair'].id.range,
                                     })),
                             }))
@@ -72,7 +72,7 @@ export const Value: interface_.Value = ($) => {
                                                                 default: return p_.exhaustive($[0])
                                                             }
                                                         }),
-                                                    'range': t_parse_tree_to_location.ID_Value_Pair($.intermediate['id value pair']),
+                                                    'range': t_parse_tree_to_full_value_location.ID_Value_Pair($.intermediate['id value pair']),
                                                     'selection range': $.intermediate['id value pair'].id.range,
                                                 })))
                                             case 'concise': return p_.option($, ($) => p_.from.list($.properties).map(
@@ -87,15 +87,15 @@ export const Value: interface_.Value = ($) => {
                                                                 },
                                                                 'detail': "property",
                                                                 'name': "-unknown-",
-                                                                'range': t_parse_tree_to_location.Value($.item.value),
-                                                                'selection range': t_parse_tree_to_location.Value($.item.value),
+                                                                'range': t_parse_tree_to_full_value_location.Value($.item.value),
+                                                                'selection range': t_parse_tree_to_full_value_location.Value($.item.value),
                                                             }))
                                                             case 'yes': return p_.option($, ($): s_out.Symbol => ({
                                                                 'value': Value($['value']),
                                                                 'detail': "property",
                                                                 'name': $.id,
-                                                                'range': t_parse_tree_to_location.Value($['value'].instance),
-                                                                'selection range': t_parse_tree_to_location.Value($['value'].instance),
+                                                                'range': t_parse_tree_to_full_value_location.Value($['value'].instance),
+                                                                'selection range': t_parse_tree_to_full_value_location.Value($['value'].instance),
                                                             }))
                                                             default: return p_.exhaustive($[0])
                                                         }
@@ -111,8 +111,8 @@ export const Value: interface_.Value = ($) => {
                                         'name': `[${index}]`,
                                         'detail': "item",
                                         'value': Value($),
-                                        'range': t_parse_tree_to_location.Value($.instance),
-                                        'selection range': t_parse_tree_to_location.Value($.instance),
+                                        'range': t_parse_tree_to_full_value_location.Value($.instance),
+                                        'selection range': t_parse_tree_to_full_value_location.Value($.instance),
                                     }),
                                 ),
                             }))
@@ -169,7 +169,7 @@ export const Value: interface_.Value = ($) => {
                                                     'name': "set",
                                                     'detail': "set",
                                                     'value': Value($.value),
-                                                    'range': t_parse_tree_to_location.Value(instance),
+                                                    'range': t_parse_tree_to_full_value_location.Value(instance),
                                                     'selection range': $.intermediate['option token'].range,
                                                 }
                                             ]),

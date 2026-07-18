@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/query'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
 import type * as query_interfaces from "../../interface/queries.js"
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/interface/queries"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
 
 //schemas
 import * as d from "../../interface/schemas/get_schema.js"
@@ -25,7 +25,7 @@ export const $$: p_.Query_Implementation<
         })
     )).refine(
         ($, abort) => r_temp_module_specifier_from_loc.Module_Specifier(
-            $,
+            $.data,
             ($) => abort({
                 'schema path': $d['schema path'],
                 'type': ['deserialize', $],

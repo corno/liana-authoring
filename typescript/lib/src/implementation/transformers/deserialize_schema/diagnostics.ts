@@ -5,7 +5,7 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 
 //schemas
 import type * as s_loc from "../../../interface/schemas/location.js"
-import type * as s_path from "pareto-resources/interface/data/fs_unrestricted_path"
+import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/path"
 import type * as s_out_2 from "../../../interface/schemas/diagnostics.js"
 namespace s_function {
     export type Parameters = {
@@ -28,20 +28,13 @@ namespace s_out {
 }
 
 //dependencies
-import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
-import * as t_deserialize_resolved_to_location from "liana-core/implementation/transformers/deserialize_resolved/location"
-import * as t_deserialize_resolved_to_prose from "liana-core/implementation/transformers/deserialize_resolved/prose"
+import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/implementation/transformers/resolved_document_deserialization/location"
+import * as ser_resolved_document_deserialization from "liana-core/modules/resolved_document_deserialization/implementation/serializers/resolved_document_deserialization"
 
 
 export const Error: interface_.Error = ($, $p) => ({
     'type': ['deserialize', null],
-    'message': t_prose_to_text.Phrase(
-        t_deserialize_resolved_to_prose.Error($),
-        {
-            'indentation': "    ",
-            'newline': "\n",
-        }
-    ),
+    'message': ser_resolved_document_deserialization.Error($),
     'range': ({
         'start': {
             'line': 0,
@@ -57,7 +50,7 @@ export const Error: interface_.Error = ($, $p) => ({
             'message': "The schema is not valid",
             'location': {
                 'file path': $p['schema path'],
-                'range': t_deserialize_resolved_to_location.Error($),
+                'range': t_resolved_document_deserialization_to_location.Error($),
             }
         }
     ])),

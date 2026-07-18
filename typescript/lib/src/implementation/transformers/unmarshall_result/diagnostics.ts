@@ -1,6 +1,7 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/diagnostics.js"
+import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
 
 //schemas
 import type * as s_out from "../../../interface/schemas/diagnostics.js"
@@ -9,9 +10,8 @@ import type * as s_out from "../../../interface/schemas/diagnostics.js"
 //dependencies
 import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors.js"
 import * as t_to_unmarshall_result_to_warnings from "../unmarshall_result/unmarshall_warnings.js"
-import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
-import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/prose.js"
-import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/prose.js"
+import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/rich_phrase.js"
+import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/rich_phrase.js"
 
 export const Document: interface_.Document = ($) => p_.literal.segmented_list([
     p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(
@@ -20,12 +20,8 @@ export const Document: interface_.Document = ($) => p_.literal.segmented_list([
                 'severity': ['error', null],
                 'range': p_.literal.set(['range', $.range]),
                 'related information': p_.literal.not_set(),
-                'message': t_prose_to_text.Phrases(
+                'message': ser_rich_phrase.Phrase(
                     t_unmarshall_errors_to_prose.Error($),
-                    {
-                        'indentation': "    ",
-                        'newline': "\n",
-                    }
                 ),
                 'type': ['semantic', null],
             })
@@ -37,12 +33,8 @@ export const Document: interface_.Document = ($) => p_.literal.segmented_list([
                 'severity': ['warning', null],
                 'range': p_.literal.set(['range', $.range]),
                 'related information': p_.literal.not_set(),
-                'message': t_prose_to_text.Phrases(
+                'message': ser_rich_phrase.Phrase(
                     t_unmarshall_warnings_to_prose.Warning($),
-                    {
-                        'indentation': "    ",
-                        'newline': "\n",
-                    }
                 ),
                 'type': ['semantic', null],
             })
