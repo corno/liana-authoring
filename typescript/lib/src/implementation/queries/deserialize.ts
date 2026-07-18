@@ -9,7 +9,7 @@ import * as p_select_lookup from 'pareto-core/implementation/transformer/special
 import type * as query_interfaces from "../../interface/queries.js"
 
 //schemas
-import * as d from "../../interface/schemas/deserialize.js"
+import * as d from "../../interface/schemas/deserialization.js"
 
 //depencencies
 import * as r_unmarshall_result_from_loc from "../refiners/unmarshall_result/list_of_characters.js"

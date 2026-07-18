@@ -5,7 +5,7 @@ import type * as query_interfaces from "../../interface/queries.js"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
 
 //schemas
-import * as d from "../../interface/schemas/get_schema.js"
+import * as d from "../../interface/schemas/retrieval_of_schema.js"
 
 //depencencies
 import * as r_temp_module_specifier_from_loc from "pareto-liana/implementation/refiners/temp_module_specifier/list_of_characters"

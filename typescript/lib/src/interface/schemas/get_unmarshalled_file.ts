@@ -1,6 +1,6 @@
 import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/path"
 import type * as s_read_file from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/read_file"
-import type * as s_deserialize from "./deserialize.js"
+import type * as s_deserialize from "./deserialization.js"
 
 export type Result = s_deserialize.Result
 
