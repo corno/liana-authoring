@@ -10,7 +10,7 @@ import type * as query_interfaces_pareto_filesystem_unrestricted_api from "paret
 import * as d from "../../interface/schemas/retrieval_of_schema_path.js"
 
 //depencencies
-import * as t_path_to_path from "pareto-resources/implementation/transformers/unrestricted_path/unrestricted_path"
+import * as t_path_to_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/implementation/transformers/path/path"
 
 
 export const $$: p_.Query_Implementation<
