@@ -127,18 +127,22 @@ export const Error: Error = ($) => sh.ph.composed(
                             case 'option name is not a text': return p_.option($, ($) => p_.literal.list([
                                 sh.ph.text("option name is not a text")
                             ]))
-                            case 'unknown option': return p_.option($, ($) => p_.literal.segmented_list([
-                                p_.literal.list([
-                                    sh.ph.text("unknown option: '"),
-                                    sh.ph.text($.found),
-                                    sh.ph.text("', expected one of "),
-                                ]),
-                                p_.from.dictionary($.expected,).convert_to_list(
-                                    ($, id) => sh.ph.composed([
-                                        sh.ph.text("'"),
-                                        sh.ph.text(id),
-                                        sh.ph.text("'")
-                                    ])
+                            case 'unknown option': return p_.option($, ($) => p_.literal.list([
+                                sh.ph.text("unknown option: '"),
+                                sh.ph.text($.found),
+                                sh.ph.text("', expected one of "), sh.ph.rich_phrase(
+                                    p_.from.dictionary($.expected).convert_to_list(
+                                        ($, id) => sh.ph.composed(p_.literal.list([
+                                            sh.ph.text("'"),
+                                            sh.ph.text(id),
+                                            sh.ph.text("'")
+                                        ]))
+                                    ),
+                                    sh.ph.text("something"),
+                                    null,
+                                    sh.ph.text(" or "),
+                                    null,
+
                                 )
                             ]))
                             default: return p_.exhaustive($[0])
