@@ -40,13 +40,27 @@ export const Error: Error = ($) => sh.ph.composed(
                             case 'invalid type': return p_.option($, ($) => p_.literal.list([
                                 sh.ph.text("invalid value type, expected "),
                                 sh.ph.rich_phrase(
-                                    p_.from.list($.expected).flatten(
-                                        ($) => p_.literal.list([
+                                    p_.from.list($.expected).map(
+                                        ($) => sh.ph.composed(p_.literal.list([
                                             sh.ph.text("'"),
-                                            sh.ph.text($[0]),
+                                            sh.ph.text(p_.from.state($).decide(
+                                                ($) => {
+                                                    switch ($[0]) {
+                                                        case 'dictionary': return "dictionary"
+                                                        case 'group': return "group"
+                                                        case 'list': return "list"
+                                                        case 'nothing': return "nothing"
+                                                        case 'optional': return "optional"
+                                                        case 'state': return "state"
+                                                        case 'text': return "text"
+                                                        default: return p_.au($[0])
+                                                    }
+                                                }
+                                            )),
                                             sh.ph.text("'")
-                                        ])),
-                                    sh.ph.text(" something"),
+                                        ]))
+                                    ),
+                                    sh.ph.text("something"),
                                     null,
                                     sh.ph.text(" or "),
                                     null,

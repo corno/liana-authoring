@@ -568,6 +568,7 @@ export const Value: Value = ($, $p) => {
                                                 'instance': p_.from.state($v_concrete_value).decide(
                                                     ($) => {
                                                         switch ($[0]) {
+                                                            //if the state is written in the JSON format; ["state name", ...]
                                                             case 'list': return p_.option($, ($) => {
                                                                 const list = $
                                                                 return p_.from.list($.items).on_has_first_item(
@@ -732,7 +733,7 @@ export const Value: Value = ($, $p) => {
                                 })
                         ).__decide<s_out.Value['unmarshall result']>(
                             ($) => ['success', $],
-                            ($) => ['error', ['incorrect', ['wrong type', null]]],
+                            ($) => ['error', $],
                         ),
                         'optional parent range stack': $p['parent range stack']
                     }
