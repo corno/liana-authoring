@@ -7,10 +7,10 @@ import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
+import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/implementation/serializers/rich_phrase"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/rich_phrase/deprecated"
+import * as sh from "pareto-fountain-pen/modules/rich_phrase/shorthands/deprecated"
 
 const Property_Path = ($: s_in.Property_Path): string => ser_rich_phrase.Phrase(
     sh.ph.rich_phrase(

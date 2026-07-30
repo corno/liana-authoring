@@ -13,7 +13,7 @@ namespace s_function {
 
 //dependencies
 import * as ser_deserialize_resolved from "liana-core/modules/resolved_document_deserialization/implementation/serializers/resolved_document_deserialization"
-import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
+import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/implementation/serializers/rich_phrase"
 import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/implementation/transformers/resolved_document_deserialization/location"
 
 export const Error: interface_.Error = ($, $p) => {
