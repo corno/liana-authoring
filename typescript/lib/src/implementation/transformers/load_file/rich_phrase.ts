@@ -13,7 +13,7 @@ export type Error = p_.Transformer<
 
 
 //dependencies
-import * as ser_read_file from "pareto-filesystem-unrestricted-api/modules/unrestricted/implementation/serializers/read_file"
+import * as ser_read_file from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/read_file/serializers"
 import * as t_deserialize_to_rich_phrase from "../deserialize/rich_phrase.js"
 
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"

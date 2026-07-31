@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/get_schema/diagnostics.js"
 
 //schemas
-import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/path"
+import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/schema"
 
 namespace s_function {
 	export type Parameters = {
@@ -12,9 +12,9 @@ namespace s_function {
 }
 
 //dependencies
-import * as ser_deserialize_resolved from "liana-core/modules/resolved_document_deserialization/implementation/serializers/resolved_document_deserialization"
+import * as ser_deserialize_resolved from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
 import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
-import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/implementation/transformers/resolved_document_deserialization/location"
+import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/transformers/location"
 
 export const Error: interface_.Error = ($, $p) => {
 	return p_.from.state($.type).decide(

@@ -1,7 +1,7 @@
-import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/path"
+import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/schema"
 import type * as s_unmarshall_result from "./unmarshall_result.js"
 import type * as s_resolve_result from "./resolve_result.js"
-import type * as s_deserialize_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree_deserialization"
+import type * as s_deserialize_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/schema"
 import type * as s_load_schema from "./retrieval_of_schema.js"
 import type * as s_schema_path from "./retrieval_of_schema_path.js"
 

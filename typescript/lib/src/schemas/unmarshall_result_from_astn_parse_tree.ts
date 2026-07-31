@@ -1,4 +1,4 @@
-import type * as s_in_definition from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
+import type * as s_in_definition from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 import type * as s_out from "./unmarshall_result.js"
 
 export type Parameters = {

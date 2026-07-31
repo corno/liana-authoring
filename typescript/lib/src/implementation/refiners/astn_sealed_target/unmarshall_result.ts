@@ -1,11 +1,11 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
 //schemas
-import type * as s_out from "astn-core/modules/serialization/schemas/sealed_target"
+import type * as s_out from "astn-core/modules/serialization/schemas/sealed_target/schema"
 import type * as s_function from "../../../schemas/sealed_target_from_unmarshall_result.js"
 
 //dependencies
-import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/start_token_range"
+import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 import type * as interface_ from "../../../declarations/refiners/astn_sealed_target/unmarshall_result.js"
 

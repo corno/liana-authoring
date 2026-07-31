@@ -3,11 +3,11 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/authoring_target.js"
 
 //schemas
-import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target"
+import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"
 import type * as s_function from "../../../schemas/unmarshall_result_to_authoring_target.js"
 
 //dependencies
-import * as t_parse_tree_to_authoring_target from "astn/modules/parse_tree/implementation/transformers/parse_tree/authoring_target"
+import * as t_parse_tree_to_authoring_target from "astn/modules/parse_tree/schemas/parse_tree/transformers/authoring_target"
 
 //FIXME: we are losing comments in the transformation from the parse tree to the unmarshalled result, we need to add them to the unmarshalled result and then to the authoring target
 

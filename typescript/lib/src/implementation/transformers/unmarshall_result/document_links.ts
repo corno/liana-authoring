@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/document_links.js"
 
 //schemas
-import type * as s_schema from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
+import type * as s_schema from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 
 export const Document: interface_.Document = ($) => Value($.content)
 

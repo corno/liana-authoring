@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/liana_schema/authoring_target.js"
 
 //schemas
-import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target"
+import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"
 
 namespace s_function {
     export type Parameters = {

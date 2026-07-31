@@ -6,13 +6,13 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 //schemas
 import type * as s_out from "../../../schemas/completion_suggestions.js"
 
-import type * as s_schema from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
-import type * as s_ast_target from "astn/modules/authoring_target/schemas/authoring_target"
+import type * as s_schema from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
+import type * as s_ast_target from "astn/modules/authoring_target/schemas/authoring_target/schema"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
 import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target.js"
-import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/implementation/transformers/authoring_target/serialized"
+import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/schemas/authoring_target/transformers/serialized"
 
 
 type Minimal_Completion_Suggestion = {

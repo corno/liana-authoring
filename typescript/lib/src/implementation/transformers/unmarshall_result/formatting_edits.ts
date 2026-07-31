@@ -7,8 +7,8 @@ import type * as s_out from "../../../schemas/formatting_edits.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/implementation/transformers/authoring_target/serialized"
-import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
+import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/schemas/authoring_target/transformers/serialized"
+import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
 
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 

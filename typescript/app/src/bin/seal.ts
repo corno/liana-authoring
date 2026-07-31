@@ -5,9 +5,9 @@ import * as p_h from 'pareto-core-application/index'
 import * as rs_filesystem_unrestricted from "pareto-resource-filesystem-unrestricted/index"
 import * as rs_stream from "pareto-resource-stream/index"
 
-import { $$ as c_command } from "pareto-common/modules/file_in_file_out/implementation/commands/operation"
+import { $$ as c_command } from "pareto-common/modules/file_in_file_out/commands/implementations/operation"
 
-import { $$ as q_query } from "lib/implementation/queries/seal"
+import { $$ as q_query } from "lib/queries/implementations/seal"
 
 
 p_h.run_main_command(

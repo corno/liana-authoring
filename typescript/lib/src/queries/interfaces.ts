@@ -1,9 +1,9 @@
 import * as p_ from 'pareto-core/interface/query_interface'
 
 //schemas
-import type * as s_deserialize from "./schemas/deserialization.js"
-import type * as s_get_schema_path from "./schemas/retrieval_of_schema_path.js"
-import type * as s_get_schema from "./schemas/retrieval_of_schema.js"
+import type * as s_deserialize from "../schemas/deserialization.js"
+import type * as s_get_schema_path from "../schemas/retrieval_of_schema_path.js"
+import type * as s_get_schema from "../schemas/retrieval_of_schema.js"
 
 export type get_schema_path = p_.Query_Interface<
     s_get_schema_path.Result,

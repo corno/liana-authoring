@@ -12,7 +12,7 @@ export type Error = p_.Transformer<
 
 
 //dependencies
-import * as ser_stat_possible_node from "pareto-filesystem-unrestricted-api/modules/unrestricted/implementation/serializers/stat_possible_node"
+import * as ser_stat_possible_node from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/stat_possible_node/serializers"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"

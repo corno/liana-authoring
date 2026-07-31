@@ -9,7 +9,7 @@ import type * as s_in from "astn-core/modules/deserialization/schemas/parse_tree
 import type * as s_out from "../../../schemas/unmarshall_result.js"
 
 import type * as s_function from "../../../schemas/unmarshall_result_from_astn_parse_tree.js"
-import type * as s_in_definition from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
+import type * as s_in_definition from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 
 
 
@@ -32,9 +32,9 @@ export type Value = p_.Transformer_With_Parameter<
 
 
 //dependencies
-import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
+import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
 
-import * as t_parse_tree_to_start_token_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/start_token_range"
+import * as t_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 export const Document: Document = ($, $p) => ({
     'header': p_.from.optional($['header']).map(

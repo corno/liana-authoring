@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/interface/data'
 
 //schemas
 import type * as s_astn_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree/schema"
-import type * as s_schema from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
+import type * as s_schema from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 import type * as s_location from "astn-core/modules/deserialization/schemas/location/schema"
 
 export type Range_Stack = {

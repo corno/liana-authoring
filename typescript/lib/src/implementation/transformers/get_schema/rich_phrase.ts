@@ -12,8 +12,8 @@ export type Error = p_.Transformer<
 
 
 //dependencies
-import * as ser_deserialize_resolved from "liana-core/modules/resolved_document_deserialization/implementation/serializers/resolved_document_deserialization"
-import * as ser_read_file from "pareto-filesystem-unrestricted-api/modules/unrestricted/implementation/serializers/read_file"
+import * as ser_deserialize_resolved from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
+import * as ser_read_file from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/read_file/serializers"
 
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 

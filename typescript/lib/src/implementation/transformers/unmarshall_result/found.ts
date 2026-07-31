@@ -8,7 +8,7 @@ import type * as s_astn_location from "astn-core/modules/deserialization/schemas
 import type * as s_out from "../../../schemas/found.js"
 
 //dependencies
- import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree/full_value_range"
+ import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
 
 
 

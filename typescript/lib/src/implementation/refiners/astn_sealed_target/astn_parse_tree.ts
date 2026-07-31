@@ -2,7 +2,7 @@ import type * as p_i from 'pareto-core/interface/refiner'
 
 //schemas
 import type * as s_in from "astn-core/modules/deserialization/schemas/parse_tree/schema"
-import type * as s_out from "astn-core/modules/serialization/schemas/sealed_target"
+import type * as s_out from "astn-core/modules/serialization/schemas/sealed_target/schema"
 import type * as s_function from "../../../schemas/sealed_target_from_parse_tree.js"
 
 //dependencies

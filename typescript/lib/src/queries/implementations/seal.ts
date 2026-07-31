@@ -8,15 +8,15 @@ import type * as query_interfaces_pareto_filesystem_unrestricted_api from "paret
 import type * as s_paragraph_serialization from "pareto-fountain-pen/modules/paragraph/schemas/paragraph_serialization/schema"
 
 //data  types
-import type * as s_file_in_file_out_query from "pareto-common/modules/file_in_file_out/schemas/query"
+import type * as s_file_in_file_out_query from "pareto-common/modules/file_in_file_out/schemas/query/schema"
 
 //dependencies
-import { $$ as q_get_unmarshalled_file } from "../queries/load_unmarshalled_file.js"
-import * as t_load_file_to_prose from "../transformers/load_file/rich_phrase.js"
-import * as ser_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/implementation/serializers/path"
-import * as r_astn_sealed_target_from_unmarshall_result from "../refiners/astn_sealed_target/unmarshall_result.js"
-import * as t_auth_targ_from_unmarshall_result_to_prose from "../transformers/sealed_target_from_unmarshall_result/rich_phrase.js"
-import * as t_astn_sealed_target_to_paragraph from "astn-core/modules/serialization/implementation/transformers/sealed_target/paragraph"
+import { $$ as q_get_unmarshalled_file } from "./load_unmarshalled_file.js"
+import * as t_load_file_to_prose from "../../implementation/transformers/load_file/rich_phrase.js"
+import * as ser_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/serializers"
+import * as r_astn_sealed_target_from_unmarshall_result from "../../implementation/refiners/astn_sealed_target/unmarshall_result.js"
+import * as t_auth_targ_from_unmarshall_result_to_prose from "../../implementation/transformers/sealed_target_from_unmarshall_result/rich_phrase.js"
+import * as t_astn_sealed_target_to_paragraph from "astn-core/modules/serialization/schemas/sealed_target/transformers/paragraph"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/modules/paragraph/schemas/paragraph/shorthands/deprecated"

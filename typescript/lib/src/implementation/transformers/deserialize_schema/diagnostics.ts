@@ -5,7 +5,7 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 
 //schemas
 import type * as s_loc from "../../../schemas/location.js"
-import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/path"
+import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/schema"
 import type * as s_out_2 from "../../../schemas/diagnostics.js"
 namespace s_function {
     export type Parameters = {
@@ -28,8 +28,8 @@ namespace s_out {
 }
 
 //dependencies
-import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/implementation/transformers/resolved_document_deserialization/location"
-import * as ser_resolved_document_deserialization from "liana-core/modules/resolved_document_deserialization/implementation/serializers/resolved_document_deserialization"
+import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/transformers/location"
+import * as ser_resolved_document_deserialization from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
 
 
 export const Error: interface_.Error = ($, $p) => ({
