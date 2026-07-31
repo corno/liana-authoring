@@ -1,9 +1,24 @@
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/document_links.js"
-
 //schemas
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_out from "../../../schemas/document_links/schema.js"
 import type * as s_schema from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
+
+
+namespace interface_ {
+
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Links
+    >
+
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Links
+    >
+}
 
 export const Document: interface_.Document = ($) => Value($.content)
 

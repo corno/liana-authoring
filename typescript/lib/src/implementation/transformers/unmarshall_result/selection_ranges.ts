@@ -1,9 +1,23 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+import type * as p_di from 'pareto-core/interface/data'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/selection_ranges.js"
+import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_out from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_location from "../../../schemas/location/schema.js"
+
+
+namespace interface_ {
+
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        p_di.List<s_out.Range_Stack>,
+        {
+            'positions': p_di.List<s_location.Position_>
+        }
+    >
+}
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"

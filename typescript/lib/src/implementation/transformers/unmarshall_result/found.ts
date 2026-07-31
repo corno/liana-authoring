@@ -1,11 +1,51 @@
+import type * as p_di from 'pareto-core/interface/data'
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/found.js"
+//schemas
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_location from "../../../schemas/location/schema.js"
+import type * as s_out from "../../../schemas/found/schema.js"
+
+
+namespace interface_ {
+
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Found,
+        {
+            'position': s_location.Position
+        }
+    >
+
+    // export type Items = p_.Transformer_With_Parameter<
+    //     s_in.Items,
+    //     Found,
+    //     {
+    //         'position': s_location.Position
+    //     }
+    // >
+
+    export type Value = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Found,
+        {
+            'position': s_location.Position
+        }
+    >
+
+    export type Value_possibly_found = p_.Transformer_With_Parameter<
+        s_in.Value,
+        p_di.Optional_Value<s_out.Found>,
+        {
+            'position': s_location.Position
+        }
+    >
+}
+
 
 //schemas
-import type * as s_location from "../../../schemas/location/schema.js"
 import type * as s_astn_location from "astn-core/modules/deserialization/schemas/location/schema"
-import type * as s_out from "../../../schemas/found/schema.js"
 
 //dependencies
  import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"

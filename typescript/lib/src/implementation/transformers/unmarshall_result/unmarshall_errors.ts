@@ -1,10 +1,25 @@
-import * as p_ from 'pareto-core/implementation/transformer'
-import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_errors.js"
+import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
 import type * as s_out from "../../../schemas/unmarshall_errors/schema.js"
+
+
+namespace interface_ {
+
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Errors
+    >
+
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Errors
+    >
+}
+
+import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
 //dependencies
 import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"

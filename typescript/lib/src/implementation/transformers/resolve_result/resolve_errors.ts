@@ -1,9 +1,24 @@
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/resolve_result/resolve_errors.js"
-
 //schemas
+import type * as s_in from "../../../schemas/resolve_result/schema.js"
 import type * as s_out from "../../../schemas/resolve_errors/schema.js"
+
+
+
+namespace interface_ {
+
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Errors
+    >
+
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Errors
+    >
+}
 
 export const Document: interface_.Document = ($) => {
     return Value(

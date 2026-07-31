@@ -1,18 +1,20 @@
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/deserialize_schema/diagnostics.js"
-
+import type * as s_out_2 from "../../../schemas/diagnostics/schema.js"
+import type * as s_in from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/schema"
 
 //schemas
 import type * as s_loc from "../../../schemas/location/schema.js"
 import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/schema"
-import type * as s_out_2 from "../../../schemas/diagnostics/schema.js"
-namespace s_function {
+
+export namespace s_function {
     export type Parameters = {
         'schema path': s_path.Node_Path
     }
 }
-namespace s_out {
+
+export namespace s_out {
 
     export type Error = {
         'type':
@@ -25,6 +27,16 @@ namespace s_out {
         | ['warning', null]
         'related information': s_out_2.Diagnostic.related_information
     }
+}
+
+
+namespace interface_ {
+
+    export type Error = p_.Transformer_With_Parameter<
+        s_in.Error,
+        s_out.Error,
+        s_function.Parameters
+    >
 }
 
 //dependencies

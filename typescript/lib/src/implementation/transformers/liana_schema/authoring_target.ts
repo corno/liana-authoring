@@ -1,16 +1,31 @@
-import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/liana_schema/authoring_target.js"
+import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
 import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"
+import type * as s_in from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 
-namespace s_function {
+export namespace s_function {
     export type Parameters = {
         'style':
         | ['concise', null]
         | ['verbose', null]
     }
+}
+
+
+namespace interface_ {
+
+    export type Value = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        s_function.Parameters
+    >
+    export type Value_data = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value.data,
+        s_function.Parameters
+    >
 }
 
 export const Value: interface_.Value = ($, $p) => ({

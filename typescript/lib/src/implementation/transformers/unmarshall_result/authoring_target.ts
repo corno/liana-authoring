@@ -1,11 +1,43 @@
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/authoring_target.js"
-
 //schemas
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_in_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree/schema"
 import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"
 import type * as s_function from "../../../schemas/unmarshall_result_to_authoring_target/schema.js"
 
+namespace interface_ {
+
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Document,
+        s_function.Parameters
+    >
+
+    export type Any_Value = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        s_function.Parameters
+    >
+
+    export type Non_Entity = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        s_function.Parameters
+    >
+
+    export type Entity = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        s_function.Parameters
+    >
+
+    export type Structural_Token = p_.Transformer<
+        s_in_parse_tree.Structural_Token,
+        s_out.Token_Trivia
+    >
+}
 //dependencies
 import * as t_parse_tree_to_authoring_target from "astn/modules/parse_tree/schemas/parse_tree/transformers/authoring_target"
 

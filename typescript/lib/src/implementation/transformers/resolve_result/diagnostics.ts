@@ -1,6 +1,18 @@
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/resolve_result/diagnostics.js"
+//schemas
+import type * as s_in from "../../../schemas/resolve_result/schema.js"
+import type * as s_out from "../../../schemas/diagnostics/schema.js"
+
+
+namespace interface_ {
+
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Diagnostics
+    >
+}
 
 //dependencies
 import * as t_to_resolve_result_to_errors from "../resolve_result/resolve_errors.js"

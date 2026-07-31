@@ -1,10 +1,42 @@
 import * as p_ from 'pareto-core/implementation/transformer'
-import type * as p_di from 'pareto-core/interface/data'
-
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/completion_suggestions.js"
 
 //schemas
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
 import type * as s_out from "../../../schemas/completion_suggestions/schema.js"
+
+import type * as s_location from "../../../schemas/location/schema.js"
+import type * as s_outx from "../../../schemas/found/schema.js"
+
+
+namespace interface_ {
+
+    export type Parameters = {
+        'position': s_location.Position
+        'indent': string
+        'style':
+        | ['verbose', null]
+        | ['concise', null]
+
+    }
+
+
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Completion_Suggestions,
+        Parameters
+
+    >
+
+    export type Found = p_.Transformer_With_Parameter<
+        s_outx.Found,
+        s_out.Completion_Suggestions,
+        Parameters
+    >
+}
+
+import type * as p_di from 'pareto-core/interface/data'
+
+
 
 import type * as s_schema from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 import type * as s_ast_target from "astn/modules/authoring_target/schemas/authoring_target/schema"

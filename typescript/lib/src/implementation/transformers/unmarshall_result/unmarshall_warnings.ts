@@ -1,9 +1,23 @@
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_warnings.js"
-
 //schemas
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
 import type * as s_out from "../../../schemas/unmarshall_errors/schema.js"
+
+
+namespace interface_ {
+
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Warnings
+    >
+
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Warnings
+    >
+}
 
 //dependencies
 import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"

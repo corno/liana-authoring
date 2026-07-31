@@ -1,9 +1,44 @@
+
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/unmarshall_result/formatting_edits.js"
-
 //schemas
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
 import type * as s_out from "../../../schemas/formatting_edits/schema.js"
+import type * as s_location from "../../../schemas/location/schema.js"
+import type * as s_outx from "../../../schemas/found/schema.js"
+import type * as s_function_parameters from "../../../schemas/unmarshall_result_to_authoring_target/schema.js"
+
+namespace interface_ {
+
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Optional_Formatting_Edit,
+        {
+            'position': s_location.Position
+            'indentation': string
+            'conversion': s_function_parameters.Parameters
+        }
+    >
+
+    export type Found = p_.Transformer_With_Parameter<
+        s_outx.Found,
+        s_out.Optional_Formatting_Edit,
+        {
+            'indentation': string
+            'conversion': s_function_parameters.Parameters
+        }
+    >
+
+    export type Value = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Optional_Formatting_Edit,
+        {
+            'indentation': string
+            'conversion': s_function_parameters.Parameters
+        }
+    >
+}
+
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
