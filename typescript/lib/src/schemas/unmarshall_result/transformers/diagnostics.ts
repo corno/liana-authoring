@@ -17,10 +17,10 @@ namespace interface_ {
 import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
 
 //dependencies
-import * as t_to_unmarshall_result_to_errors from "../unmarshall_result/unmarshall_errors.js"
-import * as t_to_unmarshall_result_to_warnings from "../unmarshall_result/unmarshall_warnings.js"
-import * as t_unmarshall_errors_to_prose from "../unmarshall_errors/rich_phrase.js"
-import * as t_unmarshall_warnings_to_prose from "../unmarshall_warnings/rich_phrase.js"
+import * as t_to_unmarshall_result_to_errors from "./unmarshall_errors.js"
+import * as t_to_unmarshall_result_to_warnings from "./unmarshall_warnings.js"
+import * as t_unmarshall_errors_to_prose from "../../unmarshall_errors/transformers/rich_phrase.js"
+import * as t_unmarshall_warnings_to_prose from "../../unmarshall_warnings/transformers/rich_phrase.js"
 
 export const Document: interface_.Document = ($) => p_.literal.segmented_list([
     p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(

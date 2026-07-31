@@ -25,7 +25,7 @@ namespace interface_ {
 
 
 //depencencies
-import * as t_parse_tree_to_unmarshall_result from "../../transformers/astn_parse_tree/unmarshall_result.js"
+import * as t_parse_tree_to_unmarshall_result from "../../astn_parse_tree/transformers/unmarshall_result.js"
 import * as r_parse_tree_from_list_of_characters from "astn-core/modules/deserialization/schemas/parse_tree/refiners/list_of_characters"
 
 export const Document: interface_.Document = ($, abort, $p) => {

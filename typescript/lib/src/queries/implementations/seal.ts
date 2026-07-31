@@ -12,10 +12,10 @@ import type * as s_file_in_file_out_query from "pareto-common/modules/file_in_fi
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "./load_unmarshalled_file.js"
-import * as t_load_file_to_prose from "../../implementation/transformers/load_file/rich_phrase.js"
+import * as t_load_file_to_prose from "../../schemas/load_file/transformers/rich_phrase.js"
 import * as ser_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/serializers"
-import * as r_astn_sealed_target_from_unmarshall_result from "../../implementation/refiners/astn_sealed_target/unmarshall_result.js"
-import * as t_auth_targ_from_unmarshall_result_to_prose from "../../implementation/transformers/sealed_target_from_unmarshall_result/rich_phrase.js"
+import * as r_astn_sealed_target_from_unmarshall_result from "../../schemas/astn_sealed_target/refiners/unmarshall_result.js"
+import * as t_auth_targ_from_unmarshall_result_to_prose from "../../schemas/sealed_target_from_unmarshall_result/transformers/rich_phrase.js"
 import * as t_astn_sealed_target_to_paragraph from "astn-core/modules/serialization/schemas/sealed_target/transformers/paragraph"
 
 //shorthands

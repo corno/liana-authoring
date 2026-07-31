@@ -15,7 +15,7 @@ namespace interface_ {
 }
 
 //depencencies
-import * as t_get_schema from "../get_schema/diagnostics.js"
+import * as t_get_schema from "../../get_schema/transformers/diagnostics.js"
 import * as t_deserialize_to_location from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/transformers/location"
 import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
 

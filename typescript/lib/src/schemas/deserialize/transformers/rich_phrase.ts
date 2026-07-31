@@ -13,8 +13,8 @@ export type Error = p_.Transformer<
 
 //dependencies
 import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
-import * as t_get_schema_to_rich_phrase from "../get_schema/rich_phrase.js"
-import * as t_get_schema_path_to_rich_phrase from "../get_schema_path/rich_phrase.js"
+import * as t_get_schema_to_rich_phrase from "../../get_schema/transformers/rich_phrase.js"
+import * as t_get_schema_path_to_rich_phrase from "../../get_schema_path/transformers/rich_phrase.js"
 
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 

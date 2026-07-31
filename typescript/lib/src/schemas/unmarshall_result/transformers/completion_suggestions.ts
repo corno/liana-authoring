@@ -43,7 +43,7 @@ import type * as s_ast_target from "astn/modules/authoring_target/schemas/author
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_liana_schema_to_authoring_target from "../liana_schema/authoring_target.js"
+import * as t_liana_schema_to_authoring_target from "../../liana_schema/transformers/authoring_target.js"
 import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/schemas/authoring_target/transformers/serialized"
 
 

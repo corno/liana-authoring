@@ -15,9 +15,9 @@ namespace interface_ {
 }
 
 //dependencies
-import * as t_to_resolve_result_to_errors from "../resolve_result/resolve_errors.js"
+import * as t_to_resolve_result_to_errors from "./resolve_errors.js"
 import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
-import * as t_resolve_errors_to_prose from "../resolve_errors/rich_phrase.js"
+import * as t_resolve_errors_to_prose from "../../resolve_errors/transformers/rich_phrase.js"
 
 export const Document: interface_.Document = ($) => p_.from.list(t_to_resolve_result_to_errors.Document($)).map(
     ($) => ({

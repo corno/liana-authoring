@@ -12,8 +12,8 @@ import type * as query_interfaces from "../interfaces.js"
 import * as d from "../../schemas/deserialization/schema.js"
 
 //depencencies
-import * as r_unmarshall_result_from_loc from "../../implementation/refiners/unmarshall_result/list_of_characters.js"
-import * as r_resolve_result_from_unmarshall_result from "../../implementation/transformers/unmarshall_result/resolve_result.js"
+import * as r_unmarshall_result_from_loc from "../../schemas/unmarshall_result/refiners/list_of_characters.js"
+import * as r_resolve_result_from_unmarshall_result from "../../schemas/unmarshall_result/transformers/resolve_result.js"
 
 export const $$: p_.Query_Implementation<
     query_interfaces.deserialize,
