@@ -6,7 +6,7 @@ import p_super_query_result from 'pareto-core/implementation/query/super_query_r
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
 
 //schemas
-import * as d from "../../schemas/get_unmarshalled_file.js"
+import * as d from "../../schemas/get_unmarshalled_file/schema.js"
 
 //depencencies
 import { $$ as q_deserialize } from "./deserialize.js"

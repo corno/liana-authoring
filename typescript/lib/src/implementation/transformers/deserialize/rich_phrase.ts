@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 
 //schemas
-import type * as s_in from "../../../schemas/deserialization.js"
+import type * as s_in from "../../../schemas/deserialization/schema.js"
 import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 export type Error = p_.Transformer<

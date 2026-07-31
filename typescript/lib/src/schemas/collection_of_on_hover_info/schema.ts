@@ -1,11 +1,11 @@
 
 import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_imports_hover_info from "./hover_info.js"
+import * as i_imports_hover_info from "../hover_info/schema.js"
 
-import * as i_imports_location from "./location.js"
+import * as i_imports_location from "../location/schema.js"
 
-import * as i_imports_path_unrestricted from "./path_unrestricted.js"
+import * as i_imports_path_unrestricted from "../path_unrestricted/schema.js"
 
 export namespace Result_ {
     

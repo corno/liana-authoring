@@ -1,7 +1,7 @@
 
 import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_imports_location from "./location.js"
+import * as i_imports_location from "../location/schema.js"
 
 export namespace Sort_Parameters_ {
     

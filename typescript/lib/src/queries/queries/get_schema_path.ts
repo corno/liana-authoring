@@ -7,7 +7,7 @@ import type * as query_interfaces from "../interfaces.js"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
 
 //schemas
-import * as d from "../../schemas/retrieval_of_schema_path.js"
+import * as d from "../../schemas/retrieval_of_schema_path/schema.js"
 
 //depencencies
 import * as t_path_to_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/transformers/path"

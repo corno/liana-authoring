@@ -2,9 +2,9 @@
 import * as p_i from 'pareto-core/interface/__internal/Abort'
 import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_location from "./location.js"
+import * as i_imports_location from "../location/schema.js"
 
-import * as i_imports_text_edits from "./text_edits.js"
+import * as i_imports_text_edits from "../text_edits/schema.js"
 
 export namespace Completion_Suggestions_ {
     

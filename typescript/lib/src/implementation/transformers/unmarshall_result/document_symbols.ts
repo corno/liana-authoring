@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/document_symbols.js"
 
 //schemas
-import type * as s_out from "../../../schemas/document_symbols.js"
+import type * as s_out from "../../../schemas/document_symbols/schema.js"
 
 //dependencies
 import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"

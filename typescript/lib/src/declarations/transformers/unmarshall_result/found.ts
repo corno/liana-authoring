@@ -3,9 +3,9 @@ import type * as p_di from 'pareto-core/interface/data'
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //schemas
-import type * as s_in from "../../../schemas/unmarshall_result.js"
-import type * as s_location from "../../../schemas/location.js"
-import type * as s_out from "../../../schemas/found.js"
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_location from "../../../schemas/location/schema.js"
+import type * as s_out from "../../../schemas/found/schema.js"
 
 
 export type Document = p_.Transformer_With_Parameter<

@@ -4,7 +4,7 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
 
 //schemas
-import type * as s_out from "../../../schemas/diagnostics.js"
+import type * as s_out from "../../../schemas/diagnostics/schema.js"
 
 
 //dependencies

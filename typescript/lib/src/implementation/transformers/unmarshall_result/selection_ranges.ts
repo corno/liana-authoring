@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/selection_ranges.js"
 
 //schemas
-import type * as s_in from "../../../schemas/unmarshall_result.js"
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"

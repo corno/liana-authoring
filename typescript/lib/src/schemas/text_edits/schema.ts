@@ -2,7 +2,7 @@
 import * as p_i from 'pareto-core/interface/__internal/Abort'
 import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_location from "./astn_location.js"
+import * as i_imports_location from "../astn_location/schema.js"
 
 export namespace Text_Edits_ {
     

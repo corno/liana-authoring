@@ -1,11 +1,11 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //schemas
-import type * as s_in from "../../../schemas/unmarshall_result.js"
-import type * as s_out from "../../../schemas/completion_suggestions.js"
+import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_out from "../../../schemas/completion_suggestions/schema.js"
 
-import type * as s_location from "../../../schemas/location.js"
-import type * as s_outx from "../../../schemas/found.js"
+import type * as s_location from "../../../schemas/location/schema.js"
+import type * as s_outx from "../../../schemas/found/schema.js"
 
 
 export type Parameters = {

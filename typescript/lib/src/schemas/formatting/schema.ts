@@ -1,9 +1,9 @@
 
 import * as p_i from 'pareto-core/interface/__internal/Abort'
 
-import * as i_imports_location from "./location.js"
+import * as i_imports_location from "../location/schema.js"
 
-import * as i_imports_text_edits from "./text_edits.js"
+import * as i_imports_text_edits from "../text_edits/schema.js"
 
 export type Result_ = i_imports_text_edits.Text_Edits
 

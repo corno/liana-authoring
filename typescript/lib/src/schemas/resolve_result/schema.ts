@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/data'
 
-import type * as s_unmarshall_result from "./unmarshall_result.js"
+import type * as s_unmarshall_result from "../unmarshall_result/schema.js"
 
 import type * as s_schema from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 

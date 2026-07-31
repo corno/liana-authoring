@@ -4,7 +4,7 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/unmarshall_errors.js"
 
 //schemas
-import type * as s_out from "../../../schemas/unmarshall_errors.js"
+import type * as s_out from "../../../schemas/unmarshall_errors/schema.js"
 
 //dependencies
 import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"

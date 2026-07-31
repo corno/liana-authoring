@@ -6,9 +6,9 @@ import p_create_refinement_context from 'pareto-core/implementation/__internal/s
 
 //schemas
 import type * as s_in from "astn-core/modules/deserialization/schemas/parse_tree/schema"
-import type * as s_out from "../../../schemas/unmarshall_result.js"
+import type * as s_out from "../../../schemas/unmarshall_result/schema.js"
 
-import type * as s_function from "../../../schemas/unmarshall_result_from_astn_parse_tree.js"
+import type * as s_function from "../../../schemas/unmarshall_result_from_astn_parse_tree/schema.js"
 import type * as s_in_definition from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 
 
