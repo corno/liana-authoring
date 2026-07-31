@@ -3,10 +3,10 @@ import type * as p_di from 'pareto-core/interface/data'
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
-import type * as s_location from "../../../interface/schemas/location.js"
-import type * as s_astn_location from "astn-core/modules/deserialization/schemas/location"
-import type * as s_out from "../../../interface/schemas/found.js"
+import type * as s_in from "../../../schemas/unmarshall_result.js"
+import type * as s_location from "../../../schemas/location.js"
+import type * as s_astn_location from "astn-core/modules/deserialization/schemas/location/schema"
+import type * as s_out from "../../../schemas/found.js"
 
 
 export type Document = p_.Transformer_With_Parameter<

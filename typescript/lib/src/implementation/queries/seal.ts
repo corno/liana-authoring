@@ -3,9 +3,9 @@ import * as p_temp from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import type * as query_interfaces_file_in_file_out from "pareto-common/modules/file_in_file_out/interface/queries"
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
-import type * as s_paragraph_serialization from "pareto-fountain-pen/modules/paragraph/schemas/paragraph_serialization"
+import type * as query_interfaces_file_in_file_out from "pareto-common/modules/file_in_file_out/queries/interfaces"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
+import type * as s_paragraph_serialization from "pareto-fountain-pen/modules/paragraph/schemas/paragraph_serialization/schema"
 
 //data  types
 import type * as s_file_in_file_out_query from "pareto-common/modules/file_in_file_out/schemas/query"
@@ -19,7 +19,7 @@ import * as t_auth_targ_from_unmarshall_result_to_prose from "../transformers/se
 import * as t_astn_sealed_target_to_paragraph from "astn-core/modules/serialization/implementation/transformers/sealed_target/paragraph"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/modules/paragraph/shorthands/deprecated"
+import * as sh from "pareto-fountain-pen/modules/paragraph/schemas/paragraph/shorthands/deprecated"
 
 export const $$: p_.Query_Implementation<
     query_interfaces_file_in_file_out.operation,

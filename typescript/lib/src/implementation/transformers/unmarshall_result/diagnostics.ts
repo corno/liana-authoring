@@ -1,10 +1,10 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/diagnostics.js"
-import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/implementation/serializers/rich_phrase"
+import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
 
 //schemas
-import type * as s_out from "../../../interface/schemas/diagnostics.js"
+import type * as s_out from "../../../schemas/diagnostics.js"
 
 
 //dependencies

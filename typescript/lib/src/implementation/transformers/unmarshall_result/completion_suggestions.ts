@@ -4,7 +4,7 @@ import type * as p_di from 'pareto-core/interface/data'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/completion_suggestions.js"
 
 //schemas
-import type * as s_out from "../../../interface/schemas/completion_suggestions.js"
+import type * as s_out from "../../../schemas/completion_suggestions.js"
 
 import type * as s_schema from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
 import type * as s_ast_target from "astn/modules/authoring_target/schemas/authoring_target"

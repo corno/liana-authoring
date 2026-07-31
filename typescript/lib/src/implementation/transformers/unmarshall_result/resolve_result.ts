@@ -5,9 +5,9 @@ import p_implement_me from 'pareto-core-dev/implement_me'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
 
-import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in from "../../../schemas/unmarshall_result.js"
 import type * as s_in_definition from "pareto-liana/modules/liana.generated/modules/schema/schemas/resolved"
-import type * as s_out from "../../../interface/schemas/resolve_result.js"
+import type * as s_out from "../../../schemas/resolve_result.js"
 
 namespace p_i_temp {
 

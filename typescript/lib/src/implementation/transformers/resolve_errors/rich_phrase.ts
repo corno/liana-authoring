@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 
 //schemas
-import type * as s_in from "../../../interface/schemas/resolve_errors.js"
-import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase"
+import type * as s_in from "../../../schemas/resolve_errors.js"
+import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 export type Error = p_.Transformer<
     s_in.Error,
@@ -11,7 +11,7 @@ export type Error = p_.Transformer<
 >
 
 //shorthands
-import * as sh from "pareto-fountain-pen/modules/rich_phrase/shorthands/deprecated"
+import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 
 export const Error: Error = ($) => p_.from.state($.type).decide(
     ($) => {

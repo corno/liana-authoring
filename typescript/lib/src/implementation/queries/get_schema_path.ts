@@ -3,11 +3,11 @@ import * as p_temp from 'pareto-core/implementation/refiner'
 import p_variables from 'pareto-core/implementation/query/specials/variables'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
-import type * as query_interfaces from "../../interface/queries.js"
-import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/queries"
+import type * as query_interfaces from "../../queries/interfaces.js"
+import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
 
 //schemas
-import * as d from "../../interface/schemas/retrieval_of_schema_path.js"
+import * as d from "../../schemas/retrieval_of_schema_path.js"
 
 //depencencies
 import * as t_path_to_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/implementation/transformers/path/path"

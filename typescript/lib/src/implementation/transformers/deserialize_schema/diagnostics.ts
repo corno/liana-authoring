@@ -4,9 +4,9 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 
 
 //schemas
-import type * as s_loc from "../../../interface/schemas/location.js"
+import type * as s_loc from "../../../schemas/location.js"
 import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/interface/schemas/path"
-import type * as s_out_2 from "../../../interface/schemas/diagnostics.js"
+import type * as s_out_2 from "../../../schemas/diagnostics.js"
 namespace s_function {
     export type Parameters = {
         'schema path': s_path.Node_Path

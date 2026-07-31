@@ -4,7 +4,7 @@ import type * as interface_ from "../../../declarations/transformers/unmarshall_
 
 //schemas
 import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target"
-import type * as s_function from "../../../interface/schemas/unmarshall_result_to_authoring_target.js"
+import type * as s_function from "../../../schemas/unmarshall_result_to_authoring_target.js"
 
 //dependencies
 import * as t_parse_tree_to_authoring_target from "astn/modules/parse_tree/implementation/transformers/parse_tree/authoring_target"

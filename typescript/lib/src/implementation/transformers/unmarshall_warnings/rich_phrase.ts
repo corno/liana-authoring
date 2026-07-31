@@ -1,8 +1,8 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/unmarshall_errors.js"
-import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase"
+import type * as s_in from "../../../schemas/unmarshall_errors.js"
+import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 
 export type Warning = p_.Transformer<
@@ -12,7 +12,7 @@ export type Warning = p_.Transformer<
 
 
 //shorthands
-import * as sh from "pareto-fountain-pen/modules/rich_phrase/shorthands/deprecated"
+import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 
 
 export const Warning: Warning = ($) => sh.ph.composed(

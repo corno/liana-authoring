@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/formatting_edits.js"
 
 //schemas
-import type * as s_out from "../../../interface/schemas/formatting_edits.js"
+import type * as s_out from "../../../schemas/formatting_edits.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"

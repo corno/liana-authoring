@@ -2,8 +2,8 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/resolve_result.js"
-import type * as s_out from "../../../interface/schemas/resolve_errors.js"
+import type * as s_in from "../../../schemas/resolve_result.js"
+import type * as s_out from "../../../schemas/resolve_errors.js"
 
 
 

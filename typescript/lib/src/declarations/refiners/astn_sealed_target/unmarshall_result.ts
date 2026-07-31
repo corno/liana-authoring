@@ -3,10 +3,10 @@ import type * as p_ from 'pareto-core/interface/refiner'
 import type * as p_ti from 'pareto-core/interface/transformer'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in from "../../../schemas/unmarshall_result.js"
 import type * as s_out from "astn-core/modules/serialization/schemas/sealed_target"
-import type * as s_in_astn_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree"
-import type * as s_function from "../../../interface/schemas/sealed_target_from_unmarshall_result.js"
+import type * as s_in_astn_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree/schema"
+import type * as s_function from "../../../schemas/sealed_target_from_unmarshall_result.js"
 
 export type Value = p_.Refiner<
     s_out.Value,

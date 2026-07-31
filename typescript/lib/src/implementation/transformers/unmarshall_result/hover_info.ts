@@ -3,14 +3,14 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import type * as interface_ from "../../../declarations/transformers/unmarshall_result/hover_info.js"
 
 //schemas
-import type * as s_in from "../../../interface/schemas/unmarshall_result.js"
+import type * as s_in from "../../../schemas/unmarshall_result.js"
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/implementation/serializers/rich_phrase"
+import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/modules/rich_phrase/shorthands/deprecated"
+import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 
 const Property_Path = ($: s_in.Property_Path): string => ser_rich_phrase.Phrase(
     sh.ph.rich_phrase(

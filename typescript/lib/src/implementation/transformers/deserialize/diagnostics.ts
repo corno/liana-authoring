@@ -4,8 +4,8 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 
 //depencencies
 import * as t_get_schema from "../get_schema/diagnostics.js"
-import * as t_deserialize_to_location from "astn-core/modules/deserialization/implementation/transformers/parse_tree_deserialization/location"
-import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/implementation/serializers/parse_tree_deserialization"
+import * as t_deserialize_to_location from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/transformers/location"
+import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
 
 export const Error: interface_.Error = ($) => p_.from.state($).decide(
 	($) => {

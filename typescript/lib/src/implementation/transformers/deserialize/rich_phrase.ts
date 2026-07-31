@@ -2,8 +2,8 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 
 //schemas
-import type * as s_in from "../../../interface/schemas/deserialization.js"
-import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase"
+import type * as s_in from "../../../schemas/deserialization.js"
+import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 export type Error = p_.Transformer<
     s_in.Error,
@@ -12,11 +12,11 @@ export type Error = p_.Transformer<
 
 
 //dependencies
-import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/implementation/serializers/parse_tree_deserialization"
+import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
 import * as t_get_schema_to_rich_phrase from "../get_schema/rich_phrase.js"
 import * as t_get_schema_path_to_rich_phrase from "../get_schema_path/rich_phrase.js"
 
-import * as sh from "pareto-fountain-pen/modules/rich_phrase/shorthands/deprecated"
+import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 
 export const Error: Error = ($) => p_.from.state($).decide(
     ($) => {   
