@@ -6,7 +6,7 @@ import type * as s_in from "../../../schemas/deserialization/schema.js"
 import type * as s_out from "../../../schemas/diagnostics/schema.js"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Error = p_.Transformer<
         s_in.Error,
@@ -19,7 +19,7 @@ import * as t_get_schema from "../../get_schema/transformers/diagnostics.js"
 import * as t_deserialize_to_location from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/transformers/location"
 import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
 
-export const Error: interface_.Error = ($) => p_.from.state($).decide(
+export const Error: declarations_.Error = ($) => p_.from.state($).decide(
 	($) => {
 		switch ($[0]) {
 			case 'schema path': return p_.option($, ($) => ({

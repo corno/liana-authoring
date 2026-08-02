@@ -6,7 +6,7 @@ import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
 import type * as s_out from "../../../schemas/unmarshall_errors/schema.js"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer<
         s_in.Document,
@@ -23,11 +23,11 @@ namespace interface_ {
 import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 
-export const Document: interface_.Document = ($) => Value(
+export const Document: declarations_.Document = ($) => Value(
     $.content,
 )
 
-export const Value: interface_.Value = ($) => {
+export const Value: declarations_.Value = ($) => {
     const start_token_range = t_astn_parse_tree_to_start_token_location.Value($.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {

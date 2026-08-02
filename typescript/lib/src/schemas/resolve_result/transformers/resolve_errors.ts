@@ -7,7 +7,7 @@ import type * as s_out from "../../../schemas/resolve_errors/schema.js"
 
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer<
         s_in.Document,
@@ -20,13 +20,13 @@ namespace interface_ {
     >
 }
 
-export const Document: interface_.Document = ($) => {
+export const Document: declarations_.Document = ($) => {
     return Value(
         $.content
     )
 }
 
-export const Value: interface_.Value = ($) => p_.from.state($['unmarshall result']).decide(
+export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall result']).decide(
     ($) => {
         switch ($[0]) {
             case 'error': return p_.option($, ($) => p_.literal.list([])) //reported by the unmarshaller, it is not the responsibility of this transformer to report them

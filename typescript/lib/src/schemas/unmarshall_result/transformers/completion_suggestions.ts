@@ -8,7 +8,7 @@ import type * as s_location from "../../../schemas/location/schema.js"
 import type * as s_outx from "../../../schemas/found/schema.js"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Parameters = {
         'position': s_location.Position
@@ -163,7 +163,7 @@ const s_schema_Value = (
 
 }
 
-export const Found: interface_.Found = ($, $p) => {
+export const Found: declarations_.Found = ($, $p) => {
     switch ($[0]) {
         case 'value': return p_.option($, ($): s_out.Completion_Suggestions => {
             const definition = $.definition
@@ -276,7 +276,7 @@ export const Found: interface_.Found = ($, $p) => {
     }
 }
 
-export const Document: interface_.Document = ($, $p) => {
+export const Document: declarations_.Document = ($, $p) => {
     return Found(
         t_to_unmarshall_result_value_at_position.Document(
             $,

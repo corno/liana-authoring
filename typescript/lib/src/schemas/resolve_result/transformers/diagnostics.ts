@@ -6,7 +6,7 @@ import type * as s_in from "../../../schemas/resolve_result/schema.js"
 import type * as s_out from "../../../schemas/diagnostics/schema.js"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer<
         s_in.Document,
@@ -17,15 +17,15 @@ namespace interface_ {
 //dependencies
 import * as t_to_resolve_result_to_errors from "./resolve_errors.js"
 import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
-import * as t_resolve_errors_to_prose from "../../resolve_errors/transformers/rich_phrase.js"
+import * as t_resolve_errors_to_rich_phrase from "../../resolve_errors/transformers/rich_phrase.js"
 
-export const Document: interface_.Document = ($) => p_.from.list(t_to_resolve_result_to_errors.Document($)).map(
+export const Document: declarations_.Document = ($) => p_.from.list(t_to_resolve_result_to_errors.Document($)).map(
     ($) => ({
         'severity': $.severity,
         'range': p_.literal.set(['range', $.range]),
         'related information': p_.literal.not_set(),
         'message': ser_rich_phrase.Phrase(
-            t_resolve_errors_to_prose.Error($),
+            t_resolve_errors_to_rich_phrase.Error($),
         ),
         'type': ['semantic', null],
     })

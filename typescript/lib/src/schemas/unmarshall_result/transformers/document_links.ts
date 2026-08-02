@@ -7,7 +7,7 @@ import type * as s_out from "../../../schemas/document_links/schema.js"
 import type * as s_schema from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer<
         s_in.Document,
@@ -20,9 +20,9 @@ namespace interface_ {
     >
 }
 
-export const Document: interface_.Document = ($) => Value($.content)
+export const Document: declarations_.Document = ($) => Value($.content)
 
-export const Value: interface_.Value = ($) => p_.from.state($['unmarshall result']).decide(
+export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall result']).decide(
     ($) => {
         switch ($[0]) {
             case 'error': return p_.option($, ($) => p_.literal.list([]))

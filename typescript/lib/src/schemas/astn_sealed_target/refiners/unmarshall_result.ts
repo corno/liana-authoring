@@ -8,7 +8,7 @@ import type * as s_out from "astn-core/modules/serialization/schemas/sealed_targ
 import type * as s_in_astn_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree/schema"
 import type * as s_function from "../../../schemas/sealed_target_from_unmarshall_result/schema.js"
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Value = p_.Refiner<
         s_out.Value,
@@ -25,7 +25,7 @@ namespace interface_ {
 import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 
-export const Found: interface_.Found = ($) => {
+export const Found: declarations_.Found = ($) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
@@ -56,7 +56,7 @@ export const Found: interface_.Found = ($) => {
 //     return Value($.content, abort)
 // }
 
-export const Value: interface_.Value = ($, abort) => {
+export const Value: declarations_.Value = ($, abort) => {
     const start_token_range = t_astn_parse_tree_to_start_token_location.Value($.instance)
     return p_.from.state($['unmarshall result']).decide(
         ($) => {

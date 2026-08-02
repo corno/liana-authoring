@@ -6,7 +6,7 @@ import type * as s_function_unmarshall from "../../../schemas/unmarshall_result_
 import type * as s_function_seal from "../../../schemas/sealing/schema.js"
 import type * as s_in from "astn-core/modules/deserialization/schemas/list_of_characters/schema"
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Refiner_With_Parameter<
         s_out.Document,
@@ -22,7 +22,7 @@ namespace interface_ {
 import * as r_unmarshall_result_from_list_of_characters from "../../unmarshall_result/refiners/list_of_characters.js"
 import * as r_sealed_target_from_unmarshall_result from "./unmarshall_result.js"
 
-export const Document: interface_.Document = ($, abort, $p) => {
+export const Document: declarations_.Document = ($, abort, $p) => {
     return r_sealed_target_from_unmarshall_result.Value(
         r_unmarshall_result_from_list_of_characters.Document(
             $,

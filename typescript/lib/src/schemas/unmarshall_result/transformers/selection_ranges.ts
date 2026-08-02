@@ -8,7 +8,7 @@ import type * as s_out from "../../../schemas/unmarshall_result/schema.js"
 import type * as s_location from "../../../schemas/location/schema.js"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer_With_Parameter<
         s_in.Document,
@@ -24,7 +24,7 @@ import * as t_to_unmarshall_result_value_at_position from "./found.js"
 import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
 
 
-export const Document: interface_.Document = ($, $p) => {
+export const Document: declarations_.Document = ($, $p) => {
     const doc = $
     return p_.from.list($p.positions).map(
         ($): s_in.Range_Stack => p_.from.state(t_to_unmarshall_result_value_at_position.Document(

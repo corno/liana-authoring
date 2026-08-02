@@ -6,7 +6,7 @@ import type * as s_in from "../../../schemas/sealed_target_from_unmarshall_resul
 import type * as s_out from "astn-core/modules/deserialization/schemas/location/schema"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Error = p_.Transformer<
         s_in.Error,
@@ -16,6 +16,6 @@ namespace interface_ {
 
 //dependencies
 
-export const Error: interface_.Error = (
+export const Error: declarations_.Error = (
     $,
 ) => $.range

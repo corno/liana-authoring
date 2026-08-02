@@ -13,7 +13,7 @@ import type * as s_in from "astn-core/modules/deserialization/schemas/list_of_ch
 //     s_in.List_of_Characters,
 //     s_function.Parameters
 // >
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Refiner_With_Parameter<
         s_out.Document,
@@ -28,7 +28,7 @@ namespace interface_ {
 import * as t_parse_tree_to_unmarshall_result from "../../astn_parse_tree/transformers/unmarshall_result.js"
 import * as r_parse_tree_from_list_of_characters from "astn-core/modules/deserialization/schemas/parse_tree/refiners/list_of_characters"
 
-export const Document: interface_.Document = ($, abort, $p) => {
+export const Document: declarations_.Document = ($, abort, $p) => {
 
     return t_parse_tree_to_unmarshall_result.Document(
         r_parse_tree_from_list_of_characters.Document(

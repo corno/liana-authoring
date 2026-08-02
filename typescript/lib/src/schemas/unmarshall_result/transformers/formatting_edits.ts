@@ -8,7 +8,7 @@ import type * as s_location from "../../../schemas/location/schema.js"
 import type * as s_outx from "../../../schemas/found/schema.js"
 import type * as s_function_parameters from "../../../schemas/unmarshall_result_to_authoring_target/schema.js"
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer_With_Parameter<
         s_in.Document,
@@ -48,7 +48,7 @@ import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserial
 import * as t_unmarshall_result_to_authoring_target from "./authoring_target.js"
 
 
-const Value: interface_.Value = (value, $p) => {
+const Value: declarations_.Value = (value, $p) => {
     return p_.literal.set({
         'range': t_parse_tree_to_full_value_location.Value(value.instance),
         'lines': t_authoring_target_to_serialized.Value(
@@ -65,7 +65,7 @@ const Value: interface_.Value = (value, $p) => {
     })
 }
 
-export const Found: interface_.Found = ($, $p): s_out.Optional_Formatting_Edit => {
+export const Found: declarations_.Found = ($, $p): s_out.Optional_Formatting_Edit => {
 
     switch ($[0]) {
         case 'value': return p_.option($, ($): s_out.Optional_Formatting_Edit => {
@@ -111,7 +111,7 @@ export const Found: interface_.Found = ($, $p): s_out.Optional_Formatting_Edit =
     }
 }
 
-export const Document: interface_.Document = ($, $p) => {
+export const Document: declarations_.Document = ($, $p) => {
     return p_.from.state(
         t_to_unmarshall_result_value_at_position.Document($, $p),
     ).decide(

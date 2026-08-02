@@ -14,7 +14,7 @@ export namespace s_function {
 }
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Value = p_.Transformer_With_Parameter<
         s_in.Value,
@@ -28,12 +28,12 @@ namespace interface_ {
     >
 }
 
-export const Value: interface_.Value = ($, $p) => ({
+export const Value: declarations_.Value = ($, $p) => ({
 
     'data': Value_data($, $p)
 })
 
-export const Value_data: interface_.Value_data = ($, $p) => p_.from.state($).decide(
+export const Value_data: declarations_.Value_data = ($, $p) => p_.from.state($).decide(
     ($): s_out.Value.data => {
         switch ($[0]) {
             case 'simple': return p_.option($, ($) => ['concrete', {

@@ -12,7 +12,7 @@ export namespace s_function {
 }
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Error = p_.Transformer_With_Parameter<
         s_in.Error,
@@ -26,7 +26,7 @@ import * as ser_deserialize_resolved from "liana-core/modules/resolved_document_
 import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
 import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/transformers/location"
 
-export const Error: interface_.Error = ($, $p) => {
+export const Error: declarations_.Error = ($, $p) => {
 	return p_.from.state($.type).decide(
 		($) => {
 			switch ($[0]) {

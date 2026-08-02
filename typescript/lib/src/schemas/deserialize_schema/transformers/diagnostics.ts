@@ -30,7 +30,7 @@ export namespace s_out {
 }
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Error = p_.Transformer_With_Parameter<
         s_in.Error,
@@ -44,7 +44,7 @@ import * as t_resolved_document_deserialization_to_location from "liana-core/mod
 import * as ser_resolved_document_deserialization from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
 
 
-export const Error: interface_.Error = ($, $p) => ({
+export const Error: declarations_.Error = ($, $p) => ({
     'type': ['deserialize', null],
     'message': ser_resolved_document_deserialization.Error($),
     'range': ({

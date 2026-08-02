@@ -7,7 +7,7 @@ import type * as s_in_parse_tree from "astn-core/modules/deserialization/schemas
 import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"
 import type * as s_function from "../../../schemas/unmarshall_result_to_authoring_target/schema.js"
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer_With_Parameter<
         s_in.Document,
@@ -47,7 +47,7 @@ const temp_value = ($: s_out.Value.data): s_out.Value => ({
     'data': $
 })
 
-export const Document: interface_.Document = ($, $p): s_out.Document => {
+export const Document: declarations_.Document = ($, $p): s_out.Document => {
     return {
         'header': p_.from.optional($['header']).map(
             ($) => t_parse_tree_to_authoring_target.Value($)),
@@ -57,7 +57,7 @@ export const Document: interface_.Document = ($, $p): s_out.Document => {
 
 
 
-export const Non_Entity: interface_.Non_Entity = ($, $p) => {
+export const Non_Entity: declarations_.Non_Entity = ($, $p) => {
     const temp_dont_restyle_entities = ($: s_function.Parameters): s_function.Parameters => {
         const x = $
         return {
@@ -76,7 +76,7 @@ export const Non_Entity: interface_.Non_Entity = ($, $p) => {
     return Any_Value($, temp_dont_restyle_entities($p))
 }
 
-export const Entity: interface_.Entity = ($, $p) => {
+export const Entity: declarations_.Entity = ($, $p) => {
     const value = $
     return p_.from.state($p.impact).decide(
         ($) => {
@@ -95,7 +95,7 @@ export const Entity: interface_.Entity = ($, $p) => {
         })
 }
 
-export const Any_Value: interface_.Any_Value = ($, $p) => {
+export const Any_Value: declarations_.Any_Value = ($, $p) => {
     const instance = $['instance']
     return p_.from.state($['unmarshall result']).decide(
         ($) => {
@@ -401,6 +401,6 @@ export const Any_Value: interface_.Any_Value = ($, $p) => {
             }
         })
 }
-export const Structural_Token: interface_.Structural_Token = ($) => ({
+export const Structural_Token: declarations_.Structural_Token = ($) => ({
     'comments': $['trailing trivia'].comments
 })

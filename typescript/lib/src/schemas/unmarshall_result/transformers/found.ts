@@ -8,7 +8,7 @@ import type * as s_location from "../../../schemas/location/schema.js"
 import type * as s_out from "../../../schemas/found/schema.js"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer_With_Parameter<
         s_in.Document,
@@ -72,9 +72,9 @@ export const range_overlaps_position = (
     )
 
 
-export const Document: interface_.Document = ($, $p) => Value($.content, $p)
+export const Document: declarations_.Document = ($, $p) => Value($.content, $p)
 
-export const Value_possibly_found: interface_.Value_possibly_found = ($, $p) => {
+export const Value_possibly_found: declarations_.Value_possibly_found = ($, $p) => {
     return range_overlaps_position(
         t_parse_tree_to_full_value_location.Value($.instance),
         {
@@ -85,7 +85,7 @@ export const Value_possibly_found: interface_.Value_possibly_found = ($, $p) => 
         : p_.literal.not_set()
 }
 
-export const Value: interface_.Value = ($, $p) => {
+export const Value: declarations_.Value = ($, $p) => {
 
 
 

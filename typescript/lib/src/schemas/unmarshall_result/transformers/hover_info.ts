@@ -7,7 +7,7 @@ import type * as s_location from "../../../schemas/location/schema.js"
 import type * as s_out from "../../../schemas/hover_info/schema.js"
 
 
-namespace interface_ {
+namespace declarations_ {
 
     export type Document = p_.Transformer_With_Parameter<
         s_in.Document,
@@ -44,7 +44,7 @@ const Property_Path = ($: s_in.Property_Path): string => ser_rich_phrase.Phrase(
     ),
 )
 
-export const Document: interface_.Document = ($, $p) => {
+export const Document: declarations_.Document = ($, $p) => {
     return p_.from.state(
         t_to_unmarshall_result_value_at_position.Document($, $p)
     ).decide(
