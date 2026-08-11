@@ -6,18 +6,19 @@ import type * as s_in from "../../../schemas/unmarshall_errors/schema.js"
 import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 
-export type Error = p_.Transformer<
-    s_in.Errors.L,
-    s_out.Phrase
->
-
+namespace declarations {
+    export type Error = p_.Transformer<
+        s_in.Errors.L,
+        s_out.Phrase
+    >
+}
 
 //dependencies
 
 //shorthands
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 
-export const Error: Error = ($) => sh.ph.composed(
+export const Error: declarations.Error = ($) => sh.ph.composed(
     p_.from.state($.type).decide(
         ($): s_out.Phrases => {
             switch ($[0]) {

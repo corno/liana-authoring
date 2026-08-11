@@ -13,22 +13,23 @@ import type * as s_in_definition from "pareto-liana/modules/schema.generated/sch
 
 
 
-export type Document = p_.Transformer_With_Parameter<
-    s_in.Document,
-    s_out.Document,
-    s_function.Parameters
->
+namespace declarations {
+    export type Document = p_.Transformer_With_Parameter<
+        s_in.Document,
+        s_out.Document,
+        s_function.Parameters
+    >
 
-export type Value = p_.Transformer_With_Parameter<
-    s_in.Value,
-    s_out.Value,
-    {
-        'definition': s_in_definition.Value
-        'property path': s_out.Property_Path
-        'parent range stack': p_di.Optional_Value<s_out.Range_Stack>
-    }
->
-
+    export type Value = p_.Transformer_With_Parameter<
+        s_in.Value,
+        s_out.Value,
+        {
+            'definition': s_in_definition.Value
+            'property path': s_out.Property_Path
+            'parent range stack': p_di.Optional_Value<s_out.Range_Stack>
+        }
+    >
+}
 
 
 //dependencies
@@ -36,7 +37,7 @@ import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserial
 
 import * as t_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
-export const Document: Document = ($, $p) => ({
+export const Document: declarations.Document = ($, $p) => ({
     'header': p_.from.optional($['header']).map(
         ($) => $.value),
     'content': Value(
@@ -49,7 +50,7 @@ export const Document: Document = ($, $p) => ({
     )
 })
 
-export const Value: Value = ($, $p) => {
+export const Value: declarations.Value = ($, $p) => {
     const value = $
     const value_range_stack: s_out.Range_Stack = {
         'range': t_parse_tree_to_full_value_location.Value($),

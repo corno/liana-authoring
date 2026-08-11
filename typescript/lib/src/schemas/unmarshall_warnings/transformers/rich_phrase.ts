@@ -5,17 +5,18 @@ import type * as s_in from "../../../schemas/unmarshall_errors/schema.js"
 import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 
+namespace declarations {
 export type Warning = p_.Transformer<
     s_in.Warnings.L,
     s_out.Phrase
 >
-
+}
 
 //shorthands
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 
 
-export const Warning: Warning = ($) => sh.ph.composed(
+export const Warning: declarations.Warning = ($) => sh.ph.composed(
     p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
