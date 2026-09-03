@@ -1,6 +1,5 @@
 import * as p_ from 'pareto-core/implementation/query'
 import * as p_temp from 'pareto-core/implementation/transformer'
-import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
 import type * as query_interfaces_file_in_file_out from "pareto-common/modules/file_in_file_out/queries/interfaces"
