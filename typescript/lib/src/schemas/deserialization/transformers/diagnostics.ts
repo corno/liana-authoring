@@ -2,8 +2,8 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
-import type * as s_in from "../../../schemas/deserialization/schema.js"
-import type * as s_out from "../../../schemas/diagnostics/schema.js"
+import type * as s_in from "../schema.js"
+import type * as s_out from "../../diagnostics/schema.js"
 
 
 namespace declarations_ {
@@ -15,7 +15,7 @@ namespace declarations_ {
 }
 
 //depencencies
-import * as t_get_schema from "../../get_schema/transformers/diagnostics.js"
+import * as t_get_schema from "../../retrieval_of_schema/transformers/diagnostics.js"
 import * as t_deserialize_to_location from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/transformers/location"
 import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
 

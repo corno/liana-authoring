@@ -20,7 +20,6 @@ import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schema
 import * as t_to_unmarshall_result_to_errors from "./unmarshall_errors.js"
 import * as t_to_unmarshall_result_to_warnings from "./unmarshall_warnings.js"
 import * as t_unmarshall_errors_to_rich_phrase from "../../unmarshall_errors/transformers/rich_phrase.js"
-import * as t_unmarshall_warnings_to_rich_phrase from "../../unmarshall_warnings/transformers/rich_phrase.js"
 
 export const Document: declarations_.Document = ($) => p_.literal.segmented_list([
     p_.from.list(t_to_unmarshall_result_to_errors.Document($)).map(
@@ -43,7 +42,7 @@ export const Document: declarations_.Document = ($) => p_.literal.segmented_list
                 'range': p_.literal.set(['range', $.range]),
                 'related information': p_.literal.not_set(),
                 'message': ser_rich_phrase.Phrase(
-                    t_unmarshall_warnings_to_rich_phrase.Warning($),
+                    t_unmarshall_errors_to_rich_phrase.Warning($),
                 ),
                 'type': ['semantic', null],
             })

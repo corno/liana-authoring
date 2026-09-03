@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 
 //schemas
-import type * as s_in from "../../../schemas/get_unmarshalled_file/schema.js"
+import type * as s_in from "../schema.js"
 import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 
@@ -15,7 +15,7 @@ namespace declarations {
 
 //dependencies
 import * as ser_read_file from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/read_file/serializers"
-import * as t_deserialize_to_rich_phrase from "../../deserialize/transformers/rich_phrase.js"
+import * as t_deserialize_to_rich_phrase from "../../deserialization/transformers/rich_phrase.js"
 
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 

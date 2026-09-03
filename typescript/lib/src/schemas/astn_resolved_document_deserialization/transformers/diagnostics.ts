@@ -1,11 +1,11 @@
 
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as s_out_2 from "../../../schemas/diagnostics/schema.js"
-import type * as s_in from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/schema"
+import type * as s_out_2 from "../../diagnostics/schema.js"
+import type * as s_in from "../schema.js"
 
 //schemas
-import type * as s_loc from "../../../schemas/location/schema.js"
+import type * as s_loc from "../../location/schema.js"
 import type * as s_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/schema"
 
 export namespace s_function {

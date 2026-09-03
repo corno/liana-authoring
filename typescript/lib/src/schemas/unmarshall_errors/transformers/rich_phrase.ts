@@ -11,6 +11,10 @@ namespace declarations {
         s_in.Errors.L,
         s_out.Phrase
     >
+    export type Warning = p_.Transformer<
+        s_in.Warnings.L,
+        s_out.Phrase
+    >
 }
 
 //dependencies
@@ -152,4 +156,30 @@ export const Error: declarations.Error = ($) => sh.ph.composed(
                 default: return p_.exhaustive($[0])
             }
         })
+)
+
+
+export const Warning: declarations.Warning = ($) => sh.ph.composed(
+    p_.from.state($.type).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'expected apostrophed text': return p_.option($, ($) => p_.literal.list([
+                    sh.ph.text("Expected a text with apostrophes (')")
+                ]))
+                case 'expected backticked text': return p_.option($, ($) => p_.literal.list([
+                    sh.ph.text("Expected a text with backticks (`)")
+                ]))
+                case 'expected quoted text': return p_.option($, ($) => p_.literal.list([
+                    sh.ph.text("Expected a text with quotes (\")")
+                ]))
+                case 'expected undelimited text': return p_.option($, ($) => p_.literal.list([
+                    sh.ph.text("Expected a text without delimiters")
+                ]))
+                case 'expected a group': return p_.option($, ($) => p_.literal.list([
+                    sh.ph.text("Expected a group")
+                ]))
+                default: return p_.exhaustive($[0])
+            }
+        }
+    )
 )

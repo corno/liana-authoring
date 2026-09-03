@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 
 //schemas
-import type * as s_in from "../../../schemas/deserialization/schema.js"
+import type * as s_in from "../schema.js"
 import type * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"
 
 namespace declarations {
@@ -14,8 +14,8 @@ export type Error = p_.Transformer<
 
 //dependencies
 import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
-import * as t_get_schema_to_rich_phrase from "../../get_schema/transformers/rich_phrase.js"
-import * as t_get_schema_path_to_rich_phrase from "../../get_schema_path/transformers/rich_phrase.js"
+import * as t_get_schema_to_rich_phrase from "../../retrieval_of_schema/transformers/rich_phrase.js"
+import * as t_get_schema_path_to_rich_phrase from "../../retrieval_of_schema_path/transformers/rich_phrase.js"
 
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 

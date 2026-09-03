@@ -5,7 +5,7 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import p_create_refinement_context from 'pareto-core/implementation/__internal/sync/create_refinement_context'
 
 //schemas
-import type * as s_in from "astn-core/modules/deserialization/schemas/parse_tree/schema"
+import type * as s_in from "../schema.js"
 import type * as s_out from "../../../schemas/unmarshall_result/schema.js"
 
 import type * as s_function from "../../../schemas/unmarshall_result_from_astn_parse_tree/schema.js"

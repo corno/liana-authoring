@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
 import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"
-import type * as s_in from "pareto-liana/modules/schema.generated/schemas/resolved/schema"
+import type * as s_in from "../schema.js"
 
 export namespace s_function {
     export type Parameters = {
