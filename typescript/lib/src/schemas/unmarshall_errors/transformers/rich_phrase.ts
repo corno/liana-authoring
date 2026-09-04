@@ -58,7 +58,7 @@ export const Error: declarations.Error = ($) => sh.ph.composed(
                                                         case 'optional': return "optional"
                                                         case 'state': return "state"
                                                         case 'text': return "text"
-                                                        default: return p_.au($[0])
+                                                        default: return p_.exhaustive($[0])
                                                     }
                                                 }
                                             )),

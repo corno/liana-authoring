@@ -43,47 +43,51 @@ namespace p_i_temp {
 
 }
 
-type Acyclic_Parameter_Resolve_Status =
-    | ['to be implemented', null]
-    | ['resolved', p_i.lookup.Acyclic<s_out.Entry>]
-    | ['not found because of root', null]
+namespace temp {
 
-type Cyclic_Parameter_Resolve_Status =
-    | ['to be implemented', null]
-    | ['resolved', p_i.lookup.Cyclic<s_out.Entry>]
-    | ['not found because of root', null]
+    export type Acyclic_Parameter_Resolve_Status =
+        | ['to be implemented', null]
+        | ['resolved', p_i.lookup.Acyclic<s_out.Entry>]
+        | ['not found because of root', null]
 
-type Stack_Parameter_Resolve_Status =
-    | ['to be implemented', null]
-    | ['resolved', p_i.lookup.Stack<s_out.Entry>]
-    | ['not found because of root', null]
+    export type Cyclic_Parameter_Resolve_Status =
+        | ['to be implemented', null]
+        | ['resolved', p_i.lookup.Cyclic<s_out.Entry>]
+        | ['not found because of root', null]
 
-type Lookup_Parameters = {
-    'acyclic': p_temp_dictionary.Generic_Dictionary<Acyclic_Parameter_Resolve_Status>
-    'cyclic': p_temp_dictionary.Generic_Dictionary<Cyclic_Parameter_Resolve_Status>
-    'stack': p_temp_dictionary.Generic_Dictionary<Stack_Parameter_Resolve_Status>
-}
+    export type Stack_Parameter_Resolve_Status =
+        | ['to be implemented', null]
+        | ['resolved', p_i.lookup.Stack<s_out.Entry>]
+        | ['not found because of root', null]
 
-type Lookups = {
-    'parameters': Lookup_Parameters
-    'siblings': {
-        'acyclic': p_i.lookup.Acyclic<s_out.Entry>
-        'cyclic': p_i.lookup.Cyclic<s_out.Entry>
+    type Lookup_Parameters = {
+        'acyclic': p_temp_dictionary.Generic_Dictionary<Acyclic_Parameter_Resolve_Status>
+        'cyclic': p_temp_dictionary.Generic_Dictionary<Cyclic_Parameter_Resolve_Status>
+        'stack': p_temp_dictionary.Generic_Dictionary<Stack_Parameter_Resolve_Status>
     }
-}
 
-type Module_Parameter_Resolve_Status =
-    | ['not found because of root', null]
-    | ['to be implemented', null]
+    export type Lookups = {
+        'parameters': Lookup_Parameters
+        'siblings': {
+            'acyclic': p_i.lookup.Acyclic<s_out.Entry>
+            'cyclic': p_i.lookup.Cyclic<s_out.Entry>
+        }
+    }
+
+    export type Module_Parameter_Resolve_Status =
+        | ['not found because of root', null]
+        | ['to be implemented', null]
+
+}
 
 export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
     s_in.Document,
     s_out.Document,
-    Lookups,
+    temp.Lookups,
     {
         'definition': s_in_definition.Resolver_Modules.D
         'resolvers': s_in_definition.Resolver
-        'module parameters': p_di.Dictionary<Module_Parameter_Resolve_Status>
+        'module parameters': p_di.Dictionary<temp.Module_Parameter_Resolve_Status>
     }
 > = ($, $l, $p) => ({
     'unmarshalled': $,
@@ -157,13 +161,13 @@ export const Document: p_i_temp.Transformer_With_Lookups_And_Parameter<
 
 export const Resolver_Optional_Value_Initialization = (
     $: s_in_definition.Resolver_Optional_Value_Initialization
-): Module_Parameter_Resolve_Status => {
+): temp.Module_Parameter_Resolve_Status => {
     return ['to be implemented', null]
 }
 
 export const Resolver_Guaranteed_Value_Selection = (
     $: s_in_definition.Resolver_Guaranteed_Value_Selection
-): Module_Parameter_Resolve_Status => {
+): temp.Module_Parameter_Resolve_Status => {
     return ['to be implemented', null]
 }
 
@@ -171,11 +175,11 @@ export const Resolver_Guaranteed_Value_Selection = (
 export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
     s_in.Value,
     s_out.Value,
-    Lookups,
+    temp.Lookups,
     {
         'definition': s_in_definition.Resolver_Value
         'resolver': s_in_definition.Resolver
-        'module parameters': p_di.Dictionary<Module_Parameter_Resolve_Status>
+        'module parameters': p_di.Dictionary<temp.Module_Parameter_Resolve_Status>
     }
 > = ($, $l, $p) => {
     return {
@@ -220,15 +224,15 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                             ($) => ({
                                                                                 'acyclic': p_temp_dictionary.map_value_dictionary_to_generic_dictionary(
                                                                                     $,
-                                                                                    ($): Acyclic_Parameter_Resolve_Status => ['to be implemented', null]
+                                                                                    ($): temp.Acyclic_Parameter_Resolve_Status => ['to be implemented', null]
                                                                                 ),
                                                                                 'cyclic': p_temp_dictionary.map_value_dictionary_to_generic_dictionary(
                                                                                     $,
-                                                                                    ($): Cyclic_Parameter_Resolve_Status => ['to be implemented', null]
+                                                                                    ($): temp.Cyclic_Parameter_Resolve_Status => ['to be implemented', null]
                                                                                 ),
                                                                                 'stack': p_temp_dictionary.map_value_dictionary_to_generic_dictionary(
                                                                                     $,
-                                                                                    ($): Stack_Parameter_Resolve_Status => ['to be implemented', null]
+                                                                                    ($): temp.Stack_Parameter_Resolve_Status => ['to be implemented', null]
                                                                                 )
                                                                             }),
                                                                             () => $l.parameters
@@ -246,7 +250,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                         ($) => p_i_temp.from_option_decide(
                                                                             $.modules,
                                                                             ($) => p_.from.dictionary($).map(
-                                                                                ($): Module_Parameter_Resolve_Status => p_.from.state($).decide(
+                                                                                ($): temp.Module_Parameter_Resolve_Status => p_.from.state($).decide(
                                                                                     ($) => {
                                                                                         switch ($[0]) {
                                                                                             case 'optional': return p_.option($, ($) => Resolver_Optional_Value_Initialization($))

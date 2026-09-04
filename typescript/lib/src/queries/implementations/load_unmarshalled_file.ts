@@ -1,7 +1,6 @@
 import * as p_ from 'pareto-core/implementation/query'
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 import p_variables from 'pareto-core/implementation/query/specials/variables'
-import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
 
@@ -25,10 +24,12 @@ export const $$: p_.Query_Implementation<
         'stat': query_interfaces_pareto_filesystem_unrestricted_api.stat_possible_node
     }
 > = p_.query(
-    ($d, $s, $q) => p_super_query_result($q['read file'](
-        $d['file path'],
-        ($): d.Error => ['read file', $]
-    )).query(
+    (e, $s, $q, $d) => e.query(
+        ($d) => $q['read file'](
+            $d['file path'],
+            ($): d.Error => ['read file', $]
+        )
+    ).query(
         ($) => p_variables(
             () => q_deserialize(
                 null,
@@ -52,8 +53,8 @@ export const $$: p_.Query_Implementation<
                         $.data,
                         ($) => $
                     ),
-                    'file path': $d['file path'],
-                    'tab size': $d['tab size'],
+                    'file path': $d.deprecated['file path'],
+                    'tab size': $d.deprecated['tab size'],
                 },
                 ($): d.Error => ['deserialize', $]
             )

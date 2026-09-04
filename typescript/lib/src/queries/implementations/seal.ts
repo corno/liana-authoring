@@ -1,6 +1,5 @@
 import * as p_ from 'pareto-core/implementation/query'
 import * as p_temp from 'pareto-core/implementation/transformer'
-import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 
 import type * as query_interfaces_file_in_file_out from "pareto-common/modules/file_in_file_out/queries/interfaces"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
@@ -31,8 +30,8 @@ export const $$: p_.Query_Implementation<
         'stat': query_interfaces_pareto_filesystem_unrestricted_api.stat_possible_node
     }
 > = p_.query(
-    ($d, $s, $q) => p_super_query_result(
-        q_get_unmarshalled_file(
+    (e, $s, $q) => e.query(
+        ($d) => q_get_unmarshalled_file(
             null,
             {
                 'read file': $q['read file'],
@@ -58,8 +57,8 @@ export const $$: p_.Query_Implementation<
             p_temp.from.state($).decide(
                 ($) => {
                     switch ($[0]) {
-                        case 'unconstrained': return p_temp.ss($, ($) => $.content)
-                        case 'constrained': return p_temp.ss($, ($) => $.content.unmarshalled)
+                        case 'unconstrained': return p_temp.option($, ($) => $.content)
+                        case 'constrained': return p_temp.option($, ($) => $.content.unmarshalled)
                         default: return p_temp.exhaustive($[0])
                     }
                 }),

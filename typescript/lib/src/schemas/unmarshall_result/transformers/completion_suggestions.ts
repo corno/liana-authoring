@@ -47,123 +47,124 @@ import * as t_liana_schema_to_authoring_target from "../../liana_schema/transfor
 import * as t_authoring_target_to_serialized from "astn/modules/authoring_target/schemas/authoring_target/transformers/serialized"
 
 
-type Minimal_Completion_Suggestion = {
-    'label': string,
-    'insert value': s_ast_target.Value,
-}
 
-type Minimal_Completion_Suggestions = p_di.List<Minimal_Completion_Suggestion>
+export const Found: declarations_.Found = ($, $p) => {
 
-
-const s_schema_Value = (
-    $: s_schema.Value,
-    $p: {
-        'style':
-        | ['verbose', null]
-        | ['concise', null]
+    type Minimal_Completion_Suggestion = {
+        'label': string,
+        'insert value': s_ast_target.Value,
     }
-): Minimal_Completion_Suggestions => {
-    return p_.from.state($).decide(
-        ($): Minimal_Completion_Suggestions => {
-            switch ($[0]) {
-                case 'component': return p_.option($, ($) => s_schema_Value(
-                    p_.from.state($.type).decide(
-                        ($): s_schema.Value => {
-                            switch ($[0]) {
-                                case 'external': return p_.option($, ($) => $.module['l entry']['root value'])
-                                case 'internal': return p_.option($, ($) => $['l entry'].get_circular_dependent()['root value'])
-                                case 'internal acyclic': return p_.option($, ($) => $['l entry']['root value'])
-                                default: return p_.exhaustive($[0])
-                            }
-                        }),
-                    $p,
-                ))
-                case 'reference': return p_.option($, ($) => p_.literal.list<Minimal_Completion_Suggestion>([
-                    {
-                        'label': "",
-                        'insert value': {
-                            'data': ['concrete', {
-                                'type': ['text', {
-                                    'delimiter': ['apostrophe', null],
-                                    'value': "...",
-                                    'trivia': {
-                                        'comments': p_.literal.list([])
-                                    }
-                                }]
-                            }]
-                        },
-                    }
-                ]))
-                case 'group': return p_.option($, ($) => {
-                    const $v_group = $
-                    return p_.literal.list<Minimal_Completion_Suggestion>([
-                        p_.from.state($p.style).decide(
-                            ($): Minimal_Completion_Suggestion => {
+
+    type Minimal_Completion_Suggestions = p_di.List<Minimal_Completion_Suggestion>
+
+
+    const s_schema_Value = (
+        $: s_schema.Value,
+        $p: {
+            'style':
+            | ['verbose', null]
+            | ['concise', null]
+        }
+    ): Minimal_Completion_Suggestions => {
+        return p_.from.state($).decide(
+            ($): Minimal_Completion_Suggestions => {
+                switch ($[0]) {
+                    case 'component': return p_.option($, ($) => s_schema_Value(
+                        p_.from.state($.type).decide(
+                            ($): s_schema.Value => {
                                 switch ($[0]) {
-                                    case 'verbose': return p_.option($, ($) => ({
-                                        'label': "",
-                                        'insert value': {
-                                            'data': ['concrete', {
-                                                'type': ['group', ['verbose', {
-                                                    '(': {
-                                                        'comments': p_.literal.list([])
-                                                    },
-                                                    'properties': p_.from.dictionary($v_group).convert_to_list(
-                                                        ($, id) => ({
-                                                            'id': id,
-                                                            'value': p_.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
-                                                        })
-                                                    ),
-                                                    ')': {
-                                                        'comments': p_.literal.list([])
-                                                    },
-                                                }]]
-                                            }]
-                                        },
-
-                                    }))
-                                    case 'concise': return p_.option($, ($) => ({
-                                        'label': "",
-                                        'insert value': {
-                                            'data': ['concrete', {
-                                                'type': ['group', ['concise', {
-                                                    '<': {
-                                                        'comments': p_.literal.list([])
-                                                    },
-                                                    'properties': p_.from.dictionary($v_group).convert_to_list(
-                                                        ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
-                                                    ),
-                                                    '>': {
-                                                        'comments': p_.literal.list([])
-                                                    },
-                                                }]]
-                                            }]
-                                        },
-
-                                    }))
+                                    case 'external': return p_.option($, ($) => $.module['l entry']['root value'])
+                                    case 'internal': return p_.option($, ($) => $['l entry'].get_circular_dependent()['root value'])
+                                    case 'internal acyclic': return p_.option($, ($) => $['l entry']['root value'])
                                     default: return p_.exhaustive($[0])
                                 }
                             }),
+                        $p,
+                    ))
+                    case 'reference': return p_.option($, ($) => p_.literal.list<Minimal_Completion_Suggestion>([
+                        {
+                            'label': "",
+                            'insert value': {
+                                'data': ['concrete', {
+                                    'type': ['text', {
+                                        'delimiter': ['apostrophe', null],
+                                        'value': "...",
+                                        'trivia': {
+                                            'comments': p_.literal.list([])
+                                        }
+                                    }]
+                                }]
+                            },
+                        }
+                    ]))
+                    case 'group': return p_.option($, ($) => {
+                        const $v_group = $
+                        return p_.literal.list<Minimal_Completion_Suggestion>([
+                            p_.from.state($p.style).decide(
+                                ($): Minimal_Completion_Suggestion => {
+                                    switch ($[0]) {
+                                        case 'verbose': return p_.option($, ($) => ({
+                                            'label': "",
+                                            'insert value': {
+                                                'data': ['concrete', {
+                                                    'type': ['group', ['verbose', {
+                                                        '(': {
+                                                            'comments': p_.literal.list([])
+                                                        },
+                                                        'properties': p_.from.dictionary($v_group).convert_to_list(
+                                                            ($, id) => ({
+                                                                'id': id,
+                                                                'value': p_.literal.set(t_liana_schema_to_authoring_target.Value($.value, { 'style': ['verbose', null] }))
+                                                            })
+                                                        ),
+                                                        ')': {
+                                                            'comments': p_.literal.list([])
+                                                        },
+                                                    }]]
+                                                }]
+                                            },
 
+                                        }))
+                                        case 'concise': return p_.option($, ($) => ({
+                                            'label': "",
+                                            'insert value': {
+                                                'data': ['concrete', {
+                                                    'type': ['group', ['concise', {
+                                                        '<': {
+                                                            'comments': p_.literal.list([])
+                                                        },
+                                                        'properties': p_.from.dictionary($v_group).convert_to_list(
+                                                            ($, id) => t_liana_schema_to_authoring_target.Value($.value, { 'style': ['concise', null] })
+                                                        ),
+                                                        '>': {
+                                                            'comments': p_.literal.list([])
+                                                        },
+                                                    }]]
+                                                }]
+                                            },
+
+                                        }))
+                                        default: return p_.exhaustive($[0])
+                                    }
+                                }),
+
+                        ])
+                    })
+                    default: return p_.literal.list([
+                        {
+                            'label': "",
+                            'insert value': t_liana_schema_to_authoring_target.Value(
+                                $,
+                                { 'style': ['verbose', null] }
+                            ),
+
+
+                        }
                     ])
-                })
-                default: return p_.literal.list([
-                    {
-                        'label': "",
-                        'insert value': t_liana_schema_to_authoring_target.Value(
-                            $,
-                            { 'style': ['verbose', null] }
-                        ),
+                }
+            })
 
-
-                    }
-                ])
-            }
-        })
-
-}
-
-export const Found: declarations_.Found = ($, $p) => {
+    }
     switch ($[0]) {
         case 'value': return p_.option($, ($): s_out.Completion_Suggestions => {
             const definition = $.definition

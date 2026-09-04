@@ -2,7 +2,6 @@ import * as p_ from 'pareto-core/implementation/query'
 import * as p_r from 'pareto-core/implementation/refiner'
 import * as p_t from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
-import p_super_query_result from 'pareto-core/implementation/query/super_query_result'
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
 import * as p_select_lookup from 'pareto-core/implementation/transformer/specials/lookup'
 
@@ -23,16 +22,18 @@ export const $$: p_.Query_Implementation<
         'get schema path': query_interfaces.get_schema_path
     }
 > = p_.query(
-    ($d, $s, $q) => p_super_query_result($q['get schema path'](
-        {
-            'context path': $d['file path'].context,
-        },
-        ($): d.Error => ['schema path', $]
-    )).query(
+    (e, $s, $q, $d) => e.query(
+        ($d) => $q['get schema path'](
+            {
+                'context path': $d['file path'].context,
+            },
+            ($): d.Error => ['schema path', $]
+        )
+    ).query(
         ($v) => $q['get schema'](
             {
                 'schema path': $v,
-                'tab size': $d['tab size'],
+                'tab size': $d.deprecated['tab size'],
             },
             ($): d.Error => ['schema', {
                 'error': $,
@@ -43,16 +44,16 @@ export const $$: p_.Query_Implementation<
         ($v, abort) => p_r.from.state($v).decide(
             ($) => {
                 switch ($[0]) {
-                    case 'constrained': return p_r.ss($, ($): d.Result => ['constrained', r_resolve_result_from_unmarshall_result.Document(
+                    case 'constrained': return p_r.option($, ($): d.Result => ['constrained', r_resolve_result_from_unmarshall_result.Document(
                         r_unmarshall_result_from_loc.Document(
                             p_list_from_text(
-                                $d.content,
+                                $d.deprecated.content,
                                 ($) => $
                             ),
                             ($) => abort(['deserialize parse tree', $]),
                             {
                                 'module': $['module resolver'].entry.signature.module,
-                                'tab size': $d['tab size'],
+                                'tab size': $d.deprecated['tab size'],
                             }
                         ),
                         {
@@ -96,15 +97,15 @@ export const $$: p_.Query_Implementation<
                             )
                         }
                     )])
-                    case 'unconstrained': return p_r.ss($, ($) => ['unconstrained', r_unmarshall_result_from_loc.Document(
+                    case 'unconstrained': return p_r.option($, ($) => ['unconstrained', r_unmarshall_result_from_loc.Document(
                         p_list_from_text(
-                            $d.content,
+                            $d.deprecated.content,
                             ($) => $
                         ),
                         ($) => abort(['deserialize parse tree', $]),
                         {
                             'module': $.module.entry,
-                            'tab size': $d['tab size'],
+                            'tab size': $d.deprecated['tab size'],
                         }
                     )])
                     default: return p_r.exhaustive($[0])
