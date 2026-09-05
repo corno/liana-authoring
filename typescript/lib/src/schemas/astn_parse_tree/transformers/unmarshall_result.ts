@@ -1,8 +1,8 @@
-import * as p_ from 'pareto-core/implementation/transformer'
-import type * as p_di from 'pareto-core/interface/data'
+import * as p_ from 'pareto-core/transformer'
+import type * as p_di from 'pareto-core/schema'
 import p_implement_me from 'pareto-core-dev/implement_me'
-import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
-import p_create_refinement_context from 'pareto-core/implementation/__internal/sync/create_refinement_context'
+import p_unreachable_code_path from 'pareto-core/transformer/specials/unreachable_code_path'
+import p_create_refinement_context from 'pareto-core/__internal/sync/create_refinement_context'
 
 //schemas
 import type * as s_in from "../schema.js"

@@ -1,5 +1,5 @@
-import * as p_ from 'pareto-core/implementation/query'
-import * as p_temp from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/query'
+import * as p_temp from 'pareto-core/transformer'
 
 import type * as query_interfaces_file_in_file_out from "pareto-common/modules/file_in_file_out/queries/interfaces"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"

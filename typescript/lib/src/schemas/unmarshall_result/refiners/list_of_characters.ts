@@ -1,5 +1,5 @@
 
-import * as p_ from 'pareto-core/implementation/refiner'
+import * as p_ from 'pareto-core/refiner'
 
 //schemas
 import type * as s_out from "../../../schemas/unmarshall_result/schema.js"

@@ -1,5 +1,5 @@
 
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/transformer'
 
 //schemas
 import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"

@@ -1,5 +1,5 @@
 
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/transformer'
 
 import type * as s_out_2 from "../../diagnostics/schema.js"
 import type * as s_in from "../schema.js"

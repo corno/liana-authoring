@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/transformer'
 
-import type * as p_i from 'pareto-core/interface/transformer'
-import type * as p_di from 'pareto-core/interface/data'
+import type * as p_i from 'pareto-core/transformer'
+import type * as p_di from 'pareto-core/schema'
 import p_implement_me from 'pareto-core-dev/implement_me'
-import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
+import p_unreachable_code_path from 'pareto-core/transformer/specials/unreachable_code_path'
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
 
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"

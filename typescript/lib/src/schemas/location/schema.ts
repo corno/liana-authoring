@@ -1,5 +1,5 @@
 
-import * as p_i from 'pareto-core/interface/__internal/Abort'
+import * as p_i from 'pareto-core/__internal/Abort'
 
 export namespace Position_ {
     

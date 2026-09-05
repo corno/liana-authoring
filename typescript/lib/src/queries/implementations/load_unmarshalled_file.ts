@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/implementation/query'
-import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
-import p_variables from 'pareto-core/implementation/query/specials/variables'
+import * as p_ from 'pareto-core/query'
+import p_text_from_list from 'pareto-core/transformer/specials/text_from_list'
+import p_variables from 'pareto-core/query/specials/variables'
 
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
 

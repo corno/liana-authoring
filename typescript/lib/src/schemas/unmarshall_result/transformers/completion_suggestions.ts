@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/transformer'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
@@ -34,7 +34,7 @@ namespace declarations_ {
     >
 }
 
-import type * as p_di from 'pareto-core/interface/data'
+import type * as p_di from 'pareto-core/schema'
 
 
 

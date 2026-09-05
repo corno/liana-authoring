@@ -1,5 +1,5 @@
 
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/transformer'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
@@ -19,7 +19,7 @@ namespace declarations_ {
     >
 }
 
-import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
+import p_unreachable_code_path from 'pareto-core/transformer/specials/unreachable_code_path'
 
 //dependencies
 import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"

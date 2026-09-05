@@ -1,4 +1,4 @@
-// import * as p_ti from 'pareto-core/interface/transformer'
+// import * as p_ti from 'pareto-core/transformer'
 
 // import type * as s_resolve_result from "../resolve_result/schema.js"
 

@@ -1,6 +1,6 @@
 
-import * as p_ from 'pareto-core/implementation/refiner'
-import type * as p_ti from 'pareto-core/interface/transformer'
+import * as p_ from 'pareto-core/refiner'
+import type * as p_ti from 'pareto-core/transformer'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"

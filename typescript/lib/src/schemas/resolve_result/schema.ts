@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/interface/data'
+import * as p_ from 'pareto-core/schema'
 
 import type * as s_unmarshall_result from "../unmarshall_result/schema.js"
 

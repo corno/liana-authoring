@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/interface/data'
+import * as p_ from 'pareto-core/schema'
 
 //schemas
 import type * as s_astn_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree/schema"

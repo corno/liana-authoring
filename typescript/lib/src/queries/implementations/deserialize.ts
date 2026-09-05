@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/implementation/query'
-import * as p_r from 'pareto-core/implementation/refiner'
-import * as p_t from 'pareto-core/implementation/transformer'
-import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
+import * as p_ from 'pareto-core/query'
+import * as p_r from 'pareto-core/refiner'
+import * as p_t from 'pareto-core/transformer'
+import p_list_from_text from 'pareto-core/refiner/specials/list_from_text'
 import * as p_temp_dictionary from 'pareto-core/temp/Generic_Dictionary'
-import * as p_select_lookup from 'pareto-core/implementation/transformer/specials/lookup'
+import * as p_select_lookup from 'pareto-core/transformer/specials/lookup'
 
 import type * as query_interfaces from "../interfaces.js"
 
