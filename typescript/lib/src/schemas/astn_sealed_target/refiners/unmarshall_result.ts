@@ -25,31 +25,29 @@ namespace declarations_ {
 import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 
-export const Found: declarations_.Found = ($) => {
-    return p_.from.state($.type).decide(
-        ($) => {
-            switch ($[0]) {
-                case 'concrete': return p_.option($, ($): s_function.Found => p_.from.state($).decide(
-                    ($) => {
-                        switch ($[0]) {
-                            case 'dictionary': return p_.option($, ($) => ['dictionary', null])
-                            case 'group': return p_.option($, ($) => ['group', null])
-                            case 'list': return p_.option($, ($) => ['list', null])
-                            case 'nothing': return p_.option($, ($) => ['nothing', null])
-                            case 'optional': return p_.option($, ($) => ['optional', null])
-                            case 'state': return p_.option($, ($) => ['state', null])
-                            case 'text': return p_.option($, ($) => ['text', {
-                                'value': $.token.value
-                            }])
-                            default: return p_.exhaustive($[0])
-                        }
-                    }))
-                case 'include': return p_.option($, ($) => ['include', null])
-                case 'missing': return p_.option($, ($) => ['missing data', null])
-                default: return p_.exhaustive($[0])
-            }
-        })
-}
+export const Found: declarations_.Found = ($) => p_.from.state($.type).decide(
+    ($) => {
+        switch ($[0]) {
+            case 'concrete': return p_.option($, ($): s_function.Found => p_.from.state($).decide(
+                ($) => {
+                    switch ($[0]) {
+                        case 'dictionary': return p_.option($, ($) => ['dictionary', null])
+                        case 'group': return p_.option($, ($) => ['group', null])
+                        case 'list': return p_.option($, ($) => ['list', null])
+                        case 'nothing': return p_.option($, ($) => ['nothing', null])
+                        case 'optional': return p_.option($, ($) => ['optional', null])
+                        case 'state': return p_.option($, ($) => ['state', null])
+                        case 'text': return p_.option($, ($) => ['text', {
+                            'value': $.token.value
+                        }])
+                        default: return p_.exhaustive($[0])
+                    }
+                }))
+            case 'include': return p_.option($, ($) => ['include', null])
+            case 'missing': return p_.option($, ($) => ['missing data', null])
+            default: return p_.exhaustive($[0])
+        }
+    })
 
 //implementations
 // export const Document: Document = ($, abort) => {

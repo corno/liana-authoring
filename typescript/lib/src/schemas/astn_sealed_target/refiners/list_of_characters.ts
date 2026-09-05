@@ -22,14 +22,12 @@ namespace declarations_ {
 import * as r_unmarshall_result_from_list_of_characters from "../../unmarshall_result/refiners/list_of_characters.js"
 import * as r_sealed_target_from_unmarshall_result from "./unmarshall_result.js"
 
-export const Document: declarations_.Document = ($, abort, $p) => {
-    return r_sealed_target_from_unmarshall_result.Value(
-        r_unmarshall_result_from_list_of_characters.Document(
-            $,
-            ($) => abort(['unmarshall', $]),
-            $p.unmarshall
-        ).content,
-        ($) => abort(['seal', $]
-        )
+export const Document: declarations_.Document = ($, abort, $p) => r_sealed_target_from_unmarshall_result.Value(
+    r_unmarshall_result_from_list_of_characters.Document(
+        $,
+        ($) => abort(['unmarshall', $]),
+        $p.unmarshall
+    ).content,
+    ($) => abort(['seal', $]
     )
-}
+)
