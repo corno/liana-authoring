@@ -1,5 +1,6 @@
 
 import * as p_ from 'pareto-core/transformer'
+import * as p_s from 'pareto-core/serializer'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
@@ -20,6 +21,8 @@ namespace declarations_ {
 
 //dependencies
 import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
+import * as ser from "../serializers.js"
+
 
 export const Document: declarations_.Document = ($) => Value($.content)
 
@@ -121,7 +124,11 @@ export const Value: declarations_.Value = ($) => {
                                 'kind': ['array', null],
                                 'children': p_.from.list($.derived.items).map_with_index(
                                     ($, index): s_out.Symbol => ({
-                                        'name': `[${index}]`,
+                                        'name': p_s.ph.list(p_.literal.list([
+                                            "[",
+                                            ser.Number(index),
+                                            "]",
+                                        ])),
                                         'detail': "item",
                                         'value': Value($),
                                         'range': t_parse_tree_to_full_value_location.Value($.instance),

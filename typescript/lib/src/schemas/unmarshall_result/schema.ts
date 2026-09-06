@@ -99,32 +99,48 @@ export type Entry_Unmarshall_Error =
 
 export type Group = {
     'definition': s_schema.Value.group
-    'intermediate': {
-        'instance':
-        | ['group', {
-            'dummy': null
-            'type': Group_Type
-        }]
-        | ['dictionary', {
-            'dummy': null
-            'properties': Verbose_Properties
-        }]
-        | ['list', {
-            'dummy': null
-            'properties': Concise_Properties
-        }]
+    'intermediate': Group.intermediate
+    'derived': Group.derived
+}
+export namespace Group {
+    export type intermediate = {
+        'instance': intermediate.instance
     }
-    'derived': {
+
+    export namespace intermediate {
+        export type instance =
+            | ['group', {
+                'dummy': null
+                'type': Group_Type
+            }]
+            | ['dictionary', {
+                'dummy': null
+                'properties': Verbose_Properties
+            }]
+            | ['list', {
+                'dummy': null
+                'properties': Concise_Properties
+            }]
+    }
+    export type derived = {
         'style': Group_Type
-        'properties': p_.Dictionary<Property>
+        'properties': derived.properties
+    }
+
+    export namespace derived {
+        export type properties = p_.Dictionary<Property>
     }
 }
 
 export type Property = {
     'definition': s_schema.Group.D
-    'result':
-    | ['error', Property_Unmarshall_Error]
-    | ['success', Value]
+    'result': Property.result
+}
+
+export namespace Property {
+    export type result =
+        | ['error', Property_Unmarshall_Error]
+        | ['success', Value]
 }
 
 export type Property_Unmarshall_Error =
@@ -211,7 +227,10 @@ export type Optional_Instance_Optional =
 export type Optional = {
     'definition': s_schema.Value.optional
     'instance': Optional_Instance
-    'derived': {
+    'derived': Optional.derived
+}
+export namespace Optional {
+    export type derived = {
         'status':
         | ['set', {
             'child value': Value
@@ -247,7 +266,13 @@ export type State = {
     'definition': s_schema.Value.state
     'property pathx': Property_Path
     'parent range stack': Range_Stack
-    'intermediate': {
+    'intermediate': State.intermediate
+    'derived': {
+        'option status': State_Option
+    }
+}
+export namespace State {
+    export type intermediate = {
         'instance':
         | ['state', {
             'xxx': s_astn_parse_tree.Value.type_.concrete.state
@@ -258,9 +283,6 @@ export type State = {
             'xxx': s_astn_parse_tree.Value.type_.concrete.list
             'option status': State_Option
         }]
-    }
-    'derived': {
-        'option status': State_Option
     }
 }
 
@@ -304,7 +326,11 @@ export type Entry = {
         'id value pair': s_astn_parse_tree.ID_Value_Pairs.L
     }
     'id': string
-    'value': 
-    | ['set', Value]
-    | ['not set', null]
+    'value': Entry.value
+}
+
+export namespace Entry {
+    export type value =
+        | ['set', Value]
+        | ['not set', null]
 }

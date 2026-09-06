@@ -1,5 +1,6 @@
 
 import * as p_ from 'pareto-core/transformer'
+import * as p_s from 'pareto-core/serializer'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
@@ -136,7 +137,11 @@ export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall res
                                         case 'yes': return p_.option($, ($) => p_.literal.list([
                                             {
                                                 'range': $v_instance.range,
-                                                'target': $['path prefix'] + $v_instance.token.value + $['path suffix'],
+                                                'target': p_s.ph.list(p_.literal.list([
+                                                    $['path prefix'],
+                                                    $v_instance.token.value,
+                                                    $['path suffix'],
+                                                ])),
                                                 'tooltip': p_.literal.not_set()
                                             }
                                         ]))

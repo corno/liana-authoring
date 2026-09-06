@@ -43,6 +43,12 @@ namespace declarations_ {
     >
 }
 
+namespace s_parameters {
+    export type range_overlaps_position = {
+        'position': s_location.Position
+    }
+}
+
 
 //schemas
 import type * as s_astn_location from "astn-core/modules/deserialization/schemas/location/schema"
@@ -54,10 +60,7 @@ import type * as s_astn_location from "astn-core/modules/deserialization/schemas
 
 export const range_overlaps_position = (
     $: s_astn_location.Range,
-    $p: {
-        'position': s_location.Position
-
-    }
+    $p: s_parameters.range_overlaps_position
 ): boolean =>
     (
         $.start.relative.line < $p.position.line
@@ -87,11 +90,8 @@ export const Value_possibly_found: declarations_.Value_possibly_found = ($, $p) 
 
 export const Value: declarations_.Value = ($, $p) => {
 
-
-
     const this_value = (
     ): s_out.Found => ['value', $]
-
 
     return p_.from.state($['unmarshall result']).decide(
         ($) => {

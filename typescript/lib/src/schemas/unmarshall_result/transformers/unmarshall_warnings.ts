@@ -38,30 +38,25 @@ export const Value: declarations_.Value = ($) => {
                     ($): s_out.Warnings => {
                         switch ($[0]) {
                             case 'dictionary': return p_.option($, ($) => p_.from.list($.intermediate['entries as list']).flatten(
-                                ($) => $.intermediate['id value pair'].id.token.type[0] !== 'apostrophed'
-                                    ? p_.literal.list([
-                                        {
-                                            'range': $.intermediate['id value pair'].id.range,
-                                            'type': ['expected apostrophed text', null]
-                                        }
-                                    ])
-                                    : p_.from.state($.value).decide(
+                                ($) => $.intermediate['id value pair'].id.token.type[0] === 'apostrophed'
+                                    ? p_.from.state($.value).decide(
                                         ($) => {
                                             switch ($[0]) {
                                                 case 'set': return p_.option($, ($) => Value($))
                                                 case 'not set': return p_.option($, ($) => p_.literal.list<s_out.Warnings.L>([]))
                                                 default: return p_.exhaustive($[0])
                                             }
-                                        })
+                                        }
+                                    )
+                                    : p_.literal.list([
+                                        {
+                                            'range': $.intermediate['id value pair'].id.range,
+                                            'type': ['expected apostrophed text', null]
+                                        }
+                                    ])
                             ))
-                            case 'group': return p_.option($, ($) => $.intermediate.instance[0] !== 'group'
-                                ? p_.literal.list([
-                                    {
-                                        'range': start_token_range,
-                                        'type': ['expected a group', null]
-                                    }
-                                ])
-                                : p_.from.state($.derived.style).decide(
+                            case 'group': return p_.option($, ($) => $.intermediate.instance[0] === 'group'
+                                ? p_.from.state($.derived.style).decide(
                                     ($) => {
                                         switch ($[0]) {
                                             case 'concise': return p_.option($, ($) => p_.from.list($.properties).flatten(
@@ -99,7 +94,15 @@ export const Value: declarations_.Value = ($) => {
                                             ))
                                             default: return p_.exhaustive($[0])
                                         }
-                                    }))
+                                    }
+                                )
+                                : p_.literal.list([
+                                    {
+                                        'range': start_token_range,
+                                        'type': ['expected a group', null]
+                                    }
+                                ])
+                            )
                             case 'simple': return p_.option($, ($) => p_.from.state($.instance.token.type).decide(
                                 ($): boolean => {
                                     switch ($[0]) {

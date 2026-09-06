@@ -24,7 +24,7 @@ export const Error: declarations_.Error = ($) => p_.from.state($).decide(
 		switch ($[0]) {
 			case 'schema path': return p_.option($, ($) => ({
 				'severity': ['error', null],
-				'message': `no schema found`,
+				'message': "no schema found",
 				'range': p_.literal.not_set(),
 				'related information': p_.literal.not_set(),
 				'type': ['deserialize', null]

@@ -42,13 +42,17 @@ export type Dictionary = {
 }
 
 export type Entry = {
-    'unmarshall result':
-    | ['success',{
-        'value': 
-        | ['set', Value]
-        | ['not set', null]
-    }]
-    | ['error', null]
+    'unmarshall result': Entry.Unmarshall_Result
+}
+
+export namespace Entry {
+    export type Unmarshall_Result =
+        | ['success', {
+            'value':
+            | ['set', Value]
+            | ['not set', null]
+        }]
+        | ['error', null]
 }
 
 export type Group = {

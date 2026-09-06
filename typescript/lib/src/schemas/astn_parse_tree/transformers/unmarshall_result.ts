@@ -104,8 +104,8 @@ export const Value: declarations.Value = ($, $p) => {
                                                                         'property path': $p['property path'],
                                                                         'id': $.id.token.value,
                                                                         'value': p_.from.optional($.assignment).decide(
-                                                                            ($): s_out.Entry['value'] => p_.from.optional($.value).decide(
-                                                                                ($): s_out.Entry['value'] => ['set', Value(
+                                                                            ($): s_out.Entry.value => p_.from.optional($.value).decide(
+                                                                                ($): s_out.Entry.value => ['set', Value(
                                                                                     $,
                                                                                     {
                                                                                         'definition': dict_def.value,
@@ -236,7 +236,7 @@ export const Value: declarations.Value = ($, $p) => {
                                             }
                                             return ['group', p_.from.state($v_concrete_value).decide(
                                                 ($): s_out.Group => {
-                                                    const instance: s_out.Group['intermediate']['instance'] = p_.from.state($).decide(
+                                                    const instance: s_out.Group.intermediate.instance = p_.from.state($).decide(
                                                         ($) => {
                                                             switch ($[0]) {
                                                                 case 'dictionary': return p_.option($, ($) => ['dictionary', {
@@ -286,7 +286,7 @@ export const Value: declarations.Value = ($, $p) => {
                                                         'derived': {
                                                             'style': group_type,
                                                             'properties': p_.from.state(group_type).decide(
-                                                                ($): s_out.Group['derived']['properties'] => {
+                                                                ($): s_out.Group.derived.properties => {
                                                                     switch ($[0]) {
                                                                         case 'verbose': return p_.option($, ($) => {
                                                                             const $v_instance_lookup = p_.from.list($.properties).group(
@@ -298,13 +298,13 @@ export const Value: declarations.Value = ($, $p) => {
                                                                                     'definition': $,
                                                                                     'result': p_.from.dictionary($v_instance_lookup).get_possible_entry(
                                                                                         id,
-                                                                                        ($): s_out.Property['result'] => p_.from.list($).on_has_single_item(
-                                                                                            ($): s_out.Property['result'] => p_.from.state($['definition found']).decide(
+                                                                                        ($): s_out.Property.result => p_.from.list($).on_has_single_item(
+                                                                                            ($): s_out.Property.result => p_.from.state($['definition found']).decide(
                                                                                                 ($) => {
                                                                                                     switch ($[0]) {
-                                                                                                        case 'yes': return p_.option($, ($): s_out.Property['result'] => p_.from.optional($['value']).decide(
-                                                                                                            ($): s_out.Property['result'] => ['success', $],
-                                                                                                            (): s_out.Property['result'] => ['error', ['missing', {
+                                                                                                        case 'yes': return p_.option($, ($): s_out.Property.result => p_.from.optional($['value']).decide(
+                                                                                                            ($): s_out.Property.result => ['success', $],
+                                                                                                            (): s_out.Property.result => ['error', ['missing', {
                                                                                                                 'start token range': start_token_range
                                                                                                             }]]
                                                                                                         ))
@@ -312,17 +312,17 @@ export const Value: declarations.Value = ($, $p) => {
                                                                                                         default: return p_.exhaustive($[0])
                                                                                                     }
                                                                                                 }),
-                                                                                            ($): s_out.Property['result'] => {
+                                                                                            ($): s_out.Property.result => {
                                                                                                 const x: s_out.Property_Unmarshall_Error = ['multiple', {
                                                                                                     'instances': $
                                                                                                 }]
                                                                                                 return ['error', x]
                                                                                             },
-                                                                                            (): s_out.Property['result'] => ['error', ['missing', {
+                                                                                            (): s_out.Property.result => ['error', ['missing', {
                                                                                                 'start token range': start_token_range
                                                                                             }]]
                                                                                         ),
-                                                                                        (): s_out.Property['result'] => ['error', ['missing', {
+                                                                                        (): s_out.Property.result => ['error', ['missing', {
                                                                                             'start token range': start_token_range
                                                                                         }]]
                                                                                     )
@@ -348,14 +348,14 @@ export const Value: declarations.Value = ($, $p) => {
                                                                                     'definition': $,
                                                                                     'result': p_.from.dictionary($_instance_lookup).get_possible_entry(
                                                                                         id,
-                                                                                        ($): s_out.Property['result'] => p_.from.list($).on_has_single_item(
-                                                                                            ($): s_out.Property['result'] => ['success', $['value']],
+                                                                                        ($): s_out.Property.result => p_.from.list($).on_has_single_item(
+                                                                                            ($): s_out.Property.result => ['success', $['value']],
                                                                                             () => p_unreachable_code_path("definitions are determined based on position. 2 properties cannot have the same position"),
-                                                                                            (): s_out.Property['result'] => ['error', ['missing', {
+                                                                                            (): s_out.Property.result => ['error', ['missing', {
                                                                                                 'start token range': start_token_range
                                                                                             }]]
                                                                                         ),
-                                                                                        (): s_out.Property['result'] => ['error', ['missing', {
+                                                                                        (): s_out.Property.result => ['error', ['missing', {
                                                                                             'start token range': start_token_range
                                                                                         }]]
                                                                                     )
@@ -490,7 +490,7 @@ export const Value: declarations.Value = ($, $p) => {
                                                 'definition': def,
                                                 'instance': instance,
                                                 'derived': p_.from.state(instance).decide(
-                                                    ($): s_out.Optional['derived'] => {
+                                                    ($): s_out.Optional.derived => {
                                                         switch ($[0]) {
                                                             case 'list': return p_.option($, ($) => ({
                                                                 'status': ['set', {
@@ -565,7 +565,7 @@ export const Value: declarations.Value = ($, $p) => {
                                         })
                                         case 'state': return p_.option($, ($): s_out.Unmarshalled_Value => {
                                             const $v_def = $
-                                            const intermediate: s_out.State['intermediate'] = {
+                                            const intermediate: s_out.State.intermediate = {
                                                 'instance': p_.from.state($v_concrete_value).decide(
                                                     ($) => {
                                                         switch ($[0]) {

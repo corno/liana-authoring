@@ -348,7 +348,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                         'entries': p_.from.dictionary($.derived.entries).resolve(
                                                             ($, id, $al, $cl): s_out.Entry => ({
                                                                 'unmarshall result': p_.from.state($.result).decide(
-                                                                    ($): s_out.Entry['unmarshall result'] => {
+                                                                    ($): s_out.Entry.Unmarshall_Result => {
                                                                         switch ($[0]) {
                                                                             case 'success': return p_.option($, ($) => p_.from.state($.value).decide(
                                                                                 ($) => {

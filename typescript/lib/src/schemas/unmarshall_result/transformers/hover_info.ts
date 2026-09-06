@@ -1,8 +1,9 @@
 
 import * as p_ from 'pareto-core/transformer'
+import * as p_s from 'pareto-core/serializer'
 
 //schemas
-import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
+import type * as s_in from "../schema.js"
 import type * as s_location from "../../../schemas/location/schema.js"
 import type * as s_out from "../../../schemas/hover_info/schema.js"
 
@@ -20,29 +21,11 @@ namespace declarations_ {
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
+import * as ser from "../serializers.js"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/shorthands/deprecated"
 
-const Property_Path = ($: s_in.Property_Path): string => ser_rich_phrase.Phrase(
-    sh.ph.rich_phrase(
-        p_.from.list($).map(
-            ($) => p_.from.state($).decide(
-                ($) => {
-                    switch ($[0]) {
-                        case 'group': return p_.option($, ($) => sh.ph.text($))
-                        case 'optional': return p_.option($, ($) => sh.ph.text("O"))
-                        case 'state': return p_.option($, ($) => sh.ph.text($))
-                        default: return p_.exhaustive($[0])
-                    }
-                })),
-        null,
-        null,
-        sh.ph.text(" > "),
-        null,
-    ),
-)
 
 export const Document: declarations_.Document = ($, $p) => {
     return p_.from.state(
@@ -53,9 +36,9 @@ export const Document: declarations_.Document = ($, $p) => {
                 case 'value': return p_.option($, ($) => {
                     const $v_def = $.definition
                     return p_.literal.list([
-                        Property_Path($['property path']),
+                        ser.Property_Path($['property path']),
                         p_.from.state($['unmarshall result']).decide(
-                            ($): string => {
+                            ($): s_out.Hover_Texts.L => {
                                 switch ($[0]) {
                                     case 'error': return p_.option($, ($) => p_.from.state($).decide(
                                         ($) => {
@@ -109,7 +92,7 @@ export const Document: declarations_.Document = ($, $p) => {
                     ])
                 })
                 case 'entry': return p_.option($, ($) => p_.literal.list([
-                    Property_Path($['property path']),
+                    ser.Property_Path($['property path']),
                 ]))
                 case 'property': return p_.option($, ($) => p_.from.state($.style).decide(
                     ($) => {
@@ -136,7 +119,7 @@ export const Document: declarations_.Document = ($, $p) => {
                         }
                     }))
                 case 'state': return p_.option($, ($) => {
-                    const prop_path = Property_Path($['property pathx'])
+                    const prop_path = ser.Property_Path($['property pathx'])
                     return p_.from.state($.derived['option status']).decide(
                         ($) => {
                             switch ($[0]) {
@@ -148,7 +131,10 @@ export const Document: declarations_.Document = ($, $p) => {
                                     ),
                                 ]))
                                 case 'missing data': return p_.option($, ($) => p_.literal.list([
-                                    "property: " + prop_path,
+                                    p_s.ph.list(p_.literal.list([
+                                        "property: ",
+                                        prop_path,
+                                    ])),
                                     "use ctrl+d to get suggestions for options",
                                 ]))
                                 default: return p_.exhaustive($[0])

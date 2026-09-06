@@ -1,4 +1,5 @@
 import * as p_ from 'pareto-core/transformer'
+import * as p_s from 'pareto-core/serializer'
 
 //schemas
 import type * as s_in from "../../../schemas/retrieval_of_schema/schema.js"
@@ -38,7 +39,10 @@ export const Error: declarations_.Error = ($, $p) => {
 					'type': ['schema', null]
 				}))
 				case 'deserialize': return p_.option($, ($) => ({
-					'message': "failed to deserialize schema: " + ser_deserialize_resolved.Error($),
+					'message': p_s.ph.list(p_.literal.list([
+						"failed to deserialize schema: ",
+						ser_deserialize_resolved.Error($)
+					])),
 					'severity': ['error', null],
 					'related information': p_.literal.set(p_.literal.list([
 						{
