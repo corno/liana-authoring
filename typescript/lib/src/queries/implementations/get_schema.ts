@@ -11,9 +11,11 @@ import * as r_temp_module_specifier_from_loc from "pareto-liana/schemas/temp_mod
 
 export const $$: p_.Query_Implementation<
     query_interfaces.get_schema,
-    null,
     {
-        'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file
+        'tab size': number
+    },
+    {
+        'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file,
     }
 > = p_.query(
     (e, $s, $q, $d) => e.query(
@@ -29,7 +31,10 @@ export const $$: p_.Query_Implementation<
                 ($) => abort({
                     'schema path': $d.deprecated['schema path'],
                     'type': ['deserialize', $],
-                })
+                }),
+                {
+                    'tab size': $s['tab size']
+                }
 
             )
         )

@@ -18,7 +18,9 @@ export const $$: p_.Query_Implementation<
         d.Error,
         d.Parameters
     >,
-    null,
+    {
+        'tab size': number
+    },
     {
         'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file
         'stat': query_interfaces_pareto_filesystem_unrestricted_api.stat_possible_node
@@ -35,7 +37,9 @@ export const $$: p_.Query_Implementation<
                 null,
                 {
                     'get schema': q_get_schema(
-                        null,
+                        {
+                            'tab size': $s['tab size']
+                        },
                         {
                             'read file': $q['read file']
                         },

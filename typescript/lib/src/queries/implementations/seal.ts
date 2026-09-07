@@ -32,7 +32,9 @@ export const $$: p_.Query_Implementation<
 > = p_.query(
     (e, $s, $q) => e.query(
         ($d) => q_get_unmarshalled_file(
-            null,
+            {
+                'tab size': $s['tab size']
+            },
             {
                 'read file': $q['read file'],
                 'stat': $q['stat'],
