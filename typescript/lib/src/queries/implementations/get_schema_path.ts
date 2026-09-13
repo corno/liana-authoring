@@ -9,7 +9,7 @@ import type * as query_interfaces_pareto_filesystem_unrestricted_api from "paret
 import * as d from "../../schemas/retrieval_of_schema_path/schema.js"
 
 //depencencies
-import * as t_path_to_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/transformers/path"
+import * as t_path_to_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/transformers/path_extended_with_single_step"
 
 
 export const $$: p_.Query_Implementation<
@@ -21,27 +21,27 @@ export const $$: p_.Query_Implementation<
 > = p_.query(
     (e, $s, $q, $d) => p_variables(
         () => {
-            const schema_path = t_path_to_path.create_node_path(
-                t_path_to_path.extend_context_path_with_single_step(
+            const schema_path = {
+                'context': t_path_to_path.Context_Path(
                     $d.deprecated['context path'],
                     { 'addition': ".liana" }
                 ),
-                { 'node': "schema.slna" }
-            )
+                'node': "schema.slna"
+            }
             return e.query(
                 ($d) => $q['stat'](
-                schema_path,
-                ($): d.Error => ['stat error', $]
-            )).refine(
-                ($, abort) => p_temp.from.state($).decide(
-                    ($) => {
-                        switch ($[0]) {
-                            case 'does not exist': return p_temp.option($, ($) => abort(['not found', null]))
-                            case 'file': return p_temp.option($, ($) => schema_path)
-                            case 'directory': return p_temp.option($, ($) => abort(['not found', null]))
-                            default: return p_temp.exhaustive($[0])
-                        }
-                    })
-            )
+                    schema_path,
+                    ($): d.Error => ['stat error', $]
+                )).refine(
+                    ($, abort) => p_temp.from.state($).decide(
+                        ($) => {
+                            switch ($[0]) {
+                                case 'does not exist': return p_temp.option($, ($) => abort(['not found', null]))
+                                case 'file': return p_temp.option($, ($) => schema_path)
+                                case 'directory': return p_temp.option($, ($) => abort(['not found', null]))
+                                default: return p_temp.exhaustive($[0])
+                            }
+                        })
+                )
         })
 )
