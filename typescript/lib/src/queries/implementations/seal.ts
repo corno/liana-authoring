@@ -47,7 +47,7 @@ export const $$: p_.Query_Implementation<
             ($): s_file_in_file_out_query.Error => ({
                 'message': sh.ph.composed([
                     sh.ph.text(ser_path.Node_Path($d.path)),
-                    sh.ph.text("FIX location: "),
+                    sh.ph.text(" FIX location: "),
                     t_load_file_to_phrase.Error(
                         $,
                     )
@@ -67,7 +67,7 @@ export const $$: p_.Query_Implementation<
             ($) => abort(
                 {
                     'message': sh.ph.composed([
-                        sh.ph.text("FIX location: "),
+                        sh.ph.text(" FIX location: "),
                         t_auth_targ_from_unmarshall_result_to_rich_phrase.Error(
                             $,
                         )
