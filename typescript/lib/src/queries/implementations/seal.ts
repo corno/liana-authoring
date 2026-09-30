@@ -1,12 +1,12 @@
 import * as p_ from 'pareto-core/query'
 import * as p_temp from 'pareto-core/transformer'
 
-import type * as query_interfaces_file_in_file_out from "pareto-common/modules/file_in_file_out/queries/interfaces"
+import type * as query_interfaces_file_in_stream_out from "pareto-common/modules/file_in_stream_out/queries/interfaces"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
 import type * as s_paragraph_serialization from "pareto-fountain-pen/modules/paragraph/schemas/paragraph_serialization/schema"
 
 //data  types
-import type * as s_file_in_file_out_query from "pareto-common/modules/file_in_file_out/schemas/query/schema"
+import type * as s_file_in_stream_out_query from "pareto-common/modules/file_in_stream_out/schemas/query/schema"
 
 //dependencies
 import { $$ as q_get_unmarshalled_file } from "./load_unmarshalled_file.js"
@@ -20,7 +20,7 @@ import * as t_astn_sealed_target_to_paragraph from "astn-core/modules/serializat
 import * as sh from "pareto-fountain-pen/modules/paragraph/schemas/paragraph/shorthands/deprecated"
 
 export const $$: p_.Query_Implementation<
-    query_interfaces_file_in_file_out.operation,
+    query_interfaces_file_in_stream_out.operation,
     {
         'tab size': number,
         'serialization parameters': s_paragraph_serialization.Parameters,
@@ -44,7 +44,7 @@ export const $$: p_.Query_Implementation<
                 'file path': $d.path, //to determine the schema path
                 'tab size': $s['tab size'],
             },
-            ($): s_file_in_file_out_query.Error => ({
+            ($): s_file_in_stream_out_query.Error => ({
                 'message': sh.ph.composed([
                     sh.ph.text(ser_path.Node_Path($d.path)),
                     sh.ph.text(" FIX location: "),
@@ -76,8 +76,8 @@ export const $$: p_.Query_Implementation<
             )
         ),
     ).transform(
-        ($): s_file_in_file_out_query.Result => ({
-            'paragraph': t_astn_sealed_target_to_paragraph.Document(
+        ($): s_file_in_stream_out_query.Result => ({
+            'data': t_astn_sealed_target_to_paragraph.Document(
                 $,
             ),
         })
