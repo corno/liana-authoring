@@ -33,9 +33,9 @@ namespace declarations {
 
 
 //dependencies
-import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
+import * as t_parse_tree_to_full_value_location from "astn-runtime/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
 
-import * as t_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
+import * as t_parse_tree_to_start_token_location from "astn-runtime/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 export const Document: declarations.Document = ($, $p) => ({
     'header': p_.from.optional($['header']).map(

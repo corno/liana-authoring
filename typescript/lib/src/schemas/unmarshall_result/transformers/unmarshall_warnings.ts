@@ -20,7 +20,7 @@ namespace declarations_ {
 }
 
 //dependencies
-import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
+import * as t_astn_parse_tree_to_start_token_location from "astn-runtime/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 
 export const Document: declarations_.Document = ($) => Value(

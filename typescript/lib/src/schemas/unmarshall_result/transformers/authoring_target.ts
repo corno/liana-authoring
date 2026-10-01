@@ -3,7 +3,7 @@ import * as p_ from 'pareto-core/transformer'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
-import type * as s_in_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree/schema"
+import type * as s_in_parse_tree from "astn-runtime/modules/deserialization/schemas/parse_tree/schema"
 import type * as s_out from "astn/modules/authoring_target/schemas/authoring_target/schema"
 import type * as s_function from "../../../schemas/unmarshall_result_to_authoring_target/schema.js"
 

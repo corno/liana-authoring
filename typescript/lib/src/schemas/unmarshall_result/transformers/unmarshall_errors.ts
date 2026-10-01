@@ -22,7 +22,7 @@ namespace declarations_ {
 import p_unreachable_code_path from 'pareto-core/transformer/specials/unreachable_code_path'
 
 //dependencies
-import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
+import * as t_astn_parse_tree_to_start_token_location from "astn-runtime/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 
 export const Document: declarations_.Document = ($) => {

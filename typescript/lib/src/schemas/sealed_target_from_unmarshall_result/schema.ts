@@ -1,4 +1,4 @@
-import type * as s_location from "astn-core/modules/deserialization/schemas/location/schema"
+import type * as s_location from "astn-runtime/modules/deserialization/schemas/location/schema"
 
 export type Error = {
     'type': Error_Type

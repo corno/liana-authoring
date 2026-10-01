@@ -1,1 +1,1 @@
-export * from "astn-core/modules/serialization/schemas/sealed_target/schema"
+export * from "astn-runtime/modules/serialization/schemas/sealed_target/schema"

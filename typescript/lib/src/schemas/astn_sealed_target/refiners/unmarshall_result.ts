@@ -5,7 +5,7 @@ import type * as p_ti from 'pareto-core/transformer'
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
 import type * as s_out from "../schema.js"
-import type * as s_in_astn_parse_tree from "astn-core/modules/deserialization/schemas/parse_tree/schema"
+import type * as s_in_astn_parse_tree from "astn-runtime/modules/deserialization/schemas/parse_tree/schema"
 import type * as s_function from "../../../schemas/sealed_target_from_unmarshall_result/schema.js"
 
 namespace declarations_ {
@@ -22,7 +22,7 @@ namespace declarations_ {
 }
 
 //dependencies
-import * as t_astn_parse_tree_to_start_token_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
+import * as t_astn_parse_tree_to_start_token_location from "astn-runtime/modules/deserialization/schemas/parse_tree/transformers/start_token_range"
 
 
 export const Found: declarations_.Found = ($) => p_.from.state($.type).decide(

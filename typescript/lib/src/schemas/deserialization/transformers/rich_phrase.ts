@@ -13,7 +13,7 @@ export type Error = p_.Transformer<
 }
 
 //dependencies
-import * as ser_parse_tree_deserialization from "astn-core/modules/deserialization/schemas/parse_tree_deserialization/serializers"
+import * as ser_parse_tree_deserialization from "astn-runtime/modules/deserialization/schemas/parse_tree_deserialization/serializers"
 import * as t_get_schema_to_rich_phrase from "../../retrieval_of_schema/transformers/rich_phrase.js"
 import * as t_get_schema_path_to_rich_phrase from "../../retrieval_of_schema_path/transformers/rich_phrase.js"
 

@@ -21,7 +21,7 @@ namespace declarations_ {
 
 //dependencies
 import * as t_to_unmarshall_result_value_at_position from "./found.js"
-import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
+import * as t_parse_tree_to_full_value_location from "astn-runtime/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
 
 
 export const Document: declarations_.Document = ($, $p) => {

@@ -14,7 +14,7 @@ import * as t_load_file_to_phrase from "../../schemas/get_unmarshalled_file/tran
 import * as ser_path from "pareto-filesystem-unrestricted-api/modules/unrestricted/schemas/path/serializers"
 import * as r_astn_sealed_target_from_unmarshall_result from "../../schemas/astn_sealed_target/refiners/unmarshall_result.js"
 import * as t_auth_targ_from_unmarshall_result_to_rich_phrase from "../../schemas/sealed_target_from_unmarshall_result/transformers/rich_phrase.js"
-import * as t_astn_sealed_target_to_paragraph from "astn-core/modules/serialization/schemas/sealed_target/transformers/paragraph"
+import * as t_astn_sealed_target_to_paragraph from "astn-runtime/modules/serialization/schemas/sealed_target/transformers/paragraph"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/modules/paragraph/schemas/paragraph/shorthands/deprecated"

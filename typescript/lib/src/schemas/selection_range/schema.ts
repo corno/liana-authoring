@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/schema'
 
 //schemas
-import type * as s_location from "astn-core/modules/deserialization/schemas/location/schema"
+import type * as s_location from "astn-runtime/modules/deserialization/schemas/location/schema"
 
 export type Selection_Range = {
     'range': s_location.Range

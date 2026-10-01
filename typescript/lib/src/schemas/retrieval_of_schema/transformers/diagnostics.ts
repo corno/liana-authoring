@@ -23,9 +23,9 @@ namespace declarations_ {
 }
 
 //dependencies
-import * as ser_deserialize_resolved from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
+import * as ser_deserialize_resolved from "liana-runtime/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
 import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/serializers"
-import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/transformers/location"
+import * as t_resolved_document_deserialization_to_location from "liana-runtime/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/transformers/location"
 
 export const Error: declarations_.Error = ($, $p) => {
 	return p_.from.state($.type).decide(

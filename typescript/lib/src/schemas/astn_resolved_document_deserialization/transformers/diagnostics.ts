@@ -40,8 +40,8 @@ namespace declarations_ {
 }
 
 //dependencies
-import * as t_resolved_document_deserialization_to_location from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/transformers/location"
-import * as ser_resolved_document_deserialization from "liana-core/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
+import * as t_resolved_document_deserialization_to_location from "liana-runtime/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/transformers/location"
+import * as ser_resolved_document_deserialization from "liana-runtime/modules/resolved_document_deserialization/schemas/resolved_document_deserialization/serializers"
 
 
 export const Error: declarations_.Error = ($, $p) => ({

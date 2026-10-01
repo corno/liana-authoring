@@ -51,10 +51,10 @@ namespace s_parameters {
 
 
 //schemas
-import type * as s_astn_location from "astn-core/modules/deserialization/schemas/location/schema"
+import type * as s_astn_location from "astn-runtime/modules/deserialization/schemas/location/schema"
 
 //dependencies
- import * as t_parse_tree_to_full_value_location from "astn-core/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
+ import * as t_parse_tree_to_full_value_location from "astn-runtime/modules/deserialization/schemas/parse_tree/transformers/full_value_range"
 
 
 
