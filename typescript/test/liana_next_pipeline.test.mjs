@@ -19,7 +19,7 @@ const lookup = await import(require.resolve('pareto-core/refiner/specials/lookup
 const abort = error => { throw error }
 const chars = source => p.literal.list(Array.from(source, c => c.codePointAt(0)))
 const entry = (dictionary, name) => p.from.dictionary(dictionary).get_possible_entry(name, value => value, () => assert.fail(name))
-const fixture = name => input(fileURLToPath(new URL(name + '.liana_next.lna', examples)))
+const fixture = name => input(fileURLToPath(new URL(name + '.liana.lna', examples)))
 const compile = directory => {
     const configuration = join(directory, 'tsconfig.json')
     const config = JSON.parse(readFileSync(configuration, 'utf8'))
@@ -94,6 +94,276 @@ test('semantic API exposes parsing and the declared resolver separately', async 
     }
 })
 
+test('Lioncore resolves language and entity references with explicit dependency kinds', async t => {
+    const directory = mkdtempSync(join(tmpdir(), 'liana-next-lioncore-'))
+    try {
+        const source = fixture('lioncore')
+        const root = entry(source[1].types, 'Root')['root value']
+        assert.deepEqual(root[1].__get_raw().map(([id]) => id), ['languages', 'primary language'])
+        assert.deepEqual(source[1].globals['simple types'].__get_raw().map(([id]) => id), ['boolean', 'version'])
+        const generated = pipeline(source)
+        assert.deepEqual(placeholders(generated.pareto), [])
+        write(generated.typescript, directory)
+        assert.deepEqual(typecheck(directory), { status: 'passed' })
+        compile(directory)
+        const parser = await import(pathToFileURL(join(directory, 'dist/schemas/unresolved/refiners/list_of_characters.js')))
+        const resolver = await import(pathToFileURL(join(directory, 'dist/schemas/resolved/refiners/unresolved.js')))
+        const serializer = await import(pathToFileURL(join(directory, 'dist/schemas/resolved/transformers/serialized_paragraph.js')))
+        const parse = text => parser.Root(chars(text), abort, { 'tab size': 4 })
+        const resolve = value => resolver.Root(value, abort, null, null)
+        const plain = value => JSON.parse(JSON.stringify(value, (_key, item) =>
+            item?.__dictionary ? { ...item, source: [...item.source].sort(([left], [right]) => left.localeCompare(right)) } : item))
+        const present = value => p.from.optional(value).decide(value => value, () => assert.fail('Expected a present reference'))
+        const authored = parse(`(
+            languages: {
+                'Main': (
+                    version: "1"
+                    \`depends on\`: { 'Base': 'Base' }
+                    entities: {
+                        'Person': | classifier (
+                            features: {
+                                'name': ( optional: false kind: | property ( type: | local ( entity: 'Text' ) ) )
+                                'other': ( optional: true kind: | link (
+                                    multiple: false type: | local ( entity: 'Other' ) kind: | reference ~
+                                ) )
+                                'children': ( optional: false kind: | link (
+                                    multiple: true type: | external ( language: 'Base' entity: 'Node' ) kind: | containment ~
+                                ) )
+                            }
+                            kind: | concept (
+                                abstract: false partition: false
+                                extends: * | local ( entity: 'Other' )
+                                implements: [ | local ( entity: 'Interface' ) ]
+                            )
+                        )
+                        'Note': | classifier (
+                            features: {}
+                            kind: | annotation (
+                                annotates: * | local ( entity: 'Person' )
+                                extends: * | external ( language: 'Base' entity: 'Annotation' )
+                                implements: []
+                            )
+                        )
+                        'Interface': | classifier (
+                            features: {}
+                            kind: | interface ( extends: [ | external ( language: 'Base' entity: 'Interface' ) ] )
+                        )
+                        'Record': | \`data type\` | \`structured data type\` (
+                            fields: { 'value': ( type: | external ( language: 'Base' entity: 'Text' ) ) }
+                        )
+                        'Text': | \`data type\` | \`primitive type\` ~
+                        'Other': | classifier (
+                            features: {} kind: | concept ( abstract: false partition: false extends: _ implements: [] )
+                        )
+                    }
+                )
+                'Base': (
+                    version: "1" \`depends on\`: {}
+                    entities: {
+                        'Text': | \`data type\` | \`primitive type\` ~
+                        'Node': | classifier (
+                            features: {} kind: | concept ( abstract: false partition: false extends: _ implements: [] )
+                        )
+                        'Interface': | classifier ( features: {} kind: | interface ( extends: [] ) )
+                        'Annotation': | classifier (
+                            features: {} kind: | annotation ( annotates: _ extends: _ implements: [] )
+                        )
+                    }
+                )
+            }
+            \`primary language\`: 'Main'
+        )`)
+
+        await t.test('forward references preserve target identity and serialize back to identifiers', () => {
+            const resolved = resolve(authored)
+            const main = entry(resolved.languages, 'Main')
+            const base = entry(resolved.languages, 'Base')
+            const person = entry(main.entities, 'Person')[1]
+            assert.equal(resolved['primary language']['l entry'], main)
+            assert.equal(entry(main['depends on'], 'Base')['l entry'], base)
+            assert.equal(entry(person.features, 'name').kind[1].type[1].entity['l entry'], entry(main.entities, 'Text'))
+            assert.equal(entry(person.features, 'other').kind[1].type[1].entity['l entry'], entry(main.entities, 'Other'))
+            const external = entry(person.features, 'children').kind[1].type[1]
+            assert.equal(external.language['l entry'], entry(main['depends on'], 'Base'))
+            assert.equal(external.entity['l entry'], entry(base.entities, 'Node'))
+            assert.equal(present(person.kind[1].extends)[1].entity['l entry'], entry(main.entities, 'Other'))
+            assert.equal(person.kind[1].implements.__get_raw()[0][1].entity['l entry'], entry(main.entities, 'Interface'))
+            const note = entry(main.entities, 'Note')[1].kind[1]
+            assert.equal(present(note.annotates)[1].entity['l entry'], entry(main.entities, 'Person'))
+            assert.equal(present(note.extends)[1].entity['l entry'], entry(base.entities, 'Annotation'))
+            const iface = entry(main.entities, 'Interface')[1].kind[1]
+            assert.equal(iface.extends.__get_raw()[0][1].entity['l entry'], entry(base.entities, 'Interface'))
+            const record = entry(main.entities, 'Record')[1][1]
+            assert.equal(entry(record.fields, 'value').type[1].entity['l entry'], entry(base.entities, 'Text'))
+            const rendered = serializer.Root(resolved, { indentation: '    ' }).__get_raw().join('\n')
+            assert.doesNotMatch(rendered, /l entry|l id/)
+            assert.deepEqual(plain(parse(rendered)), plain(authored))
+        })
+
+        const primitive = '| `data type` | `primitive type` ~'
+        const record = reference => `| \`data type\` | \`structured data type\` ( fields: { 'value': ( type: ${reference} ) } )`
+        const local = id => `| local ( entity: '${id}' )`
+        const cyclic = id => `| \`local cyclic\` ( entity: '${id}' )`
+        const external = (language, id) => `| external ( language: '${language}' entity: '${id}' )`
+        const language = (dependencies, entities) =>
+            `( version: "1" \`depends on\`: { ${dependencies} } entities: { ${entities} } )`
+        const document = (languages, primary = 'Main') =>
+            parse(`( languages: { ${languages} } \`primary language\`: '${primary}' )`)
+        await t.test('local cyclic explicitly allows self and mutual references with identity-preserving handles', () => {
+            const source = document(`'Main': ${language('', `
+                'Self': ${record(cyclic('Self'))}
+                'A': ${record(cyclic('B'))}
+                'B': ${record(cyclic('A'))}
+            `)}`)
+            const resolved = resolve(source)
+            const entities = entry(resolved.languages, 'Main').entities
+            for (const [owner, target] of [['Self', 'Self'], ['A', 'B'], ['B', 'A']]) {
+                const reference = entry(entry(entities, owner)[1][1].fields, 'value').type
+                assert.equal(reference[0], 'local cyclic')
+                assert.equal(reference[1].entity['l entry'].get_circular_dependent(), entry(entities, target))
+            }
+            assert.deepEqual(plain(parse(serializer.Root(resolved, { indentation: '    ' }).__get_raw().join('\n'))), plain(source))
+            assert.throws(() => resolve(document(`'Main': ${language('', "'A': " + record(cyclic('Missing')))}`)),
+                error => error.type === 'no such entry' && error.id === 'Missing')
+        })
+        await t.test('self and mutual language/entity dependencies fail explicitly', () => {
+            const cases = [
+                `'Main': ${language("'Main': 'Main'", '')}`,
+                `'Main': ${language("'Base': 'Base'", '')} 'Base': ${language("'Main': 'Main'", '')}`,
+                `'Main': ${language('', "'Self': " + record(local('Self')))}`,
+                `'Main': ${language('', "'A': " + record(local('B')) + " 'B': " + record(local('A')))}`,
+            ]
+            for (const source of cases)
+                assert.throws(() => resolve(document(source)), error => error.type === 'cycle detected', source)
+        })
+        await t.test('missing targets and undeclared or transitively declared languages fail explicitly', () => {
+            const emptyMain = `'Main': ${language('', '')}`
+            const cases = [
+                [emptyMain, 'Missing', 'Missing'],
+                [`'Main': ${language("'Missing': 'Missing'", '')}`, 'Main', 'Missing'],
+                [`'Main': ${language('', "'A': " + record(local('Missing')))} `, 'Main', 'Missing'],
+                [`'Main': ${language("'Base': 'Base'", "'A': " + record(external('Base', 'Missing')))}
+                    'Base': ${language('', '')}`, 'Main', 'Missing'],
+                [`'Main': ${language('', "'A': " + record(external('Base', 'Text')))}
+                    'Base': ${language('', "'Text': " + primitive)}`, 'Main', 'Base'],
+                [`'Main': ${language("'Middle': 'Middle'", "'A': " + record(external('Base', 'Text')))}
+                    'Middle': ${language("'Base': 'Base'", '')}
+                    'Base': ${language('', "'Text': " + primitive)}`, 'Main', 'Base'],
+            ]
+            for (const [source, primary, id] of cases)
+                assert.throws(() => resolve(document(source, primary)), error =>
+                    error.type === 'no such entry' && error.id === id, source)
+        })
+        await t.test('the full SysML fixture preserves the supplied language and resolves explicit local cycles', () => {
+            const value = parse(readFileSync(new URL('lioncore/sysml.lna', examples), 'utf8'))
+            const sysml = entry(value.languages, 'sysml')
+            const types = entry(value.languages, 'types')
+            assert.equal(value['primary language'], 'sysml')
+            assert.equal(entry(sysml['depends on'], 'types'), 'types')
+            assert.deepEqual(types.entities.__get_raw().map(([id]) => id), ['Boolean', 'String', 'Integer', 'Real'])
+            assert.ok(types.entities.__get_raw().every(([, entity]) => entity[0] === 'data type' && entity[1][0] === 'primitive type'))
+            const original = JSON.parse(readFileSync(new URL('../packages/pareto-lionweb/data/SysML_lionweb_lionweb.json', base), 'utf8'))
+            const nodes = new Map(original.nodes.map(node => [node.id, node]))
+            const name = node => node.properties.find(property => property.property.key === 'LionCore-builtins-INamed-name').value
+            const properties = node => Object.fromEntries(node.properties.map(property => [property.property.key, property.value]))
+            const children = (node, key) => node.containments.find(containment => containment.containment.key === key).children
+            const references = node => Object.fromEntries(node.references.map(reference =>
+                [reference.reference.key, reference.targets.map(target => target.reference)]))
+            const originalLanguage = original.nodes.find(node => node.classifier.key === 'Language')
+            const entityIds = children(originalLanguage, 'Language-entities')
+            assert.equal(sysml.version, properties(originalLanguage)['Language-version'])
+            assert.deepEqual(sysml.entities.__get_raw().map(([id]) => id), entityIds.map(id => name(nodes.get(id))))
+            const target = id => nodes.has(id)
+                ? ['local', { entity: name(nodes.get(id)) }]
+                : ['external', { language: 'types', entity: id.replace(/^types-/, '') }]
+            let features = 0, literals = 0, selfReferences = 0, cyclicReferences = 0
+            for (const id of entityIds) {
+                const source = nodes.get(id)
+                const converted = entry(sysml.entities, name(source))
+                const refs = references(source)
+                if (source.classifier.key === 'Enumeration') {
+                    const ids = children(source, 'Enumeration-literals')
+                    assert.deepEqual(plain(converted), plain(['data type', ['enumeration', {
+                        literals: p.literal.dictionary(Object.fromEntries(ids.map(id => [name(nodes.get(id)), null]))),
+                    }]]))
+                    literals += ids.length
+                    continue
+                }
+                assert.equal(converted[0], 'classifier')
+                const classifier = converted[1]
+                const featureIds = children(source, 'Classifier-features')
+                assert.deepEqual(classifier.features.__get_raw().map(([id]) => id), featureIds.map(id => name(nodes.get(id))))
+                for (const featureId of featureIds) {
+                    const feature = nodes.get(featureId)
+                    const props = properties(feature)
+                    const convertedFeature = entry(classifier.features, name(feature))
+                    const isProperty = feature.classifier.key === 'Property'
+                    const referent = references(feature)[isProperty ? 'Property-type' : 'Link-type'][0]
+                    assert.equal(convertedFeature.optional, props['Feature-optional'] === 'true')
+                    assert.equal(convertedFeature.kind[0], isProperty ? 'property' : 'link')
+                    const expected = target(referent)
+                    if (convertedFeature.kind[1].type[0] === 'local cyclic') {
+                        assert.equal(isProperty, false)
+                        assert.equal(expected[0], 'local')
+                        expected[0] = 'local cyclic'
+                        cyclicReferences++
+                    }
+                    assert.deepEqual(convertedFeature.kind[1].type, expected)
+                    if (!isProperty) {
+                        assert.equal(convertedFeature.kind[1].multiple, props['Link-multiple'] === 'true')
+                        assert.deepEqual(convertedFeature.kind[1].kind,
+                            [feature.classifier.key === 'Containment' ? 'containment' : 'reference', null])
+                    }
+                    if (referent === id) selfReferences++
+                    features++
+                }
+                if (source.classifier.key === 'Concept') {
+                    const props = properties(source)
+                    assert.equal(classifier.kind[0], 'concept')
+                    assert.equal(classifier.kind[1].abstract, props['Concept-abstract'] === 'true')
+                    assert.equal(classifier.kind[1].partition, props['Concept-partition'] === 'true')
+                    assert.deepEqual(plain(classifier.kind[1].extends), plain(refs['Concept-extends'].length
+                        ? p.literal.set(target(refs['Concept-extends'][0])) : p.literal.not_set()))
+                    assert.deepEqual(classifier.kind[1].implements.__get_raw(), refs['Concept-implements'].map(target))
+                } else {
+                    assert.equal(classifier.kind[0], 'interface')
+                    assert.deepEqual(classifier.kind[1].extends.__get_raw(), refs['Interface-extends'].map(target))
+                }
+            }
+            assert.equal(entityIds.length, 222)
+            assert.equal(features, 421)
+            assert.equal(literals, 19)
+            assert.equal(1 + entityIds.length + features + literals, original.nodes.length)
+            assert.equal(selfReferences, 14)
+            assert.equal(cyclicReferences, 248)
+            const resolved = resolve(value)
+            const resolvedSysml = entry(resolved.languages, 'sysml')
+            const resolvedTypes = entry(resolved.languages, 'types')
+            assert.equal(resolved['primary language']['l entry'], resolvedSysml)
+            assert.equal(entry(resolvedSysml['depends on'], 'types')['l entry'], resolvedTypes)
+            for (const [, classifier] of resolvedSysml.entities.__get_raw()) {
+                if (classifier[0] !== 'classifier') continue
+                for (const [, feature] of classifier[1].features.__get_raw()) {
+                    const reference = feature.kind[1].type
+                    const selected = reference[1].entity
+                    const entities = reference[0] === 'external' ? resolvedTypes.entities : resolvedSysml.entities
+                    assert.equal(reference[0] === 'local cyclic'
+                        ? selected['l entry'].get_circular_dependent() : selected['l entry'],
+                    entry(entities, selected['l id']))
+                }
+            }
+            const rendered = serializer.Root(resolved, { indentation: '    ' }).__get_raw().join('\n')
+            assert.deepEqual(plain(parse(rendered)), plain(value))
+            const allAcyclic = parse(readFileSync(new URL('lioncore/sysml.lna', examples), 'utf8').replaceAll(
+                '| `local cyclic`', '| `local`'))
+            assert.throws(() => resolve(allAcyclic), error =>
+                error.type === 'cycle detected' && error.id === 'Subclassification')
+        })
+    } finally {
+        rmSync(directory, { recursive: true })
+    }
+})
+
 test('the native schema-document API round-trips without derived-field placeholders', () => {
     const source = fixture('resolver')
     const serialized = authoringSerializer.Root(source, { indentation: '    ' }).__get_raw().join('\n')
@@ -145,7 +415,7 @@ test('Liana Next identity assertions compare selected nodes, not their contents'
     )`
     const directory = mkdtempSync(join(tmpdir(), 'liana-next-identity-'))
     try {
-        const schemaPath = join(directory, 'identity.liana_next.lna')
+        const schemaPath = join(directory, 'identity.liana.lna')
         symlinkSync(fileURLToPath(new URL('.liana/', examples)), join(directory, '.liana'), 'dir')
         writeFileSync(schemaPath, source)
         const generated = pipeline(input(schemaPath))
@@ -182,10 +452,10 @@ test('the placeholder audit counts expression payloads, not dictionary option na
     assert.equal(report.placeholderExpressions, 6)
     assert.equal(report.typescriptPlaceholderCalls, 6)
     assert.deepEqual(report.results.filter(result => result.placeholders.length).map(result => [result.name, result.placeholders.length]),
-        [['json_schema_light.liana_next.lna', 2],
-            ['programming_languages--pareto_next.liana_next.lna', 3], ['sql_query.liana_next.lna', 1]])
-    assert.ok(!report.results.some(result => result.name === 'liana.liana_next.lna'))
-    assert.ok(report.results.some(result => result.name === 'liana_next.liana_next.lna'))
+        [['json_schema_light.liana.lna', 2],
+            ['programming_languages--pareto_next.liana.lna', 3], ['sql_query.liana.lna', 1]])
+    assert.ok(!report.results.some(result => result.name === 'liana.liana.lna'))
+    assert.ok(report.results.some(result => result.name === 'liana_next.liana.lna'))
     assert.ok(report.results.filter(result => result.branch === 'astn').every(result => result.status === 'emitted' && result.placeholders.length === 0))
     assert.deepEqual(report.results.filter(result => result.status === 'failed'), [])
 })
@@ -322,10 +592,165 @@ test('Liana Next infers constraint metadata without declaring or parsing metadat
     }
 })
 
+test('group selection constraints infer metadata types, preserve dependencies and identity, and serialize only data', async () => {
+    const dict = p.literal.dictionary
+    const base = fixture('resolver')[1]
+    const selection = (kind, name, path = []) => ({ start: [kind, name], tail: { path: p.literal.list(path) } })
+    const constraints = {
+        alias: selection('metadata', 'node'),
+        node: selection('sibling', 'seed', [['component', null]]),
+    }
+    const properties = dict({
+        seed: { resolver: ['component', { location: ['internal', 'Source'], arguments: p.literal.not_set(), constraints: dict({}) }] },
+        meta: { resolver: ['simple', null] },
+    })
+    const signature = entry(base.resolver.signatures.signatures, 'Root')
+    const withConstraints = results => ['liana', {
+        ...base,
+        types: dict({
+            Source: { 'root value': ['group', dict({ label: { description: p.literal.not_set(), value: ['simple', 'Text'] } })] },
+            Root: { 'root value': ['group', dict({
+                seed: { description: p.literal.not_set(), value: ['component', { type: ['internal', 'Source'], results: p.literal.not_set() }] },
+                meta: { description: p.literal.not_set(), value: ['simple', 'Text'] },
+            })] },
+        }),
+        resolver: {
+            signatures: { ...base.resolver.signatures, signatures: dict({ Source: signature, Root: signature }) },
+            types: dict({
+                Source: { 'root value resolver': ['group', dict({ label: { resolver: ['simple', null] } })] },
+                Root: { 'root value resolver': ['with constraints', { constraints: dict(results), resolver: properties }] },
+            }),
+        },
+    }]
+    const source = withConstraints(constraints)
+    const serializedSchema = authoringSerializer.Root(source, { indentation: '    ' }).__get_raw().join('\n')
+    assert.deepEqual(api.Root(chars(serializedSchema), abort, { 'tab size': 4 }), source)
+    const directory = mkdtempSync(join(tmpdir(), 'liana-next-group-metadata-'))
+    try {
+        const generated = pipeline(source)
+        assert.deepEqual(placeholders(generated.pareto), [])
+        assert.equal(write(generated.typescript, directory).typescriptPlaceholders, 0)
+        assert.deepEqual(typecheck(directory), { status: 'passed' })
+        compile(directory)
+        const parse = await import(pathToFileURL(join(directory, 'dist/schemas/unresolved/refiners/list_of_characters.js')))
+        const resolve = await import(pathToFileURL(join(directory, 'dist/schemas/resolved/refiners/unresolved.js')))
+        const serialize = await import(pathToFileURL(join(directory, 'dist/schemas/resolved/transformers/serialized_paragraph.js')))
+        const authored = parse.Root(chars('( seed: ( label: "node" ) meta: "authored" )'), abort, { 'tab size': 4 })
+        assert.deepEqual(authored, { seed: { label: 'node' }, meta: 'authored' })
+        const output = resolve.Root(authored, abort, null, null)
+        assert.deepEqual(output, { value: authored, meta: { alias: authored.seed, node: authored.seed } })
+        assert.equal(output.meta.node, output.value.seed)
+        assert.equal(output.meta.alias, output.meta.node)
+        const serialized = serialize.Root(output, { indentation: '    ' }).__get_raw().join('\n')
+        assert.doesNotMatch(serialized, /alias|node:/)
+        assert.deepEqual(parse.Root(chars(serialized), abort, { 'tab size': 4 }), authored)
+        assert.throws(() => parse.Root(chars('( seed: ( label: "node" ) meta: "authored" node: ~ )'), abort, { 'tab size': 4 }))
+    } finally {
+        rmSync(directory, { recursive: true })
+    }
+    assert.throws(() => pipeline(withConstraints({ alias: selection('metadata', 'absent') })), /absent/)
+    assert.throws(() => pipeline(withConstraints({ alias: selection('metadata', 'node'), node: selection('metadata', 'alias') })),
+        /cyclic metadata constraints/)
+    assert.throws(() => pipeline(withConstraints({ seed: constraints.node })), /constraint conflicts with authored property seed/)
+})
+
+test('all eleven instance computations are constraints, with no native derived-reference alternative', () => {
+    const schema = fixture('liana_next')[1]
+    for (const name of ['Value', 'Resolver Value']) {
+        const reference = entry(entry(schema.types, name)['root value'][1], 'reference').value
+        const alternatives = entry(reference[1], 'type').value[1].__get_raw().map(([id]) => id)
+        assert.deepEqual(alternatives, ['selected'])
+    }
+    for (const [name, expected] of [['boekhouding', 6], ['json_schema_light', 1], ['programming_languages--pareto_next', 4]]) {
+        let count = 0
+        const visit = value => {
+            if (value === null || typeof value !== 'object') return
+            if (Array.isArray(value)) {
+                if (value[0] === 'with constraints') count += value[1].constraints.__get_raw().length
+                if (value[0] === 'reference' && value[1]?.type) assert.notEqual(value[1].type[0], 'derived')
+                value.forEach(visit)
+            } else if (value.__get_raw) visit(value.__get_raw())
+            else Object.values(value).forEach(visit)
+        }
+        visit(fixture(name))
+        assert.equal(count, expected, name)
+    }
+})
+
+test('optional component results forward present and absent values without schema-specific handling', async () => {
+    const dict = p.literal.dictionary
+    const none = p.literal.not_set
+    const base = fixture('resolver')[1]
+    const plain = entry(base.resolver.signatures.signatures, 'Root')
+    const signature = { parameters: ['local', {
+        types: dict({ argument: { type: { location: ['internal', 'Source'] }, presence: ['optional', null] } }),
+        lookups: dict({}),
+    }] }
+    const component = name => ['component', { type: ['internal', name], results: none() }]
+    const property = value => ({ description: none(), value })
+    const resolveComponent = name => ['component', {
+        location: ['internal', name], arguments: p.literal.set({ types: p.literal.set(dict({})), lookups: p.literal.set(dict({})) }),
+        constraints: dict({}),
+    }]
+    const source = ['liana', {
+        ...base,
+        types: dict({
+            Source: { 'root value': ['simple', 'Text'] },
+            Receiver: { 'root value': ['optional', ['simple', 'Text']] },
+            Root: { 'root value': ['group', dict({
+                seed: property(['optional', component('Source')]), receiver: property(component('Receiver')),
+            })] },
+        }),
+        resolver: {
+            signatures: { signatures: dict({ Source: plain, Receiver: signature, Root: plain }) },
+            types: dict({
+                Source: { 'root value resolver': ['simple', null] },
+                Receiver: { 'root value resolver': ['optional', {
+                    constraints: dict({ argument: ['assert is set', ['parameter', 'argument']] }),
+                    resolver: ['simple', null],
+                }] },
+                Root: { 'root value resolver': ['group', dict({
+                    seed: { resolver: ['optional', { constraints: dict({}), resolver: resolveComponent('Source') }] },
+                    receiver: { resolver: ['component', {
+                        ...resolveComponent('Receiver')[1],
+                        arguments: p.literal.set({
+                            types: p.literal.set(dict({ argument: ['optional', ['selection', ['result', ['optional value', {
+                                property: 'seed', result: { location: ['internal', 'Source'] },
+                            }]]]] })),
+                            lookups: p.literal.set(dict({})),
+                        }),
+                    }] },
+                })] },
+            }),
+        },
+    }]
+    const directory = mkdtempSync(join(tmpdir(), 'liana-next-optional-result-'))
+    try {
+        const generated = pipeline(source)
+        assert.deepEqual(placeholders(generated.pareto), [])
+        write(generated.typescript, directory)
+        assert.deepEqual(typecheck(directory), { status: 'passed' })
+        compile(directory)
+        const resolve = await import(pathToFileURL(join(directory, 'dist/schemas/resolved/refiners/unresolved.js')))
+        for (const seed of [none(), p.literal.set('node')]) {
+            const authored = { seed, receiver: none() }
+            const output = resolve.Root(authored, abort, null, null)
+            assert.deepEqual(output.seed.__get_raw(), seed.__get_raw())
+            assert.equal(output.receiver.__get_raw(), null)
+        }
+        const present = resolve.Root({ seed: p.literal.set('node'), receiver: p.literal.set('authored') }, abort, null, null)
+        assert.deepEqual(present.receiver.__get_raw(), [{ value: 'authored', meta: { argument: 'node' } }])
+        assert.throws(() => resolve.Root({ seed: none(), receiver: p.literal.set('authored') }, abort, null, null),
+            error => error.type === 'optional value not set' && error.id === 'argument')
+    } finally {
+        rmSync(directory, { recursive: true })
+    }
+})
+
 test('accounting migrations retain their registry structure and explicit resolver corrections', () => {
     for (const name of ['boekhouding', 'boekhouding_oude_model']) {
         const source = readFileSync(new URL('../liana_registry/liana/' + name + '.liana.lna', base), 'utf8')
-        const expected = readFileSync(new URL(name + '.liana_next.lna', examples), 'utf8')
+        const expected = readFileSync(new URL(name + '.liana.lna', examples), 'utf8')
         assert.equal(convert(source, { correctBoekhouding: name === 'boekhouding' }), expected)
         const next = fixture(name)
         assert.equal(next[0], name === 'boekhouding' ? 'liana' : 'astn')
@@ -342,14 +767,22 @@ test('generated Boekhouding follows the proven bank-mutation and Resultaat looku
         assert.deepEqual(typecheck(directory), { status: 'passed' })
         compile(directory)
         const resolver = await import(pathToFileURL(join(directory, 'dist/schemas/resolved/refiners/unresolved.js')))
+        const parser = await import(pathToFileURL(join(directory, 'dist/schemas/unresolved/refiners/list_of_characters.js')))
+        const serializer = await import(pathToFileURL(join(directory, 'dist/schemas/resolved/transformers/serialized_paragraph.js')))
         const dict = p.literal.dictionary
-        const stamp = { Bedrag: 123, Datum: 20260101 }
+        const stamp = { Bedrag: 123, Datum: 20454 }
         const bank = { Mutaties: dict({ payment: stamp }) }
         const account = { marker: 'Resultaat account' }
         const informal = { marker: 'Informal account' }
+        const settlement = { marker: 'Settlement account' }
+        const balanceAccount = { marker: 'Balance account' }
+        const resolvedAccounts = resolver.Grootboekrekeningen({ Balans: dict({ balance: {} }), Resultaat: dict({ expense: {} }) },
+            abort, null, { Beheer: { Grootboekrekeningen: { Balans: dict({ balance: balanceAccount }), Resultaat: dict({ expense: account }) } } })
+        assert.equal(entry(resolvedAccounts.Balans, 'balance').meta.Stam, balanceAccount)
+        assert.equal(entry(resolvedAccounts.Resultaat, 'expense').meta.Stam, account)
         const year = {
             Balans: {
-                Verrekenposten: dict({}),
+                Verrekenposten: dict({ settlement }),
                 Bankrekeningen: dict({ bank }),
                 'Overige balans items': dict({ item: { marker: 'Balance item' } }),
                 'Informele rekeningen': dict({ informal }),
@@ -361,24 +794,38 @@ test('generated Boekhouding follows the proven bank-mutation and Resultaat looku
             Handelstransacties: { Inkopen: dict({}), Verkopen: dict({}) },
         }
         const processing = id => dict({ [id]: {
-            Stam: null, type: ['Balans', ['Informele rekening', { 'Informele rekening': 'informal' }]],
+            type: ['Balans', ['Informele rekening', { 'Informele rekening': 'informal' }]],
         } })
         const source = {
-            Verrekenposten: dict({}),
-            Bankrekeningen: dict({ bank: { Stam: null, 'Mutatie Verwerkingen': processing('payment') } }),
+            Verrekenposten: dict({ settlement: { Mutaties: dict({}) } }),
+            Bankrekeningen: dict({ bank: { 'Mutatie Verwerkingen': processing('payment') } }),
             'Overige Balans Items': dict({ item: {
-                Stam: null, 'Memoriaal Boekingen': dict({ booking: {
-                    Bedrag: 123, Datum: 20260101, Omschrijving: 'Expense', Grootboekrekening: 'expense',
+                'Memoriaal Boekingen': dict({ booking: {
+                    Bedrag: 123, Datum: 20454, Omschrijving: 'Expense', Grootboekrekening: 'expense',
                 } }),
             } }),
         }
         const output = resolver.Mutaties(source, abort, { Jaren: lookup.acyclic.from_resolved_dictionary(dict({})) }, parameters)
         const resolvedBank = entry(output.Bankrekeningen, 'bank')
-        assert.equal(resolvedBank.Stam, bank)
-        assert.equal(entry(resolvedBank['Mutatie Verwerkingen'], 'payment').Stam, stamp)
-        assert.equal(entry(entry(output['Overige Balans Items'], 'item')['Memoriaal Boekingen'], 'booking').Grootboekrekening['l entry'], account)
+        assert.equal(resolvedBank.meta.Stam, bank)
+        assert.equal(entry(resolvedBank.value['Mutatie Verwerkingen'], 'payment').meta.Stam, stamp)
+        assert.equal(entry(output.Verrekenposten, 'settlement').meta.Stam, settlement)
+        const resolvedItem = entry(output['Overige Balans Items'], 'item')
+        assert.equal(resolvedItem.meta.Stam, entry(year.Balans['Overige balans items'], 'item'))
+        assert.equal(entry(resolvedItem.value['Memoriaal Boekingen'], 'booking').Grootboekrekening['l entry'], account)
+        for (const [type, resolved, authored] of [
+            ['Mutaties', output, source],
+            ['Grootboekrekeningen', resolvedAccounts, { Balans: dict({ balance: {} }), Resultaat: dict({ expense: {} }) }],
+        ]) {
+            const serialized = serializer[type](resolved, { indentation: '    ' }).__get_raw().join('\n')
+            assert.doesNotMatch(serialized, /Stam/)
+            let roundTrip
+            assert.doesNotThrow(() => { roundTrip = parser[type](chars(serialized), abort, { 'tab size': 4 }) },
+                type + ' round-trip:\n' + serialized)
+            assert.deepEqual(JSON.parse(JSON.stringify(roundTrip)), JSON.parse(JSON.stringify(authored)))
+        }
         assert.throws(() => resolver.Mutaties({
-            ...source, Bankrekeningen: dict({ bank: { Stam: null, 'Mutatie Verwerkingen': processing('absent') } }),
+            ...source, Bankrekeningen: dict({ bank: { 'Mutatie Verwerkingen': processing('absent') } }),
         }, abort, { Jaren: lookup.acyclic.from_resolved_dictionary(dict({})) }, parameters), error =>
             error.type === 'no benchmark entry' && error.id === 'absent')
     } finally {
