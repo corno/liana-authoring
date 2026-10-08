@@ -8,9 +8,19 @@ import * as full_range from 'astn-runtime/modules/deserialization/schemas/parse_
 import type * as s_in from "../../../schemas/resolve_result/schema.js"
 import type * as s_out from "../../../schemas/resolve_errors/schema.js"
 
+const Severity = (type: s_out.Error['type']): s_out.Error['severity'] => {
+    switch (type[0]) {
+        case 'to be implemented': return ['hint', null]
+        case 'lookup unavailable': return [type[1].cause === 'missing implementation' ? 'hint' : 'warning', null]
+        case 'entry unavailable':
+        case 'selection unavailable': return ['warning', null]
+        default: return ['error', null]
+    }
+}
+
 const Selection_Errors = (status: s_in.Value_Selection_Status, range: s_out.Error['range']): s_out.Errors => {
-    const error = (type: s_out.Error['type'], hint = false): s_out.Errors =>
-        p_.literal.list([{ range, type, severity: hint ? ['hint', null] : ['error', null] }])
+    const error = (type: s_out.Error['type']): s_out.Errors =>
+        p_.literal.list([{ range, type, severity: Severity(type) }])
     switch (status[0]) {
         case 'resolved': return p_.literal.list([])
         case 'not set': return error(['optional value not set', null])
@@ -18,12 +28,14 @@ const Selection_Errors = (status: s_in.Value_Selection_Status, range: s_out.Erro
         case 'selection unavailable': return error(['selection unavailable', null])
         case 'unexpected state':
         case 'cycle detected': return error(status)
-        case 'to be implemented': return error(status, true)
+        case 'to be implemented': return error(status)
         case 'reference error':
             switch (status[1][0]) {
                 case 'resolved':
                 case 'resolved stack': return p_.literal.list([])
-                case 'to be implemented': return error(status[1], true)
+                case 'entry unavailable':
+                case 'lookup unavailable':
+                case 'to be implemented': return error(status[1])
                 default: return error(status[1])
             }
         default: return p_.exhaustive(status[0])
@@ -109,15 +121,18 @@ const Structural_Value: declarations_.Value = ($) => p_.from.state($['unmarshall
                                                     case 'no such entry':
                                                     case 'unexpected state':
                                                     case 'no context lookup':
-                                                    case 'cycle detected':
-                                                    case 'entry unavailable': return p_.literal.list([{
+                                                    case 'cycle detected': return p_.literal.list([{
                                                         severity: ['error', null], range, type: $,
+                                                    }])
+                                                    case 'entry unavailable':
+                                                    case 'lookup unavailable': return p_.literal.list([{
+                                                        severity: Severity($), range, type: $,
                                                     }])
                                                     case 'premature cyclic access': return p_.literal.list([{
                                                         severity: ['error', null], range, type: $,
                                                     }])
                                                     case 'to be implemented': return p_.literal.list([{
-                                                        severity: ['hint', null], range,
+                                                        severity: Severity($), range,
                                                         type: ['to be implemented', null],
                                                     }])
                                                     default: return p_.exhaustive($[0])

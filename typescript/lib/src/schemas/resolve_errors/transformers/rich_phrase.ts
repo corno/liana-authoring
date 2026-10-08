@@ -18,20 +18,22 @@ export const Error: declarations.Error = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'unexpected state': return sh.ph.text('Expected state "' + $[1].expected + '", but found "' + $[1].actual + '".')
-            case 'selection unavailable': return sh.ph.text('The selected value is unavailable.')
+            case 'selection unavailable': return sh.ph.text('The selected value is unavailable; resolution could not obtain its context or value.')
             case 'optional value not set': return sh.ph.text('The selected optional value is not set.')
             case 'premature cyclic access': return sh.ph.text('A cyclic reference was accessed before its target was resolved.')
             case 'no such entry': return p_.option($, ($) => sh.ph.text('No such dictionary entry: "' + $ + '".'))
             case 'no context lookup': return sh.ph.text('No lookup context is available for this reference.')
-            case 'entry unavailable': return p_.option($, ($) => sh.ph.text('The referenced entry "' + $ + '" has no usable value.'))
+            case 'entry unavailable': return p_.option($, ($) => sh.ph.text('The referenced entry "' + $ + '" is unavailable because its target could not be unmarshalled or has no value. Check the target diagnostics.'))
+            case 'lookup unavailable': return sh.ph.text('Cannot resolve reference "' + $[1].id + '": '
+                + ($[1].cause === 'missing implementation'
+                    ? 'the interpreter has not implemented the required lookup or value selection.'
+                    : 'the lookup context could not be selected. Check upstream diagnostics; the reference itself has not been validated.'))
             case 'cycle detected': return p_.option($, ($) => sh.ph.text(
                 'Acyclic reference cycle: ' + p_.from.list($).reduce_to_any_value<string>(
                     '', (id, path) => path === '' ? id : path + ' -> ' + id,
                 ),
             ))
-            case 'to be implemented': return p_.option($, ($) => sh.ph.composed([
-                sh.ph.text("this error type is not yet implemented, please report it to the developers")
-            ]))
+            case 'to be implemented': return sh.ph.text('Resolution is unavailable because the interpreter has not implemented this resolver operation.')
             default: return p_.exhaustive($[0])
         }
     })

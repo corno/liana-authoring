@@ -168,15 +168,15 @@ namespace temp {
 
     export const Lookup_Error = (failure: Lookup_Failure, id: string): s_out.Final_Reference_Resolve_Status => {
         switch (failure[0]) {
-            case 'to be implemented': return failure
+            case 'to be implemented': return ['lookup unavailable', { id, cause: 'missing implementation' }]
             case 'not found because of root': return ['no context lookup', null]
-            case 'selection unavailable': return ['entry unavailable', id]
+            case 'selection unavailable': return ['lookup unavailable', { id, cause: 'selection unavailable' }]
             case 'selection error':
                 switch (failure[1][0]) {
-                    case 'cycle detected':
-                    case 'to be implemented': return failure[1]
+                    case 'cycle detected': return failure[1]
+                    case 'to be implemented': return ['lookup unavailable', { id, cause: 'missing implementation' }]
                     case 'reference error': return failure[1][1]
-                    case 'selection unavailable': return ['entry unavailable', id]
+                    case 'selection unavailable': return ['lookup unavailable', { id, cause: 'selection unavailable' }]
                     case 'unexpected state': return failure[1]
                     default: return ['no context lookup', null]
                 }
@@ -223,6 +223,17 @@ export const Reference_Status = temp.Reference_Status
 
 const resolvedType = (value: s_out.Value): s_out.Resolved_Value_Type | null =>
     value['unmarshall result'][0] === 'success' ? value['unmarshall result'][1] : null
+
+const Module_Parameter_Value = (status: temp.Module_Parameter_Resolve_Status): temp.Module_Parameter_Resolve_Status => {
+    if (status[0] !== 'resolved') return status
+    let selected = status[1]
+    let value = resolvedType(selected)
+    while (value !== null && value[0] === 'component') {
+        selected = value[1].value
+        value = resolvedType(selected)
+    }
+    return ['resolved', selected]
+}
 
 const selectProperty = (lookup: p_i.lookup.Acyclic<s_out.Property>, id: string): temp.Module_Parameter_Resolve_Status => {
     const failure: { cycle: p_di.List<string> | null } = { cycle: null }
@@ -710,7 +721,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                         ($) => p_i_temp.from_option_decide(
                                                                             $.modules,
                                                                             ($) => p_.from.dictionary($).map(
-                                                                                ($): temp.Module_Parameter_Resolve_Status => p_.from.state($).decide(
+                                                                                ($): temp.Module_Parameter_Resolve_Status => Module_Parameter_Value(p_.from.state($).decide(
                                                                                     ($) => {
                                                                                         switch ($[0]) {
                                                                                             case 'optional': return p_.option($, ($) => Resolver_Optional_Value_Initialization($, $l, $p['module parameters']))
@@ -722,7 +733,7 @@ export const Value: p_i_temp.Transformer_With_Lookups_And_Parameter<
                                                                                             case 'required': return p_.option($, ($) => Resolver_Guaranteed_Value_Selection($, $l, $p['module parameters']))
                                                                                             default: return p_.exhaustive($[0])
                                                                                         }
-                                                                                    })
+                                                                                    })),
                                                                             ),
                                                                             () => $p['module parameters']
                                                                         ),

@@ -220,11 +220,41 @@ test('unavailable targets are reported without hiding unmarshalling failures', (
     ]) {
         const result = run(source)
         assert.deepEqual(next(entries(result).a)['resolve status'], ['entry unavailable', 'b'])
-        assert.match(diagnostics.Document(result).__get_raw()[0].message, /no usable value/)
+        const diagnostic = diagnostics.Document(result).__get_raw()[0]
+        assert.deepEqual(diagnostic.severity, ['warning', null])
+        assert.match(diagnostic.message, /target could not be unmarshalled or has no value/)
     }
     const wrongType = run('( )', referenceDefinition, referenceResolver(siblingSelection))
     assert.equal(wrongType.content['unmarshall result'][0], 'error')
     assert.deepEqual(errors.Document(wrongType).__get_raw(), [])
+})
+
+test('unavailable lookup warnings distinguish selection failures from missing implementations', () => {
+    const selection = {
+        type: ['parameter', { 'l id': 'names', 'l entry': { type: ['acyclic', null] } }],
+    }
+    for (const [failure, cause, message] of [
+        [['selection unavailable', null], 'selection unavailable', /lookup context could not be selected/],
+        [['to be implemented', null], 'missing implementation', /interpreter has not implemented/],
+    ]) {
+        const context = rootLookups()
+        context.parameters.acyclic = generic.map_value_dictionary_to_generic_dictionary(dict({ names: null }), () => failure)
+        const result = run("'target'", referenceDefinition, referenceResolver(selection), context)
+        const diagnostic = errors.Document(result).__get_raw()[0]
+        assert.deepEqual(diagnostic.type, ['lookup unavailable', { id: 'target', cause }])
+        assert.deepEqual(diagnostic.severity, [cause === 'missing implementation' ? 'hint' : 'warning', null])
+        assert.match(diagnostics.Document(result).__get_raw()[0].message, message)
+    }
+    const missingSelection = {
+        type: ['acyclic', ['resolved dictionary', {
+            selection: { start: ['list cursor', null], tail: { path: { 'l value': p.literal.list([]) } } },
+        }]],
+    }
+    const result = run("'target'", referenceDefinition, referenceResolver(missingSelection))
+    assert.deepEqual(errors.Document(result).__get_raw()[0].type,
+        ['lookup unavailable', { id: 'target', cause: 'missing implementation' }])
+    assert.deepEqual(errors.Document(result).__get_raw()[0].severity, ['hint', null])
+    assert.match(diagnostics.Document(result).__get_raw()[0].message, /interpreter has not implemented/)
 })
 
 test('cyclic references report missing lookup context', () => {
@@ -361,12 +391,15 @@ test('derived references and reference-selection tails retain actual values and 
         [dict({}), 'no context lookup'],
         [dict({ value: ['not set', null] }), 'optional value not set'],
         [dict({ value: ['selection unavailable', null] }), 'selection unavailable'],
+        [dict({ value: ['to be implemented', null] }), 'to be implemented'],
     ]) {
         const failed = run('~', definition, resolver, rootLookups(), parameters)
         const diagnostic = errors.Document(failed).__get_raw()[0]
         assert.equal(diagnostic.type[0], expected)
         assert.deepEqual(diagnostic.range.start.relative, { line: 0, column: 0 })
-        assert.deepEqual(diagnostic.severity, ['error', null])
+        assert.deepEqual(diagnostic.severity, [
+            expected === 'to be implemented' ? 'hint' : expected === 'selection unavailable' ? 'warning' : 'error', null,
+        ])
     }
     const entry = entries(run("{ target: ( label: 'TARGET' next: _ ) }")).target
     const lookupContext = rootLookups()
@@ -698,34 +731,39 @@ test('SQL list paths resolve and complete against the previous resolved foreign-
         })
         return interpret.Document(input, rootLookups(), { definition, resolvers: schema[1].resolver, 'module parameters': dict({}) })
     }
-    const source = readFileSync(new URL('orders.sq.lna', base), 'utf8')
+    const source = readFileSync(new URL('../../../../examples/orders.sq.lna', base), 'utf8')
     assert.deepEqual(errors.Document(resolve(source)).__get_raw(), [])
     for (const [path, expected] of [
-        ["[ 'absent' ]", ['customer_id', 'id', 'total']],
-        ["[ 'customer_id' 'absent' ]", ['country_id', 'id', 'name']],
-        ["[ 'customer_id' 'country_id' 'absent' ]", ['id', 'name']],
+        ["( `head`: 'absent' `tail`: [  ] )", ['customer_id', 'id', 'total']],
+        ["( `head`: 'customer_id' `tail`: [ 'absent' ] )", ['country_id', 'id', 'name']],
+        ["( `head`: 'customer_id' `tail`: [ 'country_id' 'absent' ] )", ['id', 'name']],
     ]) {
-        const modified = source.replace("[ 'customer_id' 'country_id' 'name' ]", path)
+        const modified = source.replace("( `head`: 'customer_id' `tail`: [ 'country_id' 'name' ] )", path)
         assert.notEqual(modified, source)
         const result = resolve(modified)
         assert.deepEqual(completeAt(result, modified, "'absent'").suggestions.__get_raw().map(item => item.label).sort(), expected)
     }
-    const invalid = source.replace("[ 'customer_id' 'country_id' 'name' ]", "[ 'customer_id' 'name' 'id' ]")
+    const invalid = source.replace("( `head`: 'customer_id' `tail`: [ 'country_id' 'name' ] )", "( `head`: 'customer_id' `tail`: [ 'name' 'id' ] )")
     const reported = errors.Document(resolve(invalid)).__get_raw()
     assert.deepEqual(reported.map(error => error.type), [['unexpected state', { expected: 'reference', actual: 'value' }]])
     assert.match(diagnostics.Document(resolve(invalid)).__get_raw()[0].message, /Expected state "reference".*found "value"/)
-    const offset = invalid.indexOf("'id'", invalid.indexOf("[ 'customer_id' 'name' 'id' ]"))
+    const offset = invalid.indexOf("'id'", invalid.indexOf("( `head`: 'customer_id' `tail`: [ 'name' 'id' ] )"))
     assert.equal(reported[0].range.start.absolute, offset)
-    const foreignKeyFinal = source.replace("[ 'customer_id' 'country_id' 'name' ]", "[ 'customer_id' 'country_id' ]")
+    const foreignKeyFinal = source.replace("( `head`: 'customer_id' `tail`: [ 'country_id' 'name' ] )", "( `head`: 'customer_id' `tail`: [ 'country_id' ] )")
     assert.deepEqual(errors.Document(resolve(foreignKeyFinal)).__get_raw(), [])
+    const scalarHead = source.replace("( `head`: 'customer_id' `tail`: [ 'country_id' 'name' ] )", "( `head`: 'total' `tail`: [ 'id' ] )")
+    assert.deepEqual(errors.Document(resolve(scalarHead)).__get_raw().map(error => error.type),
+        [['unexpected state', { expected: 'reference', actual: 'value' }]])
+    const direct = source.replace("( `head`: 'customer_id' `tail`: [ 'country_id' 'name' ] )", "( `head`: 'total' `tail`: [] )")
+    assert.deepEqual(errors.Document(resolve(direct)).__get_raw(), [])
 })
 
 test('schema resolution rejects a previous-item initial selection with an incompatible type', () => {
     const path = new URL('../../../../newstyle_projects/projects/sql_query/sketch/transformers/sql_sketch/typescript/schemas/input.slna', import.meta.url)
     const source = readFileSync(path, 'utf8')
-    const initial = /(`start`:\s*\|\s*`previous item`\s*\(\s*`initial`:\s*\(\s*`start`:\s*\|\s*`parameter`\s*'table'\s*`tail`:\s*\(\s*`path`:\s*)\[\s*\|\s*`group`\s*'fields'\s*\|\s*`component`\s*~\s*\]/
+    const initial = /(`start`:\s*\|\s*`previous item`\s*\(\s*`initial`:\s*\(\s*`start`:\s*\|\s*)`sibling`\s*'head'(\s*`tail`:\s*\(\s*`path`:\s*)\[[^\]]*\]/
     assert.match(source, initial)
-    const invalid = source.replace(initial, '$1[ ]')
+    const invalid = source.replace(initial, "$1`parameter` 'table'$2[ ]")
     assert.throws(() => schemaParser.Module_Specifier(
         p.literal.list(Array.from(invalid, c => c.codePointAt(0))), abort, { 'tab size': 4 },
     ), error => JSON.stringify(error).includes('initial selection data type'))

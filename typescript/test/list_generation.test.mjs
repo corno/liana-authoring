@@ -20,7 +20,7 @@ function expressions(value, tag) {
     return found
 }
 
-test('SQL previous-item code generation asserts the previous field state only in the present-item branch', () => {
+test('SQL tail code generation asserts both the previous tail field and the initial head before advancing', () => {
     const source = readFileSync(new URL('../../../../newstyle_projects/projects/sql_query/sketch/transformers/sql_sketch/typescript/schemas/input.slna', import.meta.url), 'utf8')
     const document = tree.Document(p.literal.list(Array.from(source, c => c.codePointAt(0))), abort, { 'tab size': 4 })
     const specification = parse.Module_Specification(document.content, abort)
@@ -35,7 +35,9 @@ test('SQL previous-item code generation asserts the previous field state only in
     const assertions = expressions(branches['on set'], 'assert state')
     assert.equal(assertions.length, 1)
     assert.equal(assertions[0].option, 'reference')
-    assert.deepEqual(expressions(branches['on not set'], 'assert state'), [])
-    assert.equal(expressions(path, 'assert state').length, 1)
+    const initialAssertions = expressions(branches['on not set'], 'assert state')
+    assert.equal(initialAssertions.length, 1)
+    assert.equal(initialAssertions[0].option, 'reference')
+    assert.equal(expressions(path, 'assert state').length, 2)
     assert.deepEqual(expressions(path, 'implement me'), [])
 })

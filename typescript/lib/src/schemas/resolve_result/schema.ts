@@ -107,6 +107,7 @@ export type Final_Reference_Resolve_Status =
     | ['no context lookup', null]
     | ['cycle detected', p_.List<string>]
     | ['entry unavailable', string]
+    | ['lookup unavailable', { 'id': string, 'cause': 'selection unavailable' | 'missing implementation' }]
     | ['to be implemented', null]
 
 export type Reference_Resolve_Status =

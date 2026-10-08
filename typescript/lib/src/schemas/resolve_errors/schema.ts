@@ -10,6 +10,7 @@ export type Error = {
     | ['no context lookup', null]
     | ['cycle detected', p_.List<string>]
     | ['entry unavailable', string]
+    | ['lookup unavailable', { 'id': string, 'cause': 'selection unavailable' | 'missing implementation' }]
     | ['premature cyclic access', null]
     | ['selection unavailable', null]
     | ['optional value not set', null]
@@ -17,6 +18,7 @@ export type Error = {
     'severity':
     | ['error', null]
     | ['warning', null]
+    | ['information', null]
     | ['hint', null]
 }
 

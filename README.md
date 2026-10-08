@@ -12,7 +12,9 @@ definitions while retaining the unmarshalled document and source locations.
 Acyclic selected references can use dictionary siblings or named acyclic lookup
 parameters, or select a resolved dictionary from a sibling/value parameter.
 Required value arguments and forwarded value parameters are interpreted through
-nested component calls. Optional arguments support explicit absence, guaranteed
+nested component calls. Explicit component-valued arguments are normalized to
+their module value before they are passed to the callee, matching declared
+module-parameter types. Optional arguments support explicit absence, guaranteed
 value selection, and forwarding optional parameters. Sibling selections establish
 group-property dependency order; component, group, reference, and state selection tails
 are supported. Derived references retain the selected value and diagnose failed
@@ -20,8 +22,13 @@ selections.
 Successful references retain the actual resolved dictionary entry;
 dictionary dependencies are ordered by Pareto Core.
 
-Missing targets, unavailable entry values, missing lookup contexts, and acyclic
-cycles produce resolve statuses and semantic diagnostics at the reference range.
+Missing targets, missing lookup contexts, and acyclic cycles produce error
+diagnostics at the reference range. Targets unavailable because of unmarshalling
+failures or absent values produce dependent warnings directing the author to
+the target diagnostics. Unavailable lookup selections also produce warnings;
+when the cause is an unimplemented interpreter operation, a hint
+diagnostic says so explicitly rather than implying that the referenced
+identifier is invalid.
 Cyclic sibling references and cyclic lookup parameters support self/mutual
 recursion; their targets are validated after dictionary resolution. Premature
 access is reported explicitly. Stack parameters retain the closest entry's frame
@@ -55,7 +62,7 @@ field. Instance completion follows the same per-item table selection.
 Functional coverage is not complete. Legacy state/optional/list results, benchmark
 density, linked-entry selections, list cursors, optional result initialization,
 and external component interpretation remain unfinished. Some structural
-constraint/result metadata is not yet interpreted; unsupported hints are not
+constraint/result metadata is not yet interpreted; implementation hints are not
 a complete inventory of these gaps.
 
 The tests include the real YABNF schema and recursive grammar, injecting terminal
@@ -88,5 +95,9 @@ node --test typescript/test/resolve_references.test.mjs
 When using the sibling new-style workspace, after building its Pareto Next
 transformer, also run `node --test typescript/test/list_generation.test.mjs`
 from this package. This checks
-that generated SQL previous-item selection asserts the state only in its
-present-item branch, not in its initial fallback.
+that generated SQL tail selection asserts the previous tail item's state in
+the present-item branch and the sibling head's state in the initial branch.
+Both assertions occur only when a tail item advances the path.
+
+`node --test typescript/test/sql_lowering.test.mjs` checks the sibling SQL
+transformer's head/tail input model against its existing expected SQL ASTs.
