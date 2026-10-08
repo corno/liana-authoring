@@ -14,9 +14,9 @@ const named = node => node.properties.find(property => property.property.key ===
 
 test('SysML fixture has the native LionCore editor contract', () => {
     const environment = new URL('liana/sketch/temp/lioncore/.liana/', projects)
-    const native = readFileSync(new URL('schema.native.slna', environment), 'utf8')
+    const native = readFileSync(new URL('schema.slna', environment), 'utf8')
     assert.equal(native, readSchemaText(new URL('liana/sketch/examples/lioncore.liana.lna', projects)))
-    assert.ok(readFileSync(new URL('schema.slna', environment), 'utf8').length > 0)
+    assert.ok(readFileSync(new URL('schema.to_be_removed.slna', environment), 'utf8').length > 0)
 })
 
 test('native LionCore serialization preserves SysML through tree, chunk and JSON', async t => {

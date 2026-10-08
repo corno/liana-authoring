@@ -26,22 +26,31 @@ export const $$: p_.Query_Implementation<
                     $d.deprecated['context path'],
                     { 'addition': ".liana" }
                 ),
-                'node': "schema.slna"
+                'node': "schema.to_be_removed.slna"
             }
             return e.query(
                 ($d) => $q['stat'](
                     schema_path,
                     ($): d.Error => ['stat error', $]
-                )).refine(
+                )).query(
+                    ($) => {
+                        const selected = $[0] === 'does not exist'
+                            ? { ...schema_path, node: "schema.slna" }
+                            : schema_path
+                        return e.query(
+                            () => $q['stat'](selected, ($): d.Error => ['stat error', $])
+                        ).refine(
                     ($, abort) => p_temp.from.state($).decide(
                         ($) => {
                             switch ($[0]) {
                                 case 'does not exist': return p_temp.option($, ($) => abort(['not found', null]))
-                                case 'file': return p_temp.option($, ($) => schema_path)
+                                case 'file': return p_temp.option($, ($) => selected)
                                 case 'directory': return p_temp.option($, ($) => abort(['not found', null]))
                                 default: return p_temp.exhaustive($[0])
                             }
                         })
+                        )
+                    }
                 )
         })
 )
