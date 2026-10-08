@@ -3,7 +3,7 @@ import { createRequire } from 'node:module'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
-const generator = new URL('../../../../newstyle_projects/projects/liana/sketch/transformers/pareto_next_sketch/typescript/', import.meta.url)
+const generator = new URL('../../../../newstyle_projects/projects/liana_legacy/sketch/transformers/pareto_next_sketch/typescript/', import.meta.url)
 const parse = await import(new URL('dist/modules/source.liana.generated/schemas/unresolved/refiners/astn_parse_tree.js', generator))
 const bodies = await import(new URL('dist/resolver_bodies.js', generator))
 const require = createRequire(new URL('package.json', generator))

@@ -1,16 +1,17 @@
 import assert from 'node:assert/strict'
 import { readFileSync, readdirSync } from 'node:fs'
-import { join, relative } from 'node:path'
+import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 import test from 'node:test'
 import * as unmarshal from '../lib/dist/schemas/unmarshall_result/refiners/list_of_characters.js'
 import * as errors from '../lib/dist/schemas/unmarshall_result/transformers/unmarshall_errors.js'
+import { readSchemaText } from './native_schema_text.mjs'
 
 const require = createRequire(new URL('../lib/package.json', import.meta.url))
 const p = await import(require.resolve('pareto-core/transformer'))
 const parser = await import(require.resolve('pareto-liana/schemas/temp_module_specifier/refiners/list_of_characters'))
-const base = new URL('../../../../newstyle_projects/projects/liana_next/sketch/', import.meta.url)
+const base = new URL('../../../../newstyle_projects/projects/liana/sketch/', import.meta.url)
 const chars = source => p.literal.list(Array.from(source, c => c.codePointAt(0)))
 const abort = error => { throw error }
 const schema = parser.Module_Specifier(chars(readFileSync(new URL('examples/.liana/schema.slna', base), 'utf8')), abort, { 'tab size': 4 })
@@ -185,7 +186,7 @@ test('ASTN reference and id are unit simple flavors, not value alternatives', ()
         assert.ok(!options.__get_raw().some(([id]) => id === name))
     }
     for (const name of ['reference', 'id']) assert.deepEqual(entry(flavors, name).value, ['nothing', null])
-    const source = readFileSync(new URL('examples/identifiers.liana.lna', base), 'utf8')
+    const source = readSchemaText(new URL('examples/identifiers.liana.lna', base))
     assert.ok(errors.Document(parse(source.replace('| `reference` ~', '| `reference` ( referent: \'Root\' )'))).__get_raw().length > 0)
     for (const value of ['| `reference` ~', '| `id` ~', '| `text` | `local` < | `single line` ~ | `no` ~ >',
         '| `simple` | `local` < | `single line` ~ | `no` ~ >']) {
@@ -220,7 +221,7 @@ test('schema-document authoring has no derived-reference fields or required meta
     }
     visit(rootType['root value'])
     assert.ok(references > 20)
-    const minimal = readFileSync(new URL('examples/resolver.liana.lna', base), 'utf8')
+    const minimal = readSchemaText(new URL('examples/resolver.liana.lna', base))
     assert.doesNotMatch(minimal, /`signature`|`resolved parameters`|`definition`|`resulting node`/)
     assert.deepEqual(errors.Document(parse(minimal)).__get_raw(), [])
     const old = minimal.replace('`root value resolver`:', '`signature`: ~\n                `root value resolver`:')
@@ -241,15 +242,16 @@ test('both branches use types without colliding with primitive dictionaries', ()
         assert.ok(!value[1].options.__get_raw().some(([id]) => id === 'text'))
     }
     for (const name of ['identifiers', 'resolver']) {
-        const source = readFileSync(new URL('examples/' + name + '.liana.lna', base), 'utf8')
+        const source = readSchemaText(new URL('examples/' + name + '.liana.lna', base))
         assert.ok(!/\bmodules?\b/.test(source))
         assert.ok(errors.Document(parse(source.replace('`types`:', '`modules`:'))).__get_raw().length > 0)
     }
 })
 
 test('named simple types accept text configuration and preserve existing primitive flavors', () => {
-    const source = readFileSync(new URL('examples/identifiers.liana.lna', base), 'utf8')
-    const original = '| `text` < | `single line` ~ | `no` ~ >'
+    const source = readSchemaText(new URL('examples/identifiers.liana.lna', base))
+    const original = /\| `text` \(\s*`type`: \| `single line` ~\s*`link`: \| `no` ~\s*\)/
+    assert.match(source, original)
     for (const flavor of [
         '| `text` < | `multi line` ~ | `yes` ( `path prefix`: "https://" `path suffix`: "" ) >',
         '| `boolean` ~',
@@ -260,7 +262,7 @@ test('named simple types accept text configuration and preserve existing primiti
         assert.deepEqual(errors.Document(parse(source.replace(original, flavor))).__get_raw(), [], flavor)
     }
     assert.ok(errors.Document(parse(source.replace('`simple types`:', '`text types`: {} `simple types`:'))).__get_raw().length > 0)
-    const semantic = readFileSync(new URL('examples/resolver.liana.lna', base), 'utf8')
+    const semantic = readSchemaText(new URL('examples/resolver.liana.lna', base))
     assert.ok(errors.Document(parse(semantic.replace("| `simple` 'Text'", '| `text` | `local` < | `single line` ~ | `no` ~ >'))).__get_raw().length > 0)
     assert.ok(errors.Document(parse(semantic.replace('| `simple` ~', '| `text` ~'))).__get_raw().length > 0)
     const liana = entry(rootType['root value'][1].options, 'liana').value[1].type[1]['l entry'].get_circular_dependent()
@@ -268,12 +270,12 @@ test('named simple types accept text configuration and preserve existing primiti
 })
 
 test('imports contain unwrapped schema documents from their own realm', () => {
-    const source = readFileSync(new URL('examples/imports.liana.lna', base), 'utf8')
+    const source = readSchemaText(new URL('examples/imports.liana.lna', base))
     assert.deepEqual(errors.Document(parse(source)).__get_raw(), [])
     for (const tag of ['astn', 'liana', 'set']) {
         assert.ok(errors.Document(parse(source.replace("'names': (", "'names': | `" + tag + "` ("))).__get_raw().length > 0)
     }
-    const semantic = readFileSync(new URL('examples/resolver.liana.lna', base), 'utf8')
+    const semantic = readSchemaText(new URL('examples/resolver.liana.lna', base))
     const payload = semantic.replace(/^\| `liana` /, '')
     assert.notEqual(payload, semantic)
     const imported = semantic.replace('`imports`: {}', "`imports`: { 'semantic': " + payload + ' }')
@@ -287,7 +289,7 @@ test('imports contain unwrapped schema documents from their own realm', () => {
 })
 
 test('the Liana branch requires an explicit resolver while ASTN does not', () => {
-    const source = readFileSync(new URL('examples/resolver.liana.lna', base), 'utf8')
+    const source = readSchemaText(new URL('examples/resolver.liana.lna', base))
     const withoutResolver = source.replace(/\s*`resolver`:\s*\([\s\S]*\)\n    `root`:/, '\n    `root`:')
     assert.notEqual(withoutResolver, source)
     assert.ok(errors.Document(parse(withoutResolver)).__get_raw().length > 0)
@@ -295,7 +297,14 @@ test('the Liana branch requires an explicit resolver while ASTN does not', () =>
     assert.deepEqual(errors.Document(parse(astn)).__get_raw(), [])
 })
 
-test('retained project definitions preserve structure and resolver except the redesigned Lioncore example', () => {
+test('retained definitions preserve structure and resolvers except explicit LionCore and result-metadata migrations', () => {
+    const migratedResults = {
+        'programming_languages--pareto_next.liana.lna': ['Schema Value Path'],
+        'sql_query.liana.lna': ['Foreign Key'],
+    }
+    const retainedResolvers = (value, migrated) => ['group', value[1].map(([id, child]) => [
+        id, id === 'types' ? ['dictionary', child[1].filter(([name]) => !migrated.includes(name))] : child,
+    ])]
     const projects = fileURLToPath(new URL('../../../../newstyle_projects/projects/', import.meta.url))
     const definitions = directory => readdirSync(directory, { withFileTypes: true }).flatMap(item => {
         if (!item.isDirectory() || ['test_harness', 'node_modules', 'temp', '.git'].includes(item.name)) return []
@@ -303,14 +312,22 @@ test('retained project definitions preserve structure and resolver except the re
         if (item.name === 'definition') return readdirSync(path).includes('schema.liana.lna') ? [join(path, 'schema.liana.lna')] : []
         return definitions(path)
     })
-    const old = parser.Module_Specifier(chars(readFileSync(new URL('definition/.liana/schema.slna', base), 'utf8')), abort, { 'tab size': 4 })
+    const old = parser.Module_Specifier(chars(readFileSync(new URL('../../liana_legacy/sketch/temp/native_definition_bootstrap.slna', base), 'utf8')), abort, { 'tab size': 4 })
     const oldModule = old[0] === 'constrained' ? old[1]['module resolver'].entry.signature.module : old[1].module.entry
-    const sources = definitions(projects).filter(path => relative(projects, path) !== 'liana/sketch/definition/schema.liana.lna').sort()
+    const sources = definitions(projects).filter(path => relative(projects, path) !== 'liana_legacy/sketch/definition/schema.liana.lna').sort()
     assert.equal(sources.length, 49)
-    assert.ok(!readdirSync(new URL('examples/', base)).includes('liana.liana.lna'))
+    assert.ok(readdirSync(new URL('examples/', base)).includes('liana.liana.lna'))
     let semanticCount = 0
     for (const sourcePath of sources) {
         const name = relative(projects, sourcePath).replace(/\/sketch\/definition\/schema\.liana\.lna$/, '').replaceAll('/', '--') + '.liana.lna'
+        if (['liana', 'liana next'].includes(readFileSync(join(dirname(sourcePath), '../schema'), 'utf8').trim())) {
+            const authored = parse(readFileSync(sourcePath, 'utf8'))
+            const converted = parse(readFileSync(new URL('examples/' + name, base), 'utf8'))
+            assert.deepEqual(errors.Document(authored).__get_raw(), [], name)
+            assert.deepEqual(snapshot(authored.content), snapshot(converted.content), 'Native project and retained example: ' + name)
+            if (selectedState(authored.content).option === 'liana') semanticCount++
+            continue
+        }
         const original = unmarshal.Document(chars(readFileSync(sourcePath, 'utf8')), abort, { module: oldModule, 'tab size': 4 })
         assert.deepEqual(errors.Document(original).__get_raw(), [], sourcePath)
         const tree = selectedState(property(original.content, 'schema'))
@@ -330,6 +347,7 @@ test('retained project definitions preserve structure and resolver except the re
         const convertedTypes = dictionary(property(branch.value, 'types'))
         assert.deepEqual(convertedTypes.map(([id]) => id), originalTypes.map(([id]) => id), name)
         for (let index = 0; index < originalTypes.length; index++) {
+            if (migratedResults[name]?.includes(originalTypes[index][0])) continue
             assert.deepEqual(normalizedValue(property(convertedTypes[index][1], 'root value'), property(branch.value, 'globals'), semantic, false),
                 normalizedValue(property(originalTypes[index][1], 'root value'), property(oldDefinition, 'globals'), semantic, true),
                 'Structural preservation: ' + name + ' / ' + originalTypes[index][0])
@@ -344,7 +362,9 @@ test('retained project definitions preserve structure and resolver except the re
                 dictionary(property(originalResolver, 'modules')).map(([id]) => id), name)
             assert.deepEqual(dictionary(property(property(resolver, 'signatures'), 'signatures')).map(([id]) => id),
                 dictionary(property(property(originalResolver, 'signatures'), 'signatures')).map(([id]) => id), name)
-            assert.deepEqual(normalizeResolver(snapshot(resolver)), normalizeResolver(snapshot(originalResolver, true)),
+            const migrated = migratedResults[name] ?? []
+            assert.deepEqual(normalizeResolver(retainedResolvers(snapshot(resolver), migrated)),
+                normalizeResolver(retainedResolvers(snapshot(originalResolver, true), migrated)),
                 'Resolver computation preservation: ' + name)
         }
     }
