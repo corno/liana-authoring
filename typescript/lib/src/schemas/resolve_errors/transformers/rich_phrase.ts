@@ -17,6 +17,7 @@ import * as sh from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase
 export const Error: declarations.Error = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
+            case 'unexpected state': return sh.ph.text('Expected state "' + $[1].expected + '", but found "' + $[1].actual + '".')
             case 'selection unavailable': return sh.ph.text('The selected value is unavailable.')
             case 'optional value not set': return sh.ph.text('The selected optional value is not set.')
             case 'premature cyclic access': return sh.ph.text('A cyclic reference was accessed before its target was resolved.')

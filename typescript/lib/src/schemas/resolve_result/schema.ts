@@ -13,6 +13,8 @@ export type Value = {
     'definition': s_schema.Resolver_Value
     'unmarshalled': s_unmarshall_result.Value
     'unmarshall result': Value_Unmarshall_Result
+    'reference identifiers'?: p_.Circular_Dependency<p_.List<string>>
+    'constraints'?: p_.Circular_Dependency<p_.Dictionary<Value_Selection_Status>>
 }
 
 export type Value_Unmarshall_Result =
@@ -78,6 +80,7 @@ export type List = {
 
 export type Optional = {
     'unmarshalled': s_unmarshall_result.Optional
+    'constraints'?: p_.Dictionary<Value_Selection_Status>
     'status':
     | ['set', {
         'child value': Value
@@ -96,6 +99,7 @@ export type Reference =
     }]
 
 export type Final_Reference_Resolve_Status =
+    | ['unexpected state', { 'expected': string, 'actual': string }]
     | ['resolved', Entry]
     | ['resolved stack', { 'entry': Entry, 'depth': number }]
     | ['premature cyclic access', null]
@@ -117,8 +121,10 @@ export type Value_Selection_Status =
     | ['not found because of root', null]
     | ['to be implemented', null]
     | ['reference error', Final_Reference_Resolve_Status]
+    | ['unexpected state', { 'expected': string, 'actual': string }]
 
 export type State = {
     'unmarshalled': s_unmarshall_result.State
     'option': p_.Optional_Value<Value>
+    'constraints'?: p_.Dictionary<Value_Selection_Status>
 }

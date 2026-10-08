@@ -58,6 +58,7 @@ export namespace Completion_Suggestions_ {
     export type O = {
         readonly 'type': O.type_
         readonly 'suggestions': O.suggestions
+        readonly 'replace range'?: i_imports_location.Range_FE
     }
     
 }

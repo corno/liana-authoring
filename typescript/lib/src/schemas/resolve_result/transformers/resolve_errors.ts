@@ -1,11 +1,34 @@
 
 import * as p_ from 'pareto-core/transformer'
+import type * as p_di from 'pareto-core/schema'
 import { Reference_Status } from '../../unmarshall_result/transformers/resolve_result.js'
+import * as full_range from 'astn-runtime/modules/deserialization/schemas/parse_tree/transformers/full_value_range'
 
 //schemas
 import type * as s_in from "../../../schemas/resolve_result/schema.js"
 import type * as s_out from "../../../schemas/resolve_errors/schema.js"
 
+const Selection_Errors = (status: s_in.Value_Selection_Status, range: s_out.Error['range']): s_out.Errors => {
+    const error = (type: s_out.Error['type'], hint = false): s_out.Errors =>
+        p_.literal.list([{ range, type, severity: hint ? ['hint', null] : ['error', null] }])
+    switch (status[0]) {
+        case 'resolved': return p_.literal.list([])
+        case 'not set': return error(['optional value not set', null])
+        case 'not found because of root': return error(['no context lookup', null])
+        case 'selection unavailable': return error(['selection unavailable', null])
+        case 'unexpected state':
+        case 'cycle detected': return error(status)
+        case 'to be implemented': return error(status, true)
+        case 'reference error':
+            switch (status[1][0]) {
+                case 'resolved':
+                case 'resolved stack': return p_.literal.list([])
+                case 'to be implemented': return error(status[1], true)
+                default: return error(status[1])
+            }
+        default: return p_.exhaustive(status[0])
+    }
+}
 
 
 namespace declarations_ {
@@ -27,7 +50,7 @@ export const Document: declarations_.Document = ($) => {
     )
 }
 
-export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall result']).decide(
+const Structural_Value: declarations_.Value = ($) => p_.from.state($['unmarshall result']).decide(
     ($) => {
         switch ($[0]) {
             case 'error': return p_.option($, ($) => p_.literal.list([])) //reported by the unmarshaller, it is not the responsibility of this transformer to report them
@@ -74,25 +97,7 @@ export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall res
                                     case 'derived': return p_.option($, ($): s_out.Errors => {
                                         const instance = $.unmarshalled.intermediate.instance
                                         const range = instance[0] === 'nothing' ? instance[1]['~'].range : instance[1].range
-                                        const status = $['resolve status']
-                                        const error = (type: s_out.Error['type'], hint = false): s_out.Errors =>
-                                            p_.literal.list([{ range, type, severity: hint ? ['hint', null] : ['error', null] }])
-                                        switch (status[0]) {
-                                            case 'resolved': return p_.literal.list([])
-                                            case 'not set': return error(['optional value not set', null])
-                                            case 'not found because of root': return error(['no context lookup', null])
-                                            case 'selection unavailable': return error(['selection unavailable', null])
-                                            case 'cycle detected': return error(status)
-                                            case 'to be implemented': return error(status, true)
-                                            case 'reference error':
-                                                switch (status[1][0]) {
-                                                    case 'resolved':
-                                                    case 'resolved stack': return p_.literal.list([])
-                                                    case 'to be implemented': return error(status[1], true)
-                                                    default: return error(status[1])
-                                                }
-                                            default: return p_.exhaustive(status[0])
-                                        }
+                                        return Selection_Errors($['resolve status'], range)
                                     })
                                     case 'selected': return p_.option($, ($) => {
                                         const range = $.unmarshalled.intermediate.instance.range
@@ -102,6 +107,7 @@ export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall res
                                                     case 'resolved': return p_.literal.list([])
                                                     case 'resolved stack': return p_.literal.list([])
                                                     case 'no such entry':
+                                                    case 'unexpected state':
                                                     case 'no context lookup':
                                                     case 'cycle detected':
                                                     case 'entry unavailable': return p_.literal.list([{
@@ -118,6 +124,7 @@ export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall res
                                                 }
                                             }
                                         )
+
                                     })
                                     default: return p_.exhaustive($[0])
                                 }
@@ -149,3 +156,23 @@ export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall res
         }
     }
 )
+
+export const Value: declarations_.Value = (value) => {
+    const status = value['unmarshall result']
+    if (status[0] === 'error') return p_.literal.list([])
+    if (status[1][0] === 'reference' && status[1][1][0] === 'selected') {
+        const reference = Reference_Status(status[1][1][1]['resolve status'])
+        if (reference[0] !== 'resolved' && reference[0] !== 'resolved stack') return Structural_Value(value)
+    }
+    const range = full_range.Value(value.unmarshalled.instance)
+    const constraints = value.constraints === undefined ? p_.literal.dictionary<s_in.Value_Selection_Status>({})
+        : value.constraints.get_circular_dependent()
+    const optionConstraints = status[1][0] === 'state' || status[1][0] === 'optional'
+        ? status[1][1].constraints : undefined
+    const errors = (values: p_di.Dictionary<s_in.Value_Selection_Status>): s_out.Errors =>
+        p_.from.dictionary(values).flatten_to_list(status => Selection_Errors(status, range))
+    return p_.from.list(p_.literal.list([
+        Structural_Value(value), errors(constraints),
+        optionConstraints === undefined ? p_.literal.list<s_out.Error>([]) : errors(optionConstraints),
+    ])).flatten(errors => errors)
+}

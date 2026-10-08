@@ -13,6 +13,7 @@ export type Error = {
     | ['premature cyclic access', null]
     | ['selection unavailable', null]
     | ['optional value not set', null]
+    | ['unexpected state', { 'expected': string, 'actual': string }]
     'severity':
     | ['error', null]
     | ['warning', null]

@@ -6,6 +6,7 @@ import * as unmarshal from '../lib/dist/schemas/unmarshall_result/refiners/list_
 import * as interpret from '../lib/dist/schemas/unmarshall_result/transformers/resolve_result.js'
 import * as errors from '../lib/dist/schemas/resolve_result/transformers/resolve_errors.js'
 import * as diagnostics from '../lib/dist/schemas/resolve_result/transformers/diagnostics.js'
+import * as completions from '../lib/dist/schemas/resolve_result/transformers/completion_suggestions.js'
 
 const require = createRequire(new URL('../lib/package.json', import.meta.url))
 const p = await import(require.resolve('pareto-core/transformer'))
@@ -49,13 +50,13 @@ const nodeResolver = ['group', dict({
 const dictionaryResolver = ['dictionary', {
     definition: dictionaryDefinition, resolver: nodeResolver, benchmark: none(),
 }]
-function run(source, definition = ['dictionary', dictionaryDefinition], resolver = dictionaryResolver, lookups = rootLookups()) {
+function run(source, definition = ['dictionary', dictionaryDefinition], resolver = dictionaryResolver, lookups = rootLookups(), parameters = dict({}), modules = dict({})) {
     const input = unmarshal.Document(p.literal.list(Array.from(source, c => c.codePointAt(0))), abort, {
         module: { 'root value': definition }, 'tab size': 4,
     })
     return interpret.Document(input, lookups, {
-        definition: { 'root value resolver': resolver }, resolvers: { modules: dict({}) },
-        'module parameters': dict({}),
+        definition: { 'root value resolver': resolver }, resolvers: { modules },
+        'module parameters': parameters,
     })
 }
 const entries = result => {
@@ -66,6 +67,84 @@ const child = entry => entry['unmarshall result'][1].value[1]
 const next = entry => child(entry)['unmarshall result'][1][1].properties.__get_raw()
     .find(([id]) => id === 'next')[1]['unmarshall result'][1].resolved['unmarshall result'][1][1]
     .status[1]['child value']['unmarshall result'][1][1][1]
+
+const completeAt = (result, source, token) => {
+    const offset = source.indexOf(token)
+    assert.ok(offset >= 0)
+    const before = source.slice(0, offset + 1).split('\n')
+    return completions.Document(result, {
+        position: { line: before.length - 1, character: before.at(-1).length },
+        indent: '    ', style: ['verbose', null],
+    }).__get_raw()[0]
+}
+
+test('instance completion suggests dictionary identifiers and replaces the complete reference token', () => {
+    for (const token of ["'absent'", "''", '#']) {
+        const source = "{ a: ( label: 'A' next: * " + token + " ) 'ID Value Pairs': ( label: 'B' next: _ ) }"
+        const result = run(source)
+        const suggestions = completeAt(result, source, token)
+        assert.deepEqual(suggestions.type, ['reference', null])
+        assert.deepEqual(suggestions.suggestions.__get_raw().map(s => s.label).sort(), ['ID Value Pairs', 'a'])
+        const replacement = suggestions.suggestions.__get_raw().find(s => s.label === 'ID Value Pairs')
+        assert.equal(replacement['insert lines'].__get_raw().join('\n'), "'ID Value Pairs'")
+        assert.equal(suggestions['replace range'].start.character, source.indexOf(token))
+        assert.equal(suggestions['replace range'].end.character, source.indexOf(token) + token.length)
+        const range = suggestions['replace range']
+        const corrected = source.slice(0, range.start.character) + replacement['insert lines'].__get_raw().join('\n') + source.slice(range.end.character)
+        assert.deepEqual(errors.Document(run(corrected)).__get_raw(), [])
+    }
+})
+
+test('reference completion serializes special identifiers as literal ASTN values', () => {
+    const source = `{ a: ( label: 'A' next: * 'absent' )
+        "O'Brien": ( label: 'B' next: _ )
+        '$0': ( label: 'C' next: _ )
+        '__proto__': ( label: 'D' next: _ )
+        'constructor': ( label: 'E' next: _ ) }`
+    const result = run(source)
+    const completion = completeAt(result, source, "'absent'")
+    for (const id of ["O'Brien", '$0', '__proto__', 'constructor']) {
+        const item = completion.suggestions.__get_raw().find(item => item.label === id)
+        assert.ok(item, id)
+        const corrected = source.replace("'absent'", item['insert lines'].__get_raw().join('\n'))
+        const resolved = run(corrected)
+        const values = entries(resolved)
+        assert.equal(next(values.a)['resolve status'][1], values[id])
+        assert.deepEqual(errors.Document(resolved).__get_raw(), [])
+    }
+})
+
+test('instance completion preserves structural completions and handles absent reference contexts', () => {
+    const missingText = run('#', text, ['text', null])
+    assert.deepEqual(completeAt(missingText, '#', '#').type, ['missing value', null])
+    const selection = { type: ['parameter', { 'l id': 'missing', 'l entry': { type: ['acyclic', null] } }] }
+    const reference = run("'absent'", referenceDefinition, referenceResolver(selection))
+    const suggestions = completeAt(reference, "'absent'", "'absent'")
+    assert.deepEqual(suggestions.type, ['reference', null])
+    assert.deepEqual(suggestions.suggestions.__get_raw(), [])
+    assert.deepEqual(errors.Document(reference).__get_raw()[0].type, ['no context lookup', null])
+})
+
+test('stack reference completion deduplicates names while preserving closest-frame priority', () => {
+    const target = entries(run("{ target: ( label: 'TARGET' next: _ ) }")).target
+    const parent = {
+        ...lookup.acyclic.from_resolved_dictionary(dict({ target })),
+        identifiers: () => p.literal.list(['target', '__proto__']),
+    }
+    const frame = {
+        ...lookup.acyclic.from_resolved_dictionary(dict({ target })),
+        identifiers: () => p.literal.list(['target', '__proto__']),
+    }
+    const context = rootLookups()
+    context.parameters.stack = generic.map_value_dictionary_to_generic_dictionary(dict({ frames: null }), () => ['resolved', {
+        ...lookup.stack.push(lookup.stack.push(lookup.stack.empty(), parent), frame),
+        identifiers: () => p.literal.list(['target', '__proto__', 'target', '__proto__']),
+    }])
+    const result = run("'target'", referenceDefinition, referenceResolver({
+        type: ['parameter', { 'l id': 'frames', 'l entry': { type: ['stack', null] } }],
+    }), context)
+    assert.deepEqual(completeAt(result, "'target'", "'target'").suggestions.__get_raw().map(item => item.label), ['target', '__proto__'])
+})
 
 test('parsed acyclic sibling references select actual resolved entries in dependency order', () => {
     const result = run("{ a: ( label: 'A' next: * 'b' ) b: ( label: 'B' next: _ ) }")
@@ -208,14 +287,264 @@ test('stack lookup parameters retain depth, select the closest frame, and diagno
     assert.deepEqual(errors.Document(absent).__get_raw()[0].type, ['no context lookup', null])
 })
 
-test('reference constraints remain explicitly unsupported', () => {
-    const constrained = referenceResolver(siblingSelection)
-    constrained[1].type[1].constraints = dict({ check: null })
-    for (const resolver of [constrained]) {
-        const result = run("'target'", referenceDefinition, resolver)
-        assert.deepEqual(result.content['unmarshall result'][1][1][1]['resolve status'], ['to be implemented', null])
-        assert.deepEqual(errors.Document(result).__get_raw()[0].severity, ['hint', null])
+test('dereferencing a cyclic sibling before dictionary resolution reports premature access explicitly', () => {
+    const entry = entries(run("{ target: ( label: 'TARGET' next: _ ) }")).target
+    let premature
+    p.from.dictionary(dict({ target: null })).resolve((value, id, acyclic, cyclic) => {
+        const result = run("'" + id + "'", referenceDefinition,
+            referenceResolver({ type: ['cyclic', ['siblings', dictionaryDefinition]] }),
+            { ...rootLookups(), siblings: { acyclic, cyclic } })
+        premature = interpret.Reference_Status(result.content['unmarshall result'][1][1][1]['resolve status'])
+        return entry
+    })
+    assert.deepEqual(premature, ['premature cyclic access', null])
+})
+
+test('reference constraints assert optional values and dependent states, preserving target identity', () => {
+    const stateDefinition = ['state', { options: dict({
+        yes: { value: text, description: none(), constraints: none() },
+        no: { value: text, description: none(), constraints: none() },
+    }), results: none() }]
+    const stateResolver = ['state', { definition: stateDefinition[1], options: dict({
+        yes: { constraints: dict({}), resolver: ['text', null] },
+        no: { constraints: dict({}), resolver: ['text', null] },
+    }) }]
+    const targetDefinition = ['optional', stateDefinition]
+    const targetResolver = ['optional', { constraints: dict({}), resolver: stateResolver }]
+    const relative = { path: { 'l value': p.literal.list([]) } }
+    const constraints = dict({
+        state: { start: ['sibling', { 'l id': 'present' }], constraint: {
+            selection: relative, type: ['state', { option: { 'l id': 'yes' } }],
+        } },
+        present: { start: ['value', null], constraint: { selection: relative, type: ['optional value', {}] } },
+    })
+    for (const [source, expected] of [["* | yes 'ok'", null], ["* | no 'bad'", 'unexpected state'], ['_', 'not set']]) {
+        const target = run(source, targetDefinition, targetResolver).content
+        const entry = { 'unmarshall result': ['success', { value: ['set', target] }] }
+        const context = rootLookups()
+        context.parameters.acyclic = generic.map_value_dictionary_to_generic_dictionary(dict({ names: null }),
+            () => ['resolved', lookup.acyclic.from_resolved_dictionary(dict({ target: entry }))])
+        const resolver = referenceResolver({ type: ['parameter', { 'l id': 'names', 'l entry': { type: ['acyclic', null] } }] })
+        resolver[1].type[1].constraints = constraints
+        const result = run("'target'", referenceDefinition, resolver, context)
+        assert.equal(result.content['unmarshall result'][1][1][1]['resolve status'][1], entry)
+        const values = raw(result.content.constraints.get_circular_dependent())
+        assert.equal(values.state[0], expected ?? 'resolved')
+        if (expected === null) assert.deepEqual(errors.Document(result).__get_raw(), [])
+        else {
+            assert.ok(errors.Document(result).__get_raw().every(error => error.severity[0] === 'error'))
+            assert.deepEqual(errors.Document(result).__get_raw()[0].range.start.relative, { line: 0, column: 0 })
+        }
+        if (expected === 'unexpected state') assert.match(diagnostics.Document(result).__get_raw()[0].message, /Expected state "yes".*found "no"/)
+        assert.deepEqual(Object.keys(values), ['present', 'state'])
+        const missing = run("'absent'", referenceDefinition, resolver, context)
+        assert.deepEqual(errors.Document(missing).__get_raw().map(error => error.type), [['no such entry', 'absent']])
     }
+    const cycle = interpret.Resolver_Value_Constraints(dict({
+        a: { start: ['sibling', { 'l id': 'b' }], constraint: { selection: relative, type: ['optional value', {}] } },
+        b: { start: ['sibling', { 'l id': 'a' }], constraint: { selection: relative, type: ['optional value', {}] } },
+    }), ['selection unavailable', null])
+    assert.equal(raw(cycle).a[0], 'cycle detected')
+})
+
+test('derived references and reference-selection tails retain actual values and report failures', () => {
+    const definition = ['reference', { ...referenceDefinition[1], type: ['derived', null] }]
+    const target = run("'target'", ['text', null], ['text', null]).content
+    const selection = { start: ['parameter', { 'l id': 'value' }], tail: { path: { 'l value': p.literal.list([]) } } }
+    const resolver = ['reference', { definition: definition[1], type: ['derived', { value: selection }] }]
+    const result = run('~', definition, resolver, rootLookups(), dict({ value: ['resolved', target] }))
+    assert.equal(result.content['unmarshall result'][1][1][1]['resolve status'][1], target)
+    assert.deepEqual(errors.Document(result).__get_raw(), [])
+    const tail = { ...selection, tail: { path: { 'l value': p.literal.list([{ 'l item': ['reference', { definition: definition[1] }] }]) } } }
+    assert.equal(interpret.Resolver_Guaranteed_Value_Selection(tail, rootLookups(), dict({ value: ['resolved', result.content] }))[1], target)
+    for (const [parameters, expected] of [
+        [dict({}), 'no context lookup'],
+        [dict({ value: ['not set', null] }), 'optional value not set'],
+        [dict({ value: ['selection unavailable', null] }), 'selection unavailable'],
+    ]) {
+        const failed = run('~', definition, resolver, rootLookups(), parameters)
+        const diagnostic = errors.Document(failed).__get_raw()[0]
+        assert.equal(diagnostic.type[0], expected)
+        assert.deepEqual(diagnostic.range.start.relative, { line: 0, column: 0 })
+        assert.deepEqual(diagnostic.severity, ['error', null])
+    }
+    const entry = entries(run("{ target: ( label: 'TARGET' next: _ ) }")).target
+    const lookupContext = rootLookups()
+    lookupContext.parameters.acyclic = generic.map_value_dictionary_to_generic_dictionary(dict({ names: null }),
+        () => ['resolved', lookup.acyclic.from_resolved_dictionary(dict({ target: entry }))])
+    const reference = run("'target'", referenceDefinition, referenceResolver({
+        type: ['parameter', { 'l id': 'names', 'l entry': { type: ['acyclic', null] } }],
+    }), lookupContext)
+    const traversed = interpret.Resolver_Guaranteed_Value_Selection(tail, rootLookups(), dict({ value: ['resolved', reference.content] }))
+    assert.equal(traversed[1], entry['unmarshall result'][1].value[1])
+})
+
+test('state option constraints supply selected payloads to the child and diagnose state mismatches', () => {
+    const derived = ['reference', { referent: null, type: ['derived', null] }]
+    const sourceState = ['state', { options: dict({
+        yes: { value: text, description: none(), constraints: none() },
+        no: { value: text, description: none(), constraints: none() },
+    }), results: none() }]
+    const sourceResolver = ['state', { definition: sourceState[1], options: dict({
+        yes: { constraints: dict({}), resolver: ['text', null] },
+        no: { constraints: dict({}), resolver: ['text', null] },
+    }) }]
+    const definition = ['state', { options: dict({ go: { value: derived, description: none(), constraints: none() } }), results: none() }]
+    const emptyTail = { path: { 'l value': p.literal.list([]) } }
+    const resolver = ['state', { definition: definition[1], options: dict({
+        go: {
+            constraints: dict({ match: ['state', {
+                selection: { start: ['parameter', { 'l id': 'source' }], tail: emptyTail },
+                option: { 'l id': 'yes' },
+            }] }),
+            resolver: ['reference', { definition: derived[1], type: ['derived', {
+                value: { start: ['option constraint', { 'l id': 'match' }], tail: emptyTail },
+            }] }],
+        },
+    }) }]
+    for (const [input, expected] of [["| yes 'target'", 'resolved'], ["| no 'target'", 'unexpected state']]) {
+        const target = run(input, sourceState, sourceResolver).content
+        const result = run('| go ~', definition, resolver, rootLookups(), dict({ source: ['resolved', target] }))
+        const resolvedState = result.content['unmarshall result'][1][1]
+        const status = raw(resolvedState.constraints).match
+        assert.equal(status[0], expected)
+        const child = resolvedState.option.__get_raw()[0]
+        assert.equal(child['unmarshall result'][1][1][1]['resolve status'], status)
+        if (expected === 'resolved') assert.deepEqual(errors.Document(result).__get_raw(), [])
+        else assert.ok(errors.Document(result).__get_raw().some(error => error.type[0] === expected))
+    }
+})
+
+test('component constraint selections expose the asserted payload to sibling properties', () => {
+    const optional = ['optional', text]
+    const component = ['component', { type: ['internal', {
+        'l id': 'Target', 'l entry': { get_circular_dependent: () => ({ 'root value': optional }) },
+    }] }]
+    const derived = ['reference', { referent: null, type: ['derived', null] }]
+    const definition = ['group', dict({
+        target: { value: component, description: none() },
+        payload: { value: derived, description: none() },
+    })]
+    const relative = { path: { 'l value': p.literal.list([]) } }
+    const resolver = ['group', dict({
+        target: { definition: definition[1], resolver: ['component', {
+            location: ['internal', { 'l id': 'Target' }], arguments: none(),
+            constraints: dict({ present: {
+                start: ['value', null], constraint: { selection: relative, type: ['optional value', {}] },
+            } }),
+        }] },
+        payload: { definition: definition[1], resolver: ['reference', {
+            definition: derived[1], type: ['derived', {
+                value: { start: ['constraint', ['component', {
+                    property: { 'l id': 'target' }, constraint: { 'l id': 'present' },
+                }]], tail: relative },
+            }],
+        }] },
+    })]
+    const result = run("( target: * 'actual' payload: ~ )", definition, resolver, rootLookups(), dict({}), dict({
+        Target: { 'root value resolver': ['optional', { constraints: dict({}), resolver: ['text', null] }] },
+    }))
+    assert.deepEqual(errors.Document(result).__get_raw(), [])
+    const props = raw(result.content['unmarshall result'][1][1].properties)
+    const target = props.target['unmarshall result'][1].resolved
+    const payload = props.payload['unmarshall result'][1].resolved
+    assert.equal(payload['unmarshall result'][1][1][1]['resolve status'][1], raw(target.constraints.get_circular_dependent()).present[1])
+})
+
+test('optional option constraints assert a parameter only when the child is set', () => {
+    const definition = ['optional', text]
+    const resolver = ['optional', {
+        constraints: dict({ source: ['assert is set', ['parameter', { 'l id': 'source' }]] }),
+        resolver: ['text', null],
+    }]
+    const unset = run('_', definition, resolver)
+    assert.deepEqual(errors.Document(unset).__get_raw(), [])
+    const missing = run("* 'child'", definition, resolver, rootLookups(), dict({ source: ['not set', null] }))
+    assert.deepEqual(errors.Document(missing).__get_raw().map(error => error.type[0]), ['optional value not set'])
+    const target = run("'target'", text, ['text', null]).content
+    const result = run("* 'child'", definition, resolver, rootLookups(), dict({ source: ['resolved', target] }))
+    assert.deepEqual(errors.Document(result).__get_raw(), [])
+    assert.equal(raw(result.content['unmarshall result'][1][1].constraints).source[1], target)
+})
+
+test('option constraints resolve dependent names in dependency order and diagnose cycles', () => {
+    const inner = ['state', { options: dict({ yes: { value: text, description: none(), constraints: none() } }), results: none() }]
+    const innerResolver = ['state', { definition: inner[1], options: dict({ yes: { constraints: dict({}), resolver: ['text', null] } }) }]
+    const outer = ['state', { options: dict({ yes: { value: inner, description: none(), constraints: none() } }), results: none() }]
+    const outerResolver = ['state', { definition: outer[1], options: dict({ yes: { constraints: dict({}), resolver: innerResolver } }) }]
+    const target = run("| yes | yes 'payload'", outer, outerResolver).content
+    const tail = { path: { 'l value': p.literal.list([]) } }
+    const assertState = start => ['state', { selection: { start, tail }, option: { 'l id': 'yes' } }]
+    const definition = ['optional', text]
+    const resolver = ['optional', {
+        constraints: dict({
+            second: assertState(['option constraint', { 'l id': 'first' }]),
+            first: assertState(['parameter', { 'l id': 'source' }]),
+        }),
+        resolver: ['text', null],
+    }]
+    const result = run("* 'child'", definition, resolver, rootLookups(), dict({ source: ['resolved', target] }))
+    assert.deepEqual(errors.Document(result).__get_raw(), [])
+    const statuses = raw(result.content['unmarshall result'][1][1].constraints)
+    assert.deepEqual(Object.keys(statuses), ['first', 'second'])
+    assert.equal(statuses.second[1]['unmarshall result'][1][1].value, 'payload')
+    resolver[1].constraints = dict({
+        first: assertState(['option constraint', { 'l id': 'second' }]),
+        second: assertState(['option constraint', { 'l id': 'first' }]),
+    })
+    const cycle = run("* 'child'", definition, resolver)
+    assert.ok(errors.Document(cycle).__get_raw().every(error => error.type[0] === 'cycle detected'))
+    assert.equal(errors.Document(cycle).__get_raw().length, 2)
+})
+
+test('optional value initialization distinguishes absence, explicit selection, and forwarded absence', () => {
+    const target = run("'target'", ['text', null], ['text', null]).content
+    const context = rootLookups()
+    const parameters = dict({ value: ['resolved', target], absent: ['not set', null] })
+    assert.deepEqual(interpret.Resolver_Optional_Value_Initialization(['not set', null], context, parameters), ['not set', null])
+    const selection = { start: ['parameter', { 'l id': 'value' }], tail: { path: { 'l value': p.literal.list([]) } } }
+    assert.equal(interpret.Resolver_Optional_Value_Initialization(['set', selection], context, parameters)[1], target)
+    assert.deepEqual(interpret.Resolver_Optional_Value_Initialization(['selection', ['parameter', { 'l id': 'absent' }]], context, parameters), ['not set', null])
+    assert.deepEqual(interpret.Resolver_Optional_Value_Initialization(['selection', ['parameter', { 'l id': 'missing' }]], context, parameters), ['not found because of root', null])
+})
+
+test('component calls push stack frames and forward lookup arguments across nested calls', () => {
+    const context = rootLookups()
+    const parameters = dict({ source: ['resolved', run("{ target: ( label: 'TARGET' next: _ ) }").content] })
+    const parameter = (id, kind) => ({ type: ['parameter', { 'l id': id, 'l entry': { type: [kind, null] } }] })
+    const component = (id, definition, arguments_) => ({
+        definition: ['component', { type: ['internal', { 'l id': id, 'l entry': { get_circular_dependent: () => ({ 'root value': definition }) } }] }],
+        resolver: ['component', {
+            location: ['internal', { 'l id': id }], arguments: p.literal.set(arguments_), constraints: dict({}),
+        }],
+    })
+    const inner = component('inner', referenceDefinition, {
+        modules: none(), lookups: p.literal.set(dict({ frames: ['selection', parameter('frames', 'stack')] })),
+    })
+    const outer = component('outer', inner.definition, {
+        modules: none(), lookups: p.literal.set(dict({
+            frames: ['stack', ['push', {
+                stack: parameter('initial', 'stack'),
+                item: { type: ['acyclic', ['resolved dictionary', {
+                    selection: { start: ['parameter', { 'l id': 'source' }], tail: { path: { 'l value': p.literal.list([]) } } },
+                }]] },
+            }]],
+        })),
+    })
+    context.parameters.stack = generic.map_value_dictionary_to_generic_dictionary(dict({ initial: null }),
+        () => ['resolved', lookup.stack.empty()])
+    const modules = dict({
+        outer: { 'root value resolver': inner.resolver },
+        inner: { 'root value resolver': referenceResolver(parameter('frames', 'stack')) },
+    })
+    const result = run("'target'", outer.definition, outer.resolver, context, parameters, modules)
+    assert.deepEqual(errors.Document(result).__get_raw(), [])
+    const value = result.content['unmarshall result'][1][1].value['unmarshall result'][1][1].value
+    const status = value['unmarshall result'][1][1][1]['resolve status']
+    assert.equal(status[0], 'resolved stack')
+    assert.equal(status[1].depth, 0)
+    assert.equal(status[1].entry, entries({ content: parameters.__get_raw()[0][1][1] }).target)
+    assert.deepEqual(completeAt(result, "'target'", "'target'").suggestions.__get_raw().map(s => s.label), ['target'])
 })
 
 test('the actual YABNF document diagnoses terminal and cyclic nonterminal typos through nested calls', () => {
@@ -244,6 +573,8 @@ test('the actual YABNF document diagnoses terminal and cyclic nonterminal typos 
     assert.deepEqual(missing.range.start.relative, { line: before.length - 1, column: before.at(-1).length })
     assert.deepEqual(missing.range.end.relative, { line: before.length - 1, column: before.at(-1).length + 7 })
     assert.ok(reported.some(e => e.type[0] === 'no such entry' && e.type[1] === 'Valuke'))
+    assert.ok(completeAt(result, source, "'Texdt'").suggestions.__get_raw().some(s => s.label === 'Text'))
+    assert.ok(completeAt(result, source, "'Valuke'").suggestions.__get_raw().some(s => s.label === 'Value'))
     assert.match(diagnostics.Document(result).__get_raw().find(d => d.message.includes('Texdt')).message, /No such dictionary entry/)
     const correctedInput = unmarshal.Document(p.literal.list(Array.from(source.replace("'Texdt'", "'Text'").replace("'Valuke'", "'Value'"), c => c.codePointAt(0))), abort, {
         module: definition.signature.module, 'tab size': 1,
@@ -256,4 +587,146 @@ test('primitive documents retain their original unmarshalled values', () => {
     assert.equal(result.content.unmarshalled, result.unmarshalled.content)
     assert.equal(result.content['unmarshall result'][1][1], result.unmarshalled.content['unmarshall result'][1][1])
     assert.deepEqual(diagnostics.Document(result).__get_raw(), [])
+})
+
+const relative = (...steps) => ({ path: { 'l value': p.literal.list(steps.map(step => ({ 'l item': step }))) } })
+const parameterSelection = id => ({ start: ['parameter', { 'l id': id }], tail: relative() })
+const previousSelection = (initial, ...steps) => ({ start: ['previous item', { initial }], tail: relative(...steps) })
+const derivedDefinition = ['reference', { referent: null, type: ['derived', null] }]
+const derivedResolver = value => ['reference', { definition: derivedDefinition[1], type: ['derived', { value }] }]
+const resolvedItems = result => result.content['unmarshall result'][1][1].items.__get_raw()
+const derivedStatus = value => value['unmarshall result'][1][1][1]['resolve status']
+
+test('previous item selects resolved output and handles zero, one and multiple items', () => {
+    const target = run("'initial'", text, ['text', null]).content
+    const definition = ['list', { value: derivedDefinition, result: none() }]
+    const resolver = ['list', { definition: definition[1], resolver: derivedResolver(previousSelection(parameterSelection('initial'))) }]
+    for (const source of ['[]', '[ ~ ]', '[ ~ ~ ~ ]']) {
+        const result = run(source, definition, resolver, rootLookups(), dict({ initial: ['resolved', target] }))
+        assert.deepEqual(errors.Document(result).__get_raw(), [])
+        const items = resolvedItems(result)
+        let previous = target
+        for (const item of items) {
+            assert.equal(derivedStatus(item)[1], previous)
+            assert.notEqual(derivedStatus(item)[1], previous.unmarshalled)
+            previous = item
+        }
+    }
+})
+
+test('previous item bypasses the outer tail for its initial selection and propagates failure', () => {
+    const target = run("'initial'", text, ['text', null]).content
+    const definition = ['list', { value: derivedDefinition, result: none() }]
+    const resolver = ['list', { definition: definition[1], resolver: derivedResolver(
+        previousSelection(parameterSelection('initial'), ['reference', {}]),
+    ) }]
+    const parameters = dict({ initial: ['resolved', target] })
+    const result = run('[ ~ ~ ~ ]', definition, resolver, rootLookups(), parameters)
+    assert.deepEqual(errors.Document(result).__get_raw(), [])
+    assert.ok(resolvedItems(result).every(item => derivedStatus(item)[1] === target))
+    const failed = run('[ ~ ~ ]', definition, resolver, rootLookups(), dict({ initial: ['not set', null] }))
+    assert.deepEqual(resolvedItems(failed).map(derivedStatus), [['not set', null], ['not set', null]])
+    assert.equal(errors.Document(failed).__get_raw().length, 2)
+    const unavailable = interpret.Resolver_Guaranteed_Value_Selection(
+        previousSelection(parameterSelection('initial'), ['component', null]),
+        { ...rootLookups(), 'previous item': target }, parameters,
+    )
+    assert.deepEqual(unavailable, ['selection unavailable', null])
+    assert.deepEqual(interpret.Resolver_Guaranteed_Value_Selection(
+        previousSelection(parameterSelection('initial')), rootLookups(), parameters,
+    ), ['selection unavailable', null])
+})
+
+test('nested lists keep independent previous-item scopes', () => {
+    const target = run("'initial'", text, ['text', null]).content
+    const inner = ['list', { value: derivedDefinition, result: none() }]
+    const innerResolver = ['list', { definition: inner[1], resolver: derivedResolver(previousSelection(parameterSelection('initial'))) }]
+    const outer = ['list', { value: inner, result: none() }]
+    const result = run('[ [ ~ ~ ] [] [ ~ ~ ] ]', outer,
+        ['list', { definition: outer[1], resolver: innerResolver }], rootLookups(), dict({ initial: ['resolved', target] }))
+    assert.deepEqual(errors.Document(result).__get_raw(), [])
+    const lists = resolvedItems(result)
+    assert.equal(lists[1]['unmarshall result'][1][1].items.__get_raw().length, 0)
+    for (const list of [lists[0], lists[2]]) {
+        const items = list['unmarshall result'][1][1].items.__get_raw()
+        assert.equal(derivedStatus(items[0])[1], target)
+        assert.equal(derivedStatus(items[1])[1], items[0])
+    }
+})
+
+test('last item selects resolved output and uses an untraversed sibling initial only for empty lists', () => {
+    const listDefinition = ['list', { value: text, result: none() }]
+    const definition = ['group', dict({
+        initial: { value: text, description: none() },
+        items: { value: listDefinition, description: none() },
+        last: { value: derivedDefinition, description: none() },
+    })]
+    const resolver = ['group', dict({
+        last: { definition: definition[1], resolver: derivedResolver({
+            start: ['last item', { property: { 'l id': 'items' },
+                initial: { start: ['sibling', { 'l id': 'initial' }], tail: relative() } }],
+            tail: relative(),
+        }) },
+        items: { definition: definition[1], resolver: ['list', { definition: listDefinition[1], resolver: ['text', null] }] },
+        initial: { definition: definition[1], resolver: ['text', null] },
+    })]
+    for (const source of ["( initial: 'fallback' items: [] last: ~ )", "( initial: 'fallback' items: [ 'one' 'two' ] last: ~ )"]) {
+        const result = run(source, definition, resolver)
+        assert.deepEqual(errors.Document(result).__get_raw(), [])
+        const properties = raw(result.content['unmarshall result'][1][1].properties)
+        const initial = properties.initial['unmarshall result'][1].resolved
+        const items = properties.items['unmarshall result'][1].resolved['unmarshall result'][1][1].items.__get_raw()
+        const last = properties.last['unmarshall result'][1].resolved
+        assert.equal(derivedStatus(last)[1], items.at(-1) ?? initial)
+        const context = { ...rootLookups(), group: { properties: lookup.acyclic.from_resolved_dictionary(dict(properties)), parent: null } }
+        const selection = { start: ['last item', { property: { 'l id': 'items' }, initial: parameterSelection('initial') }],
+            tail: relative(['component', null]) }
+        const status = interpret.Resolver_Guaranteed_Value_Selection(selection, context, dict({ initial: ['resolved', initial] }))
+        assert.deepEqual(status, items.length === 0 ? ['resolved', initial] : ['selection unavailable', null])
+    }
+})
+
+test('SQL list paths resolve and complete against the previous resolved foreign-key field', () => {
+    const base = new URL('../../../../newstyle_projects/projects/sql_query/sketch/transformers/sql_sketch/tests/fixtures/', import.meta.url)
+    const schema = schemaParser.Module_Specifier(p.literal.list(Array.from(
+        readFileSync(new URL('.liana/schema.slna', base), 'utf8'), c => c.codePointAt(0),
+    )), abort, { 'tab size': 4 })
+    const definition = schema[1]['module resolver'].entry
+    const resolve = source => {
+        const input = unmarshal.Document(p.literal.list(Array.from(source, c => c.codePointAt(0))), abort, {
+            module: definition.signature.module, 'tab size': 4,
+        })
+        return interpret.Document(input, rootLookups(), { definition, resolvers: schema[1].resolver, 'module parameters': dict({}) })
+    }
+    const source = readFileSync(new URL('orders.sq.lna', base), 'utf8')
+    assert.deepEqual(errors.Document(resolve(source)).__get_raw(), [])
+    for (const [path, expected] of [
+        ["[ 'absent' ]", ['customer_id', 'id', 'total']],
+        ["[ 'customer_id' 'absent' ]", ['country_id', 'id', 'name']],
+        ["[ 'customer_id' 'country_id' 'absent' ]", ['id', 'name']],
+    ]) {
+        const modified = source.replace("[ 'customer_id' 'country_id' 'name' ]", path)
+        assert.notEqual(modified, source)
+        const result = resolve(modified)
+        assert.deepEqual(completeAt(result, modified, "'absent'").suggestions.__get_raw().map(item => item.label).sort(), expected)
+    }
+    const invalid = source.replace("[ 'customer_id' 'country_id' 'name' ]", "[ 'customer_id' 'name' 'id' ]")
+    const reported = errors.Document(resolve(invalid)).__get_raw()
+    assert.deepEqual(reported.map(error => error.type), [['unexpected state', { expected: 'reference', actual: 'value' }]])
+    assert.match(diagnostics.Document(resolve(invalid)).__get_raw()[0].message, /Expected state "reference".*found "value"/)
+    const offset = invalid.indexOf("'id'", invalid.indexOf("[ 'customer_id' 'name' 'id' ]"))
+    assert.equal(reported[0].range.start.absolute, offset)
+    const foreignKeyFinal = source.replace("[ 'customer_id' 'country_id' 'name' ]", "[ 'customer_id' 'country_id' ]")
+    assert.deepEqual(errors.Document(resolve(foreignKeyFinal)).__get_raw(), [])
+})
+
+test('schema resolution rejects a previous-item initial selection with an incompatible type', () => {
+    const path = new URL('../../../../newstyle_projects/projects/sql_query/sketch/transformers/sql_sketch/typescript/schemas/input.slna', import.meta.url)
+    const source = readFileSync(path, 'utf8')
+    const initial = /(`start`:\s*\|\s*`previous item`\s*\(\s*`initial`:\s*\(\s*`start`:\s*\|\s*`parameter`\s*'table'\s*`tail`:\s*\(\s*`path`:\s*)\[\s*\|\s*`group`\s*'fields'\s*\|\s*`component`\s*~\s*\]/
+    assert.match(source, initial)
+    const invalid = source.replace(initial, '$1[ ]')
+    assert.throws(() => schemaParser.Module_Specifier(
+        p.literal.list(Array.from(invalid, c => c.codePointAt(0))), abort, { 'tab size': 4 },
+    ), error => JSON.stringify(error).includes('initial selection data type'))
 })
