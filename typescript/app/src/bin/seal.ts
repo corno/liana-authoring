@@ -14,15 +14,13 @@ p_h.run_main_command(
     () => c_command(
         {
             'indentation': "    ",
+            'newline': "\n",
         },
         {
             'read file': rs_filesystem_unrestricted.$.queries['read file'],
             'process data': q_query(
                 {
                     'tab size': 4,
-                    'serialization parameters': {
-                        'indentation': "    ",
-                    }
                 },
                 {
                     'read file': rs_filesystem_unrestricted.$.queries['read file'],
@@ -31,8 +29,8 @@ p_h.run_main_command(
             ),
         },
         {
-            'log error lines': rs_stream.$.commands['log error lines'],
-            'log lines': rs_stream.$.commands['log lines']
+            'log error paragraph': rs_stream.$.commands['log error paragraph'],
+            'log paragraph': rs_stream.$.commands['log paragraph']
         },
     ),
 )

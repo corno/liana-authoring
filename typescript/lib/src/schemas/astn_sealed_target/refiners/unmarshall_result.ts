@@ -1,6 +1,7 @@
 
 import * as p_ from 'pareto-core/refiner'
 import type * as p_ti from 'pareto-core/transformer'
+import type * as p_di from 'pareto-core/schema'
 
 //schemas
 import type * as s_in from "../../../schemas/unmarshall_result/schema.js"
@@ -151,6 +152,49 @@ export const Value: declarations_.Value = ($, abort) => {
                                         }))]
                             })
                             case 'group': return p_.option($, ($) => {
+                                // the derived properties only contain the defined properties, so properties without a definition are checked here
+                                p_.from.state($.derived.style).decide(
+                                    ($): p_di.List<null> => {
+                                        switch ($[0]) {
+                                            case 'verbose': return p_.option($, ($) => p_.from.list($.properties).map(
+                                                ($) => {
+                                                    const id_value_pair = $.intermediate['id value pair']
+                                                    return p_.from.state($['definition found']).decide(
+                                                        ($): null => {
+                                                            switch ($[0]) {
+                                                                case 'yes': return p_.option($, () => null)
+                                                                case 'no': return p_.option($, () => abort({
+                                                                    'type': ['group', ['unknown property', {
+                                                                        'name': id_value_pair.id.token.value
+                                                                    }]],
+                                                                    'range': id_value_pair.id.range
+                                                                }))
+                                                                default: return p_.exhaustive($[0])
+                                                            }
+                                                        })
+                                                }
+                                            ))
+                                            case 'concise': return p_.option($, ($) => p_.from.list($.properties).map(
+                                                ($) => {
+                                                    const item = $.item
+                                                    return p_.from.state($['definition found']).decide(
+                                                        ($): null => {
+                                                            switch ($[0]) {
+                                                                case 'yes': return p_.option($, () => null)
+                                                                case 'no': return p_.option($, () => abort({
+                                                                    'type': ['group', ['unknown property', {
+                                                                        'name': "(superfluous concise item)"
+                                                                    }]],
+                                                                    'range': t_astn_parse_tree_to_start_token_location.Value(item.value)
+                                                                }))
+                                                                default: return p_.exhaustive($[0])
+                                                            }
+                                                        })
+                                                }
+                                            ))
+                                            default: return p_.exhaustive($[0])
+                                        }
+                                    })
                                 return ['group', ['verbose', p_.from.dictionary($.derived.properties).map(
                                     ($, id) => p_.from.state($.result).decide(
                                         ($) => {

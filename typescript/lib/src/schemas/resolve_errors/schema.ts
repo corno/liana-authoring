@@ -6,6 +6,13 @@ export type Error = {
     'range': s_location.Range
     'type':
     | ['to be implemented', null]
+    | ['no such entry', string]
+    | ['no context lookup', null]
+    | ['cycle detected', p_.List<string>]
+    | ['entry unavailable', string]
+    | ['premature cyclic access', null]
+    | ['selection unavailable', null]
+    | ['optional value not set', null]
     'severity':
     | ['error', null]
     | ['warning', null]

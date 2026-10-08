@@ -86,12 +86,37 @@ export type Optional = {
 }
 
 export type Reference =
-    | ['derived', null]
+    | ['derived', {
+        'unmarshalled': s_unmarshall_result.Reference_Derived,
+        'resolve status': Value_Selection_Status,
+    }]
     | ['selected', {
         'unmarshalled': s_unmarshall_result.Reference_Selected
-        'resolve status':
-        | ['to be implemented', null]
+        'resolve status': Reference_Resolve_Status
     }]
+
+export type Final_Reference_Resolve_Status =
+    | ['resolved', Entry]
+    | ['resolved stack', { 'entry': Entry, 'depth': number }]
+    | ['premature cyclic access', null]
+    | ['no such entry', string]
+    | ['no context lookup', null]
+    | ['cycle detected', p_.List<string>]
+    | ['entry unavailable', string]
+    | ['to be implemented', null]
+
+export type Reference_Resolve_Status =
+    | Final_Reference_Resolve_Status
+    | ['cyclic', p_.Circular_Dependency<Final_Reference_Resolve_Status>]
+
+export type Value_Selection_Status =
+    | ['resolved', Value]
+    | ['not set', null]
+    | ['selection unavailable', null]
+    | ['cycle detected', p_.List<string>]
+    | ['not found because of root', null]
+    | ['to be implemented', null]
+    | ['reference error', Final_Reference_Resolve_Status]
 
 export type State = {
     'unmarshalled': s_unmarshall_result.State

@@ -3,7 +3,6 @@ import * as p_temp from 'pareto-core/transformer'
 
 import type * as query_interfaces_file_in_stream_out from "pareto-common/modules/file_in_stream_out/queries/interfaces"
 import type * as query_interfaces_pareto_filesystem_unrestricted_api from "pareto-filesystem-unrestricted-api/modules/unrestricted/queries/interfaces"
-import type * as s_paragraph_serialization from "pareto-fountain-pen/modules/paragraph/schemas/paragraph_serialization/schema"
 
 //data  types
 import type * as s_file_in_stream_out_query from "pareto-common/modules/file_in_stream_out/schemas/query/schema"
@@ -23,7 +22,6 @@ export const $$: p_.Query_Implementation<
     query_interfaces_file_in_stream_out.operation,
     {
         'tab size': number,
-        'serialization parameters': s_paragraph_serialization.Parameters,
     },
     {
         'read file': query_interfaces_pareto_filesystem_unrestricted_api.read_file

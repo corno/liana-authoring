@@ -1,5 +1,6 @@
 
 import * as p_ from 'pareto-core/transformer'
+import { Reference_Status } from '../../unmarshall_result/transformers/resolve_result.js'
 
 //schemas
 import type * as s_in from "../../../schemas/resolve_result/schema.js"
@@ -70,21 +71,54 @@ export const Value: declarations_.Value = ($) => p_.from.state($['unmarshall res
                         case 'reference': return p_.option($, ($) => p_.from.state($).decide(
                             ($) => {
                                 switch ($[0]) {
-                                    case 'derived': return p_.option($, ($) => p_.literal.list([]))
-                                    case 'selected': return p_.option($, ($) => p_.from.state($['resolve status']).decide(
-                                        ($) => {
-                                            switch ($[0]) {
-                                                case 'to be implemented': return p_.option($, ($) => p_.literal.list<s_out.Error>([
-                                                    // {
-                                                    //     'severity': ['hint', null],
-                                                    //     'range': range,
-                                                    //     'type': ['to be implemented', null]
-                                                    // }
-                                                ]))
-                                                default: return p_.exhaustive($[0])
-                                            }
+                                    case 'derived': return p_.option($, ($): s_out.Errors => {
+                                        const instance = $.unmarshalled.intermediate.instance
+                                        const range = instance[0] === 'nothing' ? instance[1]['~'].range : instance[1].range
+                                        const status = $['resolve status']
+                                        const error = (type: s_out.Error['type'], hint = false): s_out.Errors =>
+                                            p_.literal.list([{ range, type, severity: hint ? ['hint', null] : ['error', null] }])
+                                        switch (status[0]) {
+                                            case 'resolved': return p_.literal.list([])
+                                            case 'not set': return error(['optional value not set', null])
+                                            case 'not found because of root': return error(['no context lookup', null])
+                                            case 'selection unavailable': return error(['selection unavailable', null])
+                                            case 'cycle detected': return error(status)
+                                            case 'to be implemented': return error(status, true)
+                                            case 'reference error':
+                                                switch (status[1][0]) {
+                                                    case 'resolved':
+                                                    case 'resolved stack': return p_.literal.list([])
+                                                    case 'to be implemented': return error(status[1], true)
+                                                    default: return error(status[1])
+                                                }
+                                            default: return p_.exhaustive(status[0])
                                         }
-                                    ))
+                                    })
+                                    case 'selected': return p_.option($, ($) => {
+                                        const range = $.unmarshalled.intermediate.instance.range
+                                        return p_.from.state(Reference_Status($['resolve status'])).decide(
+                                            ($): s_out.Errors => {
+                                                switch ($[0]) {
+                                                    case 'resolved': return p_.literal.list([])
+                                                    case 'resolved stack': return p_.literal.list([])
+                                                    case 'no such entry':
+                                                    case 'no context lookup':
+                                                    case 'cycle detected':
+                                                    case 'entry unavailable': return p_.literal.list([{
+                                                        severity: ['error', null], range, type: $,
+                                                    }])
+                                                    case 'premature cyclic access': return p_.literal.list([{
+                                                        severity: ['error', null], range, type: $,
+                                                    }])
+                                                    case 'to be implemented': return p_.literal.list([{
+                                                        severity: ['hint', null], range,
+                                                        type: ['to be implemented', null],
+                                                    }])
+                                                    default: return p_.exhaustive($[0])
+                                                }
+                                            }
+                                        )
+                                    })
                                     default: return p_.exhaustive($[0])
                                 }
                             }
