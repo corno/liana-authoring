@@ -32,6 +32,19 @@ test('native LionCore serialization preserves SysML through tree, chunk and JSON
         const byPath = new Map(output.nodes.map(node => [JSON.stringify(path(node, nodes)), node]))
         const mapped = new Map(original.nodes.map(node => [node.id, byPath.get(JSON.stringify(path(node, sourceNodes)))]))
 
+        await t.test('concise and verbose instances agree and malformed input remains rejected', () => {
+            const concise = "< { 'main': < \"1\" {} { 'Text': | `data type` | `primitive type` ~ } > } 'main' >"
+            const verbose = `( languages: {
+                'main': ( version: "1" \`depends on\`: {} entities: {
+                    'Text': | \`data type\` | \`primitive type\` ~
+                } )
+            } \`primary language\`: 'main' )`
+            assert.deepEqual(plain(api.parse(concise)), plain(api.parse(verbose)))
+            assert.equal(api.convert(concise).json, api.convert(verbose).json)
+            assert.throws(() => api.parse(verbose.replace('languages:', 'unexpected:')))
+            assert.throws(() => api.parse(concise.replace('`primitive type`', '`missing type`')))
+        })
+
         await t.test('all source data except generated IDs/keys and ordering is preserved', () => {
             assert.equal(original.nodes.length, 663)
             assert.equal(output.nodes.length, 668)

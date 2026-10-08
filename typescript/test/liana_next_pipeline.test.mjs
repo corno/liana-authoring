@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
 import { createRequire } from 'node:module'
-import { mkdtempSync, readFileSync, rmSync, writeFileSync, existsSync, symlinkSync } from 'node:fs'
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync, existsSync, symlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -11,6 +11,9 @@ import * as api from '../../../../newstyle_projects/projects/liana/sketch/transf
 import * as authoringSerializer from '../../../../newstyle_projects/projects/liana/sketch/transformers/pareto_next_sketch/typescript/dist/modules/source.liana.generated/schemas/unresolved/transformers/serialized_paragraph.js'
 import { convert } from '../../../../newstyle_projects/projects/liana/sketch/temp/convert_registry.mjs'
 import { sealedSchemaText } from './native_schema_text.mjs'
+import { boekhoudingYears } from '../../../../liana-vscode/test/fixtures/boekhouding-years.mjs'
+import { instanceTextNormalizer } from '../../../../newstyle_projects/tools/liana/instance_text.mjs'
+import { Syntax_Lines } from '../../../../newstyle_projects/projects/liana/sketch/transformers/pareto_next_sketch/typescript/dist/transform.js'
 
 const base = new URL('../../../../newstyle_projects/', import.meta.url)
 const examples = new URL('projects/liana/sketch/examples/', base)
@@ -256,7 +259,9 @@ test('Lioncore resolves language and entity references with explicit dependency 
                     error.type === 'no such entry' && error.id === id, source)
         })
         await t.test('the full SysML fixture preserves the supplied language and resolves explicit local cycles', () => {
-            const value = parse(readFileSync(new URL('../temp/lioncore/sysml.lna', examples), 'utf8'))
+            const normalize = instanceTextNormalizer(Syntax_Lines(fixture('lioncore'), abort).join('\n'))
+            const text = normalize(readFileSync(new URL('../temp/lioncore/sysml.lna', examples), 'utf8'))
+            const value = parse(text)
             const sysml = entry(value.languages, 'sysml')
             const types = entry(value.languages, 'types')
             assert.equal(value['primary language'], 'sysml')
@@ -355,7 +360,7 @@ test('Lioncore resolves language and entity references with explicit dependency 
             }
             const rendered = serializer.Root(resolved, { indentation: '    ' }).__get_raw().join('\n')
             assert.deepEqual(plain(parse(rendered)), plain(value))
-            const allAcyclic = parse(readFileSync(new URL('../temp/lioncore/sysml.lna', examples), 'utf8').replaceAll(
+            const allAcyclic = parse(text.replaceAll(
                 '| `local cyclic`', '| `local`'))
             assert.throws(() => resolve(allAcyclic), error =>
                 error.type === 'cycle detected' && error.id === 'Subclassification')
@@ -882,6 +887,93 @@ test('generated Boekhouding follows the proven bank-mutation and Resultaat looku
             ...source, Bankrekeningen: dict({ bank: { 'Mutatie Verwerkingen': processing('absent') } }),
         }, abort, { Jaren: lookup.acyclic.from_resolved_dictionary(dict({})) }, parameters), error =>
             error.type === 'no benchmark entry' && error.id === 'absent')
+        for (const [invalid, type, id] of [
+            [{ ...source, Bankrekeningen: dict({ missingBank: source.Bankrekeningen.__get_raw()[0][1] }) },
+                'no benchmark entry', 'missingBank'],
+            [{ ...source, Verrekenposten: dict({ missingSettlement: { Mutaties: dict({}) } }) },
+                'no benchmark entry', 'missingSettlement'],
+            [{ ...source, 'Overige Balans Items': dict({ missingItem: { 'Memoriaal Boekingen': dict({}) } }) },
+                'no benchmark entry', 'missingItem'],
+            [{ ...source, Bankrekeningen: dict({ bank: { 'Mutatie Verwerkingen': dict({ payment: {
+                type: ['Balans', ['Informele rekening', { 'Informele rekening': 'missingInformal' }]],
+            } }) } }) }, 'no such entry', 'missingInformal'],
+            [{ ...source, 'Overige Balans Items': dict({ item: { 'Memoriaal Boekingen': dict({ booking: {
+                Bedrag: 123, Datum: 20454, Omschrijving: 'Expense', Grootboekrekening: 'balance',
+            } }) } }) }, 'no such entry', 'balance'],
+        ]) {
+            assert.throws(() => resolver.Mutaties(invalid, abort,
+                { Jaren: lookup.acyclic.from_resolved_dictionary(dict({})) }, parameters),
+            error => error.type === type && error.id === id, id)
+        }
+        const prepared = JSON.parse(execFileSync(process.execPath, [
+            fileURLToPath(new URL('tools/liana/prepare_schema.mjs', base)),
+            fileURLToPath(new URL('boekhouding.liana.lna', examples)),
+        ], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }))
+        mkdirSync(join(directory, '.liana'))
+        writeFileSync(join(directory, '.liana/schema.slna'), prepared.syntax)
+        writeFileSync(join(directory, 'years.lna'), boekhoudingYears)
+        const sealed = execFileSync(process.execPath, [
+            fileURLToPath(new URL('tools/old_style/liana_authoring/dist/bin/seal.js', base)), join(directory, 'years.lna'),
+        ], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 })
+        const authored = parser.Root(chars(sealed), abort, { 'tab size': 4 })
+        const root = resolver.Root(authored, abort, null, null)
+        const first = entry(root.Jaren, '2024')
+        const second = entry(root.Jaren, '2025')
+        assert.equal(second['Eerste boekjaar'][1]['Vorig boekjaar']['l entry'], first)
+        for (const [id, property, group] of [
+            ['zakelijk', 'Rekening', 'Bankrekeningen'],
+            ['prive', 'Rekening', 'Informele rekeningen'],
+            ['voorraad', 'Balans item', 'Overige balans items'],
+        ]) {
+            const current = entry(second.Jaarbeheer.Balans[group], id)
+            assert.equal(current.Nieuw[1].value[property]['l entry'], entry(first.Jaarbeheer.Balans[group], id))
+        }
+        const customer = entry(root.Beheer.Klanten, 'klant')
+        const sale = entry(second.Handelstransacties.Verkopen, 'projectfactuur')
+        assert.equal(sale.Debiteur['l entry'], customer)
+        const project = entry(customer.Projecten, 'project')
+        const quote = entry(project.Offertes, 'offerte')
+        assert.equal(sale.Contracttype[1].Project['l entry'], project)
+        assert.equal(sale.Contracttype[1].Offerte['l entry'], quote)
+        assert.equal(entry(sale.Regels, 'standaard').Contracttype[1].value.Opbrengst['l entry'],
+            entry(quote.Opbrengsten, 'mijlpaal'))
+        const licenseSale = entry(second.Handelstransacties.Verkopen, 'licentiefactuur')
+        const license = entry(customer.Licentieovereenkomsten, 'licentie')
+        assert.equal(licenseSale.Contracttype[1].Overeenkomst['l entry'], license)
+        assert.equal(entry(licenseSale.Regels, 'periode').Contracttype[1].value.Periode['l entry'],
+            entry(license.Periodes, 'periode'))
+        const mutations = entry(second.Mutaties.Bankrekeningen, 'zakelijk').value['Mutatie Verwerkingen']
+        assert.equal(entry(mutations, 'betaling').value.type[1].type[1]['l entry'],
+            entry(second.Handelstransacties.Inkopen, 'factuur'))
+        const priorMutation = entry(mutations, 'vorig').value.type[1]
+        assert.equal(priorMutation.Jaar.__get_raw()[0]['l entry'], first)
+        assert.equal(priorMutation.type[1]['l entry'],
+            entry(first.Handelstransacties.Verkopen, 'licentiefactuur'))
+        for (const [option, id, selectTarget] of [
+            ['Inkoop', 'factuur', year => entry(year.Handelstransacties.Inkopen, 'historische factuur')],
+            ['Verkoop', 'licentiefactuur', year => entry(year.Handelstransacties.Verkopen, 'historische licentiefactuur')],
+            ['BTW-periode', 'kwartaal', year => entry(year.Jaarbeheer.Resultaat['BTW periodes'], 'historische kwartaal')],
+        ]) {
+            const before = boekhoudingYears.indexOf("'2024':")
+            const after = boekhoudingYears.indexOf("'2025':")
+            assert.ok(before >= 0 && after > before)
+            const firstYear = boekhoudingYears.slice(before, after).replaceAll("'" + id + "'", "'historische " + id + "'")
+            const text = boekhoudingYears.slice(0, before) + firstYear + boekhoudingYears.slice(after)
+                .replace("* '2024' | `Verkoop` 'licentiefactuur'", "* '2024' | `" + option + "` 'historische " + id + "'")
+            writeFileSync(join(directory, 'years.lna'), text)
+            const sealedCase = execFileSync(process.execPath, [
+                fileURLToPath(new URL('tools/old_style/liana_authoring/dist/bin/seal.js', base)), join(directory, 'years.lna'),
+            ], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 })
+            const output = resolver.Root(parser.Root(chars(sealedCase), abort, { 'tab size': 4 }), abort, null, null)
+            const current = entry(output.Jaren, '2025')
+            const previous = entry(output.Jaren, '2024')
+            const result = entry(entry(current.Mutaties.Bankrekeningen, 'zakelijk').value['Mutatie Verwerkingen'], 'vorig').value.type[1]
+            assert.equal(result.type[1]['l entry'], selectTarget(previous), option + ' must select prior-year-only target')
+        }
+        const roundTrip = serializer.Root(root, { indentation: '    ' }).__get_raw().join('\n')
+        assert.doesNotMatch(roundTrip, /`Stam`|`meta`|`l entry`/)
+        assert.deepEqual(JSON.parse(JSON.stringify(parser.Root(chars(roundTrip), abort, { 'tab size': 4 }))),
+            JSON.parse(JSON.stringify(authored)))
     } finally {
         rmSync(directory, { recursive: true })
     }
