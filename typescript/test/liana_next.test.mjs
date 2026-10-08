@@ -165,6 +165,38 @@ const normalizedValue = (value, globals, semantic, legacy) => {
     }
 }
 
+test('all canonical schema examples use concise notation throughout', () => {
+    const visit = value => {
+        const [kind, data] = unmarshalled(value)
+        switch (kind) {
+            case 'group':
+                assert.equal(data.derived.style[0], 'concise')
+                for (const [, property] of data.derived.properties.__get_raw()) {
+                    assert.equal(property.result[0], 'success')
+                    visit(property.result[1])
+                }
+                break
+            case 'dictionary':
+                for (const [, item] of dictionary(value)) visit(item)
+                break
+            case 'list':
+                for (const item of data.derived.items.__get_raw()) visit(item)
+                break
+            case 'state':
+                visit(selectedState(value).value)
+                break
+            case 'optional':
+                if (data.derived.status[0] === 'set') visit(data.derived.status[1]['child value'])
+                break
+            case 'reference': case 'nothing': case 'text': case 'simple': break
+            default: assert.fail(kind)
+        }
+    }
+    const names = readdirSync(new URL('examples/', base)).filter(name => name.endsWith('.liana.lna')).sort()
+    assert.equal(names.length, 54)
+    for (const name of names) visit(parse(readFileSync(new URL('examples/' + name, base), 'utf8')).content)
+})
+
 test('Liana Next root distinguishes syntax from resolution and has no schema-set alternative', () => {
     assert.equal(rootType['root value'][0], 'state')
     assert.deepEqual(rootType['root value'][1].options.__get_raw().map(([id]) => id).sort(), ['astn', 'liana'])

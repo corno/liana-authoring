@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import test from 'node:test'
 import { build } from '../../../../newstyle_projects/projects/lioncore/sketch/serialization/run.mjs'
+import { readSchemaText } from './native_schema_text.mjs'
 
 const projects = new URL('../../../../newstyle_projects/projects/', import.meta.url)
 const require = createRequire(new URL('liana/sketch/transformers/pareto_next_sketch/typescript/package.json', projects))
@@ -10,6 +11,13 @@ const p = await import(require.resolve('pareto-core/transformer'))
 const abort = error => { throw error }
 const plain = value => JSON.parse(JSON.stringify(value))
 const named = node => node.properties.find(property => property.property.key === 'LionCore-builtins-INamed-name').value
+
+test('SysML fixture has the native LionCore editor contract', () => {
+    const environment = new URL('liana/sketch/temp/lioncore/.liana/', projects)
+    const native = readFileSync(new URL('schema.native.slna', environment), 'utf8')
+    assert.equal(native, readSchemaText(new URL('liana/sketch/examples/lioncore.liana.lna', projects)))
+    assert.ok(readFileSync(new URL('schema.slna', environment), 'utf8').length > 0)
+})
 
 test('native LionCore serialization preserves SysML through tree, chunk and JSON', async t => {
     const api = await build()
