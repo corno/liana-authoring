@@ -10,7 +10,7 @@ const serialize = await import(require.resolve('astn-runtime/modules/serializati
 const chars = source => p.literal.list(Array.from(source, character => character.codePointAt(0)))
 const abort = error => { throw error }
 const schema = parser.Module_Specifier(chars(readFileSync(new URL(
-    '../../../../newstyle_projects/projects/liana/sketch/examples/.liana/schema.slna', import.meta.url,
+    '../../../../newstyle_projects/projects/liana/sketch/examples/.liana/schema.to_be_removed.slna', import.meta.url,
 ), 'utf8')), abort, { 'tab size': 4 })
 assert.equal(schema[0], 'unconstrained')
 

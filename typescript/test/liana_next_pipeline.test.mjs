@@ -373,7 +373,7 @@ test('Lioncore resolves language and entity references with explicit dependency 
 test('the native LionWeb serialization chunk schema round-trips SysML wire data without source ranges', async () => {
     const directory = mkdtempSync(join(tmpdir(), 'liana-next-lionweb-chunk-'))
     try {
-        const source = input(fileURLToPath(new URL('projects/lioncore/sketch/serialization_chunk/liana.lna', base)))
+        const source = input(fileURLToPath(new URL('projects/liana/sketch/examples/lionweb--serialization_chunk.liana.lna', base)))
         assert.equal(source[0], 'astn')
         const generated = pipeline(source)
         assert.deepEqual(placeholders(generated.pareto), [])

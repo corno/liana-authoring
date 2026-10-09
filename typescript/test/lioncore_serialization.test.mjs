@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import test from 'node:test'
-import { build } from '../../../../newstyle_projects/projects/lioncore/sketch/serialization/run.mjs'
+import { build } from '../../../../newstyle_projects/tools/lioncore/serialization.mjs'
 import { readSchemaText } from './native_schema_text.mjs'
 
 const projects = new URL('../../../../newstyle_projects/projects/', import.meta.url)
